@@ -1,0 +1,42 @@
+[gd_scene load_steps=2 format=3 uid="uid://c26lr48h80a3a"]
+
+[ext_resource type="Script" path="res://addons/MaxSizeContainer/max_size_container.gd" id="1_tkmb0"]
+
+[node name="C_TitleBar_UI" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="VBC_TitleBar" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MSC_MaxTitleBar" type="MarginContainer" parent="VBC_TitleBar"]
+custom_minimum_size = Vector2(0, 15)
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/margin_left = 0
+theme_override_constants/margin_top = 0
+theme_override_constants/margin_right = 0
+theme_override_constants/margin_bottom = 0
+script = ExtResource("1_tkmb0")
+limit = Vector2(-1, 30)
+valign = 0
+
+[node name="PC_MainTitleBar" type="PanelContainer" parent="VBC_TitleBar/MSC_MaxTitleBar"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="C_MainArea_EMPTY" type="Control" parent="VBC_TitleBar"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 25.0

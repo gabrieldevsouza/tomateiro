@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://b07rdmcafy564"]
+
+[ext_resource type="PackedScene" uid="uid://c26lr48h80a3a" path="res://scenes/C_TitleBar_UI.tscn" id="1_3cdnk"]
+
+[node name="N_Bootstrap" type="Node"]
+
+[node name="C_TitleBar_UI" parent="." instance=ExtResource("1_3cdnk")]
