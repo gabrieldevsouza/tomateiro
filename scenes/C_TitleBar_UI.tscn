@@ -1,11 +1,10 @@
-[gd_scene load_steps=7 format=3 uid="uid://c26lr48h80a3a"]
+[gd_scene load_steps=6 format=3 uid="uid://c26lr48h80a3a"]
 
 [ext_resource type="Script" path="res://scripts/behaviours/TitleBar.gd" id="1_gq87v"]
 [ext_resource type="Script" path="res://addons/MaxSizeContainer/max_size_container.gd" id="1_tkmb0"]
 [ext_resource type="Script" path="res://scripts/utils/h_stackable_ratio_container.gd" id="3_ck3ec"]
 [ext_resource type="PackedScene" uid="uid://birk4wdajwwt8" path="res://scenes/B_QuitApp.tscn" id="4_5we8b"]
 [ext_resource type="PackedScene" uid="uid://dbe1alxqa4bic" path="res://scenes/B_MinimizeApp.tscn" id="4_euxw8"]
-[ext_resource type="PackedScene" uid="uid://da0qnnj1i7v40" path="res://scenes/PC_AppMainArea.tscn" id="6_2tc6o"]
 
 [node name="C_TitleBar_UI" type="Control"]
 layout_mode = 3
@@ -67,8 +66,5 @@ layout_mode = 2
 layout_mode = 2
 size_flags_vertical = 3
 size_flags_stretch_ratio = 25.0
-
-[node name="PC_AppMainArea" parent="VBC_TitleBar/C_MainArea_EMPTY" instance=ExtResource("6_2tc6o")]
-layout_mode = 1
 
 [connection signal="gui_input" from="VBC_TitleBar/MSC_MaxTitleBar/PC_MainTitleBar" to="." method="_on_main_title_bar_gui_input"]

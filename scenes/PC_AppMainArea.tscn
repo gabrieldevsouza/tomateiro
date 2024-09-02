@@ -1,4 +1,7 @@
-[gd_scene format=3 uid="uid://da0qnnj1i7v40"]
+[gd_scene load_steps=2 format=3 uid="uid://dhenu44xdc0ah"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_he1nn"]
+font_size = 64
 
 [node name="PC_AppMainArea" type="PanelContainer"]
 anchors_preset = 15
@@ -6,3 +9,16 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 2
+alignment = 1
+
+[node name="Label" type="Label" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+text = "00:00"
+label_settings = SubResource("LabelSettings_he1nn")
+horizontal_alignment = 1
+vertical_alignment = 1
