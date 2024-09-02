@@ -1,7 +1,329 @@
-[gd_scene load_steps=2 format=3 uid="uid://b07rdmcafy564"]
+[gd_scene load_steps=10 format=3 uid="uid://bh0ukvfgwej0i"]
 
-[ext_resource type="PackedScene" uid="uid://c26lr48h80a3a" path="res://scenes/C_TitleBar_UI.tscn" id="1_4vew2"]
+[ext_resource type="PackedScene" uid="uid://c26lr48h80a3a" path="res://scenes/C_TitleBar_UI.tscn" id="1_500sa"]
+[ext_resource type="Script" path="res://scripts/behaviours/TopWindowSizeControl.gd" id="2_3amhb"]
+[ext_resource type="Script" path="res://scripts/behaviours/BottomWindowSizeControl.gd" id="3_w1x7d"]
+[ext_resource type="Script" path="res://scripts/behaviours/LeftWindowSizeControl.gd" id="4_kg5eo"]
+[ext_resource type="Script" path="res://scripts/behaviours/RightWindowSizeControl.gd" id="5_8atwp"]
+[ext_resource type="Script" path="res://scripts/behaviours/TopLeftWindowSizeControl.gd" id="6_8ui6f"]
+[ext_resource type="Script" path="res://scripts/behaviours/BottomRightWindowSizeControl.gd" id="7_12mbd"]
+[ext_resource type="Script" path="res://scripts/behaviours/TopRightWindowSizeControl.gd" id="8_t23qd"]
+[ext_resource type="Script" path="res://scripts/behaviours/BottomLeftWindowSizeControl.gd" id="9_nvgdo"]
 
 [node name="N_Bootstrap" type="Node"]
 
-[node name="C_TitleBar_UI" parent="." instance=ExtResource("1_4vew2")]
+[node name="MarginContainer2" type="MarginContainer" parent="."]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_top = 10
+
+[node name="C_TitleBar_UI" parent="MarginContainer2" instance=ExtResource("1_500sa")]
+layout_mode = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Node" type="Node" parent="."]
+
+[node name="MC_WindowTopSize" type="MarginContainer" parent="."]
+anchors_preset = 10
+anchor_right = 1.0
+grow_horizontal = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_right = 8
+
+[node name="C_WindowTopSize" type="Control" parent="MC_WindowTopSize"]
+custom_minimum_size = Vector2(0, 4)
+layout_mode = 2
+mouse_filter = 1
+mouse_default_cursor_shape = 9
+script = ExtResource("2_3amhb")
+
+[node name="MarginContainer" type="MarginContainer" parent="MC_WindowTopSize/C_WindowTopSize"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_top = 2
+
+[node name="ColorRect" type="ColorRect" parent="MC_WindowTopSize/C_WindowTopSize/MarginContainer"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="MC_WindowBottomSize" type="MarginContainer" parent="."]
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -4.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_right = 8
+
+[node name="C_WindowBottomSize" type="Control" parent="MC_WindowBottomSize"]
+custom_minimum_size = Vector2(0, 4)
+layout_mode = 2
+mouse_filter = 1
+mouse_default_cursor_shape = 9
+script = ExtResource("3_w1x7d")
+
+[node name="MarginContainer" type="MarginContainer" parent="MC_WindowBottomSize/C_WindowBottomSize"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_bottom = 2
+
+[node name="ColorRect" type="ColorRect" parent="MC_WindowBottomSize/C_WindowBottomSize/MarginContainer"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="MC_WindowLeftSize" type="MarginContainer" parent="."]
+anchors_preset = 9
+anchor_bottom = 1.0
+grow_vertical = 2
+theme_override_constants/margin_left = 0
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="C_WindowLeftSize" type="Control" parent="MC_WindowLeftSize"]
+custom_minimum_size = Vector2(4, 0)
+layout_mode = 2
+mouse_filter = 1
+mouse_default_cursor_shape = 10
+script = ExtResource("4_kg5eo")
+
+[node name="MarginContainer" type="MarginContainer" parent="MC_WindowLeftSize/C_WindowLeftSize"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 2
+
+[node name="ColorRect" type="ColorRect" parent="MC_WindowLeftSize/C_WindowLeftSize/MarginContainer"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="MC_WindowRightSize" type="MarginContainer" parent="."]
+anchors_preset = 11
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 0
+grow_vertical = 2
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="C_WindowRightSize" type="Control" parent="MC_WindowRightSize"]
+custom_minimum_size = Vector2(4, 0)
+layout_mode = 2
+mouse_filter = 1
+mouse_default_cursor_shape = 10
+script = ExtResource("5_8atwp")
+
+[node name="MarginContainer" type="MarginContainer" parent="MC_WindowRightSize/C_WindowRightSize"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_right = 2
+
+[node name="ColorRect" type="ColorRect" parent="MC_WindowRightSize/C_WindowRightSize/MarginContainer"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="MC_WindowTopLeftSize" type="MarginContainer" parent="."]
+
+[node name="C_WindowTopLeftSize" type="Control" parent="MC_WindowTopLeftSize"]
+custom_minimum_size = Vector2(8, 8)
+layout_mode = 2
+mouse_filter = 1
+mouse_default_cursor_shape = 12
+script = ExtResource("6_8ui6f")
+
+[node name="MarginContainer" type="MarginContainer" parent="MC_WindowTopLeftSize/C_WindowTopLeftSize"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 2
+theme_override_constants/margin_top = 2
+theme_override_constants/margin_right = 4
+
+[node name="ColorRect" type="ColorRect" parent="MC_WindowTopLeftSize/C_WindowTopLeftSize/MarginContainer"]
+layout_mode = 2
+
+[node name="MarginContainer2" type="MarginContainer" parent="MC_WindowTopLeftSize/C_WindowTopLeftSize"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 2
+theme_override_constants/margin_top = 2
+theme_override_constants/margin_bottom = 4
+
+[node name="ColorRect" type="ColorRect" parent="MC_WindowTopLeftSize/C_WindowTopLeftSize/MarginContainer2"]
+layout_mode = 2
+
+[node name="MC_WindowBottomRightSize" type="MarginContainer" parent="."]
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -8.0
+offset_top = -8.0
+grow_horizontal = 0
+grow_vertical = 0
+
+[node name="C_WindowBottomRightSize" type="Control" parent="MC_WindowBottomRightSize"]
+custom_minimum_size = Vector2(8, 8)
+layout_mode = 2
+mouse_filter = 1
+mouse_default_cursor_shape = 12
+script = ExtResource("7_12mbd")
+
+[node name="MarginContainer" type="MarginContainer" parent="MC_WindowBottomRightSize/C_WindowBottomRightSize"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_right = 2
+theme_override_constants/margin_bottom = 2
+
+[node name="ColorRect" type="ColorRect" parent="MC_WindowBottomRightSize/C_WindowBottomRightSize/MarginContainer"]
+layout_mode = 2
+
+[node name="MarginContainer2" type="MarginContainer" parent="MC_WindowBottomRightSize/C_WindowBottomRightSize"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 2
+theme_override_constants/margin_bottom = 2
+
+[node name="ColorRect" type="ColorRect" parent="MC_WindowBottomRightSize/C_WindowBottomRightSize/MarginContainer2"]
+layout_mode = 2
+
+[node name="MC_WindowTopRightSize" type="MarginContainer" parent="."]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -8.0
+offset_bottom = 8.0
+grow_horizontal = 0
+
+[node name="C_WindowTopRightSize" type="Control" parent="MC_WindowTopRightSize"]
+custom_minimum_size = Vector2(8, 8)
+layout_mode = 2
+mouse_filter = 1
+mouse_default_cursor_shape = 11
+script = ExtResource("8_t23qd")
+
+[node name="MarginContainer" type="MarginContainer" parent="MC_WindowTopRightSize/C_WindowTopRightSize"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 2
+theme_override_constants/margin_right = 2
+
+[node name="ColorRect" type="ColorRect" parent="MC_WindowTopRightSize/C_WindowTopRightSize/MarginContainer"]
+layout_mode = 2
+
+[node name="MarginContainer2" type="MarginContainer" parent="MC_WindowTopRightSize/C_WindowTopRightSize"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_top = 2
+theme_override_constants/margin_right = 2
+theme_override_constants/margin_bottom = 4
+
+[node name="ColorRect" type="ColorRect" parent="MC_WindowTopRightSize/C_WindowTopRightSize/MarginContainer2"]
+layout_mode = 2
+
+[node name="MC_WindowBottomLeftSize" type="MarginContainer" parent="."]
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -8.0
+offset_right = 8.0
+grow_vertical = 0
+
+[node name="C_WindowBottomLeftSize" type="Control" parent="MC_WindowBottomLeftSize"]
+custom_minimum_size = Vector2(8, 8)
+layout_mode = 2
+mouse_filter = 1
+mouse_default_cursor_shape = 11
+script = ExtResource("9_nvgdo")
+
+[node name="MarginContainer" type="MarginContainer" parent="MC_WindowBottomLeftSize/C_WindowBottomLeftSize"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 2
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 2
+
+[node name="ColorRect" type="ColorRect" parent="MC_WindowBottomLeftSize/C_WindowBottomLeftSize/MarginContainer"]
+layout_mode = 2
+
+[node name="MarginContainer2" type="MarginContainer" parent="MC_WindowBottomLeftSize/C_WindowBottomLeftSize"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 2
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_bottom = 2
+
+[node name="ColorRect" type="ColorRect" parent="MC_WindowBottomLeftSize/C_WindowBottomLeftSize/MarginContainer2"]
+layout_mode = 2
+
+[connection signal="gui_input" from="MC_WindowTopSize/C_WindowTopSize" to="MC_WindowTopSize/C_WindowTopSize" method="_on_gui_input"]
+[connection signal="gui_input" from="MC_WindowBottomSize/C_WindowBottomSize" to="MC_WindowBottomSize/C_WindowBottomSize" method="_on_gui_input"]
+[connection signal="gui_input" from="MC_WindowLeftSize/C_WindowLeftSize" to="MC_WindowLeftSize/C_WindowLeftSize" method="_on_gui_input"]
+[connection signal="gui_input" from="MC_WindowRightSize/C_WindowRightSize" to="MC_WindowRightSize/C_WindowRightSize" method="_on_gui_input"]
+[connection signal="gui_input" from="MC_WindowTopLeftSize/C_WindowTopLeftSize" to="MC_WindowTopLeftSize/C_WindowTopLeftSize" method="_on_gui_input"]
+[connection signal="gui_input" from="MC_WindowBottomRightSize/C_WindowBottomRightSize" to="MC_WindowBottomRightSize/C_WindowBottomRightSize" method="_on_gui_input"]
+[connection signal="gui_input" from="MC_WindowTopRightSize/C_WindowTopRightSize" to="MC_WindowTopRightSize/C_WindowTopRightSize" method="_on_gui_input"]
+[connection signal="gui_input" from="MC_WindowBottomLeftSize/C_WindowBottomLeftSize" to="MC_WindowBottomLeftSize/C_WindowBottomLeftSize" method="_on_gui_input"]

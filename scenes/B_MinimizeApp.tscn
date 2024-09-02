@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://dbe1alxqa4bic"]
+
+[ext_resource type="Script" path="res://scripts/behaviours/MinimizeApp.gd" id="1_pn4mv"]
+
+[node name="B_MinimizeApp" type="Button"]
+script = ExtResource("1_pn4mv")
+
+[connection signal="pressed" from="." to="." method="_on_pressed"]
