@@ -1,0 +1,17 @@
+[gd_scene load_steps=2 format=3 uid="uid://by7fcj37vgdua"]
+
+[ext_resource type="PackedScene" uid="uid://c26lr48h80a3a" path="res://scenes/C_TitleBar_UI.tscn" id="1_veuk1"]
+
+[node name="MC_TitleBar" type="MarginContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="C_TitleBar_UI" parent="." instance=ExtResource("1_veuk1")]
+layout_mode = 2
