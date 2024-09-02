@@ -167,7 +167,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/margin_left = 3
+theme_override_constants/margin_left = 4
 theme_override_constants/margin_top = 3
 theme_override_constants/margin_bottom = 4
 
@@ -216,7 +216,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/margin_top = 4
-theme_override_constants/margin_right = 3
+theme_override_constants/margin_right = 4
 theme_override_constants/margin_bottom = 3
 
 [node name="ColorRect" type="ColorRect" parent="MC_WindowBottomRightSize/C_WindowBottomRightSize/MarginContainer2"]
@@ -261,7 +261,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/margin_top = 3
-theme_override_constants/margin_right = 3
+theme_override_constants/margin_right = 4
 theme_override_constants/margin_bottom = 4
 
 [node name="ColorRect" type="ColorRect" parent="MC_WindowTopRightSize/C_WindowTopRightSize/MarginContainer2"]
@@ -305,7 +305,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/margin_left = 3
+theme_override_constants/margin_left = 4
 theme_override_constants/margin_top = 4
 theme_override_constants/margin_bottom = 3
 
