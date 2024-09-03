@@ -6,6 +6,19 @@
 
 [node name="N_Bootstrap" type="Node"]
 
+[node name="MC_MainBackgdround" type="MarginContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="PanelContainer" type="PanelContainer" parent="MC_MainBackgdround"]
+layout_mode = 2
+mouse_filter = 2
+
 [node name="C_AppMainArea" parent="." instance=ExtResource("3_4x0tc")]
 
 [node name="MC_TitleBar" parent="." instance=ExtResource("1_rjt57")]

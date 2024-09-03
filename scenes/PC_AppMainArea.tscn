@@ -1,24 +1,132 @@
-[gd_scene load_steps=2 format=3 uid="uid://dhenu44xdc0ah"]
+[gd_scene load_steps=5 format=3 uid="uid://dhenu44xdc0ah"]
+
+[ext_resource type="Script" path="res://scripts/storage/TimerClock.gd" id="1_44a0l"]
+[ext_resource type="Script" path="res://addons/MaxSizeContainer/max_size_container.gd" id="2_tcs1d"]
+
+[sub_resource type="FontVariation" id="FontVariation_g36qm"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_he1nn"]
-font_size = 64
+font = SubResource("FontVariation_g36qm")
+font_size = 30
 
-[node name="PC_AppMainArea" type="PanelContainer"]
+[node name="PC_AppMainArea" type="Control"]
+layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="."]
-layout_mode = 2
-alignment = 1
+[node name="HBC_PlayerMode" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 
-[node name="Label" type="Label" parent="HBoxContainer"]
+[node name="C_Left" type="Control" parent="HBC_PlayerMode"]
 layout_mode = 2
 size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="HBC_PlayerMode/C_Left"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 2
 size_flags_vertical = 1
 text = "00:00"
 label_settings = SubResource("LabelSettings_he1nn")
 horizontal_alignment = 1
 vertical_alignment = 1
+script = ExtResource("1_44a0l")
+
+[node name="C_Middle" type="Control" parent="HBC_PlayerMode"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 2.0
+
+[node name="MaxSizeContainer" type="MarginContainer" parent="HBC_PlayerMode/C_Middle"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 0
+theme_override_constants/margin_top = 0
+theme_override_constants/margin_right = 0
+theme_override_constants/margin_bottom = 0
+script = ExtResource("2_tcs1d")
+limit = Vector2(-1, 120)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HBC_PlayerMode/C_Middle/MaxSizeContainer"]
+layout_mode = 2
+
+[node name="MaxSizeContainer" type="MarginContainer" parent="HBC_PlayerMode/C_Middle/MaxSizeContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 10.0
+theme_override_constants/margin_left = 0
+theme_override_constants/margin_top = 0
+theme_override_constants/margin_right = 0
+theme_override_constants/margin_bottom = 0
+script = ExtResource("2_tcs1d")
+limit = Vector2(250, -1)
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HBC_PlayerMode/C_Middle/MaxSizeContainer/VBoxContainer/MaxSizeContainer"]
+layout_mode = 2
+
+[node name="BTN_Repeat" type="Button" parent="HBC_PlayerMode/C_Middle/MaxSizeContainer/VBoxContainer/MaxSizeContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Repeat"
+
+[node name="BTN_Play" type="Button" parent="HBC_PlayerMode/C_Middle/MaxSizeContainer/VBoxContainer/MaxSizeContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "PLAY"
+
+[node name="BTN_Skip" type="Button" parent="HBC_PlayerMode/C_Middle/MaxSizeContainer/VBoxContainer/MaxSizeContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Skip"
+
+[node name="C_Spacing" type="Control" parent="HBC_PlayerMode/C_Middle/MaxSizeContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Control" type="Control" parent="HBC_PlayerMode/C_Middle/MaxSizeContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="MaxSizeContainer" type="MarginContainer" parent="HBC_PlayerMode/C_Middle/MaxSizeContainer/VBoxContainer/Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 0
+theme_override_constants/margin_top = 0
+theme_override_constants/margin_right = 0
+theme_override_constants/margin_bottom = 0
+script = ExtResource("2_tcs1d")
+limit = Vector2(800, 20)
+
+[node name="ProgressBar" type="ProgressBar" parent="HBC_PlayerMode/C_Middle/MaxSizeContainer/VBoxContainer/Control/MaxSizeContainer"]
+custom_minimum_size = Vector2(0, 10)
+layout_mode = 2
+size_flags_vertical = 1
+value = 50.0
+show_percentage = false
+
+[node name="C_Right" type="Control" parent="HBC_PlayerMode"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[connection signal="pressed" from="HBC_PlayerMode/C_Middle/MaxSizeContainer/VBoxContainer/MaxSizeContainer/HBoxContainer/BTN_Play" to="HBC_PlayerMode/C_Left/Label" method="_on_button_pressed"]

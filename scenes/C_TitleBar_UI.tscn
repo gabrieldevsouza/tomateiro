@@ -15,6 +15,7 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
+mouse_filter = 2
 script = ExtResource("1_gq87v")
 
 [node name="VBC_TitleBar" type="VBoxContainer" parent="."]
@@ -24,17 +25,20 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 
 [node name="MSC_MaxTitleBar" type="MarginContainer" parent="VBC_TitleBar"]
-custom_minimum_size = Vector2(0, 15)
+custom_minimum_size = Vector2(0, 10)
 layout_mode = 2
 size_flags_vertical = 3
+size_flags_stretch_ratio = 3.0
+mouse_filter = 2
 theme_override_constants/margin_left = 0
 theme_override_constants/margin_top = 0
 theme_override_constants/margin_right = 0
-theme_override_constants/margin_bottom = 0
+theme_override_constants/margin_bottom = 49
 script = ExtResource("1_tkmb0")
-limit = Vector2(-1, 30)
+limit = Vector2(-1, 20)
 valign = 0
 
 [node name="PC_MainTitleBar" type="PanelContainer" parent="VBC_TitleBar/MSC_MaxTitleBar"]
@@ -47,7 +51,7 @@ layout_mode = 2
 alignment = 2
 
 [node name="HSRC_MinimizeAppButton" type="AspectRatioContainer" parent="VBC_TitleBar/MSC_MaxTitleBar/PC_MainTitleBar/HBC_TitleBarButtons"]
-custom_minimum_size = Vector2(24, 0)
+custom_minimum_size = Vector2(20, 0)
 layout_mode = 2
 script = ExtResource("3_ck3ec")
 
@@ -55,7 +59,7 @@ script = ExtResource("3_ck3ec")
 layout_mode = 2
 
 [node name="HSRC_QuitAppButton" type="AspectRatioContainer" parent="VBC_TitleBar/MSC_MaxTitleBar/PC_MainTitleBar/HBC_TitleBarButtons"]
-custom_minimum_size = Vector2(24, 0)
+custom_minimum_size = Vector2(20, 0)
 layout_mode = 2
 script = ExtResource("3_ck3ec")
 
@@ -66,5 +70,6 @@ layout_mode = 2
 layout_mode = 2
 size_flags_vertical = 3
 size_flags_stretch_ratio = 25.0
+mouse_filter = 2
 
 [connection signal="gui_input" from="VBC_TitleBar/MSC_MaxTitleBar/PC_MainTitleBar" to="." method="_on_main_title_bar_gui_input"]

@@ -38,7 +38,7 @@ theme_override_constants/margin_top = 3
 [node name="ColorRect" type="ColorRect" parent="MC_WindowTopSize/C_WindowTopSize/MarginContainer"]
 layout_mode = 2
 mouse_filter = 2
-color = Color(0.235294, 0.235294, 0.235294, 0.588235)
+color = Color(1, 1, 1, 0)
 
 [node name="MC_WindowBottomSize" type="MarginContainer" parent="."]
 anchors_preset = 12
@@ -70,7 +70,7 @@ theme_override_constants/margin_bottom = 3
 [node name="ColorRect" type="ColorRect" parent="MC_WindowBottomSize/C_WindowBottomSize/MarginContainer"]
 layout_mode = 2
 mouse_filter = 2
-color = Color(0.235294, 0.235294, 0.235294, 0.588235)
+color = Color(1, 1, 1, 0)
 
 [node name="MC_WindowLeftSize" type="MarginContainer" parent="."]
 anchors_preset = 9
@@ -100,7 +100,7 @@ theme_override_constants/margin_left = 3
 [node name="ColorRect" type="ColorRect" parent="MC_WindowLeftSize/C_WindowLeftSize/MarginContainer"]
 layout_mode = 2
 mouse_filter = 2
-color = Color(0.235294, 0.235294, 0.235294, 0.588235)
+color = Color(1, 1, 1, 0)
 
 [node name="MC_WindowRightSize" type="MarginContainer" parent="."]
 anchors_preset = 11
@@ -132,7 +132,7 @@ theme_override_constants/margin_right = 3
 [node name="ColorRect" type="ColorRect" parent="MC_WindowRightSize/C_WindowRightSize/MarginContainer"]
 layout_mode = 2
 mouse_filter = 2
-color = Color(0.235294, 0.235294, 0.235294, 0.588235)
+color = Color(1, 1, 1, 0)
 
 [node name="MC_WindowTopLeftSize" type="MarginContainer" parent="."]
 offset_right = 8.0
@@ -158,7 +158,7 @@ theme_override_constants/margin_right = 4
 
 [node name="ColorRect" type="ColorRect" parent="MC_WindowTopLeftSize/C_WindowTopLeftSize/MarginContainer"]
 layout_mode = 2
-color = Color(0.235294, 0.235294, 0.235294, 0.588235)
+color = Color(1, 1, 1, 0)
 
 [node name="MarginContainer2" type="MarginContainer" parent="MC_WindowTopLeftSize/C_WindowTopLeftSize"]
 layout_mode = 1
@@ -173,7 +173,7 @@ theme_override_constants/margin_bottom = 4
 
 [node name="ColorRect" type="ColorRect" parent="MC_WindowTopLeftSize/C_WindowTopLeftSize/MarginContainer2"]
 layout_mode = 2
-color = Color(0.235294, 0.235294, 0.235294, 0.588235)
+color = Color(1, 1, 1, 0)
 
 [node name="MC_WindowBottomRightSize" type="MarginContainer" parent="."]
 anchors_preset = 3
@@ -206,7 +206,7 @@ theme_override_constants/margin_bottom = 3
 
 [node name="ColorRect" type="ColorRect" parent="MC_WindowBottomRightSize/C_WindowBottomRightSize/MarginContainer"]
 layout_mode = 2
-color = Color(0.235294, 0.235294, 0.235294, 0.588235)
+color = Color(1, 1, 1, 0)
 
 [node name="MarginContainer2" type="MarginContainer" parent="MC_WindowBottomRightSize/C_WindowBottomRightSize"]
 layout_mode = 1
@@ -221,7 +221,7 @@ theme_override_constants/margin_bottom = 3
 
 [node name="ColorRect" type="ColorRect" parent="MC_WindowBottomRightSize/C_WindowBottomRightSize/MarginContainer2"]
 layout_mode = 2
-color = Color(0.235294, 0.235294, 0.235294, 0.588235)
+color = Color(1, 1, 1, 0)
 
 [node name="MC_WindowTopRightSize" type="MarginContainer" parent="."]
 anchors_preset = 1
@@ -251,7 +251,7 @@ theme_override_constants/margin_right = 3
 
 [node name="ColorRect" type="ColorRect" parent="MC_WindowTopRightSize/C_WindowTopRightSize/MarginContainer"]
 layout_mode = 2
-color = Color(0.235294, 0.235294, 0.235294, 0.588235)
+color = Color(1, 1, 1, 0)
 
 [node name="MarginContainer2" type="MarginContainer" parent="MC_WindowTopRightSize/C_WindowTopRightSize"]
 layout_mode = 1
@@ -266,7 +266,7 @@ theme_override_constants/margin_bottom = 4
 
 [node name="ColorRect" type="ColorRect" parent="MC_WindowTopRightSize/C_WindowTopRightSize/MarginContainer2"]
 layout_mode = 2
-color = Color(0.235294, 0.235294, 0.235294, 0.588235)
+color = Color(1, 1, 1, 0)
 
 [node name="MC_WindowBottomLeftSize" type="MarginContainer" parent="."]
 anchors_preset = 2
@@ -296,7 +296,7 @@ theme_override_constants/margin_bottom = 3
 
 [node name="ColorRect" type="ColorRect" parent="MC_WindowBottomLeftSize/C_WindowBottomLeftSize/MarginContainer"]
 layout_mode = 2
-color = Color(0.235294, 0.235294, 0.235294, 0.588235)
+color = Color(1, 1, 1, 0)
 
 [node name="MarginContainer2" type="MarginContainer" parent="MC_WindowBottomLeftSize/C_WindowBottomLeftSize"]
 layout_mode = 1
@@ -311,7 +311,7 @@ theme_override_constants/margin_bottom = 3
 
 [node name="ColorRect" type="ColorRect" parent="MC_WindowBottomLeftSize/C_WindowBottomLeftSize/MarginContainer2"]
 layout_mode = 2
-color = Color(0.235294, 0.235294, 0.235294, 0.588235)
+color = Color(1, 1, 1, 0)
 
 [connection signal="gui_input" from="MC_WindowTopSize/C_WindowTopSize" to="MC_WindowTopSize/C_WindowTopSize" method="_on_gui_input"]
 [connection signal="gui_input" from="MC_WindowBottomSize/C_WindowBottomSize" to="MC_WindowBottomSize/C_WindowBottomSize" method="_on_gui_input"]
