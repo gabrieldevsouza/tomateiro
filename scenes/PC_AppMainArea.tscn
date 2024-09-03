@@ -1,11 +1,12 @@
-[gd_scene load_steps=5 format=3 uid="uid://dhenu44xdc0ah"]
+[gd_scene load_steps=6 format=3 uid="uid://dhenu44xdc0ah"]
 
 [ext_resource type="Script" path="res://scripts/storage/TimerClock.gd" id="1_44a0l"]
 [ext_resource type="Script" path="res://addons/MaxSizeContainer/max_size_container.gd" id="2_tcs1d"]
+[ext_resource type="Script" path="res://scripts/utils/auto_size_label.gd" id="3_ypp30"]
 
 [sub_resource type="FontVariation" id="FontVariation_g36qm"]
 
-[sub_resource type="LabelSettings" id="LabelSettings_he1nn"]
+[sub_resource type="LabelSettings" id="LabelSettings_tqy75"]
 font = SubResource("FontVariation_g36qm")
 font_size = 30
 
@@ -29,6 +30,15 @@ grow_vertical = 2
 layout_mode = 2
 size_flags_horizontal = 3
 
+[node name="ColorRect" type="ColorRect" parent="HBC_PlayerMode/C_Left"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
 [node name="Label" type="Label" parent="HBC_PlayerMode/C_Left"]
 layout_mode = 1
 anchors_preset = 15
@@ -39,10 +49,25 @@ grow_vertical = 2
 size_flags_horizontal = 2
 size_flags_vertical = 1
 text = "00:00"
-label_settings = SubResource("LabelSettings_he1nn")
+label_settings = SubResource("LabelSettings_tqy75")
 horizontal_alignment = 1
 vertical_alignment = 1
 script = ExtResource("1_44a0l")
+
+[node name="AutoSizeLabel" type="Label" parent="HBC_PlayerMode/C_Left"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 56
+text = "0000"
+horizontal_alignment = 1
+vertical_alignment = 1
+clip_text = true
+script = ExtResource("3_ypp30")
 
 [node name="C_Middle" type="Control" parent="HBC_PlayerMode"]
 layout_mode = 2
@@ -128,5 +153,7 @@ show_percentage = false
 [node name="C_Right" type="Control" parent="HBC_PlayerMode"]
 layout_mode = 2
 size_flags_horizontal = 3
+
+[node name="Node" type="Node" parent="."]
 
 [connection signal="pressed" from="HBC_PlayerMode/C_Middle/MaxSizeContainer/VBoxContainer/MaxSizeContainer/HBoxContainer/BTN_Play" to="HBC_PlayerMode/C_Left/Label" method="_on_button_pressed"]
