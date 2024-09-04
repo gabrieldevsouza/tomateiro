@@ -5,6 +5,7 @@ var window_start_drag_position : Vector2 = Vector2.ZERO
 var window_start_size : Vector2 = Vector2.ZERO
 
 var following : bool = false
+
 func _process(_delta: float) -> void:
 	if following:
 		DisplayServer.window_set_size(Vector2(
