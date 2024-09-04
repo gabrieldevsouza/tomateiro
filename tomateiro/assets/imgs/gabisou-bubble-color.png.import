@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://bo5l414wff3gk"
-path="res://.godot/imported/gabisou-bubble-color.png-e79e177abaac50bf39f90307b0b183db.ctex"
+path="res://.godot/imported/gabisou-bubble-color.png-8f2e64e79fe7a7aa1ba98bddd9a15f4a.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/imgs/gabisou-bubble-color.png"
-dest_files=["res://.godot/imported/gabisou-bubble-color.png-e79e177abaac50bf39f90307b0b183db.ctex"]
+source_file="res://tomateiro/assets/imgs/gabisou-bubble-color.png"
+dest_files=["res://.godot/imported/gabisou-bubble-color.png-8f2e64e79fe7a7aa1ba98bddd9a15f4a.ctex"]
 
 [params]
 

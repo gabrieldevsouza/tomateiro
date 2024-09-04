@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://kjoftlwb2ekd"]
 
-[ext_resource type="Script" path="res://scripts/behaviours/UI/WindowSize/WindowSizeController.gd" id="1_5rdcm"]
+[ext_resource type="Script" path="res://tomateiro/scripts/behaviours/UI/WindowSize/WindowSizeController.gd" id="1_5rdcm"]
 
 [node name="N_WindowSizeController" type="Node"]
 

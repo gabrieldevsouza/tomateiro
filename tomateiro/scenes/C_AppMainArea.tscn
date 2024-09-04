@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://da8d5hdscq8r0"]
 
-[ext_resource type="PackedScene" uid="uid://dhenu44xdc0ah" path="res://scenes/PC_AppMainArea.tscn" id="1_vuhsv"]
+[ext_resource type="PackedScene" uid="uid://dhenu44xdc0ah" path="res://tomateiro/scenes/PC_AppMainArea.tscn" id="1_vuhsv"]
 
 [node name="C_AppMainArea" type="Control"]
 layout_mode = 3

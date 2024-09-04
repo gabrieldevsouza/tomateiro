@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://by7fcj37vgdua"]
 
-[ext_resource type="PackedScene" uid="uid://c26lr48h80a3a" path="res://scenes/C_TitleBar_UI.tscn" id="1_veuk1"]
+[ext_resource type="PackedScene" uid="uid://c26lr48h80a3a" path="res://tomateiro/scenes/C_TitleBar_UI.tscn" id="1_veuk1"]
 
 [node name="MC_TitleBar" type="MarginContainer"]
 anchors_preset = 15

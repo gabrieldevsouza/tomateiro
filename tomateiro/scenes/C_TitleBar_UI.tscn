@@ -1,13 +1,13 @@
 [gd_scene load_steps=18 format=3 uid="uid://c26lr48h80a3a"]
 
-[ext_resource type="Script" path="res://scripts/behaviours/UI/TitleBar/TitleBar.gd" id="1_gq87v"]
+[ext_resource type="Script" path="res://tomateiro/scripts/behaviours/UI/TitleBar/TitleBar.gd" id="1_gq87v"]
 [ext_resource type="Script" path="res://addons/MaxSizeContainer/max_size_container.gd" id="1_tkmb0"]
-[ext_resource type="Script" path="res://scripts/utils/h_stackable_ratio_container.gd" id="3_ck3ec"]
-[ext_resource type="PackedScene" uid="uid://birk4wdajwwt8" path="res://scenes/BTN_QuitApp.tscn" id="4_5we8b"]
-[ext_resource type="PackedScene" uid="uid://dbe1alxqa4bic" path="res://scenes/BTN_MinimizeApp.tscn" id="4_euxw8"]
+[ext_resource type="Script" path="res://tomateiro/scripts/utils/h_stackable_ratio_container.gd" id="3_ck3ec"]
+[ext_resource type="PackedScene" uid="uid://birk4wdajwwt8" path="res://tomateiro/scenes/BTN_QuitApp.tscn" id="4_5we8b"]
+[ext_resource type="PackedScene" uid="uid://dbe1alxqa4bic" path="res://tomateiro/scenes/BTN_MinimizeApp.tscn" id="4_euxw8"]
 [ext_resource type="FontFile" uid="uid://bj6hexaj2p1fe" path="res://addons/material-design-icons/fonts/material_design_icons.ttf" id="6_k0e30"]
-[ext_resource type="Script" path="res://scripts/utils/auto_size_material_icon.gd" id="7_dpwqi"]
-[ext_resource type="Script" path="res://scripts/utils/auto_size_label.gd" id="8_i4ahe"]
+[ext_resource type="Script" path="res://tomateiro/scripts/utils/auto_size_material_icon.gd" id="7_dpwqi"]
+[ext_resource type="Script" path="res://tomateiro/scripts/utils/auto_size_label.gd" id="8_i4ahe"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xqa0o"]
 bg_color = Color(0.1554, 0.16359, 0.21, 0.27451)
@@ -80,7 +80,7 @@ mouse_filter = 2
 theme_override_constants/margin_left = 0
 theme_override_constants/margin_top = 0
 theme_override_constants/margin_right = 0
-theme_override_constants/margin_bottom = 39
+theme_override_constants/margin_bottom = 0
 script = ExtResource("1_tkmb0")
 limit = Vector2(-1, 30)
 valign = 0

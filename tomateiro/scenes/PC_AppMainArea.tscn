@@ -1,11 +1,11 @@
 [gd_scene load_steps=7 format=3 uid="uid://dhenu44xdc0ah"]
 
-[ext_resource type="Script" path="res://scripts/behaviours/PomodoroClock.gd" id="1_44a0l"]
+[ext_resource type="Script" path="res://tomateiro/scripts/behaviours/PomodoroClock.gd" id="1_44a0l"]
 [ext_resource type="Script" path="res://addons/MaxSizeContainer/max_size_container.gd" id="2_tcs1d"]
 [ext_resource type="FontFile" uid="uid://bj6hexaj2p1fe" path="res://addons/material-design-icons/fonts/material_design_icons.ttf" id="3_c1df7"]
-[ext_resource type="Script" path="res://scripts/utils/auto_size_label.gd" id="3_ypp30"]
-[ext_resource type="Script" path="res://scripts/utils/auto_size_material_icon.gd" id="5_0uuj3"]
-[ext_resource type="Script" path="res://scripts/utils/h_stackable_ratio_container.gd" id="5_jfy2c"]
+[ext_resource type="Script" path="res://tomateiro/scripts/utils/auto_size_label.gd" id="3_ypp30"]
+[ext_resource type="Script" path="res://tomateiro/scripts/utils/auto_size_material_icon.gd" id="5_0uuj3"]
+[ext_resource type="Script" path="res://tomateiro/scripts/utils/h_stackable_ratio_container.gd" id="5_jfy2c"]
 
 [node name="PC_AppMainArea" type="Control"]
 layout_mode = 3
@@ -73,9 +73,9 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/margin_left = 0
-theme_override_constants/margin_top = 264
+theme_override_constants/margin_top = 0
 theme_override_constants/margin_right = 0
-theme_override_constants/margin_bottom = 264
+theme_override_constants/margin_bottom = 0
 script = ExtResource("2_tcs1d")
 limit = Vector2(-1, 120)
 
@@ -89,9 +89,9 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 size_flags_stretch_ratio = 10.0
-theme_override_constants/margin_left = 122
+theme_override_constants/margin_left = 0
 theme_override_constants/margin_top = 0
-theme_override_constants/margin_right = 122
+theme_override_constants/margin_right = 0
 theme_override_constants/margin_bottom = 0
 script = ExtResource("2_tcs1d")
 mode = 1
