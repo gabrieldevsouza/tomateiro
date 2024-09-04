@@ -1,76 +1,8 @@
-[gd_scene load_steps=9 format=3 uid="uid://kjoftlwb2ekd"]
+[gd_scene load_steps=2 format=3 uid="uid://kjoftlwb2ekd"]
 
-[ext_resource type="Script" path="res://scripts/behaviours/UI/WindowSize/TopWindowSizeControl.gd" id="1_rwp7o"]
-[ext_resource type="Script" path="res://scripts/behaviours/UI/WindowSize/BottomWindowSizeControl.gd" id="2_gylhw"]
-[ext_resource type="Script" path="res://scripts/behaviours/UI/WindowSize/LeftWindowSizeControl.gd" id="3_hrv20"]
-[ext_resource type="Script" path="res://scripts/behaviours/UI/WindowSize/RightWindowSizeControl.gd" id="4_ujvf4"]
-[ext_resource type="Script" path="res://scripts/behaviours/UI/WindowSize/TopLeftWindowSizeControl.gd" id="5_v3c8e"]
-[ext_resource type="Script" path="res://scripts/behaviours/UI/WindowSize/BottomRightWindowSizeControl.gd" id="6_u6kwt"]
-[ext_resource type="Script" path="res://scripts/behaviours/UI/WindowSize/TopRightWindowSizeControl.gd" id="7_1esqg"]
-[ext_resource type="Script" path="res://scripts/behaviours/UI/WindowSize/BottomLeftWindowSizeControl.gd" id="8_srkom"]
+[ext_resource type="Script" path="res://scripts/behaviours/UI/WindowSize/WindowSizeController.gd" id="1_5rdcm"]
 
 [node name="N_WindowSizeController" type="Node"]
-
-[node name="MC_WindowTopSize" type="MarginContainer" parent="."]
-anchors_preset = 10
-anchor_right = 1.0
-offset_bottom = 4.0
-grow_horizontal = 2
-theme_override_constants/margin_left = 8
-theme_override_constants/margin_right = 8
-
-[node name="C_WindowTopSize" type="Control" parent="MC_WindowTopSize"]
-custom_minimum_size = Vector2(0, 4)
-layout_mode = 2
-mouse_filter = 1
-mouse_default_cursor_shape = 9
-script = ExtResource("1_rwp7o")
-
-[node name="MarginContainer" type="MarginContainer" parent="MC_WindowTopSize/C_WindowTopSize"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_constants/margin_top = 3
-
-[node name="ColorRect" type="ColorRect" parent="MC_WindowTopSize/C_WindowTopSize/MarginContainer"]
-layout_mode = 2
-mouse_filter = 2
-color = Color(1, 1, 1, 0)
-
-[node name="MC_WindowBottomSize" type="MarginContainer" parent="."]
-anchors_preset = 12
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_top = -4.0
-grow_horizontal = 2
-grow_vertical = 0
-theme_override_constants/margin_left = 8
-theme_override_constants/margin_right = 8
-
-[node name="C_WindowBottomSize" type="Control" parent="MC_WindowBottomSize"]
-custom_minimum_size = Vector2(0, 4)
-layout_mode = 2
-mouse_filter = 1
-mouse_default_cursor_shape = 9
-script = ExtResource("2_gylhw")
-
-[node name="MarginContainer" type="MarginContainer" parent="MC_WindowBottomSize/C_WindowBottomSize"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_constants/margin_bottom = 3
-
-[node name="ColorRect" type="ColorRect" parent="MC_WindowBottomSize/C_WindowBottomSize/MarginContainer"]
-layout_mode = 2
-mouse_filter = 2
-color = Color(1, 1, 1, 0)
 
 [node name="MC_WindowLeftSize" type="MarginContainer" parent="."]
 anchors_preset = 9
@@ -81,14 +13,14 @@ theme_override_constants/margin_left = 0
 theme_override_constants/margin_top = 8
 theme_override_constants/margin_bottom = 8
 
-[node name="C_WindowLeftSize" type="Control" parent="MC_WindowLeftSize"]
+[node name="C_WindowSize_LEFT" type="Control" parent="MC_WindowLeftSize"]
 custom_minimum_size = Vector2(4, 0)
 layout_mode = 2
 mouse_filter = 1
 mouse_default_cursor_shape = 10
-script = ExtResource("3_hrv20")
+script = ExtResource("1_5rdcm")
 
-[node name="MarginContainer" type="MarginContainer" parent="MC_WindowLeftSize/C_WindowLeftSize"]
+[node name="MarginContainer" type="MarginContainer" parent="MC_WindowLeftSize/C_WindowSize_LEFT"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -97,7 +29,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/margin_left = 3
 
-[node name="ColorRect" type="ColorRect" parent="MC_WindowLeftSize/C_WindowLeftSize/MarginContainer"]
+[node name="ColorRect" type="ColorRect" parent="MC_WindowLeftSize/C_WindowSize_LEFT/MarginContainer"]
 layout_mode = 2
 mouse_filter = 2
 color = Color(1, 1, 1, 0)
@@ -113,14 +45,15 @@ grow_vertical = 2
 theme_override_constants/margin_top = 8
 theme_override_constants/margin_bottom = 8
 
-[node name="C_WindowRightSize" type="Control" parent="MC_WindowRightSize"]
+[node name="C_WindowSize_RIGHT" type="Control" parent="MC_WindowRightSize"]
 custom_minimum_size = Vector2(4, 0)
 layout_mode = 2
 mouse_filter = 1
 mouse_default_cursor_shape = 10
-script = ExtResource("4_ujvf4")
+script = ExtResource("1_5rdcm")
+anchor_type = 1
 
-[node name="MarginContainer" type="MarginContainer" parent="MC_WindowRightSize/C_WindowRightSize"]
+[node name="MarginContainer" type="MarginContainer" parent="MC_WindowRightSize/C_WindowSize_RIGHT"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -129,7 +62,70 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/margin_right = 3
 
-[node name="ColorRect" type="ColorRect" parent="MC_WindowRightSize/C_WindowRightSize/MarginContainer"]
+[node name="ColorRect" type="ColorRect" parent="MC_WindowRightSize/C_WindowSize_RIGHT/MarginContainer"]
+layout_mode = 2
+mouse_filter = 2
+color = Color(1, 1, 1, 0)
+
+[node name="MC_WindowTopSize" type="MarginContainer" parent="."]
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 4.0
+grow_horizontal = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_right = 8
+
+[node name="C_WindowSize_TOP" type="Control" parent="MC_WindowTopSize"]
+custom_minimum_size = Vector2(0, 4)
+layout_mode = 2
+mouse_filter = 1
+mouse_default_cursor_shape = 9
+script = ExtResource("1_5rdcm")
+anchor_type = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="MC_WindowTopSize/C_WindowSize_TOP"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_top = 3
+
+[node name="ColorRect" type="ColorRect" parent="MC_WindowTopSize/C_WindowSize_TOP/MarginContainer"]
+layout_mode = 2
+mouse_filter = 2
+color = Color(1, 1, 1, 0)
+
+[node name="MC_WindowBottomSize" type="MarginContainer" parent="."]
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -4.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_right = 8
+
+[node name="C_WindowSize_BOTTOM" type="Control" parent="MC_WindowBottomSize"]
+custom_minimum_size = Vector2(0, 4)
+layout_mode = 2
+mouse_filter = 1
+mouse_default_cursor_shape = 9
+script = ExtResource("1_5rdcm")
+anchor_type = 3
+
+[node name="MarginContainer" type="MarginContainer" parent="MC_WindowBottomSize/C_WindowSize_BOTTOM"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_bottom = 3
+
+[node name="ColorRect" type="ColorRect" parent="MC_WindowBottomSize/C_WindowSize_BOTTOM/MarginContainer"]
 layout_mode = 2
 mouse_filter = 2
 color = Color(1, 1, 1, 0)
@@ -138,14 +134,15 @@ color = Color(1, 1, 1, 0)
 offset_right = 8.0
 offset_bottom = 8.0
 
-[node name="C_WindowTopLeftSize" type="Control" parent="MC_WindowTopLeftSize"]
+[node name="C_WindowSize_TOP_LEFT" type="Control" parent="MC_WindowTopLeftSize"]
 custom_minimum_size = Vector2(8, 8)
 layout_mode = 2
 mouse_filter = 1
 mouse_default_cursor_shape = 12
-script = ExtResource("5_v3c8e")
+script = ExtResource("1_5rdcm")
+anchor_type = 4
 
-[node name="MarginContainer" type="MarginContainer" parent="MC_WindowTopLeftSize/C_WindowTopLeftSize"]
+[node name="MarginContainer" type="MarginContainer" parent="MC_WindowTopLeftSize/C_WindowSize_TOP_LEFT"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -156,11 +153,11 @@ theme_override_constants/margin_left = 3
 theme_override_constants/margin_top = 3
 theme_override_constants/margin_right = 4
 
-[node name="ColorRect" type="ColorRect" parent="MC_WindowTopLeftSize/C_WindowTopLeftSize/MarginContainer"]
+[node name="ColorRect" type="ColorRect" parent="MC_WindowTopLeftSize/C_WindowSize_TOP_LEFT/MarginContainer"]
 layout_mode = 2
 color = Color(1, 1, 1, 0)
 
-[node name="MarginContainer2" type="MarginContainer" parent="MC_WindowTopLeftSize/C_WindowTopLeftSize"]
+[node name="MarginContainer2" type="MarginContainer" parent="MC_WindowTopLeftSize/C_WindowSize_TOP_LEFT"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -171,7 +168,99 @@ theme_override_constants/margin_left = 4
 theme_override_constants/margin_top = 3
 theme_override_constants/margin_bottom = 4
 
-[node name="ColorRect" type="ColorRect" parent="MC_WindowTopLeftSize/C_WindowTopLeftSize/MarginContainer2"]
+[node name="ColorRect" type="ColorRect" parent="MC_WindowTopLeftSize/C_WindowSize_TOP_LEFT/MarginContainer2"]
+layout_mode = 2
+color = Color(1, 1, 1, 0)
+
+[node name="MC_WindowTopRightSize" type="MarginContainer" parent="."]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -8.0
+offset_bottom = 8.0
+grow_horizontal = 0
+
+[node name="C_WindowSize_TOP_RIGHT" type="Control" parent="MC_WindowTopRightSize"]
+custom_minimum_size = Vector2(8, 8)
+layout_mode = 2
+mouse_filter = 1
+mouse_default_cursor_shape = 11
+script = ExtResource("1_5rdcm")
+anchor_type = 5
+
+[node name="MarginContainer" type="MarginContainer" parent="MC_WindowTopRightSize/C_WindowSize_TOP_RIGHT"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 3
+theme_override_constants/margin_right = 3
+
+[node name="ColorRect" type="ColorRect" parent="MC_WindowTopRightSize/C_WindowSize_TOP_RIGHT/MarginContainer"]
+layout_mode = 2
+color = Color(1, 1, 1, 0)
+
+[node name="MarginContainer2" type="MarginContainer" parent="MC_WindowTopRightSize/C_WindowSize_TOP_RIGHT"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_top = 3
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 4
+
+[node name="ColorRect" type="ColorRect" parent="MC_WindowTopRightSize/C_WindowSize_TOP_RIGHT/MarginContainer2"]
+layout_mode = 2
+color = Color(1, 1, 1, 0)
+
+[node name="MC_WindowBottomLeftSize" type="MarginContainer" parent="."]
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -8.0
+offset_right = 8.0
+grow_vertical = 0
+
+[node name="C_WindowSize_BOTTOM_LEFT" type="Control" parent="MC_WindowBottomLeftSize"]
+custom_minimum_size = Vector2(8, 8)
+layout_mode = 2
+mouse_filter = 1
+mouse_default_cursor_shape = 11
+script = ExtResource("1_5rdcm")
+anchor_type = 6
+
+[node name="MarginContainer" type="MarginContainer" parent="MC_WindowBottomLeftSize/C_WindowSize_BOTTOM_LEFT"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 3
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 3
+
+[node name="ColorRect" type="ColorRect" parent="MC_WindowBottomLeftSize/C_WindowSize_BOTTOM_LEFT/MarginContainer"]
+layout_mode = 2
+color = Color(1, 1, 1, 0)
+
+[node name="MarginContainer2" type="MarginContainer" parent="MC_WindowBottomLeftSize/C_WindowSize_BOTTOM_LEFT"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_bottom = 3
+
+[node name="ColorRect" type="ColorRect" parent="MC_WindowBottomLeftSize/C_WindowSize_BOTTOM_LEFT/MarginContainer2"]
 layout_mode = 2
 color = Color(1, 1, 1, 0)
 
@@ -186,14 +275,15 @@ offset_top = -8.0
 grow_horizontal = 0
 grow_vertical = 0
 
-[node name="C_WindowBottomRightSize" type="Control" parent="MC_WindowBottomRightSize"]
+[node name="C_WindowSize_BOTTOM_RIGHT" type="Control" parent="MC_WindowBottomRightSize"]
 custom_minimum_size = Vector2(8, 8)
 layout_mode = 2
 mouse_filter = 1
 mouse_default_cursor_shape = 12
-script = ExtResource("6_u6kwt")
+script = ExtResource("1_5rdcm")
+anchor_type = 7
 
-[node name="MarginContainer" type="MarginContainer" parent="MC_WindowBottomRightSize/C_WindowBottomRightSize"]
+[node name="MarginContainer" type="MarginContainer" parent="MC_WindowBottomRightSize/C_WindowSize_BOTTOM_RIGHT"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -204,11 +294,11 @@ theme_override_constants/margin_left = 4
 theme_override_constants/margin_right = 3
 theme_override_constants/margin_bottom = 3
 
-[node name="ColorRect" type="ColorRect" parent="MC_WindowBottomRightSize/C_WindowBottomRightSize/MarginContainer"]
+[node name="ColorRect" type="ColorRect" parent="MC_WindowBottomRightSize/C_WindowSize_BOTTOM_RIGHT/MarginContainer"]
 layout_mode = 2
 color = Color(1, 1, 1, 0)
 
-[node name="MarginContainer2" type="MarginContainer" parent="MC_WindowBottomRightSize/C_WindowBottomRightSize"]
+[node name="MarginContainer2" type="MarginContainer" parent="MC_WindowBottomRightSize/C_WindowSize_BOTTOM_RIGHT"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -219,105 +309,6 @@ theme_override_constants/margin_top = 4
 theme_override_constants/margin_right = 4
 theme_override_constants/margin_bottom = 3
 
-[node name="ColorRect" type="ColorRect" parent="MC_WindowBottomRightSize/C_WindowBottomRightSize/MarginContainer2"]
+[node name="ColorRect" type="ColorRect" parent="MC_WindowBottomRightSize/C_WindowSize_BOTTOM_RIGHT/MarginContainer2"]
 layout_mode = 2
 color = Color(1, 1, 1, 0)
-
-[node name="MC_WindowTopRightSize" type="MarginContainer" parent="."]
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -8.0
-offset_bottom = 8.0
-grow_horizontal = 0
-
-[node name="C_WindowTopRightSize" type="Control" parent="MC_WindowTopRightSize"]
-custom_minimum_size = Vector2(8, 8)
-layout_mode = 2
-mouse_filter = 1
-mouse_default_cursor_shape = 11
-script = ExtResource("7_1esqg")
-
-[node name="MarginContainer" type="MarginContainer" parent="MC_WindowTopRightSize/C_WindowTopRightSize"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_constants/margin_left = 4
-theme_override_constants/margin_top = 3
-theme_override_constants/margin_right = 3
-
-[node name="ColorRect" type="ColorRect" parent="MC_WindowTopRightSize/C_WindowTopRightSize/MarginContainer"]
-layout_mode = 2
-color = Color(1, 1, 1, 0)
-
-[node name="MarginContainer2" type="MarginContainer" parent="MC_WindowTopRightSize/C_WindowTopRightSize"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_constants/margin_top = 3
-theme_override_constants/margin_right = 4
-theme_override_constants/margin_bottom = 4
-
-[node name="ColorRect" type="ColorRect" parent="MC_WindowTopRightSize/C_WindowTopRightSize/MarginContainer2"]
-layout_mode = 2
-color = Color(1, 1, 1, 0)
-
-[node name="MC_WindowBottomLeftSize" type="MarginContainer" parent="."]
-anchors_preset = 2
-anchor_top = 1.0
-anchor_bottom = 1.0
-offset_top = -8.0
-offset_right = 8.0
-grow_vertical = 0
-
-[node name="C_WindowBottomLeftSize" type="Control" parent="MC_WindowBottomLeftSize"]
-custom_minimum_size = Vector2(8, 8)
-layout_mode = 2
-mouse_filter = 1
-mouse_default_cursor_shape = 11
-script = ExtResource("8_srkom")
-
-[node name="MarginContainer" type="MarginContainer" parent="MC_WindowBottomLeftSize/C_WindowBottomLeftSize"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_constants/margin_left = 3
-theme_override_constants/margin_right = 4
-theme_override_constants/margin_bottom = 3
-
-[node name="ColorRect" type="ColorRect" parent="MC_WindowBottomLeftSize/C_WindowBottomLeftSize/MarginContainer"]
-layout_mode = 2
-color = Color(1, 1, 1, 0)
-
-[node name="MarginContainer2" type="MarginContainer" parent="MC_WindowBottomLeftSize/C_WindowBottomLeftSize"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_constants/margin_left = 4
-theme_override_constants/margin_top = 4
-theme_override_constants/margin_bottom = 3
-
-[node name="ColorRect" type="ColorRect" parent="MC_WindowBottomLeftSize/C_WindowBottomLeftSize/MarginContainer2"]
-layout_mode = 2
-color = Color(1, 1, 1, 0)
-
-[connection signal="gui_input" from="MC_WindowTopSize/C_WindowTopSize" to="MC_WindowTopSize/C_WindowTopSize" method="_on_gui_input"]
-[connection signal="gui_input" from="MC_WindowBottomSize/C_WindowBottomSize" to="MC_WindowBottomSize/C_WindowBottomSize" method="_on_gui_input"]
-[connection signal="gui_input" from="MC_WindowLeftSize/C_WindowLeftSize" to="MC_WindowLeftSize/C_WindowLeftSize" method="_on_gui_input"]
-[connection signal="gui_input" from="MC_WindowRightSize/C_WindowRightSize" to="MC_WindowRightSize/C_WindowRightSize" method="_on_gui_input"]
-[connection signal="gui_input" from="MC_WindowTopLeftSize/C_WindowTopLeftSize" to="MC_WindowTopLeftSize/C_WindowTopLeftSize" method="_on_gui_input"]
-[connection signal="gui_input" from="MC_WindowBottomRightSize/C_WindowBottomRightSize" to="MC_WindowBottomRightSize/C_WindowBottomRightSize" method="_on_gui_input"]
-[connection signal="gui_input" from="MC_WindowTopRightSize/C_WindowTopRightSize" to="MC_WindowTopRightSize/C_WindowTopRightSize" method="_on_gui_input"]
-[connection signal="gui_input" from="MC_WindowBottomLeftSize/C_WindowBottomLeftSize" to="MC_WindowBottomLeftSize/C_WindowBottomLeftSize" method="_on_gui_input"]
