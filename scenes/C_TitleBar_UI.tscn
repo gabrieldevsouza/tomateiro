@@ -80,7 +80,7 @@ mouse_filter = 2
 theme_override_constants/margin_left = 0
 theme_override_constants/margin_top = 0
 theme_override_constants/margin_right = 0
-theme_override_constants/margin_bottom = 0
+theme_override_constants/margin_bottom = 39
 script = ExtResource("1_tkmb0")
 limit = Vector2(-1, 30)
 valign = 0
@@ -109,21 +109,19 @@ theme_override_styles/hover = SubResource("StyleBoxFlat_vx0qn")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_l0ymk")
 theme_override_styles/normal = SubResource("StyleBoxEmpty_k7w3w")
 
-[node name="AspectRatioContainer" type="AspectRatioContainer" parent="VBC_TitleBar/MSC_MaxTitleBar/PC_MainTitleBar/HBC_TitleBarButtons/HSRC_MinimizeAppButton/BTN_MinimizeApp"]
+[node name="AutoSizeMaterialIcon2" type="Label" parent="VBC_TitleBar/MSC_MaxTitleBar/PC_MainTitleBar/HBC_TitleBarButtons/HSRC_MinimizeAppButton/BTN_MinimizeApp"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-ratio = 0.8
-
-[node name="AutoSizeMaterialIcon" type="Label" parent="VBC_TitleBar/MSC_MaxTitleBar/PC_MainTitleBar/HBC_TitleBarButtons/HSRC_MinimizeAppButton/BTN_MinimizeApp/AspectRatioContainer"]
-layout_mode = 2
+size_flags_vertical = 1
 theme_override_fonts/font = ExtResource("6_k0e30")
-theme_override_font_sizes/font_size = 24
+theme_override_font_sizes/font_size = 26
 text = "󰖰"
 horizontal_alignment = 1
+vertical_alignment = 2
 clip_text = true
 script = ExtResource("7_dpwqi")
 icon_name = "window-minimize"
@@ -142,21 +140,19 @@ theme_override_styles/hover = SubResource("StyleBoxFlat_dwf4f")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_8eb48")
 theme_override_styles/normal = SubResource("StyleBoxEmpty_f6wsj")
 
-[node name="AspectRatioContainer" type="AspectRatioContainer" parent="VBC_TitleBar/MSC_MaxTitleBar/PC_MainTitleBar/HBC_TitleBarButtons/HSRC_QuitAppButton/BTN_QuitApp"]
+[node name="AutoSizeMaterialIcon2" type="Label" parent="VBC_TitleBar/MSC_MaxTitleBar/PC_MainTitleBar/HBC_TitleBarButtons/HSRC_QuitAppButton/BTN_QuitApp"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-ratio = 0.8
-
-[node name="AutoSizeMaterialIcon" type="Label" parent="VBC_TitleBar/MSC_MaxTitleBar/PC_MainTitleBar/HBC_TitleBarButtons/HSRC_QuitAppButton/BTN_QuitApp/AspectRatioContainer"]
-layout_mode = 2
+size_flags_vertical = 1
 theme_override_fonts/font = ExtResource("6_k0e30")
-theme_override_font_sizes/font_size = 24
+theme_override_font_sizes/font_size = 26
 text = "󱎘"
 horizontal_alignment = 1
+vertical_alignment = 1
 clip_text = true
 script = ExtResource("7_dpwqi")
 icon_name = "close-thick"

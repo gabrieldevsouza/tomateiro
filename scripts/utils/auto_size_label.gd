@@ -28,6 +28,8 @@ func _draw() -> void:
 func update_font_size() -> void:
 	await get_tree().create_timer(0.01).timeout
 
+	clip_text = true
+
 	var font = get_theme_font("font")
 	var font_size = get_theme_font_size("font_size")
 
@@ -44,9 +46,8 @@ func update_font_size() -> void:
 			var lines_needed = ceil(text_size_x / size.x)
 			var text_size_y = font.get_height(font_size) * lines_needed 
 
-			# print(text_size_x, "  ::  ", size.x, "  ::  ", text_size_y, "  ::  ", font.get_height(font_size))
 
-			if text_size_x > floor(size.x):
+			if text_size_x + 3 > floor(size.x):
 				font_size -= 1
 			elif text_size_y + 3 > floor(size.y):
 				font_size -= 1

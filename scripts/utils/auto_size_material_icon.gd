@@ -77,14 +77,20 @@ func update_font_size() -> void:
 		line.clear()
 		var created = line.add_string(text, font, font_size)
 		if created:
-			var text_size = line.get_line_width()
+			var text_size_x = line.get_line_width()
+			var lines_needed = ceil(text_size_x / size.x)
+			var text_size_y = font.get_height(font_size) * lines_needed 
 
-			if text_size > floor(size.x):
+
+			if text_size_y + 3 > floor(size.y) and font_size > 1: 
+				font_size -= 1
+			elif text_size_x + 3 > floor(size.x) and font_size > 1:
 				font_size -= 1
 			elif font_size < max_font_size:
 				font_size += 1
 			else:
 				break
+				
 		else:
 			push_warning('Could not create a string')
 			break
