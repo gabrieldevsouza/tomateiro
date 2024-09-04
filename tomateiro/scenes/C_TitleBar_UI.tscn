@@ -75,14 +75,14 @@ mouse_filter = 2
 custom_minimum_size = Vector2(0, 12)
 layout_mode = 2
 size_flags_vertical = 3
-size_flags_stretch_ratio = 3.0
+size_flags_stretch_ratio = 10.0
 mouse_filter = 2
 theme_override_constants/margin_left = 0
 theme_override_constants/margin_top = 0
 theme_override_constants/margin_right = 0
-theme_override_constants/margin_bottom = 0
+theme_override_constants/margin_bottom = 159
 script = ExtResource("1_tkmb0")
-limit = Vector2(-1, 30)
+limit = Vector2(-1, 25)
 valign = 0
 
 [node name="PC_MainTitleBar" type="PanelContainer" parent="VBC_TitleBar/MSC_MaxTitleBar"]
@@ -96,7 +96,7 @@ layout_mode = 2
 alignment = 2
 
 [node name="HSRC_MinimizeAppButton" type="AspectRatioContainer" parent="VBC_TitleBar/MSC_MaxTitleBar/PC_MainTitleBar/HBC_TitleBarButtons"]
-custom_minimum_size = Vector2(60, 0)
+custom_minimum_size = Vector2(50, 0)
 layout_mode = 2
 ratio = 2.0
 script = ExtResource("3_ck3ec")
@@ -118,7 +118,7 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_vertical = 1
 theme_override_fonts/font = ExtResource("6_k0e30")
-theme_override_font_sizes/font_size = 26
+theme_override_font_sizes/font_size = 22
 text = "󰖰"
 horizontal_alignment = 1
 vertical_alignment = 2
@@ -127,7 +127,7 @@ script = ExtResource("7_dpwqi")
 icon_name = "window-minimize"
 
 [node name="HSRC_QuitAppButton" type="AspectRatioContainer" parent="VBC_TitleBar/MSC_MaxTitleBar/PC_MainTitleBar/HBC_TitleBarButtons"]
-custom_minimum_size = Vector2(60, 0)
+custom_minimum_size = Vector2(50, 0)
 layout_mode = 2
 ratio = 2.0
 script = ExtResource("3_ck3ec")
@@ -149,7 +149,7 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_vertical = 1
 theme_override_fonts/font = ExtResource("6_k0e30")
-theme_override_font_sizes/font_size = 26
+theme_override_font_sizes/font_size = 22
 text = "󱎘"
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -182,7 +182,7 @@ size_flags_horizontal = 3
 size_flags_vertical = 1
 size_flags_stretch_ratio = 160.0
 theme_override_colors/font_color = Color(0.972549, 0.972549, 0.94902, 1)
-theme_override_font_sizes/font_size = 20
+theme_override_font_sizes/font_size = 16
 text = "Tomateiro"
 clip_text = true
 script = ExtResource("8_i4ahe")

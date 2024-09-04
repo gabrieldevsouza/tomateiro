@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://dhenu44xdc0ah"]
+[gd_scene load_steps=8 format=3 uid="uid://dhenu44xdc0ah"]
 
 [ext_resource type="Script" path="res://tomateiro/scripts/behaviours/PomodoroClock.gd" id="1_44a0l"]
 [ext_resource type="Script" path="res://addons/MaxSizeContainer/max_size_container.gd" id="2_tcs1d"]
@@ -6,6 +6,7 @@
 [ext_resource type="Script" path="res://tomateiro/scripts/utils/auto_size_label.gd" id="3_ypp30"]
 [ext_resource type="Script" path="res://tomateiro/scripts/utils/auto_size_material_icon.gd" id="5_0uuj3"]
 [ext_resource type="Script" path="res://tomateiro/scripts/utils/h_stackable_ratio_container.gd" id="5_jfy2c"]
+[ext_resource type="Resource" uid="uid://1mcpawc5p2tl" path="res://tomateiro/vars/FLOAT_FocusTime.tres" id="7_iuoot"]
 
 [node name="PC_AppMainArea" type="Control"]
 layout_mode = 3
@@ -48,7 +49,8 @@ size_flags_horizontal = 3
 size_flags_vertical = 1
 size_flags_stretch_ratio = 16.0
 theme_override_colors/font_color = Color(0.745617, 0.5782, 0.98, 0.588235)
-theme_override_colors/font_outline_color = Color(0, 0, 0, 0.392157)
+theme_override_colors/font_shadow_color = Color(0.0784314, 0.0862745, 0.141176, 1)
+theme_override_colors/font_outline_color = Color(0.1554, 0.16359, 0.21, 0.392157)
 theme_override_constants/outline_size = 10
 theme_override_font_sizes/font_size = 56
 text = "00 : 00"
@@ -73,9 +75,9 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/margin_left = 0
-theme_override_constants/margin_top = 0
+theme_override_constants/margin_top = 264
 theme_override_constants/margin_right = 0
-theme_override_constants/margin_bottom = 0
+theme_override_constants/margin_bottom = 264
 script = ExtResource("2_tcs1d")
 limit = Vector2(-1, 120)
 
@@ -89,9 +91,9 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 size_flags_stretch_ratio = 10.0
-theme_override_constants/margin_left = 0
+theme_override_constants/margin_left = 122
 theme_override_constants/margin_top = 0
-theme_override_constants/margin_right = 0
+theme_override_constants/margin_right = 122
 theme_override_constants/margin_bottom = 0
 script = ExtResource("2_tcs1d")
 mode = 1
@@ -254,7 +256,9 @@ show_percentage = false
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="N_PomodoroClock" type="Node" parent="." node_paths=PackedStringArray("pomodoro_timer_label", "play_btn")]
+[node name="N_PomodoroClock" type="Node" parent="." node_paths=PackedStringArray("pomodoro_timer_label", "play_btn", "repeat_btn")]
 script = ExtResource("1_44a0l")
 pomodoro_timer_label = NodePath("../HBC_PlayerMode/C_Left/HBoxContainer/ASL_PomodoroClock")
 play_btn = NodePath("../HBC_PlayerMode/C_Middle/MaxSizeContainer/VBoxContainer/MaxSizeContainer/HBoxContainer/HStackableRatioContainer/TB_PlayerButton_PLAY")
+repeat_btn = NodePath("../HBC_PlayerMode/C_Middle/MaxSizeContainer/VBoxContainer/MaxSizeContainer/HBoxContainer/VBoxContainer/AspectRatioContainer/TB_PlayerButton_REPEAT")
+focus_time = ExtResource("7_iuoot")
