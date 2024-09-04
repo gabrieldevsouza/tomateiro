@@ -1,10 +1,54 @@
-[gd_scene load_steps=6 format=3 uid="uid://c26lr48h80a3a"]
+[gd_scene load_steps=18 format=3 uid="uid://c26lr48h80a3a"]
 
 [ext_resource type="Script" path="res://scripts/behaviours/UI/TitleBar/TitleBar.gd" id="1_gq87v"]
 [ext_resource type="Script" path="res://addons/MaxSizeContainer/max_size_container.gd" id="1_tkmb0"]
 [ext_resource type="Script" path="res://scripts/utils/h_stackable_ratio_container.gd" id="3_ck3ec"]
 [ext_resource type="PackedScene" uid="uid://birk4wdajwwt8" path="res://scenes/BTN_QuitApp.tscn" id="4_5we8b"]
 [ext_resource type="PackedScene" uid="uid://dbe1alxqa4bic" path="res://scenes/BTN_MinimizeApp.tscn" id="4_euxw8"]
+[ext_resource type="FontFile" uid="uid://bj6hexaj2p1fe" path="res://addons/material-design-icons/fonts/material_design_icons.ttf" id="6_k0e30"]
+[ext_resource type="Script" path="res://scripts/utils/auto_size_material_icon.gd" id="7_dpwqi"]
+[ext_resource type="Script" path="res://scripts/utils/auto_size_label.gd" id="8_i4ahe"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xqa0o"]
+bg_color = Color(0.1554, 0.16359, 0.21, 0.27451)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_jqgjd"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vx0qn"]
+bg_color = Color(0.309804, 0.321569, 0.4, 0.470588)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_l0ymk"]
+bg_color = Color(0.3354, 0.348013, 0.43, 0.666667)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_k7w3w"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_63cnu"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dwf4f"]
+bg_color = Color(0.819608, 0.203922, 0.305882, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8eb48"]
+bg_color = Color(0.64, 0.224, 0.293333, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_f6wsj"]
 
 [node name="C_TitleBar_UI" type="Control"]
 layout_mode = 3
@@ -28,7 +72,7 @@ grow_vertical = 2
 mouse_filter = 2
 
 [node name="MSC_MaxTitleBar" type="MarginContainer" parent="VBC_TitleBar"]
-custom_minimum_size = Vector2(0, 10)
+custom_minimum_size = Vector2(0, 12)
 layout_mode = 2
 size_flags_vertical = 3
 size_flags_stretch_ratio = 3.0
@@ -36,35 +80,116 @@ mouse_filter = 2
 theme_override_constants/margin_left = 0
 theme_override_constants/margin_top = 0
 theme_override_constants/margin_right = 0
-theme_override_constants/margin_bottom = 49
+theme_override_constants/margin_bottom = 0
 script = ExtResource("1_tkmb0")
-limit = Vector2(-1, 20)
+limit = Vector2(-1, 30)
 valign = 0
 
 [node name="PC_MainTitleBar" type="PanelContainer" parent="VBC_TitleBar/MSC_MaxTitleBar"]
 layout_mode = 2
 size_flags_vertical = 3
 mouse_filter = 1
+theme_override_styles/panel = SubResource("StyleBoxFlat_xqa0o")
 
 [node name="HBC_TitleBarButtons" type="HBoxContainer" parent="VBC_TitleBar/MSC_MaxTitleBar/PC_MainTitleBar"]
 layout_mode = 2
 alignment = 2
 
 [node name="HSRC_MinimizeAppButton" type="AspectRatioContainer" parent="VBC_TitleBar/MSC_MaxTitleBar/PC_MainTitleBar/HBC_TitleBarButtons"]
-custom_minimum_size = Vector2(20, 0)
+custom_minimum_size = Vector2(60, 0)
 layout_mode = 2
+ratio = 2.0
 script = ExtResource("3_ck3ec")
+stack_ratio = 2.0
 
 [node name="BTN_MinimizeApp" parent="VBC_TitleBar/MSC_MaxTitleBar/PC_MainTitleBar/HBC_TitleBarButtons/HSRC_MinimizeAppButton" instance=ExtResource("4_euxw8")]
 layout_mode = 2
+theme_override_styles/focus = SubResource("StyleBoxEmpty_jqgjd")
+theme_override_styles/hover = SubResource("StyleBoxFlat_vx0qn")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_l0ymk")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_k7w3w")
+
+[node name="AspectRatioContainer" type="AspectRatioContainer" parent="VBC_TitleBar/MSC_MaxTitleBar/PC_MainTitleBar/HBC_TitleBarButtons/HSRC_MinimizeAppButton/BTN_MinimizeApp"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+ratio = 0.8
+
+[node name="AutoSizeMaterialIcon" type="Label" parent="VBC_TitleBar/MSC_MaxTitleBar/PC_MainTitleBar/HBC_TitleBarButtons/HSRC_MinimizeAppButton/BTN_MinimizeApp/AspectRatioContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("6_k0e30")
+theme_override_font_sizes/font_size = 24
+text = "󰖰"
+horizontal_alignment = 1
+clip_text = true
+script = ExtResource("7_dpwqi")
+icon_name = "window-minimize"
 
 [node name="HSRC_QuitAppButton" type="AspectRatioContainer" parent="VBC_TitleBar/MSC_MaxTitleBar/PC_MainTitleBar/HBC_TitleBarButtons"]
-custom_minimum_size = Vector2(20, 0)
+custom_minimum_size = Vector2(60, 0)
 layout_mode = 2
+ratio = 2.0
 script = ExtResource("3_ck3ec")
+stack_ratio = 2.0
 
 [node name="BTN_QuitApp" parent="VBC_TitleBar/MSC_MaxTitleBar/PC_MainTitleBar/HBC_TitleBarButtons/HSRC_QuitAppButton" instance=ExtResource("4_5we8b")]
 layout_mode = 2
+theme_override_styles/focus = SubResource("StyleBoxEmpty_63cnu")
+theme_override_styles/hover = SubResource("StyleBoxFlat_dwf4f")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_8eb48")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_f6wsj")
+
+[node name="AspectRatioContainer" type="AspectRatioContainer" parent="VBC_TitleBar/MSC_MaxTitleBar/PC_MainTitleBar/HBC_TitleBarButtons/HSRC_QuitAppButton/BTN_QuitApp"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+ratio = 0.8
+
+[node name="AutoSizeMaterialIcon" type="Label" parent="VBC_TitleBar/MSC_MaxTitleBar/PC_MainTitleBar/HBC_TitleBarButtons/HSRC_QuitAppButton/BTN_QuitApp/AspectRatioContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("6_k0e30")
+theme_override_font_sizes/font_size = 24
+text = "󱎘"
+horizontal_alignment = 1
+clip_text = true
+script = ExtResource("7_dpwqi")
+icon_name = "close-thick"
+
+[node name="Control" type="Control" parent="VBC_TitleBar/MSC_MaxTitleBar/PC_MainTitleBar"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBC_TitleBar/MSC_MaxTitleBar/PC_MainTitleBar/Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/separation = 0
+
+[node name="Control2" type="Control" parent="VBC_TitleBar/MSC_MaxTitleBar/PC_MainTitleBar/Control/HBoxContainer"]
+custom_minimum_size = Vector2(5, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="AutoSizeLabel" type="Label" parent="VBC_TitleBar/MSC_MaxTitleBar/PC_MainTitleBar/Control/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+size_flags_stretch_ratio = 160.0
+theme_override_colors/font_color = Color(0.972549, 0.972549, 0.94902, 1)
+theme_override_font_sizes/font_size = 20
+text = "Tomateiro"
+clip_text = true
+script = ExtResource("8_i4ahe")
 
 [node name="C_MainArea_EMPTY" type="Control" parent="VBC_TitleBar"]
 layout_mode = 2

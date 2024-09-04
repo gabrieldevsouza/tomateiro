@@ -18,22 +18,23 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/margin_left = 3
-theme_override_constants/margin_top = 8
+theme_override_constants/margin_top = 3
 theme_override_constants/margin_right = 3
 theme_override_constants/margin_bottom = 6
 
 [node name="VBC_TitleBar" type="VBoxContainer" parent="MarginContainer"]
 layout_mode = 2
+theme_override_constants/separation = 0
 
 [node name="C_TitleBarspace" type="Control" parent="MarginContainer/VBC_TitleBar"]
-custom_minimum_size = Vector2(0, 3)
 layout_mode = 2
 size_flags_vertical = 3
+size_flags_stretch_ratio = 4.0
 
 [node name="C_MainArea_EMPTY" type="Control" parent="MarginContainer/VBC_TitleBar"]
 layout_mode = 2
 size_flags_vertical = 3
-size_flags_stretch_ratio = 50.0
+size_flags_stretch_ratio = 100.0
 
 [node name="PC_AppMainArea" parent="MarginContainer/VBC_TitleBar/C_MainArea_EMPTY" instance=ExtResource("1_vuhsv")]
 layout_mode = 1
