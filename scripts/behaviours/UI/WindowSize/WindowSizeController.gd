@@ -20,11 +20,11 @@ func _ready() -> void:
 	gui_input.connect(_on_gui_input)
 
 func _input(event):
-	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and not event.pressed:
-		following = false
+	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
+		if event.is_released() or not event.pressed:
+			following = false
 
 func _on_gui_input(event:InputEvent) -> void:
-	print (event)
 	if event is InputEventMouseButton:
 		if event.button_index == MOUSE_BUTTON_LEFT:
 			if event.is_pressed():
@@ -57,3 +57,8 @@ func _process(_delta: float) -> void:
 
 		DisplayServer.window_set_position(target_position)
 		DisplayServer.window_set_size(target_size)
+
+
+	if not get_window().has_focus() or get_window().mode == DisplayServer.WINDOW_MODE_MINIMIZED:
+		following = false
+	
