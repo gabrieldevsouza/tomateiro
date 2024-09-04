@@ -1,13 +1,13 @@
 [gd_scene load_steps=9 format=3 uid="uid://kjoftlwb2ekd"]
 
-[ext_resource type="Script" path="res://scripts/behaviours/TopWindowSizeControl.gd" id="1_rwp7o"]
-[ext_resource type="Script" path="res://scripts/behaviours/BottomWindowSizeControl.gd" id="2_gylhw"]
-[ext_resource type="Script" path="res://scripts/behaviours/LeftWindowSizeControl.gd" id="3_hrv20"]
-[ext_resource type="Script" path="res://scripts/behaviours/RightWindowSizeControl.gd" id="4_ujvf4"]
-[ext_resource type="Script" path="res://scripts/behaviours/TopLeftWindowSizeControl.gd" id="5_v3c8e"]
-[ext_resource type="Script" path="res://scripts/behaviours/BottomRightWindowSizeControl.gd" id="6_u6kwt"]
-[ext_resource type="Script" path="res://scripts/behaviours/TopRightWindowSizeControl.gd" id="7_1esqg"]
-[ext_resource type="Script" path="res://scripts/behaviours/BottomLeftWindowSizeControl.gd" id="8_srkom"]
+[ext_resource type="Script" path="res://scripts/behaviours/UI/WindowSize/TopWindowSizeControl.gd" id="1_rwp7o"]
+[ext_resource type="Script" path="res://scripts/behaviours/UI/WindowSize/BottomWindowSizeControl.gd" id="2_gylhw"]
+[ext_resource type="Script" path="res://scripts/behaviours/UI/WindowSize/LeftWindowSizeControl.gd" id="3_hrv20"]
+[ext_resource type="Script" path="res://scripts/behaviours/UI/WindowSize/RightWindowSizeControl.gd" id="4_ujvf4"]
+[ext_resource type="Script" path="res://scripts/behaviours/UI/WindowSize/TopLeftWindowSizeControl.gd" id="5_v3c8e"]
+[ext_resource type="Script" path="res://scripts/behaviours/UI/WindowSize/BottomRightWindowSizeControl.gd" id="6_u6kwt"]
+[ext_resource type="Script" path="res://scripts/behaviours/UI/WindowSize/TopRightWindowSizeControl.gd" id="7_1esqg"]
+[ext_resource type="Script" path="res://scripts/behaviours/UI/WindowSize/BottomLeftWindowSizeControl.gd" id="8_srkom"]
 
 [node name="N_WindowSizeController" type="Node"]
 

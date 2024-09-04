@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=3 uid="uid://c26lr48h80a3a"]
 
-[ext_resource type="Script" path="res://scripts/behaviours/TitleBar.gd" id="1_gq87v"]
+[ext_resource type="Script" path="res://scripts/behaviours/UI/TitleBar/TitleBar.gd" id="1_gq87v"]
 [ext_resource type="Script" path="res://addons/MaxSizeContainer/max_size_container.gd" id="1_tkmb0"]
 [ext_resource type="Script" path="res://scripts/utils/h_stackable_ratio_container.gd" id="3_ck3ec"]
 [ext_resource type="PackedScene" uid="uid://birk4wdajwwt8" path="res://scenes/B_QuitApp.tscn" id="4_5we8b"]
