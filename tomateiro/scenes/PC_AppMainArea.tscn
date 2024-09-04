@@ -90,14 +90,15 @@ alignment = 1
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-size_flags_stretch_ratio = 10.0
-theme_override_constants/margin_left = 122
+size_flags_stretch_ratio = 25.0
+theme_override_constants/margin_left = 137
 theme_override_constants/margin_top = 0
-theme_override_constants/margin_right = 122
+theme_override_constants/margin_right = 137
 theme_override_constants/margin_bottom = 0
 script = ExtResource("2_tcs1d")
 mode = 1
 limit = Vector2(3, 1)
+valign = 2
 
 [node name="HBoxContainer" type="HBoxContainer" parent="HBC_PlayerMode/C_Middle/MaxSizeContainer/VBoxContainer/MaxSizeContainer"]
 layout_mode = 2
@@ -132,7 +133,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_colors/font_color = Color(0.97, 0.97, 0.9506, 0.392157)
 theme_override_fonts/font = ExtResource("3_c1df7")
-theme_override_font_sizes/font_size = 46
+theme_override_font_sizes/font_size = 42
 text = "󰑙"
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -145,7 +146,7 @@ layout_mode = 2
 size_flags_vertical = 3
 
 [node name="HStackableRatioContainer" type="AspectRatioContainer" parent="HBC_PlayerMode/C_Middle/MaxSizeContainer/VBoxContainer/MaxSizeContainer/HBoxContainer"]
-custom_minimum_size = Vector2(100, 0)
+custom_minimum_size = Vector2(90, 0)
 layout_mode = 2
 script = ExtResource("5_jfy2c")
 
@@ -162,7 +163,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_colors/font_color = Color(0.97, 0.97, 0.9506, 0.392157)
 theme_override_fonts/font = ExtResource("3_c1df7")
-theme_override_font_sizes/font_size = 96
+theme_override_font_sizes/font_size = 86
 text = "󰐍"
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -199,7 +200,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_colors/font_color = Color(0.97, 0.97, 0.9506, 0.392157)
 theme_override_fonts/font = ExtResource("3_c1df7")
-theme_override_font_sizes/font_size = 76
+theme_override_font_sizes/font_size = 68
 text = "󰒭"
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -222,6 +223,7 @@ size_flags_vertical = 3
 [node name="Control" type="Control" parent="HBC_PlayerMode/C_Middle/MaxSizeContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
+size_flags_stretch_ratio = 2.0
 
 [node name="ColorRect" type="ColorRect" parent="HBC_PlayerMode/C_Middle/MaxSizeContainer/VBoxContainer/Control"]
 visible = false
@@ -251,6 +253,11 @@ layout_mode = 2
 size_flags_vertical = 1
 value = 50.0
 show_percentage = false
+
+[node name="C_Spacing2" type="Control" parent="HBC_PlayerMode/C_Middle/MaxSizeContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 5.0
 
 [node name="C_Right" type="Control" parent="HBC_PlayerMode"]
 layout_mode = 2
