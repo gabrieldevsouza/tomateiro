@@ -4,12 +4,6 @@ class_name AutoSizeLabel extends Label
 
 @export var max_font_size = 56
 
-var can_check_text_change_1 = true
-var can_check_text_change_2 = true
-var can_check_text_change_3 = true
-var can_check_text_change_4 = true
-var can_check_text_change = true
-
 var call_again : bool = false
 
 var previous_text : String = ""

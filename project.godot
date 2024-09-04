@@ -14,10 +14,8 @@ config/name="tomateiro"
 run/main_scene="res://scenes/N_Bootstrap.tscn"
 config/features=PackedStringArray("4.3", "Mobile")
 boot_splash/bg_color=Color(0.141176, 0.141176, 0.141176, 0)
-boot_splash/show_image=false
 boot_splash/image="res://assets/imgs/gabisou-bubble-color.png"
 config/icon="res://icon.svg"
-boot_splash/minimum_display_time=4000
 
 [display]
 
