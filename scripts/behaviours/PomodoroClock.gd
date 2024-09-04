@@ -2,7 +2,7 @@ extends Node
 
 @export var pomodoro_timer_label : Label
 
-@export var play_btn : Button
+@export var play_btn : BaseButton
 
 @export var iterationTime : float = 0.5
 var targetTime : float = 0

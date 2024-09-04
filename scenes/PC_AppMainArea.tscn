@@ -27,42 +27,38 @@ theme_override_constants/separation = 0
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="ColorRect" type="ColorRect" parent="HBC_PlayerMode/C_Left"]
-visible = false
+[node name="HBoxContainer" type="HBoxContainer" parent="HBC_PlayerMode/C_Left"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0, 0, 0, 1)
+theme_override_constants/separation = 0
 
-[node name="MarginContainer" type="MarginContainer" parent="HBC_PlayerMode/C_Left"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_constants/margin_left = 15
-theme_override_constants/margin_top = 15
-theme_override_constants/margin_right = 15
-theme_override_constants/margin_bottom = 15
-
-[node name="AutoSizeLabel" type="Label" parent="HBC_PlayerMode/C_Left/MarginContainer"]
+[node name="C_Margin_LEFT" type="Control" parent="HBC_PlayerMode/C_Left/HBoxContainer"]
 layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 2.0
+
+[node name="ASL_PomodoroClock" type="Label" parent="HBC_PlayerMode/C_Left/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
 size_flags_vertical = 1
+size_flags_stretch_ratio = 16.0
 theme_override_font_sizes/font_size = 56
-text = "0000"
-horizontal_alignment = 1
+text = "00 : 00"
 vertical_alignment = 1
-clip_text = true
 script = ExtResource("3_ypp30")
+
+[node name="C_Margin_RIGHT" type="Control" parent="HBC_PlayerMode/C_Left/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
 
 [node name="C_Middle" type="Control" parent="HBC_PlayerMode"]
 layout_mode = 2
 size_flags_horizontal = 3
-size_flags_stretch_ratio = 2.0
+size_flags_stretch_ratio = 1.8
 
 [node name="MaxSizeContainer" type="MarginContainer" parent="HBC_PlayerMode/C_Middle"]
 layout_mode = 1
@@ -87,9 +83,9 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 size_flags_stretch_ratio = 10.0
-theme_override_constants/margin_left = 138
+theme_override_constants/margin_left = 122
 theme_override_constants/margin_top = 0
-theme_override_constants/margin_right = 138
+theme_override_constants/margin_right = 122
 theme_override_constants/margin_bottom = 0
 script = ExtResource("2_tcs1d")
 mode = 1
@@ -97,14 +93,21 @@ limit = Vector2(3, 1)
 
 [node name="HBoxContainer" type="HBoxContainer" parent="HBC_PlayerMode/C_Middle/MaxSizeContainer/VBoxContainer/MaxSizeContainer"]
 layout_mode = 2
+theme_override_constants/separation = 0
 
-[node name="BTN_Repeat" type="Button" parent="HBC_PlayerMode/C_Middle/MaxSizeContainer/VBoxContainer/MaxSizeContainer/HBoxContainer"]
+[node name="ColorRect" type="ColorRect" parent="HBC_PlayerMode/C_Middle/MaxSizeContainer/VBoxContainer/MaxSizeContainer/HBoxContainer"]
+visible = false
 layout_mode = 2
 size_flags_horizontal = 3
-text = "
-"
+size_flags_vertical = 3
+size_flags_stretch_ratio = 10.0
+color = Color(1, 0.384314, 1, 1)
 
-[node name="AutoSizeMaterialIcon" type="Label" parent="HBC_PlayerMode/C_Middle/MaxSizeContainer/VBoxContainer/MaxSizeContainer/HBoxContainer/BTN_Repeat"]
+[node name="TB_PlayerButton_REPEAT" type="TextureButton" parent="HBC_PlayerMode/C_Middle/MaxSizeContainer/VBoxContainer/MaxSizeContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="AutoSizeMaterialIcon" type="Label" parent="HBC_PlayerMode/C_Middle/MaxSizeContainer/VBoxContainer/MaxSizeContainer/HBoxContainer/TB_PlayerButton_REPEAT"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -112,7 +115,68 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_fonts/font = ExtResource("3_c1df7")
-theme_override_font_sizes/font_size = 98
+theme_override_font_sizes/font_size = 100
+text = "󰑙"
+clip_text = true
+script = ExtResource("5_0uuj3")
+max_font_size = 3000
+icon_name = "replay"
+
+[node name="TB_PlayerButton_PLAY" type="TextureButton" parent="HBC_PlayerMode/C_Middle/MaxSizeContainer/VBoxContainer/MaxSizeContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="AutoSizeMaterialIcon" type="Label" parent="HBC_PlayerMode/C_Middle/MaxSizeContainer/VBoxContainer/MaxSizeContainer/HBoxContainer/TB_PlayerButton_PLAY"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("3_c1df7")
+theme_override_font_sizes/font_size = 100
+text = "󰐍"
+clip_text = true
+script = ExtResource("5_0uuj3")
+max_font_size = 3000
+icon_name = "play-circle-outline"
+
+[node name="TB_PlayerButton_SKIP" type="TextureButton" parent="HBC_PlayerMode/C_Middle/MaxSizeContainer/VBoxContainer/MaxSizeContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="AutoSizeMaterialIcon" type="Label" parent="HBC_PlayerMode/C_Middle/MaxSizeContainer/VBoxContainer/MaxSizeContainer/HBoxContainer/TB_PlayerButton_SKIP"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("3_c1df7")
+theme_override_font_sizes/font_size = 102
+text = "󰒭"
+clip_text = true
+script = ExtResource("5_0uuj3")
+max_font_size = 3000
+icon_name = "skip-next"
+
+[node name="BTN_Repeat" type="Button" parent="HBC_PlayerMode/C_Middle/MaxSizeContainer/VBoxContainer/MaxSizeContainer/HBoxContainer"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+text = "
+"
+
+[node name="AutoSizeMaterialIcon" type="Label" parent="HBC_PlayerMode/C_Middle/MaxSizeContainer/VBoxContainer/MaxSizeContainer/HBoxContainer/BTN_Repeat"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("3_c1df7")
+theme_override_font_sizes/font_size = 170
 text = "󰑙"
 clip_text = true
 script = ExtResource("5_0uuj3")
@@ -120,6 +184,7 @@ max_font_size = 3000
 icon_name = "replay"
 
 [node name="BTN_Play" type="Button" parent="HBC_PlayerMode/C_Middle/MaxSizeContainer/VBoxContainer/MaxSizeContainer/HBoxContainer"]
+visible = false
 layout_mode = 2
 size_flags_horizontal = 3
 text = "
@@ -133,7 +198,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_fonts/font = ExtResource("3_c1df7")
-theme_override_font_sizes/font_size = 98
+theme_override_font_sizes/font_size = 264
 text = "󰐍"
 clip_text = true
 script = ExtResource("5_0uuj3")
@@ -141,6 +206,7 @@ max_font_size = 3000
 icon_name = "play-circle-outline"
 
 [node name="BTN_Skip" type="Button" parent="HBC_PlayerMode/C_Middle/MaxSizeContainer/VBoxContainer/MaxSizeContainer/HBoxContainer"]
+visible = false
 layout_mode = 2
 size_flags_horizontal = 3
 text = "
@@ -154,7 +220,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_fonts/font = ExtResource("3_c1df7")
-theme_override_font_sizes/font_size = 98
+theme_override_font_sizes/font_size = 548
 text = "󰒭"
 clip_text = true
 script = ExtResource("5_0uuj3")
@@ -177,9 +243,9 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/margin_left = 0
-theme_override_constants/margin_top = 9
+theme_override_constants/margin_top = 0
 theme_override_constants/margin_right = 0
-theme_override_constants/margin_bottom = 9
+theme_override_constants/margin_bottom = 0
 script = ExtResource("2_tcs1d")
 limit = Vector2(800, 10)
 
@@ -195,5 +261,5 @@ size_flags_horizontal = 3
 
 [node name="N_PomodoroClock" type="Node" parent="." node_paths=PackedStringArray("pomodoro_timer_label", "play_btn")]
 script = ExtResource("1_44a0l")
-pomodoro_timer_label = NodePath("../HBC_PlayerMode/C_Left/MarginContainer/AutoSizeLabel")
-play_btn = NodePath("../HBC_PlayerMode/C_Middle/MaxSizeContainer/VBoxContainer/MaxSizeContainer/HBoxContainer/BTN_Play")
+pomodoro_timer_label = NodePath("../HBC_PlayerMode/C_Left/HBoxContainer/ASL_PomodoroClock")
+play_btn = NodePath("../HBC_PlayerMode/C_Middle/MaxSizeContainer/VBoxContainer/MaxSizeContainer/HBoxContainer/TB_PlayerButton_PLAY")
