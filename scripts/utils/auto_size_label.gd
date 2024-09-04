@@ -26,7 +26,6 @@ func _set(property: StringName, _value: Variant) -> bool:
 
 
 func update_font_size() -> void:
-	print("updating font size")
 	await get_tree().create_timer(0.01).timeout
 
 	var font = get_theme_font("font")
