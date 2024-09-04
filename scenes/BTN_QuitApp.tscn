@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://birk4wdajwwt8"]
+
+[ext_resource type="Script" path="res://scripts/behaviours/UI/TitleBar/QuitApp.gd" id="1_uvra0"]
+
+[node name="BTN_QuitApp" type="Button"]
+script = ExtResource("1_uvra0")
+
+[connection signal="pressed" from="." to="." method="_on_pressed"]

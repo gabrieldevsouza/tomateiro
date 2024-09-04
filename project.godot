@@ -17,6 +17,10 @@ boot_splash/bg_color=Color(0.141176, 0.141176, 0.141176, 0)
 boot_splash/image="res://assets/imgs/gabisou-bubble-color.png"
 config/icon="res://icon.svg"
 
+[autoload]
+
+MaterialIconsDB="*res://addons/material-design-icons/icons/icons.gd"
+
 [display]
 
 window/size/borderless=true
@@ -25,7 +29,7 @@ window/per_pixel_transparency/allowed=true
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/MaxSizeContainer/plugin.cfg", "res://addons/YouCanDoIt/plugin.cfg")
+enabled=PackedStringArray("res://addons/MaxSizeContainer/plugin.cfg", "res://addons/YouCanDoIt/plugin.cfg", "res://addons/material-design-icons/plugin.cfg")
 
 [rendering]
 

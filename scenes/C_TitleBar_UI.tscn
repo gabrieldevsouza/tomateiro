@@ -3,8 +3,8 @@
 [ext_resource type="Script" path="res://scripts/behaviours/UI/TitleBar/TitleBar.gd" id="1_gq87v"]
 [ext_resource type="Script" path="res://addons/MaxSizeContainer/max_size_container.gd" id="1_tkmb0"]
 [ext_resource type="Script" path="res://scripts/utils/h_stackable_ratio_container.gd" id="3_ck3ec"]
-[ext_resource type="PackedScene" uid="uid://birk4wdajwwt8" path="res://scenes/B_QuitApp.tscn" id="4_5we8b"]
-[ext_resource type="PackedScene" uid="uid://dbe1alxqa4bic" path="res://scenes/B_MinimizeApp.tscn" id="4_euxw8"]
+[ext_resource type="PackedScene" uid="uid://birk4wdajwwt8" path="res://scenes/BTN_QuitApp.tscn" id="4_5we8b"]
+[ext_resource type="PackedScene" uid="uid://dbe1alxqa4bic" path="res://scenes/BTN_MinimizeApp.tscn" id="4_euxw8"]
 
 [node name="C_TitleBar_UI" type="Control"]
 layout_mode = 3
@@ -36,7 +36,7 @@ mouse_filter = 2
 theme_override_constants/margin_left = 0
 theme_override_constants/margin_top = 0
 theme_override_constants/margin_right = 0
-theme_override_constants/margin_bottom = 0
+theme_override_constants/margin_bottom = 49
 script = ExtResource("1_tkmb0")
 limit = Vector2(-1, 20)
 valign = 0
@@ -55,7 +55,7 @@ custom_minimum_size = Vector2(20, 0)
 layout_mode = 2
 script = ExtResource("3_ck3ec")
 
-[node name="B_MinimizeApp" parent="VBC_TitleBar/MSC_MaxTitleBar/PC_MainTitleBar/HBC_TitleBarButtons/HSRC_MinimizeAppButton" instance=ExtResource("4_euxw8")]
+[node name="BTN_MinimizeApp" parent="VBC_TitleBar/MSC_MaxTitleBar/PC_MainTitleBar/HBC_TitleBarButtons/HSRC_MinimizeAppButton" instance=ExtResource("4_euxw8")]
 layout_mode = 2
 
 [node name="HSRC_QuitAppButton" type="AspectRatioContainer" parent="VBC_TitleBar/MSC_MaxTitleBar/PC_MainTitleBar/HBC_TitleBarButtons"]
@@ -63,7 +63,7 @@ custom_minimum_size = Vector2(20, 0)
 layout_mode = 2
 script = ExtResource("3_ck3ec")
 
-[node name="B_QuitApp" parent="VBC_TitleBar/MSC_MaxTitleBar/PC_MainTitleBar/HBC_TitleBarButtons/HSRC_QuitAppButton" instance=ExtResource("4_5we8b")]
+[node name="BTN_QuitApp" parent="VBC_TitleBar/MSC_MaxTitleBar/PC_MainTitleBar/HBC_TitleBarButtons/HSRC_QuitAppButton" instance=ExtResource("4_5we8b")]
 layout_mode = 2
 
 [node name="C_MainArea_EMPTY" type="Control" parent="VBC_TitleBar"]

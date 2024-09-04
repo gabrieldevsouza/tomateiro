@@ -1,8 +1,10 @@
-[gd_scene load_steps=4 format=3 uid="uid://dhenu44xdc0ah"]
+[gd_scene load_steps=6 format=3 uid="uid://dhenu44xdc0ah"]
 
-[ext_resource type="Script" path="res://scripts/storage/PomodoroClock.gd" id="1_44a0l"]
+[ext_resource type="Script" path="res://scripts/behaviours/PomodoroClock.gd" id="1_44a0l"]
 [ext_resource type="Script" path="res://addons/MaxSizeContainer/max_size_container.gd" id="2_tcs1d"]
+[ext_resource type="FontFile" uid="uid://bj6hexaj2p1fe" path="res://addons/material-design-icons/fonts/material_design_icons.ttf" id="3_c1df7"]
 [ext_resource type="Script" path="res://scripts/utils/auto_size_label.gd" id="3_ypp30"]
+[ext_resource type="Script" path="res://scripts/utils/auto_size_material_icon.gd" id="5_0uuj3"]
 
 [node name="PC_AppMainArea" type="Control"]
 layout_mode = 3
@@ -69,9 +71,9 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/margin_left = 0
-theme_override_constants/margin_top = 0
+theme_override_constants/margin_top = 264
 theme_override_constants/margin_right = 0
-theme_override_constants/margin_bottom = 0
+theme_override_constants/margin_bottom = 264
 script = ExtResource("2_tcs1d")
 limit = Vector2(-1, 120)
 
@@ -83,15 +85,39 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 size_flags_stretch_ratio = 10.0
-theme_override_constants/margin_left = 0
+theme_override_constants/margin_left = 146
 theme_override_constants/margin_top = 0
-theme_override_constants/margin_right = 0
+theme_override_constants/margin_right = 146
 theme_override_constants/margin_bottom = 0
 script = ExtResource("2_tcs1d")
-limit = Vector2(250, -1)
+mode = 1
+limit = Vector2(3, 1)
 
 [node name="HBoxContainer" type="HBoxContainer" parent="HBC_PlayerMode/C_Middle/MaxSizeContainer/VBoxContainer/MaxSizeContainer"]
 layout_mode = 2
+
+[node name="MC_PlayerButton_Repeat" type="MarginContainer" parent="HBC_PlayerMode/C_Middle/MaxSizeContainer/VBoxContainer/MaxSizeContainer/HBoxContainer"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="MC_PlayerButton_PLAY" type="MarginContainer" parent="HBC_PlayerMode/C_Middle/MaxSizeContainer/VBoxContainer/MaxSizeContainer/HBoxContainer"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="MC_PlayerButton_SKIP" type="MarginContainer" parent="HBC_PlayerMode/C_Middle/MaxSizeContainer/VBoxContainer/MaxSizeContainer/HBoxContainer"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
 
 [node name="BTN_Repeat" type="Button" parent="HBC_PlayerMode/C_Middle/MaxSizeContainer/VBoxContainer/MaxSizeContainer/HBoxContainer"]
 layout_mode = 2
@@ -99,17 +125,62 @@ size_flags_horizontal = 3
 text = "
 "
 
+[node name="AutoSizeMaterialIcon" type="Label" parent="HBC_PlayerMode/C_Middle/MaxSizeContainer/VBoxContainer/MaxSizeContainer/HBoxContainer/BTN_Repeat"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("3_c1df7")
+theme_override_font_sizes/font_size = 90
+text = "󰑙"
+clip_text = true
+script = ExtResource("5_0uuj3")
+max_font_size = 3000
+icon_name = "replay"
+
 [node name="BTN_Play" type="Button" parent="HBC_PlayerMode/C_Middle/MaxSizeContainer/VBoxContainer/MaxSizeContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "
 "
 
+[node name="AutoSizeMaterialIcon" type="Label" parent="HBC_PlayerMode/C_Middle/MaxSizeContainer/VBoxContainer/MaxSizeContainer/HBoxContainer/BTN_Play"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("3_c1df7")
+theme_override_font_sizes/font_size = 92
+text = "󰐍"
+clip_text = true
+script = ExtResource("5_0uuj3")
+max_font_size = 3000
+icon_name = "play-circle-outline"
+
 [node name="BTN_Skip" type="Button" parent="HBC_PlayerMode/C_Middle/MaxSizeContainer/VBoxContainer/MaxSizeContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "
 "
+
+[node name="AutoSizeMaterialIcon" type="Label" parent="HBC_PlayerMode/C_Middle/MaxSizeContainer/VBoxContainer/MaxSizeContainer/HBoxContainer/BTN_Skip"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("3_c1df7")
+theme_override_font_sizes/font_size = 92
+text = "󰒭"
+clip_text = true
+script = ExtResource("5_0uuj3")
+max_font_size = 3000
+icon_name = "skip-next"
 
 [node name="C_Spacing" type="Control" parent="HBC_PlayerMode/C_Middle/MaxSizeContainer/VBoxContainer"]
 layout_mode = 2
@@ -131,10 +202,9 @@ theme_override_constants/margin_top = 0
 theme_override_constants/margin_right = 0
 theme_override_constants/margin_bottom = 0
 script = ExtResource("2_tcs1d")
-limit = Vector2(800, 20)
+limit = Vector2(800, 10)
 
 [node name="ProgressBar" type="ProgressBar" parent="HBC_PlayerMode/C_Middle/MaxSizeContainer/VBoxContainer/Control/MaxSizeContainer"]
-custom_minimum_size = Vector2(0, 10)
 layout_mode = 2
 size_flags_vertical = 1
 value = 50.0
@@ -144,8 +214,7 @@ show_percentage = false
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="N_PomodoroClock" type="Node" parent="." node_paths=PackedStringArray("pomodoro_timer_label")]
+[node name="N_PomodoroClock" type="Node" parent="." node_paths=PackedStringArray("pomodoro_timer_label", "play_btn")]
 script = ExtResource("1_44a0l")
 pomodoro_timer_label = NodePath("../HBC_PlayerMode/C_Left/MarginContainer/AutoSizeLabel")
-
-[connection signal="pressed" from="HBC_PlayerMode/C_Middle/MaxSizeContainer/VBoxContainer/MaxSizeContainer/HBoxContainer/BTN_Play" to="N_PomodoroClock" method="_on_btn_play_pressed"]
+play_btn = NodePath("../HBC_PlayerMode/C_Middle/MaxSizeContainer/VBoxContainer/MaxSizeContainer/HBoxContainer/BTN_Play")

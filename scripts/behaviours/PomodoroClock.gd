@@ -2,11 +2,14 @@ extends Node
 
 @export var pomodoro_timer_label : Label
 
+@export var play_btn : Button
+
 @export var iterationTime : float = 0.5
 var targetTime : float = 0
 var startTime : float = 0.0
 
 func _ready() -> void:
+	play_btn.pressed.connect(_on_btn_play_pressed)
 	pass
 
 func _process(delta: float) -> void:

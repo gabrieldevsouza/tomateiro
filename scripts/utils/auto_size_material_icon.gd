@@ -1,19 +1,56 @@
 @tool
-class_name AutoSizeLabel extends Label
+@icon("res://icons/ResizeMaterialIcon.svg")
 
+# Material Icon vars
+extends Label
+class_name AutoSizeMaterialIcon
 
+var _icon_name : String
+var _icon_size : int
+
+#Resize label vars
 @export var max_font_size = 56
 
 var previous_text : String = ""
 
-func _ready() -> void:
+##
+@export var icon_name := "image-outline":
+	set(value):
+		_set_icon_name(value)
+	get:
+		return _icon_name
+
+# @export_range(16, 128, 1)
+# var icon_size := 16:
+# 	set(value):
+# 		_set_icon_size(value)
+# 	get:
+# 		return _icon_size
+
+func _ready():
+	clip_text = false
 	clip_text = true
+	var font := MaterialIconsDB.font
+	set("theme_override_fonts/font", font)
+
+
+func _set_icon_name(value: String):
+	if !Engine.is_editor_hint():
+		await ready
+	_icon_name = value
+	text = MaterialIconsDB.get_icon_char(value)
+
+# func _set_icon_size(value: int):
+# 	if !Engine.is_editor_hint():
+# 		await ready
+# 	_icon_size = value
+# 	set("theme_override_font_sizes/font_size", value)
+
 
 func _process(_delta: float) -> void:
 	if previous_text != text:
 		update_font_size()
 		previous_text = text
-
 
 func _set(property: StringName, _value: Variant) -> bool:
 	match property:
