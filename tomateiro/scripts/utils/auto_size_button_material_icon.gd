@@ -1,3 +1,4 @@
+@tool
 extends Button
 class_name AutoSizeButtonMaterialIcon
 
@@ -75,9 +76,9 @@ func update_font_size() -> void:
 			var text_size_y = font.get_height(font_size) * lines_needed 
 
 
-			if text_size_y + 3 > floor(size.y) and font_size > 1: 
+			if text_size_y + 8 > floor(size.y) and font_size > 1: 
 				font_size -= 1
-			elif text_size_x + 3 > floor(size.x) and font_size > 1:
+			elif text_size_x + 10 > floor(size.x) and font_size > 1:
 				font_size -= 1
 			elif font_size < max_font_size:
 				font_size += 1
