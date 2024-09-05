@@ -18,6 +18,9 @@ func _ready() -> void:
 	pomodoro_controller.tick_signal.connect(on_tick)
 	pomodoro_controller.repeat_signal.connect(on_repeat)
 	pomodoro_controller.prepare_signal.connect(on_prepare)
+	
+	pause_btn.visible = false
+	play_btn.visible = true
 
 func on_btn_play_pressed() -> void:
 	play_btn.visible = false
@@ -31,6 +34,8 @@ func on_btn_pause_pressed() -> void:
 
 func on_btn_repeat_pressed() -> void:
 	pomodoro_controller.repeat()
+	pause_btn.visible = false
+	play_btn.visible = true
 
 func on_prepare() -> void:
 	print ("Prepare")
