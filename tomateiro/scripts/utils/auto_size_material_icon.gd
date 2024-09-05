@@ -6,7 +6,7 @@ extends Label
 class_name AutoSizeMaterialIcon
 
 var _icon_name : String
-var _icon_size : int
+# var _icon_size : int
 
 #Resize label vars
 @export var max_font_size = 56

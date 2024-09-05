@@ -1,0 +1,7 @@
+[gd_resource type="Resource" script_class="IntVar" load_steps=2 format=3 uid="uid://p5tbquc60biu"]
+
+[ext_resource type="Script" path="res://tomateiro/scripts/vars/int_var.gd" id="1_p826m"]
+
+[resource]
+script = ExtResource("1_p826m")
+value = 4

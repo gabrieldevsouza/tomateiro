@@ -5,8 +5,6 @@ extends Node
 @export var play_btn : BaseButton
 @export var repeat_btn : BaseButton
 
-@export var iterationTime : float = 0.5
-
 @export var focus_time : FloatVar
 var remaining_seconds : FloatVar
 

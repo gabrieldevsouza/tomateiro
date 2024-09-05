@@ -9,10 +9,10 @@ var previous_text : String = ""
 func _ready() -> void:
 	clip_text = true
 
-func _process(_delta: float) -> void:
-	if previous_text != text:
-		update_font_size()
-		previous_text = text
+# func _process(_delta: float) -> void:
+# 	if previous_text != text:
+# 		update_font_size()
+# 		previous_text = text
 
 
 func _set(property: StringName, _value: Variant) -> bool:

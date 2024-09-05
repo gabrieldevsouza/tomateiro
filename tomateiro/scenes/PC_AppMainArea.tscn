@@ -1,12 +1,11 @@
-[gd_scene load_steps=12 format=3 uid="uid://dhenu44xdc0ah"]
+[gd_scene load_steps=11 format=3 uid="uid://dhenu44xdc0ah"]
 
-[ext_resource type="Script" path="res://tomateiro/scripts/behaviours/PomodoroClock.gd" id="1_44a0l"]
 [ext_resource type="Script" path="res://addons/MaxSizeContainer/max_size_container.gd" id="2_tcs1d"]
 [ext_resource type="FontFile" uid="uid://bj6hexaj2p1fe" path="res://addons/material-design-icons/fonts/material_design_icons.ttf" id="3_c1df7"]
 [ext_resource type="Script" path="res://tomateiro/scripts/utils/auto_size_label.gd" id="3_ypp30"]
 [ext_resource type="Script" path="res://tomateiro/scripts/utils/auto_size_button_material_icon.gd" id="5_0sayo"]
-[ext_resource type="Script" path="res://tomateiro/scripts/utils/h_stackable_ratio_container.gd" id="5_jfy2c"]
-[ext_resource type="Resource" uid="uid://1mcpawc5p2tl" path="res://tomateiro/vars/FLOAT_FocusTime.tres" id="7_iuoot"]
+[ext_resource type="Script" path="res://tomateiro/scripts/behaviours/PomodoroPlayer.gd" id="5_je744"]
+[ext_resource type="Resource" uid="uid://bwljjvthas7gs" path="res://tomateiro/resources/pomodoro_default.tres" id="6_0jhmd"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_s753f"]
 
@@ -155,13 +154,9 @@ icon_name = "replay"
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="HSRC_PlayerButton_PLAY" type="AspectRatioContainer" parent="HBC_PlayerMode/C_Middle/MaxSizeContainer/VBoxContainer/MaxSizeContainer/HBoxContainer"]
-custom_minimum_size = Vector2(113, 0)
+[node name="ASBM_PlayerButton_PLAY" type="Button" parent="HBC_PlayerMode/C_Middle/MaxSizeContainer/VBoxContainer/MaxSizeContainer/HBoxContainer"]
 layout_mode = 2
-script = ExtResource("5_jfy2c")
-
-[node name="ASBM_PlayerButton_PLAY" type="Button" parent="HBC_PlayerMode/C_Middle/MaxSizeContainer/VBoxContainer/MaxSizeContainer/HBoxContainer/HSRC_PlayerButton_PLAY"]
-layout_mode = 2
+size_flags_horizontal = 3
 theme_override_colors/font_hover_pressed_color = Color(0.745098, 0.576471, 0.980392, 0.862745)
 theme_override_colors/font_hover_color = Color(0.745617, 0.5782, 0.98, 0.666667)
 theme_override_colors/font_pressed_color = Color(0.745617, 0.5782, 0.98, 0.862745)
@@ -267,9 +262,9 @@ size_flags_stretch_ratio = 5.0
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="N_PomodoroClock" type="Node" parent="." node_paths=PackedStringArray("pomodoro_timer_label", "play_btn", "repeat_btn")]
-script = ExtResource("1_44a0l")
+[node name="BHV_PomodoroPlayer" type="Node" parent="." node_paths=PackedStringArray("pomodoro_timer_label", "play_btn", "repeat_btn")]
+script = ExtResource("5_je744")
+pomodoro_controller = ExtResource("6_0jhmd")
 pomodoro_timer_label = NodePath("../HBC_PlayerMode/C_Left/HBoxContainer/ASL_PomodoroClock")
-play_btn = NodePath("../HBC_PlayerMode/C_Middle/MaxSizeContainer/VBoxContainer/MaxSizeContainer/HBoxContainer/HSRC_PlayerButton_PLAY/ASBM_PlayerButton_PLAY")
+play_btn = NodePath("../HBC_PlayerMode/C_Middle/MaxSizeContainer/VBoxContainer/MaxSizeContainer/HBoxContainer/ASBM_PlayerButton_PLAY")
 repeat_btn = NodePath("../HBC_PlayerMode/C_Middle/MaxSizeContainer/VBoxContainer/MaxSizeContainer/HBoxContainer/VBC_PlayerButton_REPEAT/ARC_PlayerButton_REPEAT/ASBM_PlayerButton_REPEAT")
-focus_time = ExtResource("7_iuoot")
