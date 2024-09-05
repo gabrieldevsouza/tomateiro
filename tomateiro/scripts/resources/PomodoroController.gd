@@ -17,7 +17,8 @@ var start_iteration_time : float = 0.0
 var is_running_time : bool = false
 
 signal prepare_signal
-signal play_signal 
+signal play_signal
+signal pause_signal
 signal repeat_signal
 signal tick_signal
 signal finish_signal
@@ -46,6 +47,12 @@ func play() -> void:
 
 	play_signal.emit()
 
+func pause() -> void:
+	if not is_running_time:
+		return
+	
+	is_running_time = false
+	pause_signal.emit()
 
 func repeat() -> void:
 	is_running_time = false

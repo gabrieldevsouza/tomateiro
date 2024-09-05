@@ -174,6 +174,27 @@ script = ExtResource("5_0sayo")
 max_font_size = 99999
 icon_name = "play-circle-outline"
 
+[node name="ASBM_PlayerButton_PAUSE" type="Button" parent="HBC_PlayerMode/C_Middle/MaxSizeContainer/VBoxContainer/MaxSizeContainer/HBoxContainer"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_hover_pressed_color = Color(0.745098, 0.576471, 0.980392, 0.862745)
+theme_override_colors/font_hover_color = Color(0.745617, 0.5782, 0.98, 0.666667)
+theme_override_colors/font_pressed_color = Color(0.745617, 0.5782, 0.98, 0.862745)
+theme_override_colors/font_focus_color = Color(0.97, 0.97, 0.9506, 0.588235)
+theme_override_colors/font_color = Color(0.97, 0.97, 0.9506, 0.588235)
+theme_override_fonts/font = ExtResource("3_c1df7")
+theme_override_font_sizes/font_size = 104
+theme_override_styles/focus = SubResource("StyleBoxEmpty_s753f")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_qv7sf")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_pj3c0")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_syi00")
+text = "󰏦"
+clip_text = true
+script = ExtResource("5_0sayo")
+max_font_size = 99999
+icon_name = "pause-circle-outline"
+
 [node name="VBC_PlayerButton_SKIP" type="VBoxContainer" parent="HBC_PlayerMode/C_Middle/MaxSizeContainer/VBoxContainer/MaxSizeContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
@@ -262,9 +283,10 @@ size_flags_stretch_ratio = 5.0
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="BHV_PomodoroPlayer" type="Node" parent="." node_paths=PackedStringArray("pomodoro_timer_label", "play_btn", "repeat_btn")]
+[node name="BHV_PomodoroPlayer" type="Node" parent="." node_paths=PackedStringArray("pomodoro_timer_label", "play_btn", "pause_btn", "repeat_btn")]
 script = ExtResource("5_je744")
 pomodoro_controller = ExtResource("6_0jhmd")
 pomodoro_timer_label = NodePath("../HBC_PlayerMode/C_Left/HBoxContainer/ASL_PomodoroClock")
 play_btn = NodePath("../HBC_PlayerMode/C_Middle/MaxSizeContainer/VBoxContainer/MaxSizeContainer/HBoxContainer/ASBM_PlayerButton_PLAY")
+pause_btn = NodePath("../HBC_PlayerMode/C_Middle/MaxSizeContainer/VBoxContainer/MaxSizeContainer/HBoxContainer/ASBM_PlayerButton_PAUSE")
 repeat_btn = NodePath("../HBC_PlayerMode/C_Middle/MaxSizeContainer/VBoxContainer/MaxSizeContainer/HBoxContainer/VBC_PlayerButton_REPEAT/ARC_PlayerButton_REPEAT/ASBM_PlayerButton_REPEAT")

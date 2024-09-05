@@ -6,11 +6,13 @@ class_name PomodoroPlayer
 @export var pomodoro_timer_label : Label
 
 @export var play_btn : BaseButton
+@export var pause_btn : BaseButton
 @export var repeat_btn : BaseButton
 
 
 func _ready() -> void:
 	play_btn.pressed.connect(on_btn_play_pressed)
+	pause_btn.pressed.connect(on_btn_pause_pressed)
 	repeat_btn.pressed.connect(on_btn_repeat_pressed)
 
 	pomodoro_controller.tick_signal.connect(on_tick)
@@ -18,7 +20,14 @@ func _ready() -> void:
 	pomodoro_controller.prepare_signal.connect(on_prepare)
 
 func on_btn_play_pressed() -> void:
+	play_btn.visible = false
+	pause_btn.visible = true
 	pomodoro_controller.play()
+
+func on_btn_pause_pressed() -> void:
+	pause_btn.visible = false
+	play_btn.visible = true
+	pomodoro_controller.pause()
 
 func on_btn_repeat_pressed() -> void:
 	pomodoro_controller.repeat()

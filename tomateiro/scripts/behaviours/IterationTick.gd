@@ -11,6 +11,7 @@ func _ready() -> void:
 
 func bootstrap() -> void:
 	pomodoro_controller.play_signal.connect(on_play)
+	pomodoro_controller.pause_signal.connect(on_pause)
 	pomodoro_controller.repeat_signal.connect(on_repeat)
 	pomodoro_controller.finish_signal.connect(on_finish)
 
@@ -18,6 +19,9 @@ func bootstrap() -> void:
 
 func on_play() -> void:
 	start()
+
+func on_pause() -> void:
+	stop()
 
 func on_repeat() -> void:
 	stop()
