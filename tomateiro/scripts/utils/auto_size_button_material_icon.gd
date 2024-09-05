@@ -56,6 +56,12 @@ func _set(property: StringName, _value: Variant) -> bool:
 func _draw() -> void:
 	update_font_size()
 
+func set_font_size(font_size : int) -> void:
+	add_theme_font_size_override("font_size", font_size)
+
+func get_font_size() -> int:
+	return get_theme_font_size("font_size")
+
 func update_font_size() -> void:
 	await get_tree().create_timer(0.01).timeout
 

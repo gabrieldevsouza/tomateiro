@@ -5,8 +5,8 @@ class_name PomodoroPlayer
 
 @export var pomodoro_timer_label : Label
 
-@export var play_btn : BaseButton
-@export var pause_btn : BaseButton
+@export var play_btn : AutoSizeButtonMaterialIcon
+@export var pause_btn : AutoSizeButtonMaterialIcon
 @export var repeat_btn : BaseButton
 
 
@@ -18,18 +18,24 @@ func _ready() -> void:
 	pomodoro_controller.tick_signal.connect(on_tick)
 	pomodoro_controller.repeat_signal.connect(on_repeat)
 	pomodoro_controller.prepare_signal.connect(on_prepare)
-	
+
 	pause_btn.visible = false
 	play_btn.visible = true
 
 func on_btn_play_pressed() -> void:
+	pause_btn.set_font_size(play_btn.get_font_size())
+
 	play_btn.visible = false
 	pause_btn.visible = true
+
 	pomodoro_controller.play()
 
 func on_btn_pause_pressed() -> void:
+	pause_btn.set_font_size(pause_btn.get_font_size())
+
 	pause_btn.visible = false
 	play_btn.visible = true
+	
 	pomodoro_controller.pause()
 
 func on_btn_repeat_pressed() -> void:
@@ -38,7 +44,6 @@ func on_btn_repeat_pressed() -> void:
 	play_btn.visible = true
 
 func on_prepare() -> void:
-	print ("Prepare")
 	pomodoro_timer_label.set_text(formart_time(pomodoro_controller.remaining_seconds.value))
 
 func on_tick() -> void:
