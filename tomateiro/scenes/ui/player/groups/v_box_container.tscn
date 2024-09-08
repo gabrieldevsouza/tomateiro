@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://addons/MaxSizeContainer/max_size_container.gd" id="1_snogc"]
 [ext_resource type="FontFile" uid="uid://bj6hexaj2p1fe" path="res://addons/material-design-icons/fonts/material_design_icons.ttf" id="2_cvorm"]
-[ext_resource type="Script" path="res://tomateiro/scripts/utils/auto_size_button_material_icon.gd" id="3_go1mu"]
+[ext_resource type="Script" path="res://tomateiro/scripts/utils/AutoSizeMaterialButton.gd" id="3_go1mu"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_s753f"]
 
@@ -18,6 +18,11 @@ corner_radius_bottom_left = 100
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_syi00"]
 
 [node name="VBoxContainer" type="VBoxContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme_override_constants/separation = 0
@@ -29,7 +34,7 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 size_flags_stretch_ratio = 60.0
 theme_override_constants/margin_left = 0
-theme_override_constants/margin_top = 0
+theme_override_constants/margin_top = 114
 theme_override_constants/margin_right = 0
 theme_override_constants/margin_bottom = 0
 script = ExtResource("1_snogc")
@@ -64,7 +69,7 @@ theme_override_colors/font_pressed_color = Color(0.745617, 0.5782, 0.98, 0.86274
 theme_override_colors/font_focus_color = Color(0.97, 0.97, 0.9506, 0.588235)
 theme_override_colors/font_color = Color(0.97, 0.97, 0.9506, 0.588235)
 theme_override_fonts/font = ExtResource("2_cvorm")
-theme_override_font_sizes/font_size = 2
+theme_override_font_sizes/font_size = 267
 theme_override_styles/focus = SubResource("StyleBoxEmpty_s753f")
 theme_override_styles/hover = SubResource("StyleBoxEmpty_qv7sf")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_pj3c0")
@@ -72,7 +77,6 @@ theme_override_styles/normal = SubResource("StyleBoxEmpty_syi00")
 text = "󰑙"
 clip_text = true
 script = ExtResource("3_go1mu")
-max_font_size = 99999
 icon_name = "replay"
 
 [node name="Control" type="Control" parent="MaxSizeContainer/HBoxContainer/VBC_PlayerButton_REPEAT"]
@@ -88,7 +92,7 @@ theme_override_colors/font_pressed_color = Color(0.745617, 0.5782, 0.98, 0.86274
 theme_override_colors/font_focus_color = Color(0.97, 0.97, 0.9506, 0.588235)
 theme_override_colors/font_color = Color(0.97, 0.97, 0.9506, 0.588235)
 theme_override_fonts/font = ExtResource("2_cvorm")
-theme_override_font_sizes/font_size = 2
+theme_override_font_sizes/font_size = 293
 theme_override_styles/focus = SubResource("StyleBoxEmpty_s753f")
 theme_override_styles/hover = SubResource("StyleBoxEmpty_qv7sf")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_pj3c0")
@@ -96,7 +100,6 @@ theme_override_styles/normal = SubResource("StyleBoxEmpty_syi00")
 text = "󰐍"
 clip_text = true
 script = ExtResource("3_go1mu")
-max_font_size = 99999
 icon_name = "play-circle-outline"
 
 [node name="ASBM_PlayerButton_PAUSE" type="Button" parent="MaxSizeContainer/HBoxContainer"]
@@ -108,7 +111,7 @@ theme_override_colors/font_pressed_color = Color(0.745617, 0.5782, 0.98, 0.86274
 theme_override_colors/font_focus_color = Color(0.97, 0.97, 0.9506, 0.588235)
 theme_override_colors/font_color = Color(0.97, 0.97, 0.9506, 0.588235)
 theme_override_fonts/font = ExtResource("2_cvorm")
-theme_override_font_sizes/font_size = 2
+theme_override_font_sizes/font_size = 293
 theme_override_styles/focus = SubResource("StyleBoxEmpty_s753f")
 theme_override_styles/hover = SubResource("StyleBoxEmpty_qv7sf")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_pj3c0")
@@ -116,7 +119,6 @@ theme_override_styles/normal = SubResource("StyleBoxEmpty_syi00")
 text = "󰏦"
 clip_text = true
 script = ExtResource("3_go1mu")
-max_font_size = 99999
 icon_name = "pause-circle-outline"
 
 [node name="VBC_PlayerButton_SKIP" type="VBoxContainer" parent="MaxSizeContainer/HBoxContainer"]
@@ -143,7 +145,7 @@ theme_override_colors/font_pressed_color = Color(0.745617, 0.5782, 0.98, 0.86274
 theme_override_colors/font_focus_color = Color(0.97, 0.97, 0.9506, 0.588235)
 theme_override_colors/font_color = Color(0.97, 0.97, 0.9506, 0.588235)
 theme_override_fonts/font = ExtResource("2_cvorm")
-theme_override_font_sizes/font_size = 2
+theme_override_font_sizes/font_size = 233
 theme_override_styles/focus = SubResource("StyleBoxEmpty_s753f")
 theme_override_styles/hover = SubResource("StyleBoxEmpty_qv7sf")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_pj3c0")
@@ -151,7 +153,6 @@ theme_override_styles/normal = SubResource("StyleBoxEmpty_syi00")
 text = "󰒭"
 clip_text = true
 script = ExtResource("3_go1mu")
-max_font_size = 99999
 icon_name = "skip-next"
 
 [node name="Control" type="Control" parent="MaxSizeContainer/HBoxContainer/VBC_PlayerButton_SKIP"]
@@ -177,10 +178,10 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/margin_left = 0
-theme_override_constants/margin_top = 0
-theme_override_constants/margin_right = 0
-theme_override_constants/margin_bottom = 0
+theme_override_constants/margin_left = 176
+theme_override_constants/margin_top = 22
+theme_override_constants/margin_right = 176
+theme_override_constants/margin_bottom = 22
 script = ExtResource("1_snogc")
 limit = Vector2(800, 10)
 
