@@ -1,10 +1,11 @@
-[gd_scene load_steps=11 format=3 uid="uid://dhenu44xdc0ah"]
+[gd_scene load_steps=13 format=3 uid="uid://dhenu44xdc0ah"]
 
 [ext_resource type="Script" path="res://addons/MaxSizeContainer/max_size_container.gd" id="2_tcs1d"]
 [ext_resource type="FontFile" uid="uid://bj6hexaj2p1fe" path="res://addons/material-design-icons/fonts/material_design_icons.ttf" id="3_c1df7"]
 [ext_resource type="Script" path="res://tomateiro/scripts/utils/auto_size_label.gd" id="3_ypp30"]
 [ext_resource type="Script" path="res://tomateiro/scripts/utils/auto_size_button_material_icon.gd" id="5_0sayo"]
 [ext_resource type="Script" path="res://tomateiro/scripts/behaviours/PomodoroPlayer.gd" id="5_je744"]
+[ext_resource type="Script" path="res://tomateiro/scripts/utils/auto_size_material_icon.gd" id="5_oaqx0"]
 [ext_resource type="Resource" uid="uid://bwljjvthas7gs" path="res://tomateiro/resources/pomodoro_default.tres" id="6_0jhmd"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_s753f"]
@@ -19,6 +20,9 @@ corner_radius_bottom_right = 100
 corner_radius_bottom_left = 100
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_syi00"]
+
+[sub_resource type="FontVariation" id="FontVariation_5s7c3"]
+spacing_top = -10
 
 [node name="PC_AppMainArea" type="Control"]
 layout_mode = 3
@@ -64,7 +68,6 @@ theme_override_constants/separation = 0
 [node name="C_Margin_LEFT" type="Control" parent="HBC_PlayerMode/C_Left/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
-size_flags_stretch_ratio = 2.0
 
 [node name="ASL_PomodoroClock" type="Label" parent="HBC_PlayerMode/C_Left/VBoxContainer/HBoxContainer"]
 layout_mode = 2
@@ -113,10 +116,10 @@ alignment = 1
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-size_flags_stretch_ratio = 25.0
-theme_override_constants/margin_left = 92
+size_flags_stretch_ratio = 60.0
+theme_override_constants/margin_left = 100
 theme_override_constants/margin_top = 0
-theme_override_constants/margin_right = 92
+theme_override_constants/margin_right = 100
 theme_override_constants/margin_bottom = 0
 script = ExtResource("2_tcs1d")
 mode = 1
@@ -150,7 +153,7 @@ theme_override_colors/font_pressed_color = Color(0.745617, 0.5782, 0.98, 0.86274
 theme_override_colors/font_focus_color = Color(0.97, 0.97, 0.9506, 0.588235)
 theme_override_colors/font_color = Color(0.97, 0.97, 0.9506, 0.588235)
 theme_override_fonts/font = ExtResource("3_c1df7")
-theme_override_font_sizes/font_size = 76
+theme_override_font_sizes/font_size = 74
 theme_override_styles/focus = SubResource("StyleBoxEmpty_s753f")
 theme_override_styles/hover = SubResource("StyleBoxEmpty_qv7sf")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_pj3c0")
@@ -174,7 +177,7 @@ theme_override_colors/font_pressed_color = Color(0.745617, 0.5782, 0.98, 0.86274
 theme_override_colors/font_focus_color = Color(0.97, 0.97, 0.9506, 0.588235)
 theme_override_colors/font_color = Color(0.97, 0.97, 0.9506, 0.588235)
 theme_override_fonts/font = ExtResource("3_c1df7")
-theme_override_font_sizes/font_size = 86
+theme_override_font_sizes/font_size = 82
 theme_override_styles/focus = SubResource("StyleBoxEmpty_s753f")
 theme_override_styles/hover = SubResource("StyleBoxEmpty_qv7sf")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_pj3c0")
@@ -194,7 +197,7 @@ theme_override_colors/font_pressed_color = Color(0.745617, 0.5782, 0.98, 0.86274
 theme_override_colors/font_focus_color = Color(0.97, 0.97, 0.9506, 0.588235)
 theme_override_colors/font_color = Color(0.97, 0.97, 0.9506, 0.588235)
 theme_override_fonts/font = ExtResource("3_c1df7")
-theme_override_font_sizes/font_size = 86
+theme_override_font_sizes/font_size = 82
 theme_override_styles/focus = SubResource("StyleBoxEmpty_s753f")
 theme_override_styles/hover = SubResource("StyleBoxEmpty_qv7sf")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_pj3c0")
@@ -229,7 +232,7 @@ theme_override_colors/font_pressed_color = Color(0.745617, 0.5782, 0.98, 0.86274
 theme_override_colors/font_focus_color = Color(0.97, 0.97, 0.9506, 0.588235)
 theme_override_colors/font_color = Color(0.97, 0.97, 0.9506, 0.588235)
 theme_override_fonts/font = ExtResource("3_c1df7")
-theme_override_font_sizes/font_size = 66
+theme_override_font_sizes/font_size = 64
 theme_override_styles/focus = SubResource("StyleBoxEmpty_s753f")
 theme_override_styles/hover = SubResource("StyleBoxEmpty_qv7sf")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_pj3c0")
@@ -251,21 +254,12 @@ layout_mode = 2
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="Control" type="Control" parent="HBC_PlayerMode/C_Middle/MaxSizeContainer/VBoxContainer"]
+[node name="C_ProgressBar" type="Control" parent="HBC_PlayerMode/C_Middle/MaxSizeContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 size_flags_stretch_ratio = 2.0
 
-[node name="ColorRect" type="ColorRect" parent="HBC_PlayerMode/C_Middle/MaxSizeContainer/VBoxContainer/Control"]
-visible = false
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="MaxSizeContainer" type="MarginContainer" parent="HBC_PlayerMode/C_Middle/MaxSizeContainer/VBoxContainer/Control"]
+[node name="MaxSizeContainer" type="MarginContainer" parent="HBC_PlayerMode/C_Middle/MaxSizeContainer/VBoxContainer/C_ProgressBar"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -279,7 +273,7 @@ theme_override_constants/margin_bottom = 0
 script = ExtResource("2_tcs1d")
 limit = Vector2(800, 10)
 
-[node name="ProgressBar" type="ProgressBar" parent="HBC_PlayerMode/C_Middle/MaxSizeContainer/VBoxContainer/Control/MaxSizeContainer"]
+[node name="ProgressBar" type="ProgressBar" parent="HBC_PlayerMode/C_Middle/MaxSizeContainer/VBoxContainer/C_ProgressBar/MaxSizeContainer"]
 layout_mode = 2
 size_flags_vertical = 1
 value = 50.0
@@ -288,11 +282,95 @@ show_percentage = false
 [node name="C_Spacing2" type="Control" parent="HBC_PlayerMode/C_Middle/MaxSizeContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
-size_flags_stretch_ratio = 3.0
+size_flags_stretch_ratio = 15.0
 
 [node name="C_Right" type="Control" parent="HBC_PlayerMode"]
+visible = false
 layout_mode = 2
 size_flags_horizontal = 3
+
+[node name="C_Left2" type="Control" parent="HBC_PlayerMode"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HBC_PlayerMode/C_Left2"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 0
+
+[node name="Control" type="Control" parent="HBC_PlayerMode/C_Left2/VBoxContainer"]
+visible = false
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 800.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HBC_PlayerMode/C_Left2/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 2000.0
+theme_override_constants/separation = 0
+
+[node name="C_Margin_RIGHT" type="Control" parent="HBC_PlayerMode/C_Left2/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HBC_PlayerMode/C_Left2/VBoxContainer/HBoxContainer/C_Margin_RIGHT"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 0
+
+[node name="ASL_PomodoroClock" type="Label" parent="HBC_PlayerMode/C_Left2/VBoxContainer/HBoxContainer/C_Margin_RIGHT/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(0.745617, 0.5782, 0.98, 0.588235)
+theme_override_colors/font_shadow_color = Color(0.0784314, 0.0862745, 0.141176, 1)
+theme_override_colors/font_outline_color = Color(0.1554, 0.16359, 0.21, 0.392157)
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = SubResource("FontVariation_5s7c3")
+theme_override_font_sizes/font_size = 30
+text = "1 / 4
+cycles"
+horizontal_alignment = 1
+vertical_alignment = 1
+clip_text = true
+script = ExtResource("3_ypp30")
+
+[node name="AutoSizeMaterialIcon" type="Label" parent="HBC_PlayerMode/C_Left2/VBoxContainer/HBoxContainer/C_Margin_RIGHT/VBoxContainer"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.3
+theme_override_fonts/font = ExtResource("3_c1df7")
+theme_override_font_sizes/font_size = 2
+text = "󰑙"
+horizontal_alignment = 2
+clip_text = true
+script = ExtResource("5_oaqx0")
+icon_name = "replay"
+
+[node name="Control" type="Control" parent="HBC_PlayerMode/C_Left2/VBoxContainer/HBoxContainer/C_Margin_RIGHT/VBoxContainer"]
+visible = false
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="C_Margin_LEFT" type="Control" parent="HBC_PlayerMode/C_Left2/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Control2" type="Control" parent="HBC_PlayerMode/C_Left2/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 100.0
 
 [node name="BHV_PomodoroPlayer" type="Node" parent="." node_paths=PackedStringArray("pomodoro_timer_label", "play_btn", "pause_btn", "repeat_btn")]
 script = ExtResource("5_je744")
