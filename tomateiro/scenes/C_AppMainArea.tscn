@@ -20,7 +20,7 @@ grow_vertical = 2
 theme_override_constants/margin_left = 3
 theme_override_constants/margin_top = 3
 theme_override_constants/margin_right = 3
-theme_override_constants/margin_bottom = 6
+theme_override_constants/margin_bottom = 3
 
 [node name="VBC_TitleBar" type="VBoxContainer" parent="MarginContainer"]
 layout_mode = 2

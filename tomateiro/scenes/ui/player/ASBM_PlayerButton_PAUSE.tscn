@@ -1,0 +1,36 @@
+[gd_scene load_steps=7 format=3 uid="uid://bp2xpje4e2id6"]
+
+[ext_resource type="FontFile" uid="uid://bj6hexaj2p1fe" path="res://addons/material-design-icons/fonts/material_design_icons.ttf" id="1_vncfe"]
+[ext_resource type="Script" path="res://tomateiro/scripts/utils/auto_size_button_material_icon.gd" id="2_h8kcx"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_s753f"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_qv7sf"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pj3c0"]
+bg_color = Color(0.384, 0.448, 0.64, 0.196078)
+corner_radius_top_left = 100
+corner_radius_top_right = 100
+corner_radius_bottom_right = 100
+corner_radius_bottom_left = 100
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_syi00"]
+
+[node name="ASBM_PlayerButton_PAUSE" type="Button"]
+size_flags_horizontal = 3
+theme_override_colors/font_hover_pressed_color = Color(0.745098, 0.576471, 0.980392, 0.862745)
+theme_override_colors/font_hover_color = Color(0.745617, 0.5782, 0.98, 0.666667)
+theme_override_colors/font_pressed_color = Color(0.745617, 0.5782, 0.98, 0.862745)
+theme_override_colors/font_focus_color = Color(0.97, 0.97, 0.9506, 0.588235)
+theme_override_colors/font_color = Color(0.97, 0.97, 0.9506, 0.588235)
+theme_override_fonts/font = ExtResource("1_vncfe")
+theme_override_font_sizes/font_size = 294
+theme_override_styles/focus = SubResource("StyleBoxEmpty_s753f")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_qv7sf")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_pj3c0")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_syi00")
+text = "󰏦"
+clip_text = true
+script = ExtResource("2_h8kcx")
+max_font_size = 99999
+icon_name = "pause-circle-outline"

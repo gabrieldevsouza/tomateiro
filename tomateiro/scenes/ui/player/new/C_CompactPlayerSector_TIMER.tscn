@@ -1,0 +1,48 @@
+[gd_scene load_steps=2 format=3 uid="uid://50mo7mkk2i6y"]
+
+[ext_resource type="PackedScene" uid="uid://b401dqlw3d44x" path="res://tomateiro/scenes/ui/player/new/C_PomodoroTimerLabel.tscn" id="1_qunta"]
+
+[node name="C_CompactPlayerSector_TIMER" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.246706, 0.250015, 0.340652, 1)
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 0
+
+[node name="C_Margin_LEFT" type="Control" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.5
+
+[node name="C_Margin_MIDDLE" type="Control" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 16.0
+
+[node name="C_PomodoroTimerLabel" parent="HBoxContainer/C_Margin_MIDDLE" instance=ExtResource("1_qunta")]
+layout_mode = 1
+
+[node name="C_Margin_RIGHT" type="Control" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3

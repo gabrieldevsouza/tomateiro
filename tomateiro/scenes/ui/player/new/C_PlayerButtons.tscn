@@ -1,0 +1,60 @@
+[gd_scene load_steps=4 format=3 uid="uid://dxn22ulrit4o"]
+
+[ext_resource type="PackedScene" uid="uid://cxfkrq18ojmfh" path="res://tomateiro/scenes/ui/player/new/C_PlayerButtonArea_PLAY.tscn" id="1_0ol7w"]
+[ext_resource type="PackedScene" uid="uid://bwros6vv8xl0r" path="res://tomateiro/scenes/ui/player/new/C_PlayerButtonArea_REPEAT.tscn" id="2_1wb2r"]
+[ext_resource type="Script" path="res://tomateiro/scripts/utils/HStackableRatioContainer.gd" id="2_3fk4g"]
+
+[node name="C_PlayerButtons" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.118885, 0.536569, 0.558698, 0.196078)
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 0
+alignment = 1
+
+[node name="HSRC_PlayerButtonArea_REPEAT" type="AspectRatioContainer" parent="HBoxContainer"]
+custom_minimum_size = Vector2(453.6, 0)
+layout_mode = 2
+script = ExtResource("2_3fk4g")
+item_scale = 0.7
+
+[node name="C_PlayerButtonArea_REPEAT" parent="HBoxContainer/HSRC_PlayerButtonArea_REPEAT" instance=ExtResource("2_1wb2r")]
+layout_mode = 2
+
+[node name="HStackableRatioContainer" type="AspectRatioContainer" parent="HBoxContainer"]
+custom_minimum_size = Vector2(648, 0)
+layout_mode = 2
+script = ExtResource("2_3fk4g")
+
+[node name="C_PlayerButtonArea_PLAY" parent="HBoxContainer/HStackableRatioContainer" instance=ExtResource("1_0ol7w")]
+layout_mode = 2
+
+[node name="HSRC_PlayerButtonArea_SKIP" type="AspectRatioContainer" parent="HBoxContainer"]
+custom_minimum_size = Vector2(648, 0)
+layout_mode = 2
+script = ExtResource("2_3fk4g")
+
+[node name="ColorRect" type="ColorRect" parent="HBoxContainer/HSRC_PlayerButtonArea_SKIP"]
+layout_mode = 2
+color = Color(1, 1, 1, 0.254902)

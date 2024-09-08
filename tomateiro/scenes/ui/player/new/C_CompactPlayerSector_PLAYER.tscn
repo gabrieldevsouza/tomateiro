@@ -1,0 +1,55 @@
+[gd_scene load_steps=4 format=3 uid="uid://k3bwr6cx70qv"]
+
+[ext_resource type="PackedScene" uid="uid://dxn22ulrit4o" path="res://tomateiro/scenes/ui/player/new/C_PlayerButtons.tscn" id="1_o7ti0"]
+[ext_resource type="Script" path="res://addons/MaxSizeContainer/max_size_container.gd" id="2_4h4lg"]
+[ext_resource type="PackedScene" uid="uid://chi7gf8k4krjn" path="res://tomateiro/scenes/ui/player/new/C_PlayerProgressBar.tscn" id="2_by653"]
+
+[node name="C_CompactPlayerSector_PLAYER" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.321376, 0.325536, 0.434753, 1)
+
+[node name="AspectRatioContainer" type="AspectRatioContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+ratio = 5.0
+
+[node name="VBC_PlayerArea" type="VBoxContainer" parent="AspectRatioContainer"]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="C_PlayerButtons" parent="AspectRatioContainer/VBC_PlayerArea" instance=ExtResource("1_o7ti0")]
+layout_mode = 2
+
+[node name="MaxSizeContainer" type="MarginContainer" parent="AspectRatioContainer/VBC_PlayerArea"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/margin_left = 0
+theme_override_constants/margin_top = 0
+theme_override_constants/margin_right = 0
+theme_override_constants/margin_bottom = 109
+script = ExtResource("2_4h4lg")
+mode = 2
+limit = Vector2(200, 1)
+valign = 0
+
+[node name="C_PlayerProgressBar" parent="AspectRatioContainer/VBC_PlayerArea/MaxSizeContainer" instance=ExtResource("2_by653")]
+layout_mode = 2

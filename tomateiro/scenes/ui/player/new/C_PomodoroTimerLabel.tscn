@@ -1,0 +1,37 @@
+[gd_scene load_steps=4 format=3 uid="uid://b401dqlw3d44x"]
+
+[ext_resource type="Script" path="res://tomateiro/scripts/utils/auto_size_label.gd" id="1_ca5mh"]
+[ext_resource type="Script" path="res://tomateiro/scripts/behaviours/UI/PlayerButtons/PomodoroTimerLabel.gd" id="2_j71i7"]
+[ext_resource type="Resource" uid="uid://bwljjvthas7gs" path="res://tomateiro/resources/pomodoro_default.tres" id="3_uvoex"]
+
+[node name="C_PomodoroTimerLabel" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ASL_PomodoroClock" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(0.745617, 0.5782, 0.98, 0.588235)
+theme_override_colors/font_shadow_color = Color(0.0784314, 0.0862745, 0.141176, 1)
+theme_override_colors/font_outline_color = Color(0.1554, 0.16359, 0.21, 0.392157)
+theme_override_constants/outline_size = 10
+theme_override_font_sizes/font_size = 56
+text = "00 : 00"
+vertical_alignment = 1
+clip_text = true
+script = ExtResource("1_ca5mh")
+
+[node name="BHV_PomodoroTimerLabel" type="Node" parent="." node_paths=PackedStringArray("pomodoro_timer_label")]
+script = ExtResource("2_j71i7")
+pomodoro_controller = ExtResource("3_uvoex")
+pomodoro_timer_label = NodePath("../ASL_PomodoroClock")

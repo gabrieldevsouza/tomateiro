@@ -1,0 +1,35 @@
+[gd_scene load_steps=5 format=3 uid="uid://bwros6vv8xl0r"]
+
+[ext_resource type="FontFile" uid="uid://bj6hexaj2p1fe" path="res://addons/material-design-icons/fonts/material_design_icons.ttf" id="1_bqfqf"]
+[ext_resource type="Script" path="res://tomateiro/scripts/utils/AutoSizeMaterialButton.gd" id="2_ajitj"]
+[ext_resource type="Script" path="res://tomateiro/scripts/behaviours/UI/PlayerButtons/RepeatButton.gd" id="3_scy0w"]
+[ext_resource type="Resource" uid="uid://bwljjvthas7gs" path="res://tomateiro/resources/pomodoro_default.tres" id="4_ajhvl"]
+
+[node name="C_PlayerButtonArea_REPEAT" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="AutoSizeMaterialButton" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("1_bqfqf")
+theme_override_font_sizes/font_size = 638
+text = "󰑐"
+clip_text = true
+script = ExtResource("2_ajitj")
+icon_name = "refresh"
+
+[node name="BHV_RepeatButton" type="Node" parent="." node_paths=PackedStringArray("repeat_button")]
+script = ExtResource("3_scy0w")
+pomodoro_controller = ExtResource("4_ajhvl")
+repeat_button = NodePath("../AutoSizeMaterialButton")

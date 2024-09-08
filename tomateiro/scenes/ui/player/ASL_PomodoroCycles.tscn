@@ -1,0 +1,22 @@
+[gd_scene load_steps=3 format=3 uid="uid://c8tmek0moepq8"]
+
+[ext_resource type="Script" path="res://tomateiro/scripts/utils/auto_size_label.gd" id="1_dfcwa"]
+
+[sub_resource type="FontVariation" id="FontVariation_5s7c3"]
+spacing_top = -10
+
+[node name="ASL_PomodoroCycles" type="Label"]
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(0.745617, 0.5782, 0.98, 0.588235)
+theme_override_colors/font_shadow_color = Color(0.0784314, 0.0862745, 0.141176, 1)
+theme_override_colors/font_outline_color = Color(0.1554, 0.16359, 0.21, 0.392157)
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = SubResource("FontVariation_5s7c3")
+theme_override_font_sizes/font_size = 30
+text = "1 / 4
+cycles"
+horizontal_alignment = 1
+vertical_alignment = 1
+clip_text = true
+script = ExtResource("1_dfcwa")

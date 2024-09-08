@@ -23,7 +23,12 @@ class_name HStackableRatioContainer
 
 		stack_ratio = value
 		compute()
-	
+
+
+@export_range(0.001, 1) var item_scale : float = 1.0 :
+	set(value):
+		item_scale = value
+		compute()
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -38,5 +43,5 @@ func compute() -> void:
 		container = get_parent()
 		if container == null:
 			return
-	custom_minimum_size.x = container.size.y * stack_ratio
+	custom_minimum_size.x =  container.size.y * stack_ratio * item_scale
 	pass

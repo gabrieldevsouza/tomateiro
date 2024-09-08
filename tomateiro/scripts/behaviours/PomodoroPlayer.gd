@@ -5,8 +5,8 @@ class_name PomodoroPlayer
 
 @export var pomodoro_timer_label : Label
 
-@export var play_btn : AutoSizeButtonMaterialIcon
-@export var pause_btn : AutoSizeButtonMaterialIcon
+@export var play_btn : AutoSizeMaterialButton
+@export var pause_btn : AutoSizeMaterialButton
 @export var repeat_btn : BaseButton
 
 

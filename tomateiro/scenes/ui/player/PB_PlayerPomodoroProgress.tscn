@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://dh7odmd250h85"]
+
+[node name="PB_PlayerPomodoroProgress" type="ProgressBar"]
+size_flags_vertical = 1
+value = 50.0
+show_percentage = false

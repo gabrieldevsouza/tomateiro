@@ -1,0 +1,39 @@
+[gd_scene format=3 uid="uid://chi7gf8k4krjn"]
+
+[node name="C_PlayerProgressBar" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="ProgressBar" type="ProgressBar" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 1
+value = 50.0
+show_percentage = false
+
+[node name="ColorRect" type="ColorRect" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.677116, 0.202234, 0.401946, 0.196078)
+
+[node name="ColorRect2" type="ColorRect" parent="."]
+visible = false
+layout_mode = 2
+offset_right = 1152.0
+offset_bottom = 648.0
+color = Color(0.258903, 0.00364283, 0.0900184, 1)
