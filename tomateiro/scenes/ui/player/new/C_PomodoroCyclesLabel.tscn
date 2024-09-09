@@ -1,0 +1,31 @@
+[gd_scene load_steps=2 format=3 uid="uid://bnfgx2g1bexq3"]
+
+[ext_resource type="Script" path="res://tomateiro/scripts/utils/auto_size_label.gd" id="1_aobok"]
+
+[node name="C_PomodoroCyclesLabel" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ASL_PomodoroCycles" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(0.745617, 0.5782, 0.98, 0.588235)
+theme_override_colors/font_shadow_color = Color(0.0784314, 0.0862745, 0.141176, 1)
+theme_override_colors/font_outline_color = Color(0.1554, 0.16359, 0.21, 0.392157)
+theme_override_constants/outline_size = 10
+theme_override_font_sizes/font_size = 56
+text = "1 / 4"
+horizontal_alignment = 1
+vertical_alignment = 2
+clip_text = true
+script = ExtResource("1_aobok")
