@@ -15,7 +15,7 @@ run/main_scene="res://tomateiro/scenes/N_Bootstrap.tscn"
 config/features=PackedStringArray("4.3", "Mobile")
 boot_splash/bg_color=Color(0.141176, 0.141176, 0.141176, 0)
 boot_splash/image="res://tomateiro/assets/imgs/gabisou-bubble-color.png"
-config/icon="res://tomateiro/assets/imgs/tomateiro-logo-icon.svg"
+config/icon="res://tomateiro/assets/imgs/logo_colors/tomateiro-logo-colors-icon.svg"
 
 [autoload]
 

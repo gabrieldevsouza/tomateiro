@@ -37,6 +37,7 @@ grow_vertical = 2
 size_flags_vertical = 1
 theme_override_styles/background = SubResource("StyleBoxFlat_45a8t")
 theme_override_styles/fill = SubResource("StyleBoxFlat_owmjk")
+step = 0.001
 value = 50.0
 show_percentage = false
 

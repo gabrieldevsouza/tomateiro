@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cna0mr4javlx1"
-path="res://.godot/imported/icon.png-cc40e8dc60dc1ac778f11e1c0ae2c1ad.ctex"
+uid="uid://byemwfcvl4g8j"
+path="res://.godot/imported/logo_colors.svg-3f5267dff0949e87af16ce2ff2d51ba4.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://tomateiro/assets/imgs/icon.png"
-dest_files=["res://.godot/imported/icon.png-cc40e8dc60dc1ac778f11e1c0ae2c1ad.ctex"]
+source_file="res://tomateiro/assets/imgs/logo_colors/logo_colors.svg"
+dest_files=["res://.godot/imported/logo_colors.svg-3f5267dff0949e87af16ce2ff2d51ba4.ctex"]
 
 [params]
 
@@ -32,3 +32,6 @@ process/hdr_as_srgb=false
 process/hdr_clamp_exposure=false
 process/size_limit=0
 detect_3d/compress_to=1
+svg/scale=1.0
+editor/scale_with_editor_scale=false
+editor/convert_colors_with_editor_theme=false

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c2hxk2rn1u205"
-path="res://.godot/imported/tomateiro-logo.png-1fe254359801d6bee7ae57174824ee41.ctex"
+uid="uid://bukos7rb5ohby"
+path="res://.godot/imported/tomateiro-logo-icon.svg-812957381d22f1e32a82ee87f7424d60.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://tomateiro/assets/imgs/tomateiro-logo.png"
-dest_files=["res://.godot/imported/tomateiro-logo.png-1fe254359801d6bee7ae57174824ee41.ctex"]
+source_file="res://tomateiro/assets/imgs/old_logo/tomateiro-logo-icon.svg"
+dest_files=["res://.godot/imported/tomateiro-logo-icon.svg-812957381d22f1e32a82ee87f7424d60.ctex"]
 
 [params]
 
@@ -32,3 +32,6 @@ process/hdr_as_srgb=false
 process/hdr_clamp_exposure=false
 process/size_limit=0
 detect_3d/compress_to=1
+svg/scale=1.0
+editor/scale_with_editor_scale=false
+editor/convert_colors_with_editor_theme=false

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bukos7rb5ohby"
-path="res://.godot/imported/tomateiro-logo-icon.svg-169211c4d7b7a06af2daff77740dc304.ctex"
+uid="uid://bs7b0glddj4rx"
+path="res://.godot/imported/tomateiro-logo-colors-icon.svg-107844d3d32ce742131491d9a04c6583.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://tomateiro/assets/imgs/tomateiro-logo-icon.svg"
-dest_files=["res://.godot/imported/tomateiro-logo-icon.svg-169211c4d7b7a06af2daff77740dc304.ctex"]
+source_file="res://tomateiro/assets/imgs/logo_colors/tomateiro-logo-colors-icon.svg"
+dest_files=["res://.godot/imported/tomateiro-logo-colors-icon.svg-107844d3d32ce742131491d9a04c6583.ctex"]
 
 [params]
 

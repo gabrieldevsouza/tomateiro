@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://c26lr48h80a3a"]
+[gd_scene load_steps=21 format=3 uid="uid://c26lr48h80a3a"]
 
 [ext_resource type="Script" path="res://tomateiro/scripts/behaviours/UI/TitleBar/TitleBar.gd" id="1_gq87v"]
 [ext_resource type="Script" path="res://addons/MaxSizeContainer/max_size_container.gd" id="1_tkmb0"]
@@ -8,8 +8,9 @@
 [ext_resource type="FontFile" uid="uid://bj6hexaj2p1fe" path="res://addons/material-design-icons/fonts/material_design_icons.ttf" id="6_k0e30"]
 [ext_resource type="Script" path="res://tomateiro/scripts/utils/auto_size_material_icon.gd" id="7_dpwqi"]
 [ext_resource type="Script" path="res://tomateiro/scripts/utils/auto_size_label.gd" id="8_i4ahe"]
-[ext_resource type="Texture2D" uid="uid://c2hxk2rn1u205" path="res://tomateiro/assets/imgs/tomateiro-logo.png" id="8_pqvt4"]
+[ext_resource type="Texture2D" uid="uid://c2hxk2rn1u205" path="res://tomateiro/assets/imgs/old_logo/tomateiro-logo.png" id="8_pqvt4"]
 [ext_resource type="PackedScene" uid="uid://j6bskgctwf3" path="res://tomateiro/scenes/BTN_PinApp.tscn" id="10_cscbv"]
+[ext_resource type="Texture2D" uid="uid://bibacxv15w1wg" path="res://tomateiro/assets/imgs/logo_colors/logo_colors.png" id="10_d1luw"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xqa0o"]
 bg_color = Color(0.1554, 0.16359, 0.21, 0.27451)
@@ -246,7 +247,7 @@ script = ExtResource("3_ck3ec")
 [node name="TextureRect" type="TextureRect" parent="VBC_TitleBar/MSC_MaxTitleBar/PC_MainTitleBar/Control/HBoxContainer/HSRC_AppIcon"]
 layout_mode = 2
 size_flags_horizontal = 3
-texture = ExtResource("8_pqvt4")
+texture = ExtResource("10_d1luw")
 expand_mode = 2
 stretch_mode = 4
 
