@@ -1,0 +1,60 @@
+[gd_scene load_steps=10 format=3 uid="uid://j6bskgctwf3"]
+
+[ext_resource type="FontFile" uid="uid://bj6hexaj2p1fe" path="res://addons/material-design-icons/fonts/material_design_icons.ttf" id="1_vax1a"]
+[ext_resource type="Script" path="res://tomateiro/scripts/behaviours/UI/TitleBar/PinApp.gd" id="1_vkffm"]
+[ext_resource type="Script" path="res://tomateiro/scripts/utils/auto_size_material_icon.gd" id="2_vvpau"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_63cnu"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dwf4f"]
+bg_color = Color(1, 0.47451, 0.776471, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8eb48"]
+bg_color = Color(0.61, 0.3416, 0.493693, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_f6wsj"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_j15jt"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ur5pq"]
+bg_color = Color(0.69, 0.345, 0.5405, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+
+[node name="BTN_PinApp" type="Button"]
+theme_override_styles/focus = SubResource("StyleBoxEmpty_63cnu")
+theme_override_styles/hover = SubResource("StyleBoxFlat_dwf4f")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_8eb48")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_f6wsj")
+script = ExtResource("1_vkffm")
+style_disabled = SubResource("StyleBoxEmpty_j15jt")
+style_enabled = SubResource("StyleBoxFlat_ur5pq")
+
+[node name="AutoSizeMaterialIcon2" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 1
+theme_override_fonts/font = ExtResource("1_vax1a")
+theme_override_font_sizes/font_size = 2
+text = "󰐃"
+horizontal_alignment = 1
+vertical_alignment = 1
+clip_text = true
+script = ExtResource("2_vvpau")
+icon_name = "pin"
+
+[connection signal="pressed" from="." to="." method="_on_pressed"]

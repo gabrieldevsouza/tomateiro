@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://c26lr48h80a3a"]
+[gd_scene load_steps=20 format=3 uid="uid://c26lr48h80a3a"]
 
 [ext_resource type="Script" path="res://tomateiro/scripts/behaviours/UI/TitleBar/TitleBar.gd" id="1_gq87v"]
 [ext_resource type="Script" path="res://addons/MaxSizeContainer/max_size_container.gd" id="1_tkmb0"]
@@ -9,6 +9,7 @@
 [ext_resource type="Script" path="res://tomateiro/scripts/utils/auto_size_material_icon.gd" id="7_dpwqi"]
 [ext_resource type="Script" path="res://tomateiro/scripts/utils/auto_size_label.gd" id="8_i4ahe"]
 [ext_resource type="Texture2D" uid="uid://c2hxk2rn1u205" path="res://tomateiro/assets/imgs/tomateiro-logo.png" id="8_pqvt4"]
+[ext_resource type="PackedScene" uid="uid://j6bskgctwf3" path="res://tomateiro/scenes/BTN_PinApp.tscn" id="10_cscbv"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xqa0o"]
 bg_color = Color(0.1554, 0.16359, 0.21, 0.27451)
@@ -173,11 +174,13 @@ mouse_filter = 2
 theme_override_constants/separation = 0
 
 [node name="Control2" type="Control" parent="VBC_TitleBar/MSC_MaxTitleBar/PC_MainTitleBar/Control/HBoxContainer"]
+visible = false
 custom_minimum_size = Vector2(5, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 
 [node name="TextureRect" type="TextureRect" parent="VBC_TitleBar/MSC_MaxTitleBar/PC_MainTitleBar/Control/HBoxContainer"]
+visible = false
 layout_mode = 2
 size_flags_horizontal = 3
 texture = ExtResource("8_pqvt4")
@@ -185,21 +188,134 @@ expand_mode = 2
 stretch_mode = 4
 
 [node name="Control3" type="Control" parent="VBC_TitleBar/MSC_MaxTitleBar/PC_MainTitleBar/Control/HBoxContainer"]
+visible = false
 custom_minimum_size = Vector2(5, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 0.6
 
 [node name="AutoSizeLabel" type="Label" parent="VBC_TitleBar/MSC_MaxTitleBar/PC_MainTitleBar/Control/HBoxContainer"]
+visible = false
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 1
 size_flags_stretch_ratio = 160.0
 theme_override_colors/font_color = Color(0.972549, 0.972549, 0.94902, 1)
-theme_override_font_sizes/font_size = 16
+theme_override_font_sizes/font_size = 1
 text = "Tomateiro"
 clip_text = true
 script = ExtResource("8_i4ahe")
+
+[node name="HSRC_LeftSpace" type="AspectRatioContainer" parent="VBC_TitleBar/MSC_MaxTitleBar/PC_MainTitleBar/Control/HBoxContainer"]
+custom_minimum_size = Vector2(5, 0)
+layout_mode = 2
+ratio = 2.0
+script = ExtResource("3_ck3ec")
+stack_ratio = 0.2
+
+[node name="BTN_QuitApp" parent="VBC_TitleBar/MSC_MaxTitleBar/PC_MainTitleBar/Control/HBoxContainer/HSRC_LeftSpace" instance=ExtResource("4_5we8b")]
+visible = false
+layout_mode = 2
+theme_override_styles/focus = SubResource("StyleBoxEmpty_63cnu")
+theme_override_styles/hover = SubResource("StyleBoxFlat_dwf4f")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_8eb48")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_f6wsj")
+
+[node name="AutoSizeMaterialIcon2" type="Label" parent="VBC_TitleBar/MSC_MaxTitleBar/PC_MainTitleBar/Control/HBoxContainer/HSRC_LeftSpace/BTN_QuitApp"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 1
+theme_override_fonts/font = ExtResource("6_k0e30")
+theme_override_font_sizes/font_size = 2
+text = "󱎘"
+horizontal_alignment = 1
+vertical_alignment = 1
+clip_text = true
+script = ExtResource("7_dpwqi")
+icon_name = "close-thick"
+
+[node name="HSRC_AppIcon" type="AspectRatioContainer" parent="VBC_TitleBar/MSC_MaxTitleBar/PC_MainTitleBar/Control/HBoxContainer"]
+custom_minimum_size = Vector2(25, 0)
+layout_mode = 2
+script = ExtResource("3_ck3ec")
+
+[node name="TextureRect" type="TextureRect" parent="VBC_TitleBar/MSC_MaxTitleBar/PC_MainTitleBar/Control/HBoxContainer/HSRC_AppIcon"]
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("8_pqvt4")
+expand_mode = 2
+stretch_mode = 4
+
+[node name="HSRC_LeftSpace2" type="AspectRatioContainer" parent="VBC_TitleBar/MSC_MaxTitleBar/PC_MainTitleBar/Control/HBoxContainer"]
+custom_minimum_size = Vector2(7.5, 0)
+layout_mode = 2
+ratio = 2.0
+script = ExtResource("3_ck3ec")
+stack_ratio = 0.3
+
+[node name="BTN_QuitApp" parent="VBC_TitleBar/MSC_MaxTitleBar/PC_MainTitleBar/Control/HBoxContainer/HSRC_LeftSpace2" instance=ExtResource("4_5we8b")]
+visible = false
+layout_mode = 2
+theme_override_styles/focus = SubResource("StyleBoxEmpty_63cnu")
+theme_override_styles/hover = SubResource("StyleBoxFlat_dwf4f")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_8eb48")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_f6wsj")
+
+[node name="AutoSizeMaterialIcon2" type="Label" parent="VBC_TitleBar/MSC_MaxTitleBar/PC_MainTitleBar/Control/HBoxContainer/HSRC_LeftSpace2/BTN_QuitApp"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 1
+theme_override_fonts/font = ExtResource("6_k0e30")
+theme_override_font_sizes/font_size = 2
+text = "󱎘"
+horizontal_alignment = 1
+vertical_alignment = 1
+clip_text = true
+script = ExtResource("7_dpwqi")
+icon_name = "close-thick"
+
+[node name="HSRC_AppName" type="AspectRatioContainer" parent="VBC_TitleBar/MSC_MaxTitleBar/PC_MainTitleBar/Control/HBoxContainer"]
+custom_minimum_size = Vector2(80, 0)
+layout_mode = 2
+ratio = 3.0
+alignment_horizontal = 0
+script = ExtResource("3_ck3ec")
+stack_ratio = 3.2
+
+[node name="TextureRect" type="TextureRect" parent="VBC_TitleBar/MSC_MaxTitleBar/PC_MainTitleBar/Control/HBoxContainer/HSRC_AppName"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("8_pqvt4")
+expand_mode = 2
+stretch_mode = 4
+
+[node name="AutoSizeLabel" type="Label" parent="VBC_TitleBar/MSC_MaxTitleBar/PC_MainTitleBar/Control/HBoxContainer/HSRC_AppName"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+size_flags_stretch_ratio = 160.0
+theme_override_colors/font_color = Color(0.972549, 0.972549, 0.94902, 1)
+theme_override_font_sizes/font_size = 15
+text = "Tomateiro"
+clip_text = true
+script = ExtResource("8_i4ahe")
+
+[node name="HSRC_AppIcon3" type="AspectRatioContainer" parent="VBC_TitleBar/MSC_MaxTitleBar/PC_MainTitleBar/Control/HBoxContainer"]
+custom_minimum_size = Vector2(25, 0)
+layout_mode = 2
+script = ExtResource("3_ck3ec")
+
+[node name="BTN_PinApp" parent="VBC_TitleBar/MSC_MaxTitleBar/PC_MainTitleBar/Control/HBoxContainer/HSRC_AppIcon3" instance=ExtResource("10_cscbv")]
+layout_mode = 2
 
 [node name="C_MainArea_EMPTY" type="Control" parent="VBC_TitleBar"]
 layout_mode = 2

@@ -78,3 +78,6 @@ func tick_iteration() -> void:
 	else:
 		remaining_seconds.value = 0
 		finish()
+		
+func get_progress () -> float:
+	return remaining_seconds.value / default_focus_time.value

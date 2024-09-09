@@ -63,7 +63,13 @@ func _draw() -> void:
 	update_font_size()
 
 func update_font_size() -> void:
-	await get_tree().create_timer(0.01).timeout
+	var scene_tree : SceneTree = get_tree()
+
+	if scene_tree != null:
+		var timer : SceneTreeTimer = get_tree().create_timer(0.01)
+
+		if timer != null:
+			await timer.timeout
 
 	var font = get_theme_font("font")
 	var font_size = get_theme_font_size("font_size")

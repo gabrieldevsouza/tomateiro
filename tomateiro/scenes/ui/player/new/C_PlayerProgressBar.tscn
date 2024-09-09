@@ -1,10 +1,21 @@
-[gd_scene load_steps=3 format=3 uid="uid://chi7gf8k4krjn"]
+[gd_scene load_steps=5 format=3 uid="uid://chi7gf8k4krjn"]
+
+[ext_resource type="Script" path="res://tomateiro/scripts/behaviours/PomodoroProgress.gd" id="1_u6cbv"]
+[ext_resource type="Resource" uid="uid://bwljjvthas7gs" path="res://tomateiro/resources/pomodoro_default.tres" id="2_7x5k7"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_45a8t"]
-bg_color = Color(0.143939, 0.139613, 0.365671, 1)
+bg_color = Color(0.384, 0.448, 0.64, 0.392157)
+corner_radius_top_left = 50
+corner_radius_top_right = 50
+corner_radius_bottom_right = 50
+corner_radius_bottom_left = 50
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_owmjk"]
-bg_color = Color(0.42, 0.768, 1, 0.360784)
+bg_color = Color(1, 0.47, 0.770333, 0.588235)
+corner_radius_top_left = 50
+corner_radius_top_right = 50
+corner_radius_bottom_right = 50
+corner_radius_bottom_left = 50
 
 [node name="C_PlayerProgressBar" type="Control"]
 layout_mode = 3
@@ -45,3 +56,8 @@ layout_mode = 2
 offset_right = 1152.0
 offset_bottom = 648.0
 color = Color(0.258903, 0.00364283, 0.0900184, 1)
+
+[node name="BHV_PomodoroProgress" type="Node" parent="." node_paths=PackedStringArray("progress_bar")]
+script = ExtResource("1_u6cbv")
+progress_bar = NodePath("../ProgressBar")
+pomodoro_controller = ExtResource("2_7x5k7")
