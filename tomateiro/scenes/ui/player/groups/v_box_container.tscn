@@ -34,7 +34,7 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 size_flags_stretch_ratio = 60.0
 theme_override_constants/margin_left = 0
-theme_override_constants/margin_top = 114
+theme_override_constants/margin_top = 243
 theme_override_constants/margin_right = 0
 theme_override_constants/margin_bottom = 0
 script = ExtResource("1_snogc")
@@ -162,10 +162,6 @@ size_flags_vertical = 3
 [node name="MarginContainer" type="MarginContainer" parent="MaxSizeContainer/HBoxContainer"]
 layout_mode = 2
 
-[node name="C_Spacing" type="Control" parent="."]
-layout_mode = 2
-size_flags_vertical = 3
-
 [node name="C_ProgressBar" type="Control" parent="."]
 layout_mode = 2
 size_flags_vertical = 3
@@ -179,9 +175,9 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/margin_left = 176
-theme_override_constants/margin_top = 22
+theme_override_constants/margin_top = 5
 theme_override_constants/margin_right = 176
-theme_override_constants/margin_bottom = 22
+theme_override_constants/margin_bottom = 5
 script = ExtResource("1_snogc")
 limit = Vector2(800, 10)
 
@@ -190,8 +186,3 @@ layout_mode = 2
 size_flags_vertical = 1
 value = 50.0
 show_percentage = false
-
-[node name="C_Spacing2" type="Control" parent="."]
-layout_mode = 2
-size_flags_vertical = 3
-size_flags_stretch_ratio = 15.0

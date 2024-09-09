@@ -50,6 +50,7 @@ theme_override_styles/normal = SubResource("StyleBoxEmpty_040vo")
 text = "󰐍"
 clip_text = true
 script = ExtResource("2_63ms7")
+size_margin = 1
 icon_name = "play-circle-outline"
 
 [node name="ASMB_PlayerButton_PAUSE" type="Button" parent="."]

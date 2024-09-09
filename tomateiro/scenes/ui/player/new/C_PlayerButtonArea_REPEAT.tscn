@@ -42,7 +42,7 @@ theme_override_colors/font_pressed_color = Color(0.745617, 0.5782, 0.98, 0.86274
 theme_override_colors/font_focus_color = Color(0.97, 0.97, 0.9506, 0.588235)
 theme_override_colors/font_color = Color(0.97, 0.97, 0.9506, 0.588235)
 theme_override_fonts/font = ExtResource("1_bqfqf")
-theme_override_font_sizes/font_size = 638
+theme_override_font_sizes/font_size = 628
 theme_override_styles/focus = SubResource("StyleBoxEmpty_wmqn2")
 theme_override_styles/hover = SubResource("StyleBoxEmpty_md4t8")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_c2rb4")
@@ -50,6 +50,7 @@ theme_override_styles/normal = SubResource("StyleBoxEmpty_py6hg")
 text = "󰑐"
 clip_text = true
 script = ExtResource("2_ajitj")
+size_margin = 1
 icon_name = "refresh"
 
 [node name="BHV_RepeatButton" type="Node" parent="." node_paths=PackedStringArray("repeat_button")]

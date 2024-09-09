@@ -1,4 +1,10 @@
-[gd_scene format=3 uid="uid://chi7gf8k4krjn"]
+[gd_scene load_steps=3 format=3 uid="uid://chi7gf8k4krjn"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_45a8t"]
+bg_color = Color(0.143939, 0.139613, 0.365671, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_owmjk"]
+bg_color = Color(0.42, 0.768, 1, 0.360784)
 
 [node name="C_PlayerProgressBar" type="Control"]
 layout_mode = 3
@@ -18,6 +24,8 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_vertical = 1
+theme_override_styles/background = SubResource("StyleBoxFlat_45a8t")
+theme_override_styles/fill = SubResource("StyleBoxFlat_owmjk")
 value = 50.0
 show_percentage = false
 

@@ -20,7 +20,7 @@ layout_mode = 2
 
 [node name="C_CompactPlayerSector_PLAYER" parent="." instance=ExtResource("2_thf5x")]
 layout_mode = 2
-size_flags_stretch_ratio = 4.0
+size_flags_stretch_ratio = 2.0
 
 [node name="C_CompactPlayerSector_CYCLES" parent="." instance=ExtResource("3_dw3jj")]
 layout_mode = 2
