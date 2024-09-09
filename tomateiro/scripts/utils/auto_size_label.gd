@@ -8,6 +8,7 @@ var previous_text : String = ""
 
 func _ready() -> void:
 	clip_text = true
+	set_font_size(1)
 
 # func _process(_delta: float) -> void:
 # 	if previous_text != text:
@@ -61,3 +62,7 @@ func update_font_size() -> void:
 			break
 
 		add_theme_font_size_override("font_size", font_size)
+
+
+func set_font_size(font_size : int) -> void:
+	add_theme_font_size_override("font_size", font_size)

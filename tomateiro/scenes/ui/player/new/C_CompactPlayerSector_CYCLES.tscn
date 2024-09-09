@@ -1,8 +1,11 @@
-[gd_scene load_steps=4 format=3 uid="uid://3ff1ecoqi7n6"]
+[gd_scene load_steps=5 format=3 uid="uid://3ff1ecoqi7n6"]
 
 [ext_resource type="Script" path="res://tomateiro/scripts/utils/HStackableRatioContainer.gd" id="1_6cp5m"]
 [ext_resource type="PackedScene" uid="uid://bnfgx2g1bexq3" path="res://tomateiro/scenes/ui/player/new/C_PomodoroCyclesLabel.tscn" id="1_cuuki"]
 [ext_resource type="Script" path="res://tomateiro/scripts/utils/auto_size_label.gd" id="1_kc6xr"]
+
+[sub_resource type="FontVariation" id="FontVariation_3m1ke"]
+spacing_glyph = 2
 
 [node name="C_CompactPlayerSector_CYCLES" type="Control"]
 layout_mode = 3
@@ -24,7 +27,7 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.246706, 0.250015, 0.340652, 1)
 
-[node name="HBoxContainer" type="HBoxContainer" parent="."]
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -33,35 +36,48 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 0
 
-[node name="C_Margin_RIGHT" type="Control" parent="HBoxContainer"]
+[node name="Control" type="Control" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.17
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 0
+
+[node name="C_Margin_RIGHT" type="Control" parent="VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="C_Margin_MIDDLE" type="AspectRatioContainer" parent="HBoxContainer"]
-custom_minimum_size = Vector2(0.648, 0)
+[node name="C_Margin_MIDDLE" type="AspectRatioContainer" parent="VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(36.26, 0)
 layout_mode = 2
 size_flags_horizontal = 3
-ratio = 0.7
+size_flags_stretch_ratio = 3.0
+ratio = 1.1324
 alignment_horizontal = 2
 script = ExtResource("1_6cp5m")
-stack_ratio = 0.001
+stack_ratio = 0.07
 
-[node name="ColorRect" type="ColorRect" parent="HBoxContainer/C_Margin_MIDDLE"]
+[node name="ColorRect" type="ColorRect" parent="VBoxContainer/HBoxContainer/C_Margin_MIDDLE"]
 visible = false
 layout_mode = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer/C_Margin_MIDDLE"]
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/HBoxContainer/C_Margin_MIDDLE"]
 layout_mode = 2
+theme_override_constants/separation = 0
 
-[node name="C_PomodoroCyclesLabel" parent="HBoxContainer/C_Margin_MIDDLE/VBoxContainer" instance=ExtResource("1_cuuki")]
-layout_mode = 2
-size_flags_vertical = 3
-
-[node name="C_PomodoroCyclesLabel2" type="Control" parent="HBoxContainer/C_Margin_MIDDLE/VBoxContainer"]
+[node name="C_PomodoroCyclesLabel" parent="VBoxContainer/HBoxContainer/C_Margin_MIDDLE/VBoxContainer" instance=ExtResource("1_cuuki")]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="ASL_PomodoroCycles" type="Label" parent="HBoxContainer/C_Margin_MIDDLE/VBoxContainer/C_PomodoroCyclesLabel2"]
+[node name="C_PomodoroCyclesLabel2" type="Control" parent="VBoxContainer/HBoxContainer/C_Margin_MIDDLE/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.9
+
+[node name="ASL_PomodoroCycles" type="Label" parent="VBoxContainer/HBoxContainer/C_Margin_MIDDLE/VBoxContainer/C_PomodoroCyclesLabel2"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -74,61 +90,20 @@ theme_override_colors/font_color = Color(0.745617, 0.5782, 0.98, 0.588235)
 theme_override_colors/font_shadow_color = Color(0.0784314, 0.0862745, 0.141176, 1)
 theme_override_colors/font_outline_color = Color(0.1554, 0.16359, 0.21, 0.392157)
 theme_override_constants/outline_size = 10
-theme_override_font_sizes/font_size = 56
-text = "cycles"
+theme_override_fonts/font = SubResource("FontVariation_3m1ke")
+theme_override_font_sizes/font_size = 178
+text = "Cycles"
 horizontal_alignment = 1
 clip_text = true
 script = ExtResource("1_kc6xr")
+max_font_size = 9999
 
-[node name="C_Margin_MIDDLE2" type="Control" parent="HBoxContainer"]
-visible = false
-layout_mode = 2
-size_flags_horizontal = 3
-
-[node name="ColorRect" type="ColorRect" parent="HBoxContainer/C_Margin_MIDDLE2"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer/C_Margin_MIDDLE2"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="C_PomodoroCyclesLabel" parent="HBoxContainer/C_Margin_MIDDLE2/VBoxContainer" instance=ExtResource("1_cuuki")]
-layout_mode = 2
-size_flags_vertical = 3
-
-[node name="C_PomodoroCyclesLabel2" type="Control" parent="HBoxContainer/C_Margin_MIDDLE2/VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-
-[node name="ASL_PomodoroCycles" type="Label" parent="HBoxContainer/C_Margin_MIDDLE2/VBoxContainer/C_PomodoroCyclesLabel2"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-theme_override_colors/font_color = Color(0.745617, 0.5782, 0.98, 0.588235)
-theme_override_colors/font_shadow_color = Color(0.0784314, 0.0862745, 0.141176, 1)
-theme_override_colors/font_outline_color = Color(0.1554, 0.16359, 0.21, 0.392157)
-theme_override_constants/outline_size = 10
-theme_override_font_sizes/font_size = 56
-text = "cycles"
-horizontal_alignment = 1
-clip_text = true
-script = ExtResource("1_kc6xr")
-
-[node name="C_Margin_LEFT" type="Control" parent="HBoxContainer"]
+[node name="C_Margin_LEFT" type="Control" parent="VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 0.05
+
+[node name="Control2" type="Control" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.08
