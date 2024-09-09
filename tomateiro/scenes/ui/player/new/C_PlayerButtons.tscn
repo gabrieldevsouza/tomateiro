@@ -1,23 +1,7 @@
-[gd_scene load_steps=10 format=3 uid="uid://dxn22ulrit4o"]
+[gd_scene load_steps=3 format=3 uid="uid://dxn22ulrit4o"]
 
 [ext_resource type="PackedScene" uid="uid://cxfkrq18ojmfh" path="res://tomateiro/scenes/ui/player/new/C_PlayerButtonArea_PLAY.tscn" id="1_0ol7w"]
 [ext_resource type="PackedScene" uid="uid://bwros6vv8xl0r" path="res://tomateiro/scenes/ui/player/new/C_PlayerButtonArea_REPEAT.tscn" id="2_1wb2r"]
-[ext_resource type="Script" path="res://tomateiro/scripts/utils/HStackableRatioContainer.gd" id="2_3fk4g"]
-[ext_resource type="FontFile" uid="uid://bj6hexaj2p1fe" path="res://addons/material-design-icons/fonts/material_design_icons.ttf" id="4_midtn"]
-[ext_resource type="Script" path="res://tomateiro/scripts/utils/AutoSizeMaterialButton.gd" id="5_0psee"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_2ciym"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_d7u2j"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nlmja"]
-bg_color = Color(0.384, 0.448, 0.64, 0.196078)
-corner_radius_top_left = 100
-corner_radius_top_right = 100
-corner_radius_bottom_right = 100
-corner_radius_bottom_left = 100
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_l1wts"]
 
 [node name="C_PlayerButtons" type="Control"]
 layout_mode = 3
@@ -29,43 +13,6 @@ grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="HBoxContainer" type="HBoxContainer" parent="."]
-visible = false
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_constants/separation = 0
-alignment = 1
-
-[node name="HSRC_PlayerButtonArea_REPEAT" type="AspectRatioContainer" parent="HBoxContainer"]
-custom_minimum_size = Vector2(453.6, 0)
-layout_mode = 2
-script = ExtResource("2_3fk4g")
-item_scale = 0.7
-
-[node name="C_PlayerButtonArea_REPEAT" parent="HBoxContainer/HSRC_PlayerButtonArea_REPEAT" instance=ExtResource("2_1wb2r")]
-layout_mode = 2
-
-[node name="HStackableRatioContainer" type="AspectRatioContainer" parent="HBoxContainer"]
-custom_minimum_size = Vector2(648, 0)
-layout_mode = 2
-script = ExtResource("2_3fk4g")
-
-[node name="C_PlayerButtonArea_PLAY" parent="HBoxContainer/HStackableRatioContainer" instance=ExtResource("1_0ol7w")]
-layout_mode = 2
-
-[node name="HSRC_PlayerButtonArea_SKIP" type="AspectRatioContainer" parent="HBoxContainer"]
-custom_minimum_size = Vector2(648, 0)
-layout_mode = 2
-script = ExtResource("2_3fk4g")
-
-[node name="ColorRect" type="ColorRect" parent="HBoxContainer/HSRC_PlayerButtonArea_SKIP"]
-layout_mode = 2
-color = Color(1, 1, 1, 0.254902)
-
 [node name="ColorRect" type="ColorRect" parent="."]
 layout_mode = 1
 anchors_preset = 15
@@ -75,22 +22,7 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.118885, 0.536569, 0.558698, 0.196078)
 
-[node name="AspectRatioContainer" type="AspectRatioContainer" parent="."]
-visible = false
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_right = -4.0
-grow_horizontal = 2
-grow_vertical = 2
-ratio = 2.7
-
-[node name="ColorRect" type="ColorRect" parent="AspectRatioContainer"]
-layout_mode = 2
-
-[node name="HBoxContainer2" type="HBoxContainer" parent="."]
-visible = false
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -98,41 +30,10 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 0
+alignment = 1
 
-[node name="ASBM_PlayerButton_PLAY" type="Button" parent="HBoxContainer2"]
+[node name="C_PlayerButtonArea_REPEAT" parent="HBoxContainer" instance=ExtResource("2_1wb2r")]
 layout_mode = 2
-size_flags_horizontal = 3
-theme_override_colors/font_hover_pressed_color = Color(0.745098, 0.576471, 0.980392, 0.862745)
-theme_override_colors/font_hover_color = Color(0.745617, 0.5782, 0.98, 0.666667)
-theme_override_colors/font_pressed_color = Color(0.745617, 0.5782, 0.98, 0.862745)
-theme_override_colors/font_focus_color = Color(0.97, 0.97, 0.9506, 0.588235)
-theme_override_colors/font_color = Color(0.97, 0.97, 0.9506, 0.588235)
-theme_override_fonts/font = ExtResource("4_midtn")
-theme_override_font_sizes/font_size = 566
-theme_override_styles/focus = SubResource("StyleBoxEmpty_2ciym")
-theme_override_styles/hover = SubResource("StyleBoxEmpty_d7u2j")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_nlmja")
-theme_override_styles/normal = SubResource("StyleBoxEmpty_l1wts")
-text = "󰐍"
-clip_text = true
-script = ExtResource("5_0psee")
-icon_name = "play-circle-outline"
 
-[node name="ASBM_PlayerButton_PAUSE" type="Button" parent="HBoxContainer2"]
+[node name="C_PlayerButtonArea_PLAY" parent="HBoxContainer" instance=ExtResource("1_0ol7w")]
 layout_mode = 2
-size_flags_horizontal = 3
-theme_override_colors/font_hover_pressed_color = Color(0.745098, 0.576471, 0.980392, 0.862745)
-theme_override_colors/font_hover_color = Color(0.745617, 0.5782, 0.98, 0.666667)
-theme_override_colors/font_pressed_color = Color(0.745617, 0.5782, 0.98, 0.862745)
-theme_override_colors/font_focus_color = Color(0.97, 0.97, 0.9506, 0.588235)
-theme_override_colors/font_color = Color(0.97, 0.97, 0.9506, 0.588235)
-theme_override_fonts/font = ExtResource("4_midtn")
-theme_override_font_sizes/font_size = 566
-theme_override_styles/focus = SubResource("StyleBoxEmpty_2ciym")
-theme_override_styles/hover = SubResource("StyleBoxEmpty_d7u2j")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_nlmja")
-theme_override_styles/normal = SubResource("StyleBoxEmpty_l1wts")
-text = "󰏦"
-clip_text = true
-script = ExtResource("5_0psee")
-icon_name = "pause-circle-outline"

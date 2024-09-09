@@ -1,9 +1,22 @@
-[gd_scene load_steps=5 format=3 uid="uid://cxfkrq18ojmfh"]
+[gd_scene load_steps=9 format=3 uid="uid://cxfkrq18ojmfh"]
 
 [ext_resource type="FontFile" uid="uid://bj6hexaj2p1fe" path="res://addons/material-design-icons/fonts/material_design_icons.ttf" id="1_1n6rf"]
 [ext_resource type="Script" path="res://tomateiro/scripts/utils/AutoSizeMaterialButton.gd" id="2_63ms7"]
 [ext_resource type="Script" path="res://tomateiro/scripts/behaviours/UI/PlayerButtons/PlayPauseButton.gd" id="3_ccdpb"]
 [ext_resource type="Resource" uid="uid://bwljjvthas7gs" path="res://tomateiro/resources/pomodoro_default.tres" id="4_2qp5o"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_cxhad"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ecmre"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dujws"]
+bg_color = Color(0.384, 0.448, 0.64, 0.196078)
+corner_radius_top_left = 100
+corner_radius_top_right = 100
+corner_radius_bottom_right = 100
+corner_radius_bottom_left = 100
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_040vo"]
 
 [node name="C_PlayerButtonArea_PLAY" type="Control"]
 layout_mode = 3
@@ -22,12 +35,21 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+size_flags_horizontal = 3
+theme_override_colors/font_hover_pressed_color = Color(0.745098, 0.576471, 0.980392, 0.862745)
+theme_override_colors/font_hover_color = Color(0.745617, 0.5782, 0.98, 0.666667)
+theme_override_colors/font_pressed_color = Color(0.745617, 0.5782, 0.98, 0.862745)
+theme_override_colors/font_focus_color = Color(0.97, 0.97, 0.9506, 0.588235)
+theme_override_colors/font_color = Color(0.97, 0.97, 0.9506, 0.588235)
 theme_override_fonts/font = ExtResource("1_1n6rf")
 theme_override_font_sizes/font_size = 638
+theme_override_styles/focus = SubResource("StyleBoxEmpty_cxhad")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_ecmre")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_dujws")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_040vo")
 text = "󰐍"
 clip_text = true
 script = ExtResource("2_63ms7")
-max_steps = 20
 icon_name = "play-circle-outline"
 
 [node name="ASMB_PlayerButton_PAUSE" type="Button" parent="."]
@@ -37,12 +59,21 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+size_flags_horizontal = 3
+theme_override_colors/font_hover_pressed_color = Color(0.745098, 0.576471, 0.980392, 0.862745)
+theme_override_colors/font_hover_color = Color(0.745617, 0.5782, 0.98, 0.666667)
+theme_override_colors/font_pressed_color = Color(0.745617, 0.5782, 0.98, 0.862745)
+theme_override_colors/font_focus_color = Color(0.97, 0.97, 0.9506, 0.588235)
+theme_override_colors/font_color = Color(0.97, 0.97, 0.9506, 0.588235)
 theme_override_fonts/font = ExtResource("1_1n6rf")
 theme_override_font_sizes/font_size = 638
+theme_override_styles/focus = SubResource("StyleBoxEmpty_cxhad")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_ecmre")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_dujws")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_040vo")
 text = "󰏦"
 clip_text = true
 script = ExtResource("2_63ms7")
-max_steps = 20
 icon_name = "pause-circle-outline"
 
 [node name="BHV_PlayPauseButton" type="Node" parent="." node_paths=PackedStringArray("play_button", "pause_button")]
