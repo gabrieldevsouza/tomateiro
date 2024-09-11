@@ -38,10 +38,8 @@ func iterate_cycle() -> void:
 func setup_current_cycle_time() -> void:
 	if current_cycle.get_value() % 2 == 1:
 		current_cycle_time = setup_focus_time.value
-		print("Focus Time: ", current_cycle_time, " ", current_cycle.get_value())
 	else:
 		current_cycle_time = setup_rest_time.value
-		print("Rest Time: ", current_cycle_time, " ", current_cycle.get_value())
 
 func prepare_next_cycle() -> void:
 

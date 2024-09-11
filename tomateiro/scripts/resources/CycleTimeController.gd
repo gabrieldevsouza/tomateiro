@@ -27,8 +27,6 @@ func bootstrap() -> void:
 func initialize_values() -> void:
 	if remaining_seconds.value <= 0:
 		remaining_seconds.value = round_controller.current_cycle_time
-	
-	print ("Remaining Seconds: ", remaining_seconds.value)
 
 
 func load_resources() -> void:
@@ -39,16 +37,13 @@ func load_resources() -> void:
 		remaining_seconds.value = 0
 
 func prepare() -> void:
-	print("Prepare")
 	state = PomodoroState.STOP
 
 	initialize_values()
 
 	prepare_signal.emit()
 
-	if round_controller.can_user_play():
-		print("allow_user_play: ", round_controller.can_user_play())
-	else:
+	if not round_controller.can_user_play():
 		play()
 
 func can_user_play() -> bool:
@@ -76,14 +71,11 @@ func repeat() -> void:
 	remaining_seconds.value = round_controller.current_cycle_time
 	ResourceSaver.save(remaining_seconds, "user://remaining_seconds.tres")
 
-	print(remaining_seconds.value)
-
 	prepare()
 
 	repeat_signal.emit()
 
 func finish () -> void:
-	print("Finish")
 	state = PomodoroState.STOP
 	remaining_seconds.value = 0
 

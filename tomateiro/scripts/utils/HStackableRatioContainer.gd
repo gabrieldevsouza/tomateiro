@@ -13,13 +13,8 @@ class_name HStackableRatioContainer
 			container = get_parent()
 
 		if container != null:
-			# print(container.get_minimum_size(), "  ::  ", container.size.x, "  ::  ", container.get_parent_area_size().x)
 			if value * container.size.y > container.get_parent_area_size().x and ratio_limited_by_parent_width:
 				value = container.get_parent_area_size().x / container.size.y
-
-			# print(container.get_minimum_size(), "  ::  ", container.size.x, "  ::  ", container.get_parent_area_size().x)
-			# if value * container.size.y > container.size.x:
-			# 	value = container.size.x / container.size.y
 
 		stack_ratio = value
 		compute()
@@ -30,18 +25,14 @@ class_name HStackableRatioContainer
 		item_scale = value
 		compute()
 
-# Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	container = get_parent()
 	resized.connect(compute)
-	pass # Replace with function body.
 
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
 func compute() -> void:
 	if container == null:
 		container = get_parent()
 		if container == null:
 			return
 	custom_minimum_size.x =  container.size.y * stack_ratio * item_scale
-	pass

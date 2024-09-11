@@ -30,4 +30,3 @@ func update_timer() -> void:
 	var current_count =  int((round_controller.current_cycle.get_value() + 1) / 2)
 
 	cycle_timer_label.set_text(str(current_count, " / ", max_count))
-	pass

@@ -13,13 +13,8 @@ class_name VStackableRatioContainer
 			container = get_parent()
 
 		if container != null:
-			# print(container.get_minimum_size(), "  ::  ", container.size.y, "  ::  ", container.get_parent_area_size().y)
 			if value * container.size.x > container.get_parent_area_size().y and ratio_limited_by_parent_height:
 				value = container.get_parent_area_size().y / container.size.x
-
-			# print(container.get_minimum_size(), "  ::  ", container.size.y, "  ::  ", container.get_parent_area_size().y)
-			# if value * container.size.x > container.size.y:
-			# 	value = container.size.y / container.size.x
 
 			stack_ratio = value
 			compute()
@@ -41,4 +36,3 @@ func compute() -> void:
 		if container == null:
 			return
 	custom_minimum_size.y = container.size.x * stack_ratio * item_scale
-	pass

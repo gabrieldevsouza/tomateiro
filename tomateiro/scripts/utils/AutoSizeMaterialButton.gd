@@ -47,8 +47,6 @@ func _draw() -> void:
 		return
 	
 	update_font_size()
-	
-	# print("draw")
 
 func set_font_size(font_size : int) -> void:
 	add_theme_font_size_override("font_size", font_size)

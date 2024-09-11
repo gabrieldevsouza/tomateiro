@@ -9,8 +9,6 @@ func _ready() -> void:
 	resized.connect(compute)
 
 func compute() -> void:
-	print("container.size")
-
 	if container == null:
 		container = get_parent()
 		if container == null:
