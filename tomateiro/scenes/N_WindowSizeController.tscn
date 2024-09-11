@@ -14,7 +14,7 @@ theme_override_constants/margin_top = 8
 theme_override_constants/margin_bottom = 8
 
 [node name="C_WindowSize_LEFT" type="Control" parent="MC_WindowLeftSize"]
-custom_minimum_size = Vector2(4, 0)
+custom_minimum_size = Vector2(6, 0)
 layout_mode = 2
 mouse_filter = 1
 mouse_default_cursor_shape = 10
@@ -46,7 +46,7 @@ theme_override_constants/margin_top = 8
 theme_override_constants/margin_bottom = 8
 
 [node name="C_WindowSize_RIGHT" type="Control" parent="MC_WindowRightSize"]
-custom_minimum_size = Vector2(4, 0)
+custom_minimum_size = Vector2(6, 0)
 layout_mode = 2
 mouse_filter = 1
 mouse_default_cursor_shape = 10
@@ -76,7 +76,7 @@ theme_override_constants/margin_left = 8
 theme_override_constants/margin_right = 8
 
 [node name="C_WindowSize_TOP" type="Control" parent="MC_WindowTopSize"]
-custom_minimum_size = Vector2(0, 4)
+custom_minimum_size = Vector2(0, 6)
 layout_mode = 2
 mouse_filter = 1
 mouse_default_cursor_shape = 9
@@ -109,7 +109,7 @@ theme_override_constants/margin_left = 8
 theme_override_constants/margin_right = 8
 
 [node name="C_WindowSize_BOTTOM" type="Control" parent="MC_WindowBottomSize"]
-custom_minimum_size = Vector2(0, 4)
+custom_minimum_size = Vector2(0, 6)
 layout_mode = 2
 mouse_filter = 1
 mouse_default_cursor_shape = 9
@@ -135,7 +135,7 @@ offset_right = 8.0
 offset_bottom = 8.0
 
 [node name="C_WindowSize_TOP_LEFT" type="Control" parent="MC_WindowTopLeftSize"]
-custom_minimum_size = Vector2(8, 8)
+custom_minimum_size = Vector2(10, 10)
 layout_mode = 2
 mouse_filter = 1
 mouse_default_cursor_shape = 12
@@ -181,7 +181,7 @@ offset_bottom = 8.0
 grow_horizontal = 0
 
 [node name="C_WindowSize_TOP_RIGHT" type="Control" parent="MC_WindowTopRightSize"]
-custom_minimum_size = Vector2(8, 8)
+custom_minimum_size = Vector2(10, 10)
 layout_mode = 2
 mouse_filter = 1
 mouse_default_cursor_shape = 11
@@ -227,7 +227,7 @@ offset_right = 8.0
 grow_vertical = 0
 
 [node name="C_WindowSize_BOTTOM_LEFT" type="Control" parent="MC_WindowBottomLeftSize"]
-custom_minimum_size = Vector2(8, 8)
+custom_minimum_size = Vector2(10, 10)
 layout_mode = 2
 mouse_filter = 1
 mouse_default_cursor_shape = 11
@@ -276,7 +276,7 @@ grow_horizontal = 0
 grow_vertical = 0
 
 [node name="C_WindowSize_BOTTOM_RIGHT" type="Control" parent="MC_WindowBottomRightSize"]
-custom_minimum_size = Vector2(8, 8)
+custom_minimum_size = Vector2(10, 10)
 layout_mode = 2
 mouse_filter = 1
 mouse_default_cursor_shape = 12

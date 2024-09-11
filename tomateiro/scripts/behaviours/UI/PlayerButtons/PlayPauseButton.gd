@@ -14,7 +14,7 @@ func _ready() -> void:
 	pomodoro_controller.pause_signal.connect(on_pause)
 	pomodoro_controller.repeat_signal.connect(on_repeat)
 
-	if pomodoro_controller.is_running_time:
+	if pomodoro_controller.state == PomodoroController.PomodoroState.PLAY:
 		on_play()
 	else:
 		on_pause()
