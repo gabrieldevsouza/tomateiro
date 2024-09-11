@@ -1,6 +1,10 @@
-[gd_resource type="Resource" script_class="RoundController" load_steps=2 format=3 uid="uid://ceapb1ka75jh5"]
+[gd_resource type="Resource" script_class="RoundController" load_steps=4 format=3 uid="uid://ceapb1ka75jh5"]
 
+[ext_resource type="Resource" uid="uid://bwljjvthas7gs" path="res://tomateiro/resources/cycle_controller_default.tres" id="1_a7nw5"]
 [ext_resource type="Script" path="res://tomateiro/scripts/resources/RoundController.gd" id="1_bq1hp"]
+[ext_resource type="Resource" uid="uid://p5tbquc60biu" path="res://tomateiro/vars/INT_CyclesAmount.tres" id="3_0i71y"]
 
 [resource]
 script = ExtResource("1_bq1hp")
+cycle_time = ExtResource("1_a7nw5")
+setup_focus_max_amount = ExtResource("3_0i71y")

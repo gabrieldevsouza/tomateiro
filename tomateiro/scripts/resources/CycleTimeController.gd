@@ -29,7 +29,7 @@ func bootstrap() -> void:
 
 	initialize_values()
 	
-	# prepare()
+	prepare()
 
 func initialize_values() -> void:
 	if remaining_seconds.value <= 0:
@@ -45,11 +45,10 @@ func load_resources() -> void:
 
 func prepare() -> void:
 	state = PomodoroState.STOP
-	allow_user_play = true
 	prepare_signal.emit()
 
 func play() -> void:
-	if state == PomodoroState.PLAY or not allow_user_play:
+	if state == PomodoroState.PLAY:
 		return
 
 	start_cycle_time = Time.get_unix_time_from_system()
@@ -72,6 +71,7 @@ func repeat() -> void:
 	repeat_signal.emit()
 
 func finish () -> void:
+	allow_user_play = false
 	state = PomodoroState.STOP
 	remaining_seconds.value = 0
 
@@ -97,6 +97,4 @@ func tick_iteration() -> void:
 
 
 func get_progress () -> float:
-	print(remaining_seconds.value)
-	print(remaining_seconds.value, " / ", setup_focus_time.value)
 	return remaining_seconds.value / setup_focus_time.value

@@ -20,9 +20,13 @@ func _ready() -> void:
 		on_pause()
 
 func on_play_pressed() -> void:
+	if not cycle_time.allow_user_play:
+		return
 	cycle_time.play()
 
 func on_pause_pressed() -> void:
+	if not cycle_time.allow_user_play:
+		return
 	cycle_time.pause()
 
 func on_play() -> void:
