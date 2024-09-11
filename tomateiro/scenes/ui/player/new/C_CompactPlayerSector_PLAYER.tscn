@@ -48,6 +48,6 @@ layout_mode = 2
 size_flags_stretch_ratio = 80.0
 
 [node name="Control" type="Control" parent="MaxSizeContainer/VBC_PlayerArea"]
-visible = false
+custom_minimum_size = Vector2(0, 5)
 layout_mode = 2
-size_flags_stretch_ratio = 10.0
+size_flags_vertical = 3

@@ -23,6 +23,9 @@ func _input(event):
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
 		if event.is_released() or not event.pressed:
 			following = false
+	
+	if not Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
+		following = false
 
 func _on_gui_input(event:InputEvent) -> void:
 	if event is InputEventMouseButton:

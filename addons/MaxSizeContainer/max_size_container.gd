@@ -298,4 +298,3 @@ func _on_child_exiting_tree( p_child:Node ) -> void:
 func _on_child_minimum_size_changed() -> void:
 	minimum_child_size = child.get_combined_minimum_size()
 	_validate_maximum_size()
-

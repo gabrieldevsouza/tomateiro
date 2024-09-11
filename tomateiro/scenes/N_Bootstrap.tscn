@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://bh0ukvfgwej0i"]
+[gd_scene load_steps=10 format=3 uid="uid://bh0ukvfgwej0i"]
 
 [ext_resource type="Script" path="res://tomateiro/scripts/behaviours/Bootstrap.gd" id="1_2mkm5"]
 [ext_resource type="PackedScene" uid="uid://by7fcj37vgdua" path="res://tomateiro/scenes/MC_TitleBar.tscn" id="1_rjt57"]
@@ -7,13 +7,18 @@
 [ext_resource type="Resource" uid="uid://bwljjvthas7gs" path="res://tomateiro/resources/cycle_controller_default.tres" id="3_r5iwv"]
 [ext_resource type="Resource" uid="uid://ceapb1ka75jh5" path="res://tomateiro/resources/round_controller_default.tres" id="4_ibtpp"]
 [ext_resource type="Script" path="res://tomateiro/scripts/behaviours/IterationTick.gd" id="4_wiflm"]
+[ext_resource type="StyleBox" uid="uid://cv2auc6ul6ipt" path="res://tomateiro/scenes/bg_box.tres" id="6_isphb"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_g5vdh"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_33ul4"]
 bg_color = Color(0.266, 0.2772, 0.35, 0.54902)
+draw_center = false
 corner_radius_top_left = 5
 corner_radius_top_right = 5
 corner_radius_bottom_right = 10
 corner_radius_bottom_left = 10
+shadow_color = Color(0, 0, 0, 0.313726)
+shadow_size = 4
+shadow_offset = Vector2(0, 1)
 
 [node name="N_Bootstrap" type="Node" node_paths=PackedStringArray("main_area_spawn_point", "iteration_tick")]
 script = ExtResource("1_2mkm5")
@@ -26,6 +31,24 @@ iteration_tick = NodePath("T_IterationTick")
 [node name="T_IterationTick" type="Timer" parent="."]
 script = ExtResource("4_wiflm")
 cycle_time = ExtResource("3_r5iwv")
+
+[node name="MC_MainBackgdround2" type="MarginContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 6
+
+[node name="PanelContainer2" type="PanelContainer" parent="MC_MainBackgdround2"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_33ul4")
 
 [node name="MC_MainBackgdround" type="MarginContainer" parent="."]
 anchors_preset = 15
@@ -40,10 +63,14 @@ theme_override_constants/margin_top = 5
 theme_override_constants/margin_right = 5
 theme_override_constants/margin_bottom = 5
 
+[node name="ColorRect" type="ColorRect" parent="MC_MainBackgdround"]
+visible = false
+layout_mode = 2
+
 [node name="PanelContainer" type="PanelContainer" parent="MC_MainBackgdround"]
 layout_mode = 2
 mouse_filter = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_g5vdh")
+theme_override_styles/panel = ExtResource("6_isphb")
 
 [node name="C_MainApp_SPAWN" type="Control" parent="."]
 layout_mode = 3
