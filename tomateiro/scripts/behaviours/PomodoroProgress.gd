@@ -1,14 +1,14 @@
 extends Node
 
 @export var progress_bar : ProgressBar
-@export var pomodoro_controller : PomodoroController
+@export var cycle_time : CycleTimeController
 
 
 func _ready() -> void:
-	pomodoro_controller.tick_signal.connect(on_tick)
-	pomodoro_controller.repeat_signal.connect(on_repeat)
-	pomodoro_controller.prepare_signal.connect(on_prepare)
-	pomodoro_controller.finish_signal.connect(on_finish)
+	cycle_time.tick_signal.connect(on_tick)
+	cycle_time.repeat_signal.connect(on_repeat)
+	cycle_time.prepare_signal.connect(on_prepare)
+	cycle_time.finish_signal.connect(on_finish)
 
 func on_tick() -> void:
 	update_bar()
@@ -23,4 +23,4 @@ func on_finish() -> void:
 	update_bar()
 
 func update_bar() -> void:
-	progress_bar.value = (1 - pomodoro_controller.get_progress()) * 100
+	progress_bar.value = (1 - cycle_time.get_progress()) * 100

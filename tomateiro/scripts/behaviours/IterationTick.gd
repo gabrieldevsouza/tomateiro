@@ -1,7 +1,7 @@
 extends Timer
 class_name IterationTick
 
-@export var pomodoro_controller : PomodoroController
+@export var cycle_time : CycleTimeController
 
 var test_signal : Signal
 
@@ -10,10 +10,10 @@ func _ready() -> void:
 	pass
 
 func bootstrap() -> void:
-	pomodoro_controller.play_signal.connect(on_play)
-	pomodoro_controller.pause_signal.connect(on_pause)
-	pomodoro_controller.repeat_signal.connect(on_repeat)
-	pomodoro_controller.finish_signal.connect(on_finish)
+	cycle_time.play_signal.connect(on_play)
+	cycle_time.pause_signal.connect(on_pause)
+	cycle_time.repeat_signal.connect(on_repeat)
+	cycle_time.finish_signal.connect(on_finish)
 
 	timeout.connect(on_timeout)
 
@@ -30,7 +30,7 @@ func on_finish() -> void:
 	stop()
 
 func on_timeout() -> void:
-	pomodoro_controller.tick_iteration()
+	cycle_time.tick_iteration()
 	start()
 
 func on_test() -> void:

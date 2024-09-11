@@ -3,7 +3,7 @@
 [ext_resource type="FontFile" uid="uid://bj6hexaj2p1fe" path="res://addons/material-design-icons/fonts/material_design_icons.ttf" id="1_1n6rf"]
 [ext_resource type="Script" path="res://tomateiro/scripts/utils/AutoSizeMaterialButton.gd" id="2_63ms7"]
 [ext_resource type="Script" path="res://tomateiro/scripts/behaviours/UI/PlayerButtons/PlayPauseButton.gd" id="3_ccdpb"]
-[ext_resource type="Resource" uid="uid://bwljjvthas7gs" path="res://tomateiro/resources/pomodoro_default.tres" id="4_2qp5o"]
+[ext_resource type="Resource" uid="uid://bwljjvthas7gs" path="res://tomateiro/resources/cycle_controller_default.tres" id="4_2qp5o"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_cxhad"]
 
@@ -90,6 +90,6 @@ icon_name = "pause-circle-outline"
 
 [node name="BHV_PlayPauseButton" type="Node" parent="." node_paths=PackedStringArray("play_button", "pause_button")]
 script = ExtResource("3_ccdpb")
-pomodoro_controller = ExtResource("4_2qp5o")
+cycle_time = ExtResource("4_2qp5o")
 play_button = NodePath("../ASMB_PlayerButton_PLAY")
 pause_button = NodePath("../ASMB_PlayerButton_PAUSE")

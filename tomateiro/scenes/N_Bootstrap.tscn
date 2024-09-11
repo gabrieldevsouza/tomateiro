@@ -4,7 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://by7fcj37vgdua" path="res://tomateiro/scenes/MC_TitleBar.tscn" id="1_rjt57"]
 [ext_resource type="PackedScene" uid="uid://kjoftlwb2ekd" path="res://tomateiro/scenes/N_WindowSizeController.tscn" id="2_mgvrn"]
 [ext_resource type="PackedScene" uid="uid://da8d5hdscq8r0" path="res://tomateiro/scenes/C_AppMainArea.tscn" id="3_4x0tc"]
-[ext_resource type="Resource" uid="uid://bwljjvthas7gs" path="res://tomateiro/resources/pomodoro_default.tres" id="3_r5iwv"]
+[ext_resource type="Resource" uid="uid://bwljjvthas7gs" path="res://tomateiro/resources/cycle_controller_default.tres" id="3_r5iwv"]
 [ext_resource type="Script" path="res://tomateiro/scripts/behaviours/IterationTick.gd" id="4_wiflm"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_g5vdh"]
@@ -18,12 +18,12 @@ corner_radius_bottom_left = 10
 script = ExtResource("1_2mkm5")
 main_area_spawn_point = NodePath("C_MainApp_SPAWN")
 main_area = ExtResource("3_4x0tc")
-pomodoro_controller = ExtResource("3_r5iwv")
+cycle_time = ExtResource("3_r5iwv")
 iteration_tick = NodePath("T_IterationTick")
 
 [node name="T_IterationTick" type="Timer" parent="."]
 script = ExtResource("4_wiflm")
-pomodoro_controller = ExtResource("3_r5iwv")
+cycle_time = ExtResource("3_r5iwv")
 
 [node name="MC_MainBackgdround" type="MarginContainer" parent="."]
 anchors_preset = 15

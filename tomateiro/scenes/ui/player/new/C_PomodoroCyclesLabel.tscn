@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://bnfgx2g1bexq3"]
+[gd_scene load_steps=5 format=3 uid="uid://bnfgx2g1bexq3"]
 
 [ext_resource type="Script" path="res://tomateiro/scripts/utils/auto_size_label.gd" id="1_aobok"]
-[ext_resource type="Script" path="res://tomateiro/scripts/behaviours/CycleTimer.gd" id="2_qlb6q"]
-[ext_resource type="Resource" uid="uid://bwljjvthas7gs" path="res://tomateiro/resources/pomodoro_default.tres" id="3_uoj38"]
+[ext_resource type="Script" path="res://tomateiro/scripts/behaviours/CycleCountLabel.gd" id="2_qlb6q"]
+[ext_resource type="Resource" uid="uid://bwljjvthas7gs" path="res://tomateiro/resources/cycle_controller_default.tres" id="3_uoj38"]
+[ext_resource type="Resource" uid="uid://ceapb1ka75jh5" path="res://tomateiro/resources/round_controller_default.tres" id="4_b4o6k"]
 
 [node name="C_PomodoroCyclesLabel" type="Control"]
 layout_mode = 3
@@ -32,7 +33,8 @@ clip_text = true
 script = ExtResource("1_aobok")
 max_font_size = 99999
 
-[node name="BHV_CycleTimer" type="Node" parent="." node_paths=PackedStringArray("cycle_timer_label")]
+[node name="BHV_CycleCountLabel" type="Node" parent="." node_paths=PackedStringArray("cycle_timer_label")]
 script = ExtResource("2_qlb6q")
 cycle_timer_label = NodePath("../ASL_PomodoroCycles")
-pomodoro_controller = ExtResource("3_uoj38")
+cycle_time = ExtResource("3_uoj38")
+round_controller = ExtResource("4_b4o6k")

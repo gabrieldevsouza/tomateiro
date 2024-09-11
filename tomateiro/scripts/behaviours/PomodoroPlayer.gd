@@ -1,7 +1,7 @@
 extends Node
 class_name PomodoroPlayer
 
-@export var pomodoro_controller : PomodoroController
+@export var cycle_time : CycleTimeController
 
 @export var pomodoro_timer_label : Label
 
@@ -15,9 +15,9 @@ func _ready() -> void:
 	pause_btn.pressed.connect(on_btn_pause_pressed)
 	repeat_btn.pressed.connect(on_btn_repeat_pressed)
 
-	pomodoro_controller.tick_signal.connect(on_tick)
-	pomodoro_controller.repeat_signal.connect(on_repeat)
-	pomodoro_controller.prepare_signal.connect(on_prepare)
+	cycle_time.tick_signal.connect(on_tick)
+	cycle_time.repeat_signal.connect(on_repeat)
+	cycle_time.prepare_signal.connect(on_prepare)
 
 	pause_btn.visible = false
 	play_btn.visible = true
@@ -28,7 +28,7 @@ func on_btn_play_pressed() -> void:
 	play_btn.visible = false
 	pause_btn.visible = true
 
-	pomodoro_controller.play()
+	cycle_time.play()
 
 func on_btn_pause_pressed() -> void:
 	pause_btn.set_font_size(pause_btn.get_font_size())
@@ -36,18 +36,18 @@ func on_btn_pause_pressed() -> void:
 	pause_btn.visible = false
 	play_btn.visible = true
 	
-	pomodoro_controller.pause()
+	cycle_time.pause()
 
 func on_btn_repeat_pressed() -> void:
-	pomodoro_controller.repeat()
+	cycle_time.repeat()
 	pause_btn.visible = false
 	play_btn.visible = true
 
 func on_prepare() -> void:
-	pomodoro_timer_label.set_text(formart_time(pomodoro_controller.remaining_seconds.value))
+	pomodoro_timer_label.set_text(formart_time(cycle_time.remaining_seconds.value))
 
 func on_tick() -> void:
-	pomodoro_timer_label.set_text(formart_time(pomodoro_controller.remaining_seconds.value))
+	pomodoro_timer_label.set_text(formart_time(cycle_time.remaining_seconds.value))
 
 func formart_time(time : float) -> String:
 	var minutes = int(time / 60)
@@ -57,4 +57,4 @@ func formart_time(time : float) -> String:
 	return formatted_time
 
 func on_repeat() -> void:
-	pomodoro_timer_label.set_text(formart_time(pomodoro_controller.remaining_seconds.value))
+	pomodoro_timer_label.set_text(formart_time(cycle_time.remaining_seconds.value))

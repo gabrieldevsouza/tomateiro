@@ -1,6 +1,6 @@
 extends Node
 
-@export var pomodoro_controller : PomodoroController
+@export var cycle_time : CycleTimeController
 
 @export var play_button : AutoSizeMaterialButton
 @export var pause_button : AutoSizeMaterialButton
@@ -10,20 +10,20 @@ func _ready() -> void:
 	play_button.pressed.connect(on_play_pressed)
 	pause_button.pressed.connect(on_pause_pressed)
 
-	pomodoro_controller.play_signal.connect(on_play)
-	pomodoro_controller.pause_signal.connect(on_pause)
-	pomodoro_controller.repeat_signal.connect(on_repeat)
+	cycle_time.play_signal.connect(on_play)
+	cycle_time.pause_signal.connect(on_pause)
+	cycle_time.repeat_signal.connect(on_repeat)
 
-	if pomodoro_controller.state == PomodoroController.PomodoroState.PLAY:
+	if cycle_time.state == CycleTimeController.PomodoroState.PLAY:
 		on_play()
 	else:
 		on_pause()
 
 func on_play_pressed() -> void:
-	pomodoro_controller.play()
+	cycle_time.play()
 
 func on_pause_pressed() -> void:
-	pomodoro_controller.pause()
+	cycle_time.pause()
 
 func on_play() -> void:
 	show_pause_button()

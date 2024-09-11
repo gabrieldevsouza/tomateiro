@@ -3,7 +3,7 @@
 [ext_resource type="FontFile" uid="uid://bj6hexaj2p1fe" path="res://addons/material-design-icons/fonts/material_design_icons.ttf" id="1_bqfqf"]
 [ext_resource type="Script" path="res://tomateiro/scripts/utils/AutoSizeMaterialButton.gd" id="2_ajitj"]
 [ext_resource type="Script" path="res://tomateiro/scripts/behaviours/UI/PlayerButtons/RepeatButton.gd" id="3_scy0w"]
-[ext_resource type="Resource" uid="uid://bwljjvthas7gs" path="res://tomateiro/resources/pomodoro_default.tres" id="4_ajhvl"]
+[ext_resource type="Resource" uid="uid://bwljjvthas7gs" path="res://tomateiro/resources/cycle_controller_default.tres" id="4_ajhvl"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_wmqn2"]
 
@@ -55,5 +55,5 @@ icon_name = "refresh"
 
 [node name="BHV_RepeatButton" type="Node" parent="." node_paths=PackedStringArray("repeat_button")]
 script = ExtResource("3_scy0w")
-pomodoro_controller = ExtResource("4_ajhvl")
+cycle_time = ExtResource("4_ajhvl")
 repeat_button = NodePath("../ASMB_PlayerButton_REPEAT")

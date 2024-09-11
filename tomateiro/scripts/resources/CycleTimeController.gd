@@ -1,5 +1,5 @@
 extends Resource
-class_name PomodoroController
+class_name CycleTimeController
 
 enum PomodoroState {PREPARE, PLAY, PAUSE, STOP}
 
@@ -9,16 +9,10 @@ var state : PomodoroState = PomodoroState.PREPARE
 
 @export var setup_pomodoros_amount : IntVar
 
-var user_focus_time : FloatVar
-
-var real_cycles_amount : int = 0
-var user_cycles_amount : IntVar
-
 var remaining_seconds : FloatVar
-var current_round_cycle : IntVar
 
-var finish_iteration_time : float = 0
-var start_iteration_time : float = 0.0
+var finish_cycle_time : float = 0
+var start_cycle_time : float = 0.0
 
 var allow_user_play : bool = false
 
@@ -35,41 +29,31 @@ func bootstrap() -> void:
 
 	initialize_values()
 	
-	prepare()
+	# prepare()
 
 func initialize_values() -> void:
 	if remaining_seconds.value <= 0:
 		remaining_seconds.value = int(setup_focus_time.value)
-	
-	if current_round_cycle.value <= 0:
-		current_round_cycle.value = 1
 
-	if real_cycles_amount <= 0:
-		real_cycles_amount = setup_pomodoros_amount.value
 
 func load_resources() -> void:
 	remaining_seconds = ResourceLoader.load("user://remaining_seconds.tres")
 
-	current_round_cycle = ResourceLoader.load("user://current_round_cycle.tres")
-
 	if remaining_seconds == null:
 		remaining_seconds = FloatVar.new()
 		remaining_seconds.value = 0
-	
-	if current_round_cycle == null:
-		current_round_cycle = IntVar.new()
-		current_round_cycle.value = 0
 
 func prepare() -> void:
-	prepare_signal.emit()
 	state = PomodoroState.STOP
+	allow_user_play = true
+	prepare_signal.emit()
 
 func play() -> void:
-	if state == PomodoroState.PLAY:
+	if state == PomodoroState.PLAY or not allow_user_play:
 		return
 
-	start_iteration_time = Time.get_unix_time_from_system()
-	finish_iteration_time = start_iteration_time + remaining_seconds.value
+	start_cycle_time = Time.get_unix_time_from_system()
+	finish_cycle_time = start_cycle_time + remaining_seconds.value
 
 	state = PomodoroState.PLAY
 
@@ -99,7 +83,7 @@ func tick_iteration() -> void:
 	
 	var currentTime = Time.get_unix_time_from_system()
 	
-	var timeDifference = finish_iteration_time - currentTime
+	var timeDifference = finish_cycle_time - currentTime
 	
 	if timeDifference > 0:
 		remaining_seconds.value = timeDifference
