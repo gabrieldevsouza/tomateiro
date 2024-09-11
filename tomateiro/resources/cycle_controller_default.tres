@@ -1,10 +1,8 @@
-[gd_resource type="Resource" script_class="CycleTimeController" load_steps=4 format=3 uid="uid://bwljjvthas7gs"]
+[gd_resource type="Resource" script_class="CycleTimeController" load_steps=3 format=3 uid="uid://bwljjvthas7gs"]
 
 [ext_resource type="Script" path="res://tomateiro/scripts/resources/CycleTimeController.gd" id="1_6y2xj"]
-[ext_resource type="Resource" uid="uid://p5tbquc60biu" path="res://tomateiro/vars/INT_CyclesAmount.tres" id="1_f248s"]
-[ext_resource type="Resource" uid="uid://1mcpawc5p2tl" path="res://tomateiro/vars/FLOAT_FocusTime.tres" id="2_e4sc6"]
+[ext_resource type="Resource" uid="uid://ceapb1ka75jh5" path="res://tomateiro/resources/round_controller_default.tres" id="1_eqeiv"]
 
 [resource]
 script = ExtResource("1_6y2xj")
-setup_focus_time = ExtResource("2_e4sc6")
-setup_pomodoros_amount = ExtResource("1_f248s")
+round_controller = ExtResource("1_eqeiv")

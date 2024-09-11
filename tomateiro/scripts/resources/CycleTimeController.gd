@@ -3,18 +3,15 @@ class_name CycleTimeController
 
 enum PomodoroState {PREPARE, PLAY, PAUSE, STOP}
 
+@export var round_controller : RoundController
+
 var state : PomodoroState = PomodoroState.PREPARE
-
-@export var setup_focus_time : FloatVar
-
-@export var setup_pomodoros_amount : IntVar
 
 var remaining_seconds : FloatVar
 
 var finish_cycle_time : float = 0
 var start_cycle_time : float = 0.0
 
-var allow_user_play : bool = false
 
 signal prepare_signal
 signal play_signal
@@ -27,13 +24,11 @@ func bootstrap() -> void:
 
 	load_resources()
 
-	initialize_values()
-	
-	prepare()
-
 func initialize_values() -> void:
 	if remaining_seconds.value <= 0:
-		remaining_seconds.value = int(setup_focus_time.value)
+		remaining_seconds.value = round_controller.current_cycle_time
+	
+	print ("Remaining Seconds: ", remaining_seconds.value)
 
 
 func load_resources() -> void:
@@ -44,8 +39,20 @@ func load_resources() -> void:
 		remaining_seconds.value = 0
 
 func prepare() -> void:
+	print("Prepare")
 	state = PomodoroState.STOP
+
+	initialize_values()
+
 	prepare_signal.emit()
+
+	if round_controller.can_user_play():
+		print("allow_user_play: ", round_controller.can_user_play())
+	else:
+		play()
+
+func can_user_play() -> bool:
+	return round_controller.can_user_play()
 
 func play() -> void:
 	if state == PomodoroState.PLAY:
@@ -66,16 +73,24 @@ func pause() -> void:
 
 func repeat() -> void:
 	state = PomodoroState.STOP
-	remaining_seconds.value = setup_focus_time.value
+	remaining_seconds.value = round_controller.current_cycle_time
+	ResourceSaver.save(remaining_seconds, "user://remaining_seconds.tres")
+
+	print(remaining_seconds.value)
+
+	prepare()
 
 	repeat_signal.emit()
 
 func finish () -> void:
-	allow_user_play = false
+	print("Finish")
 	state = PomodoroState.STOP
 	remaining_seconds.value = 0
 
 	finish_signal.emit()
+
+	round_controller.prepare_next_cycle()
+	prepare()
 
 func tick_iteration() -> void:
 	if not state == PomodoroState.PLAY:
@@ -97,4 +112,4 @@ func tick_iteration() -> void:
 
 
 func get_progress () -> float:
-	return remaining_seconds.value / setup_focus_time.value
+	return remaining_seconds.value / round_controller.current_cycle_time

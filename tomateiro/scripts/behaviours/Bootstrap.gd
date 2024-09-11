@@ -25,5 +25,4 @@ func bootstrap() -> void:
 
 
 func prepare() -> void:
-	round_controller.prepare()
 	cycle_time.prepare()
