@@ -7,9 +7,9 @@
 [ext_resource type="PackedScene" uid="uid://dbe1alxqa4bic" path="res://tomateiro/scenes/BTN_MinimizeApp.tscn" id="4_euxw8"]
 [ext_resource type="FontFile" uid="uid://bj6hexaj2p1fe" path="res://addons/material-design-icons/fonts/material_design_icons.ttf" id="6_k0e30"]
 [ext_resource type="Script" path="res://tomateiro/scripts/utils/auto_size_material_icon.gd" id="7_dpwqi"]
+[ext_resource type="Texture2D" uid="uid://du61y0jcteh12" path="res://tomateiro/assets/imgs/logo_colors/tomateiro-shadows.png" id="8_4j2ta"]
 [ext_resource type="Script" path="res://tomateiro/scripts/utils/auto_size_label.gd" id="8_i4ahe"]
 [ext_resource type="Texture2D" uid="uid://c2hxk2rn1u205" path="res://tomateiro/assets/imgs/old_logo/tomateiro-logo.png" id="8_pqvt4"]
-[ext_resource type="Texture2D" uid="uid://dheik2aptt4ep" path="res://tomateiro/assets/imgs/logo_colors/tomateiro-minimal.svg" id="8_w75s6"]
 [ext_resource type="PackedScene" uid="uid://j6bskgctwf3" path="res://tomateiro/scenes/BTN_PinApp.tscn" id="10_cscbv"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xqa0o"]
@@ -96,14 +96,15 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_xqa0o")
 
 [node name="HBC_TitleBarButtons" type="HBoxContainer" parent="VBC_TitleBar/MSC_MaxTitleBar/PC_MainTitleBar"]
 layout_mode = 2
+theme_override_constants/separation = 0
 alignment = 2
 
 [node name="HSRC_MinimizeAppButton" type="AspectRatioContainer" parent="VBC_TitleBar/MSC_MaxTitleBar/PC_MainTitleBar/HBC_TitleBarButtons"]
-custom_minimum_size = Vector2(50, 0)
+custom_minimum_size = Vector2(42.5, 0)
 layout_mode = 2
 ratio = 2.0
 script = ExtResource("3_ck3ec")
-stack_ratio = 2.0
+stack_ratio = 1.7
 
 [node name="BTN_MinimizeApp" parent="VBC_TitleBar/MSC_MaxTitleBar/PC_MainTitleBar/HBC_TitleBarButtons/HSRC_MinimizeAppButton" instance=ExtResource("4_euxw8")]
 layout_mode = 2
@@ -121,7 +122,7 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_vertical = 1
 theme_override_fonts/font = ExtResource("6_k0e30")
-theme_override_font_sizes/font_size = 22
+theme_override_font_sizes/font_size = 18
 text = "󰖰"
 horizontal_alignment = 1
 vertical_alignment = 2
@@ -130,11 +131,11 @@ script = ExtResource("7_dpwqi")
 icon_name = "window-minimize"
 
 [node name="HSRC_QuitAppButton" type="AspectRatioContainer" parent="VBC_TitleBar/MSC_MaxTitleBar/PC_MainTitleBar/HBC_TitleBarButtons"]
-custom_minimum_size = Vector2(50, 0)
+custom_minimum_size = Vector2(42.5, 0)
 layout_mode = 2
 ratio = 2.0
 script = ExtResource("3_ck3ec")
-stack_ratio = 2.0
+stack_ratio = 1.7
 
 [node name="BTN_QuitApp" parent="VBC_TitleBar/MSC_MaxTitleBar/PC_MainTitleBar/HBC_TitleBarButtons/HSRC_QuitAppButton" instance=ExtResource("4_5we8b")]
 layout_mode = 2
@@ -152,7 +153,7 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_vertical = 1
 theme_override_fonts/font = ExtResource("6_k0e30")
-theme_override_font_sizes/font_size = 22
+theme_override_font_sizes/font_size = 18
 text = "󱎘"
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -214,7 +215,7 @@ script = ExtResource("3_ck3ec")
 [node name="TextureRect" type="TextureRect" parent="VBC_TitleBar/MSC_MaxTitleBar/PC_MainTitleBar/Control/HBoxContainer/HSRC_AppIcon"]
 layout_mode = 2
 size_flags_horizontal = 3
-texture = ExtResource("8_w75s6")
+texture = ExtResource("8_4j2ta")
 expand_mode = 2
 stretch_mode = 4
 
@@ -272,7 +273,7 @@ size_flags_horizontal = 3
 size_flags_vertical = 1
 size_flags_stretch_ratio = 160.0
 theme_override_colors/font_color = Color(0.972549, 0.972549, 0.94902, 1)
-theme_override_font_sizes/font_size = 14
+theme_override_font_sizes/font_size = 15
 text = "Tomateiro"
 clip_text = true
 script = ExtResource("8_i4ahe")

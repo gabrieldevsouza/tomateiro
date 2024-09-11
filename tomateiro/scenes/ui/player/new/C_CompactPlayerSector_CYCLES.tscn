@@ -46,9 +46,10 @@ layout_mode = 2
 size_flags_vertical = 3
 theme_override_constants/separation = 0
 
-[node name="C_Margin_RIGHT" type="Control" parent="VBoxContainer/HBoxContainer"]
+[node name="C_Margin_LEFT" type="Control" parent="VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.5
 
 [node name="C_Margin_MIDDLE" type="AspectRatioContainer" parent="VBoxContainer/HBoxContainer"]
 custom_minimum_size = Vector2(20.16, 0)
@@ -97,10 +98,10 @@ clip_text = true
 script = ExtResource("1_kc6xr")
 max_font_size = 9999
 
-[node name="C_Margin_LEFT" type="Control" parent="VBoxContainer/HBoxContainer"]
+[node name="C_Margin_RIGHT" type="Control" parent="VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
-size_flags_stretch_ratio = 0.05
+size_flags_stretch_ratio = 0.3
 
 [node name="Control2" type="Control" parent="VBoxContainer"]
 layout_mode = 2
