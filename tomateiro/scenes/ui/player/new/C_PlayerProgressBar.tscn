@@ -4,7 +4,7 @@
 [ext_resource type="Resource" uid="uid://bwljjvthas7gs" path="res://tomateiro/resources/cycle_controller_default.tres" id="2_7x5k7"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_45a8t"]
-bg_color = Color(0.384, 0.448, 0.64, 0.392157)
+bg_color = Color(0, 0, 0, 0.392157)
 corner_radius_top_left = 50
 corner_radius_top_right = 50
 corner_radius_bottom_right = 50
@@ -28,6 +28,7 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="ProgressBar" type="ProgressBar" parent="."]
+custom_minimum_size = Vector2(0, 4)
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
