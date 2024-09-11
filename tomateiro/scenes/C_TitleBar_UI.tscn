@@ -9,8 +9,8 @@
 [ext_resource type="Script" path="res://tomateiro/scripts/utils/auto_size_material_icon.gd" id="7_dpwqi"]
 [ext_resource type="Script" path="res://tomateiro/scripts/utils/auto_size_label.gd" id="8_i4ahe"]
 [ext_resource type="Texture2D" uid="uid://c2hxk2rn1u205" path="res://tomateiro/assets/imgs/old_logo/tomateiro-logo.png" id="8_pqvt4"]
+[ext_resource type="Texture2D" uid="uid://dheik2aptt4ep" path="res://tomateiro/assets/imgs/logo_colors/tomateiro-minimal.svg" id="8_w75s6"]
 [ext_resource type="PackedScene" uid="uid://j6bskgctwf3" path="res://tomateiro/scenes/BTN_PinApp.tscn" id="10_cscbv"]
-[ext_resource type="Texture2D" uid="uid://bibacxv15w1wg" path="res://tomateiro/assets/imgs/logo_colors/logo_colors.png" id="10_d1luw"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xqa0o"]
 bg_color = Color(0.1554, 0.16359, 0.21, 0.27451)
@@ -83,7 +83,7 @@ mouse_filter = 2
 theme_override_constants/margin_left = 0
 theme_override_constants/margin_top = 0
 theme_override_constants/margin_right = 0
-theme_override_constants/margin_bottom = 159
+theme_override_constants/margin_bottom = 76
 script = ExtResource("1_tkmb0")
 limit = Vector2(-1, 25)
 valign = 0
@@ -174,39 +174,6 @@ grow_vertical = 2
 mouse_filter = 2
 theme_override_constants/separation = 0
 
-[node name="Control2" type="Control" parent="VBC_TitleBar/MSC_MaxTitleBar/PC_MainTitleBar/Control/HBoxContainer"]
-visible = false
-custom_minimum_size = Vector2(5, 0)
-layout_mode = 2
-size_flags_horizontal = 3
-
-[node name="TextureRect" type="TextureRect" parent="VBC_TitleBar/MSC_MaxTitleBar/PC_MainTitleBar/Control/HBoxContainer"]
-visible = false
-layout_mode = 2
-size_flags_horizontal = 3
-texture = ExtResource("8_pqvt4")
-expand_mode = 2
-stretch_mode = 4
-
-[node name="Control3" type="Control" parent="VBC_TitleBar/MSC_MaxTitleBar/PC_MainTitleBar/Control/HBoxContainer"]
-visible = false
-custom_minimum_size = Vector2(5, 0)
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_stretch_ratio = 0.6
-
-[node name="AutoSizeLabel" type="Label" parent="VBC_TitleBar/MSC_MaxTitleBar/PC_MainTitleBar/Control/HBoxContainer"]
-visible = false
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 1
-size_flags_stretch_ratio = 160.0
-theme_override_colors/font_color = Color(0.972549, 0.972549, 0.94902, 1)
-theme_override_font_sizes/font_size = 1
-text = "Tomateiro"
-clip_text = true
-script = ExtResource("8_i4ahe")
-
 [node name="HSRC_LeftSpace" type="AspectRatioContainer" parent="VBC_TitleBar/MSC_MaxTitleBar/PC_MainTitleBar/Control/HBoxContainer"]
 custom_minimum_size = Vector2(5, 0)
 layout_mode = 2
@@ -247,7 +214,7 @@ script = ExtResource("3_ck3ec")
 [node name="TextureRect" type="TextureRect" parent="VBC_TitleBar/MSC_MaxTitleBar/PC_MainTitleBar/Control/HBoxContainer/HSRC_AppIcon"]
 layout_mode = 2
 size_flags_horizontal = 3
-texture = ExtResource("10_d1luw")
+texture = ExtResource("8_w75s6")
 expand_mode = 2
 stretch_mode = 4
 
@@ -305,7 +272,7 @@ size_flags_horizontal = 3
 size_flags_vertical = 1
 size_flags_stretch_ratio = 160.0
 theme_override_colors/font_color = Color(0.972549, 0.972549, 0.94902, 1)
-theme_override_font_sizes/font_size = 15
+theme_override_font_sizes/font_size = 14
 text = "Tomateiro"
 clip_text = true
 script = ExtResource("8_i4ahe")
