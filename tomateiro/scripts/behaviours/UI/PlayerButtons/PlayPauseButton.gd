@@ -25,6 +25,7 @@ func on_prepare() -> void:
 		on_pause()
 
 func on_play_pressed() -> void:
+	print(cycle_time.can_user_play())
 	if not cycle_time.can_user_play():
 		return
 	cycle_time.play()

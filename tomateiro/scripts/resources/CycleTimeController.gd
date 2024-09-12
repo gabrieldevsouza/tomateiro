@@ -63,6 +63,8 @@ func play() -> void:
 func pause() -> void:
 	if not state == PomodoroState.PLAY:
 		return
+		
+	state = PomodoroState.PAUSE
 	
 	pause_signal.emit()
 
