@@ -4,14 +4,14 @@
 [ext_resource type="Resource" uid="uid://bwljjvthas7gs" path="res://tomateiro/resources/cycle_controller_default.tres" id="2_7x5k7"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_45a8t"]
-bg_color = Color(0, 0, 0, 0.392157)
+bg_color = Color(0.15, 0.15, 0.15, 0.588235)
 corner_radius_top_left = 50
 corner_radius_top_right = 50
 corner_radius_bottom_right = 50
 corner_radius_bottom_left = 50
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_owmjk"]
-bg_color = Color(1, 0.47, 0.770333, 0.588235)
+bg_color = Color(0.34, 0.626, 1, 0.588235)
 corner_radius_top_left = 50
 corner_radius_top_right = 50
 corner_radius_bottom_right = 50

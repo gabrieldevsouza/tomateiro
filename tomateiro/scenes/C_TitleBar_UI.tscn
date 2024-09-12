@@ -13,7 +13,7 @@
 [ext_resource type="PackedScene" uid="uid://j6bskgctwf3" path="res://tomateiro/scenes/BTN_PinApp.tscn" id="10_cscbv"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xqa0o"]
-bg_color = Color(0.1554, 0.16359, 0.21, 0.27451)
+bg_color = Color(0.1, 0.1, 0.1, 0.27451)
 corner_radius_top_left = 5
 corner_radius_top_right = 5
 
