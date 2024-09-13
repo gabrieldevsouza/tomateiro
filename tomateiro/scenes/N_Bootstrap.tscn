@@ -20,13 +20,14 @@ shadow_color = Color(0, 0, 0, 0.313726)
 shadow_size = 4
 shadow_offset = Vector2(0, 1)
 
-[node name="N_Bootstrap" type="Node" node_paths=PackedStringArray("main_area_spawn_point", "iteration_tick")]
+[node name="N_Bootstrap" type="Node" node_paths=PackedStringArray("main_area_spawn_point", "iteration_tick", "main_control")]
 script = ExtResource("1_2mkm5")
 main_area_spawn_point = NodePath("C_MainApp_SPAWN")
 main_area = ExtResource("3_4x0tc")
 cycle_time = ExtResource("3_r5iwv")
 round_controller = ExtResource("4_ibtpp")
 iteration_tick = NodePath("T_IterationTick")
+main_control = NodePath("C_MainApp_SPAWN")
 
 [node name="T_IterationTick" type="Timer" parent="."]
 script = ExtResource("4_wiflm")

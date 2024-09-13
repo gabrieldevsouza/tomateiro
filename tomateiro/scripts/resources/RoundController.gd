@@ -5,6 +5,7 @@ class_name RoundController
 
 @export var setup_focus_time : FloatVar
 @export var setup_rest_time : FloatVar
+@export var setup_long_rest_time : FloatVar
 
 var current_cycle_time : float = 0
 
@@ -36,7 +37,9 @@ func iterate_cycle() -> void:
 	setup_current_cycle_time()
 
 func setup_current_cycle_time() -> void:
-	if current_cycle.get_value() % 2 == 1:
+	if current_cycle.get_value() / 2 == setup_focus_max_cycle_amount.value:
+		current_cycle_time = setup_long_rest_time.value
+	elif current_cycle.get_value() % 2 == 1:
 		current_cycle_time = setup_focus_time.value
 	else:
 		current_cycle_time = setup_rest_time.value

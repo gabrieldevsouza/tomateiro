@@ -9,6 +9,8 @@ class_name Bootstrap
 
 @export var iteration_tick : IterationTick
 
+@export var main_control : Control
+
 func _ready() -> void:
 	bootstrap()
 
@@ -26,3 +28,11 @@ func bootstrap() -> void:
 
 func prepare() -> void:
 	cycle_time.prepare()
+
+func _process(delta):
+	# print(main_control.get_global_mouse_position())
+	pass
+
+func is_mouse_button_pressed() -> bool:
+	return false
+	print(Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT))

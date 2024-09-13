@@ -1,0 +1,7 @@
+[gd_resource type="Resource" script_class="FloatVar" load_steps=2 format=3 uid="uid://bciiy88dkfbve"]
+
+[ext_resource type="Script" path="res://tomateiro/scripts/vars/float_var.gd" id="1_3gfh3"]
+
+[resource]
+script = ExtResource("1_3gfh3")
+value = 15.0

@@ -41,6 +41,10 @@ func update_font_size() -> void:
 
 	for i in 20:
 		line.clear()
+
+		if font_size <= 0:
+			font_size = 1
+
 		var created = line.add_string(text, font, font_size)
 		if created:
 			var text_size_x = line.get_line_width()

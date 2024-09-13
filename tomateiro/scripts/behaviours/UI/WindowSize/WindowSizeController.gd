@@ -6,6 +6,8 @@ var window_start_size : Vector2 = Vector2.ZERO
 
 var following : bool = false
 
+var is_left_mouse_pressed : bool = false
+
 enum AnchorType {LEFT, RIGHT, TOP, BOTTOM, TOP_LEFT, TOP_RIGHT, BOTTOM_LEFT, BOTTOM_RIGHT}
 
 var target_position : Vector2 = Vector2.ZERO
@@ -32,14 +34,22 @@ func _on_gui_input(event:InputEvent) -> void:
 		if event.button_index == MOUSE_BUTTON_LEFT:
 			if event.is_pressed():
 				following = true
+				is_left_mouse_pressed = true
 				mouse_offset = get_global_mouse_position()
 				window_start_drag_position = DisplayServer.window_get_position()
 				window_start_size = DisplayServer.window_get_size()
 			elif event.is_released():
 				following = false
+				is_left_mouse_pressed = false
 			
 
 func _process(_delta: float) -> void:
+	if not Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
+		is_left_mouse_pressed = false
+
+	if not is_left_mouse_pressed:
+		following = false
+
 	if following:
 		target_size = DisplayServer.window_get_size()
 		target_position = DisplayServer.window_get_position()
@@ -63,5 +73,5 @@ func _process(_delta: float) -> void:
 
 
 	if not get_window().has_focus() or get_window().mode == DisplayServer.WINDOW_MODE_MINIMIZED:
+		is_left_mouse_pressed = false
 		following = false
-	
