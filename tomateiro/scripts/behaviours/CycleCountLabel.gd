@@ -10,6 +10,7 @@ func _ready() -> void:
 	cycle_time.repeat_signal.connect(on_repeat)
 	cycle_time.prepare_signal.connect(on_prepare)
 	cycle_time.finish_signal.connect(on_finish)
+	round_controller.reset_signal.connect(on_reset)
 
 
 func on_prepare() -> void:
@@ -22,6 +23,9 @@ func on_repeat() -> void:
 	update_timer()
 
 func on_finish() -> void:
+	update_timer()
+
+func on_reset() -> void:
 	update_timer()
 
 func update_timer() -> void:

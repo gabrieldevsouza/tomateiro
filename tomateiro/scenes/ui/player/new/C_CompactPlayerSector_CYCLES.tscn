@@ -1,11 +1,30 @@
-[gd_scene load_steps=5 format=3 uid="uid://3ff1ecoqi7n6"]
+[gd_scene load_steps=11 format=3 uid="uid://3ff1ecoqi7n6"]
 
 [ext_resource type="Script" path="res://tomateiro/scripts/utils/HStackableRatioContainer.gd" id="1_6cp5m"]
 [ext_resource type="PackedScene" uid="uid://bnfgx2g1bexq3" path="res://tomateiro/scenes/ui/player/new/C_PomodoroCyclesLabel.tscn" id="1_cuuki"]
 [ext_resource type="Script" path="res://tomateiro/scripts/utils/auto_size_label.gd" id="1_kc6xr"]
+[ext_resource type="Script" path="res://tomateiro/scripts/behaviours/UI/PlayerButtons/ResetCyclesButton.gd" id="3_nkowk"]
+[ext_resource type="Resource" uid="uid://ceapb1ka75jh5" path="res://tomateiro/resources/round_controller_default.tres" id="4_hs3d3"]
+[ext_resource type="StyleBox" uid="uid://cwstafj15fwh" path="res://tomateiro/scenes/reset_button_style.tres" id="5_1d26n"]
 
 [sub_resource type="FontVariation" id="FontVariation_3m1ke"]
 spacing_glyph = 2
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_m0y3w"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8b6if"]
+bg_color = Color(0.332881, 0.332881, 0.332881, 0.784314)
+corner_radius_top_left = 60
+corner_radius_top_right = 60
+corner_radius_bottom_right = 60
+corner_radius_bottom_left = 60
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_inlc1"]
+bg_color = Color(0.158472, 0.158472, 0.158472, 0.784314)
+corner_radius_top_left = 60
+corner_radius_top_right = 60
+corner_radius_bottom_right = 60
+corner_radius_bottom_left = 60
 
 [node name="C_CompactPlayerSector_CYCLES" type="Control"]
 layout_mode = 3
@@ -97,6 +116,60 @@ horizontal_alignment = 1
 clip_text = true
 script = ExtResource("1_kc6xr")
 max_font_size = 9999
+
+[node name="C_ResetButton" type="Control" parent="VBoxContainer/HBoxContainer/C_Margin_MIDDLE/VBoxContainer/C_PomodoroCyclesLabel2" node_paths=PackedStringArray("reset_button", "label_button")]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("3_nkowk")
+reset_button = NodePath("Button")
+cycle_time = ExtResource("4_hs3d3")
+label_button = NodePath("Button/AutoSizeLabel")
+
+[node name="Button" type="Button" parent="VBoxContainer/HBoxContainer/C_Margin_MIDDLE/VBoxContainer/C_PomodoroCyclesLabel2/C_ResetButton"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+theme_override_styles/focus = SubResource("StyleBoxEmpty_m0y3w")
+theme_override_styles/hover = SubResource("StyleBoxFlat_8b6if")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_inlc1")
+theme_override_styles/normal = ExtResource("5_1d26n")
+
+[node name="AutoSizeLabel" type="Label" parent="VBoxContainer/HBoxContainer/C_Margin_MIDDLE/VBoxContainer/C_PomodoroCyclesLabel2/C_ResetButton/Button"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 99
+text = "RESET"
+horizontal_alignment = 1
+vertical_alignment = 1
+clip_text = true
+script = ExtResource("1_kc6xr")
+max_font_size = 99999
+
+[node name="ColorRect" type="ColorRect" parent="VBoxContainer/HBoxContainer/C_Margin_MIDDLE/VBoxContainer/C_PomodoroCyclesLabel2/C_ResetButton" node_paths=PackedStringArray("reset_button")]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(1, 0, 0, 1)
+script = ExtResource("3_nkowk")
+reset_button = NodePath("../Button")
+cycle_time = ExtResource("4_hs3d3")
 
 [node name="C_Margin_RIGHT" type="Control" parent="VBoxContainer/HBoxContainer"]
 layout_mode = 2
