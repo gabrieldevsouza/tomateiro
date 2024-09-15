@@ -1,7 +1,9 @@
-[gd_scene load_steps=7 format=3 uid="uid://dhkdlbq2v44lb"]
+[gd_scene load_steps=9 format=3 uid="uid://dhkdlbq2v44lb"]
 
 [ext_resource type="FontFile" uid="uid://bj6hexaj2p1fe" path="res://addons/material-design-icons/fonts/material_design_icons.ttf" id="1_x6k0o"]
 [ext_resource type="Script" path="res://tomateiro/scripts/utils/AutoSizeMaterialButton.gd" id="2_q2so5"]
+[ext_resource type="Script" path="res://tomateiro/scripts/behaviours/UI/PlayerButtons/SkipButton.gd" id="3_ln7fq"]
+[ext_resource type="Resource" uid="uid://bwljjvthas7gs" path="res://tomateiro/resources/cycle_controller_default.tres" id="4_7vfdg"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_pi5s6"]
 
@@ -40,7 +42,7 @@ theme_override_colors/font_pressed_color = Color(0.341176, 0.627451, 1, 0.862745
 theme_override_colors/font_focus_color = Color(0.97, 0.97, 0.9506, 0.588235)
 theme_override_colors/font_color = Color(0.97, 0.97, 0.9506, 0.588235)
 theme_override_fonts/font = ExtResource("1_x6k0o")
-theme_override_font_sizes/font_size = 1
+theme_override_font_sizes/font_size = 359
 theme_override_styles/focus = SubResource("StyleBoxEmpty_pi5s6")
 theme_override_styles/hover = SubResource("StyleBoxEmpty_fyrdu")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_xm1f4")
@@ -50,3 +52,8 @@ clip_text = true
 script = ExtResource("2_q2so5")
 size_margin = 1
 icon_name = "skip-next"
+
+[node name="BHV_SkipButton" type="Node" parent="." node_paths=PackedStringArray("skip_button")]
+script = ExtResource("3_ln7fq")
+cycle_time = ExtResource("4_7vfdg")
+skip_button = NodePath("../ASMB_PlayerButton_SKIP")
