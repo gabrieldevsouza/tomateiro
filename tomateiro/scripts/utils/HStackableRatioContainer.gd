@@ -28,6 +28,7 @@ class_name HStackableRatioContainer
 func _ready() -> void:
 	container = get_parent()
 	resized.connect(compute)
+	get_tree().get_root().size_changed.connect(on_screen_resized)
 
 
 func compute() -> void:
@@ -36,3 +37,8 @@ func compute() -> void:
 		if container == null:
 			return
 	custom_minimum_size.x =  container.size.y * stack_ratio * item_scale
+
+func on_screen_resized() -> void:
+	await get_tree().create_timer(1).timeout
+	custom_minimum_size.x = 10
+	compute()

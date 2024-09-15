@@ -4,6 +4,31 @@ var following : bool = false
 var dragging_start_position : Vector2 = Vector2.ZERO
 var is_left_mouse_pressed : bool = false
 
+@export var title_bar_content : Control
+@export var title_area : Control
+
+@export var cycle_time : CycleTimeController
+@export var round_controller : RoundController
+
+@export var timer_to_hide : FloatVar
+
+func _ready():
+	cycle_time.play_signal.connect(on_play)
+	title_area.gui_input.connect(_on_gui_input)
+	title_bar_content.visible = false
+
+
+func _on_gui_input(event:InputEvent) -> void:
+	if (event is InputEventMouseMotion or event is InputEventMouseButton or event is InputEventScreenTouch) and not title_bar_content.visible and round_controller.is_focus_cycle():
+		title_bar_content.visible = true
+		await get_tree().create_timer(timer_to_hide.get_value()).timeout
+		title_bar_content.visible = false
+
+func on_play() -> void:
+	title_bar_content.visible = false
+	if not round_controller.is_focus_cycle():
+		following = false
+
 func _on_main_title_bar_gui_input(event:InputEvent) -> void:
 	if event is InputEventMouseButton:
 		if event.button_index == MOUSE_BUTTON_LEFT:

@@ -31,7 +31,7 @@ theme_override_constants/separation = 0
 [node name="C_TitleBarspace" type="Control" parent="MarginContainer/VBC_TitleBar"]
 layout_mode = 2
 size_flags_vertical = 3
-size_flags_stretch_ratio = 4.0
+size_flags_stretch_ratio = 2.0
 
 [node name="C_MainArea_EMPTY" type="Control" parent="MarginContainer/VBC_TitleBar"]
 layout_mode = 2

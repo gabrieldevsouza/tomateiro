@@ -102,6 +102,7 @@ func _ready() -> void:
 
 	# Sets up the Container
 	resized.connect(_on_self_resized)
+	get_tree().get_root().size_changed.connect(_on_self_resized)
 
 	child_entered_tree.connect( _on_child_entered_tree )
 	child_exiting_tree.connect( _on_child_exiting_tree )
@@ -254,6 +255,7 @@ func _set_custom_margin(side : int, value : int) -> void:
 
 
 func _on_self_resized() -> void:
+	await get_tree().create_timer(0.01).timeout
 	# To avoid errors in tool mode and setup, the container must be fully ready
 	if is_initialized and not is_resizing:
 		is_resizing = true

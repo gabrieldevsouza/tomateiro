@@ -28,7 +28,6 @@ func on_reset_pressed() -> void:
 
 func enable_button() -> void:
 	reset_button.size = size
-	label_button.size = size
 	label_button.update_font_size()
 	reset_button.visible = true
 

@@ -81,9 +81,9 @@ func finish () -> void:
 	state = PomodoroState.STOP
 	remaining_seconds.value = 0
 
-	finish_signal.emit()
-
 	round_controller.prepare_next_cycle()
+
+	finish_signal.emit()
 	prepare()
 
 func tick_iteration() -> void:
