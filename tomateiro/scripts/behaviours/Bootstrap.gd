@@ -41,6 +41,9 @@ func prepare() -> void:
 	save_window()
 	cycle_time.prepare()
 
+	if not round_controller.is_focus_cycle():
+		on_play()
+
 func _process(delta):
 	# print(main_control.get_global_mouse_position())
 	pass
