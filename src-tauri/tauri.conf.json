@@ -13,8 +13,8 @@
     "windows": [
       {
         "title": "tomateiro",
-        "width": 800,
-        "height": 600
+        "width": 580,
+        "height": 250
       }
     ],
     "security": {
