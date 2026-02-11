@@ -1,5 +1,5 @@
 import "./App.css";
-import TimerView from "./TimerView";
+import TimerView from "../views/Timer/TimerView";
 
 function App() {
   return (

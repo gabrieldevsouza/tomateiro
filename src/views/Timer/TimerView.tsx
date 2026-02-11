@@ -1,10 +1,13 @@
+import FocusPanel from "../../components/FocusPanel/FocusPanel";
 import "./TimerView.css";
 
 function TimerView() {
     return (
         <div className="timer-view">
 			<div className="horizontal">
-				<div className="left-section"></div>
+				<div className="left-section">
+                    <FocusPanel />
+                </div>
 				<div className="right-section">
                     <div className="timer-section">
                         <div className="counter-section"></div>
