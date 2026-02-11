@@ -1,8 +1,11 @@
+import FocusLabel from "../FocusLabel/FocusLabel";
 import "./FocusPanel.css";
 
 function FocusPanel() {
     return(
-        <div className="FocusPanel">Focus</div>
+        <div className="FocusPanel">
+            <FocusLabel />
+        </div>
     )
 
 }

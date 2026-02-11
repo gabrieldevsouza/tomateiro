@@ -2,7 +2,7 @@ import "./FocusLabel.css";
 
 function FocusLabel() {
     return(
-        <div className="FocusLabel">Focus</div>
+        <div className="FocusLabel">Focus!</div>
     )
 
 }

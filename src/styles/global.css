@@ -1,0 +1,6 @@
+@font-face {
+  font-family: 'Beiruti';
+  src: url('src/assets/fonts/Beiruti-VariableFont_wght.ttf') format('truetype');
+  font-weight: 100 900; /* importante para variable font */
+  font-style: normal;
+}

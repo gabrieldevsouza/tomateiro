@@ -1,6 +1,4 @@
-.Focus {
-    font-family: Beiruti;
-    font-size: 16px;
-    line-height: 24px;
-    font-weight: 400;
+.FocusLabel {
+    font-family: 'Beiruti', sans-serif;
+    font-weight: 400; /* você pode mudar depois */
 }
