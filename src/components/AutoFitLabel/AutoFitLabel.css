@@ -1,0 +1,20 @@
+.AutoFitLabel {
+  flex-grow: 1;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  container-type: size;
+  overflow: hidden;
+}
+
+.AutoFitLabel span {
+  font-family: 'Beiruti', sans-serif;
+  font-weight: 700;
+
+  white-space: nowrap;
+
+  /* "contain" scaling */
+  font-size: min(48cqw, 78cqh);
+}
