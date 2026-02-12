@@ -1,4 +1,18 @@
 .FocusLabel {
-    font-family: 'Beiruti', sans-serif;
-    font-weight: 400; /* você pode mudar depois */
+    font-family: 'Beiruti';
+    font-weight: 400;
+
+    flex-grow: 1;
+    background-color: green;
+
+    display: flex;
+    justify-content:center;
+    align-items: center;
+    color: white;
+    container-type: size;   /* IMPORTANT */
+}
+
+.FocusLabel span {
+  font-size: min(46cqw, 76cqh);
+  white-space: nowrap;
 }
