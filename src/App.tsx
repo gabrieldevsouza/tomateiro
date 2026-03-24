@@ -42,6 +42,7 @@ function App() {
           placeholder="Enter a name..."
         />
         <button type="submit">Greet</button>
+        <button className="btn btn-primary">Hello Tomateiro</button>
       </form>
       <p>{greetMsg}</p>
     </main>
