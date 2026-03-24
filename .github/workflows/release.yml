@@ -9,30 +9,47 @@ permissions:
   contents: write
 
 jobs:
-  build:
+  publish-tauri:
+    name: Build and publish Tauri app
     strategy:
       fail-fast: false
       matrix:
         include:
           - platform: windows-latest
-            args: ""
+          - platform: ubuntu-22.04
+          - platform: macos-latest
 
     runs-on: ${{ matrix.platform }}
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Setup Bun
         uses: oven-sh/setup-bun@v2
 
-      - name: Install frontend dependencies
-        run: bun install
-
       - name: Setup Rust
         uses: dtolnay/rust-toolchain@stable
 
-      - name: Build and upload Tauri release
+      - name: Install Linux dependencies
+        if: matrix.platform == 'ubuntu-22.04'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            libwebkit2gtk-4.1-dev \
+            build-essential \
+            curl \
+            wget \
+            file \
+            libxdo-dev \
+            libssl-dev \
+            libayatana-appindicator3-dev \
+            librsvg2-dev
+
+      - name: Install frontend dependencies
+        run: bun install --frozen-lockfile
+
+      - name: Build and upload Tauri app
         uses: tauri-apps/tauri-action@v0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -42,4 +59,3 @@ jobs:
           releaseBody: "Release ${{ github.ref_name }}"
           releaseDraft: false
           prerelease: false
-          args: ${{ matrix.args }}
