@@ -5,12 +5,21 @@
   font-family: Inter, system-ui, sans-serif;
 }
 
+html,
 body {
+  height: 100%;
   margin: 0;
-  min-height: 100vh;
-  background: radial-gradient(circle at top, #ffffff, #f4f5f7);
+  padding: 0;
+  background: transparent;
+  overflow: hidden;
 }
 
 .app-root {
-  min-height: 100vh;
+  width: 100%;
+  height: 100%;
+  min-height: 100%;
+  background: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
