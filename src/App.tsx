@@ -1,12 +1,15 @@
-import "./App.css";
 import TimerView from "./TimerView";
 
 function App() {
-  return (
-    <main className="container">
-      <TimerView/>
-    </main>
-  );
+	return (
+		<main className="
+			h-screen
+			w-screen
+			overflow-hidden
+		">
+			<TimerView />
+		</main>
+	);
 }
 
 export default App;

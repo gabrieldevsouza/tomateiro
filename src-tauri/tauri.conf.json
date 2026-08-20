@@ -14,7 +14,8 @@
       {
         "title": "tomateiro",
         "width": 580,
-        "height": 250
+        "height": 250,
+		"decorations": false
       }
     ],
     "security": {
