@@ -6,18 +6,17 @@ function App() {
 		<div
 		data-theme="light"
 		className="
-			flex
+			relative
 			h-screen
 			w-screen
-			flex-col
 			overflow-hidden
 			bg-white
 		">
 			<CustomTitlebar />
 			
 			<main className="
-				h-screen
-				w-screen
+				h-full
+				w-full
 				overflow-hidden
 			">
 
