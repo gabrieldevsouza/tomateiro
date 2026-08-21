@@ -8,7 +8,7 @@ const appWindow = getCurrentWindow();
 const INITIAL_HIDE_DELAY_MS = 1200;
 const LEAVE_HIDE_DELAY_MS = 400;
 
-const TITLEBAR_MIN_HEIGHT = "0.75rem";
+const TITLEBAR_MIN_HEIGHT = "0.8rem";
 const TITLEBAR_PREFERRED_HEIGHT = "10dvh";
 const TITLEBAR_MAX_HEIGHT = "1.8rem";
 const TITLEBAR_MAXIMIZED_HEIGHT = "2.5rem";
@@ -173,8 +173,6 @@ function CustomTitlebar() {
 					flex
 					h-full
 					items-center
-					border-b
-					border-neutral-200
 					bg-white
 					select-none
 					transition-transform

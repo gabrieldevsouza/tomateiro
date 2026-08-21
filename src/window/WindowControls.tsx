@@ -5,27 +5,38 @@ const appWindow = getCurrentWindow();
 
 function executeWindowAction(action: () => Promise<void>) {
 	void action().catch((error: unknown) => {
-		console.error("Falha ao executar comando de janela:", error);
+		console.error(
+			"Falha ao executar comando de janela:",
+			error,
+		);
 	});
 }
 
 function WindowControls() {
 	return (
-		<div className="flex h-full items-center">
+		<div className="flex h-full items-stretch">
 			<WindowControlButton
 				title="Minimize"
 				ariaLabel="Minimizes the window."
 				variant="default"
-				onClick={() => executeWindowAction(() => appWindow.minimize())}
+				onClick={() =>
+					executeWindowAction(() =>
+						appWindow.minimize()
+					)
+				}
 			>
 				<span aria-hidden="true">−</span>
 			</WindowControlButton>
 
 			<WindowControlButton
-				title="Restore"
+				title="Maximize or restore"
 				ariaLabel="Maximizes or restores the window."
 				variant="default"
-				onClick={() => executeWindowAction(() => appWindow.toggleMaximize())}
+				onClick={() =>
+					executeWindowAction(() =>
+						appWindow.toggleMaximize()
+					)
+				}
 			>
 				<span aria-hidden="true">□</span>
 			</WindowControlButton>
@@ -34,7 +45,11 @@ function WindowControls() {
 				title="Close"
 				ariaLabel="Closes the window."
 				variant="danger"
-				onClick={() => executeWindowAction(() => appWindow.close())}
+				onClick={() =>
+					executeWindowAction(() =>
+						appWindow.close()
+					)
+				}
 			>
 				<span aria-hidden="true">×</span>
 			</WindowControlButton>
