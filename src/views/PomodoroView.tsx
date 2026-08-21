@@ -18,23 +18,17 @@ function PomodoroView() {
 					aspect-8/9
 					w-[min(100cqw,88.8889cqh)]
 					grid-cols-[3fr_10fr_3fr]
+					grid-rows-[1fr_4fr_1fr]
 				"
 			>
 				<div className="
+					row-start-2
 					col-start-2
-					grid
-					h-full
-					grid-rows-[1fr_4fr_1fr]
+					flex
+					items-center
+					justify-center
 				">
-
-					<div className="
-						row-start-2
-						flex
-						items-center
-						justify-center
-					">
-						<PomodoroPanel />
-					</div>
+					<PomodoroPanel />
 				</div>
 			</div>
 		</section>
