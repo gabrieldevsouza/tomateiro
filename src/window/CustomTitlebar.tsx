@@ -6,7 +6,7 @@ import WindowTitle from "./WindowTitle";
 const appWindow = getCurrentWindow();
 
 const INITIAL_HIDE_DELAY_MS = 1200;
-const LEAVE_HIDE_DELAY_MS = 400;
+const LEAVE_HIDE_DELAY_MS = 800;
 
 const TITLEBAR_MIN_HEIGHT = "0.8rem";
 const TITLEBAR_PREFERRED_HEIGHT = "10dvh";
