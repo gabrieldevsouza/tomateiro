@@ -1,4 +1,4 @@
-function TimerView() {
+function PlaceholderView() {
 	return (
 		<section className="
 			flex
@@ -23,11 +23,11 @@ function TimerView() {
 				</div>
 
 				<h1 className="text-2xl font-semibold">
-					TimerView
+					PlaceholderView
 				</h1>
 			</div>
 		</section>
 	);
 }
 
-export default TimerView;
+export default PlaceholderView;

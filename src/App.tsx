@@ -1,5 +1,5 @@
 import { useState } from "react";
-import TimerView from "./TimerView";
+import PlaceholderView from "./PlaceholderView";
 import CustomTitlebar, {
 	TITLEBAR_MAXIMIZED_HEIGHT,
 } from "./window/CustomTitlebar";
@@ -40,7 +40,7 @@ function App() {
 						: 0,
 				}}
 			>
-				<TimerView />
+				<PlaceholderView />
 			</main>
 		</div>
 	);
