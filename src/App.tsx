@@ -1,10 +1,10 @@
 import AppShell from "./layout/AppShell";
-import TimerView from "./views/TimerView";
+import PomodoroView from "./views/PomodoroView";
 
 function App() {
 	return (
 		<AppShell>
-			<TimerView />
+			<PomodoroView />
 		</AppShell>
 	);
 }
