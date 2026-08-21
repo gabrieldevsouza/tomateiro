@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type CSSProperties } from "react";
 import { getCurrentWindow } from "@tauri-apps/api/window";
 import WindowControls from "./WindowControls";
 import WindowTitle from "./WindowTitle";
@@ -151,9 +151,12 @@ function CustomTitlebar({
 				ease-out
 				motion-reduce:transition-none
 			"
-			style={{
-				height: titlebarHeight,
-			}}
+			style={
+				{
+					height: titlebarHeight,
+					"--titlebar-height": titlebarHeight,
+				} as CSSProperties
+			}
 		>
 			<div
 				aria-hidden="true"
