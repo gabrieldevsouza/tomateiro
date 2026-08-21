@@ -1,48 +1,11 @@
-import { useState } from "react";
-import PlaceholderView from "./PlaceholderView";
-import CustomTitlebar, {
-	TITLEBAR_MAXIMIZED_HEIGHT,
-} from "./window/CustomTitlebar";
+import AppShell from "./layout/AppShell";
+import TimerView from "./views/TimerView";
 
 function App() {
-	const [isMaximized, setIsMaximized] = useState(false);
-
 	return (
-		<div
-			data-theme="light"
-			className="
-				relative
-				h-screen
-				w-screen
-				overflow-hidden
-				bg-white
-			"
-		>
-			<CustomTitlebar
-				onMaximizedChange={setIsMaximized}
-			/>
-
-			<main
-				className="
-					w-full
-					overflow-hidden
-					transition-[height,margin-top]
-					duration-300
-					ease-out
-					motion-reduce:transition-none
-				"
-				style={{
-					height: isMaximized
-						? `calc(100% - ${TITLEBAR_MAXIMIZED_HEIGHT})`
-						: "100%",
-					marginTop: isMaximized
-						? TITLEBAR_MAXIMIZED_HEIGHT
-						: 0,
-				}}
-			>
-				<PlaceholderView />
-			</main>
-		</div>
+		<AppShell>
+			<TimerView />
+		</AppShell>
 	);
 }
 
