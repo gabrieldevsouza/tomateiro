@@ -184,7 +184,7 @@ function CustomTitlebar({
 					flex
 					h-full
 					items-center
-					bg-white
+					bg-blue-300
 					select-none
 					transition-transform
 					duration-300
