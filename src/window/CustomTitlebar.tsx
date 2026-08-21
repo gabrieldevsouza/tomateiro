@@ -11,7 +11,7 @@ const LEAVE_HIDE_DELAY_MS = 800;
 const TITLEBAR_MIN_HEIGHT = "0.8rem";
 const TITLEBAR_PREFERRED_HEIGHT = "10dvh";
 const TITLEBAR_MAX_HEIGHT = "1.8rem";
-const TITLEBAR_MAXIMIZED_HEIGHT = "2.5rem";
+export const TITLEBAR_MAXIMIZED_HEIGHT = "2.5rem";
 
 const TITLEBAR_DEFAULT_HEIGHT =
 	`clamp(${TITLEBAR_MIN_HEIGHT}, ${TITLEBAR_PREFERRED_HEIGHT}, ${TITLEBAR_MAX_HEIGHT})`;
@@ -20,7 +20,14 @@ const REVEAL_ZONE_HEIGHT_PERCENT = 15;
 const REVEAL_ZONE_MIN_HEIGHT = "0.375rem";
 const REVEAL_ZONE_MAX_HEIGHT = "0.625rem";
 
-function CustomTitlebar() {
+
+type CustomTitlebarProps = {
+	onMaximizedChange?: (isMaximized: boolean) => void;
+};
+
+function CustomTitlebar({
+	onMaximizedChange,
+}: CustomTitlebarProps) {
 	const [isVisible, setIsVisible] = useState(true);
 	const [isMaximized, setIsMaximized] = useState(false);
 
@@ -88,6 +95,7 @@ function CustomTitlebar() {
 
 				if (!isDisposed) {
 					setIsMaximized(maximized);
+					onMaximizedChange?.(maximized);
 				}
 			} catch (error: unknown) {
 				console.error(
@@ -122,7 +130,7 @@ function CustomTitlebar() {
 			isDisposed = true;
 			stopListening?.();
 		};
-	}, []);
+	}, [onMaximizedChange]);
 
 	const titlebarHeight = isMaximized
 		? TITLEBAR_MAXIMIZED_HEIGHT

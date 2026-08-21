@@ -1,25 +1,45 @@
+import { useState } from "react";
 import TimerView from "./TimerView";
-import CustomTitlebar from "./window/CustomTitlebar";
+import CustomTitlebar, {
+	TITLEBAR_MAXIMIZED_HEIGHT,
+} from "./window/CustomTitlebar";
 
 function App() {
+	const [isMaximized, setIsMaximized] = useState(false);
+
 	return (
 		<div
-		data-theme="light"
-		className="
-			relative
-			h-screen
-			w-screen
-			overflow-hidden
-			bg-white
-		">
-			<CustomTitlebar />
-			
-			<main className="
-				h-full
-				w-full
+			data-theme="light"
+			className="
+				relative
+				h-screen
+				w-screen
 				overflow-hidden
-			">
+				bg-white
+			"
+		>
+			<CustomTitlebar
+				onMaximizedChange={setIsMaximized}
+			/>
 
+			<main
+				className="
+					w-full
+					overflow-hidden
+					transition-[height,margin-top]
+					duration-300
+					ease-out
+					motion-reduce:transition-none
+				"
+				style={{
+					height: isMaximized
+						? `calc(100% - ${TITLEBAR_MAXIMIZED_HEIGHT})`
+						: "100%",
+					marginTop: isMaximized
+						? TITLEBAR_MAXIMIZED_HEIGHT
+						: 0,
+				}}
+			>
 				<TimerView />
 			</main>
 		</div>
