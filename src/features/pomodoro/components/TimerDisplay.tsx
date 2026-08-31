@@ -25,7 +25,25 @@ function TimerDisplay() {
 				col-start-2
 				min-h-0
 				min-w-0
-			"/>
+			">
+				<time
+					dateTime="PT25M"
+					className="
+						flex
+						h-full
+						w-full
+						items-center
+						justify-center
+						text-4xl
+						font-medium
+						leading-none
+						tabular-nums
+					"
+					aria-label="25 minutos restantes"
+				>
+					25:00
+				</time>
+			</div>
 
 			<div className="
 				bg-emerald-400
