@@ -36,7 +36,18 @@ function CycleCounter() {
 					min-w-0
 					h-full
 					w-full
-				"/>
+				">
+					<div 
+						className="
+							radial-progress
+						" 
+						style={{ "--value": 70 } as React.CSSProperties } 
+						aria-valuenow={70}
+						role="progressbar"
+					>
+						70%
+					</div>
+				</div>
 				<div className="
 					bg-pink-200
 					col-start-2
