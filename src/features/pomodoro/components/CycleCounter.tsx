@@ -33,7 +33,7 @@ function CycleCounter() {
 				grid-cols-4
 			">
 				<div className="
-					bg-white
+					bg-[#212940]
 					col-start-1
 					min-h-0
 					min-w-0
@@ -50,30 +50,37 @@ function CycleCounter() {
 					</div>
 				</div>
 				<div className="
-					bg-pink-200
+					bg-[#212940]
 					col-start-2
 					min-h-0
 					min-w-0
 					h-full
 					w-full
-				"/>
+				">
+					<CircularProgress value={30}/>
+				</div>
 
 				<div className="
-					bg-white
+					bg-[#212940]
 					col-start-3
 					min-h-0
 					min-w-0
 					h-full
 					w-full
-				"/>
+				">
+					<CircularProgress value={100}/>
+				</div>
+
 				<div className="
-					bg-pink-200
+					bg-[#212940]
 					col-start-4
 					min-h-0
 					min-w-0
 					h-full
 					w-full
-				"/>
+				">
+					<CircularProgress value={0}/>
+				</div>
 			</div>
 
 			<div className="
