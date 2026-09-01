@@ -43,7 +43,7 @@ function CircularProgress({
     return (
         <svg
             viewBox="0 0 100 100"
-            className="w-full h-full block"
+            className="w-auto h-full block"
         >
 
             {/* 0% */}
