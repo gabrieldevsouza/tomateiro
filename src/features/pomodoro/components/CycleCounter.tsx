@@ -1,3 +1,6 @@
+import CircularProgress from "./pomodoroViewer/CircularProgress";
+
+
 function CycleCounter() {
 	return (
 		<div className="
@@ -37,15 +40,13 @@ function CycleCounter() {
 					h-full
 					w-full
 				">
-					<div 
-						className="
-							radial-progress
-						" 
-						style={{ "--value": 70 } as React.CSSProperties } 
-						aria-valuenow={70}
-						role="progressbar"
-					>
-						70%
+					<div className="
+						min-w-0 
+						min-h-0
+						w-full
+						h-full
+					">
+						<CircularProgress value={70}/>
 					</div>
 				</div>
 				<div className="
