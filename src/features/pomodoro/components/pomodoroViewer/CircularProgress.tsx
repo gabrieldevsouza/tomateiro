@@ -40,7 +40,9 @@ function CircularProgress({
         `;
     };
 
-    const progressAngle = (value / 100) * 360;
+    const progress = Math.max(0, Math.min(100, value));
+
+    const progressAngle = (progress / 100) * 360;
 
     const startAngle = -90;
     const progressEndAngle = startAngle + progressAngle;
@@ -54,7 +56,9 @@ function CircularProgress({
         <div
             className={`
                 aspect-square
-                flex-none
+                min-w-0
+                min-h-0
+                shrink
                 ${sizeClassName}
             `}
         >
@@ -62,10 +66,10 @@ function CircularProgress({
                 viewBox="0 0 100 100"
                 className="block size-full"
                 role="img"
-                aria-label={`Progresso: ${value}%`}
+                aria-label={`Progresso: ${progress}%`}
             >
                 {/* 0% */}
-                {value <= 0 && (
+                {progress <= 0 && (
                     <circle
                         cx="50"
                         cy="50"
@@ -75,7 +79,7 @@ function CircularProgress({
                 )}
 
                 {/* Entre 0% e 100% */}
-                {value > 0 && value < 100 && (
+                {progress > 0 && progress < 100 && (
                     <>
                         {/* Progresso */}
                         <path
@@ -98,7 +102,7 @@ function CircularProgress({
                 )}
 
                 {/* 100% */}
-                {value >= 100 && (
+                {progress >= 100 && (
                     <circle
                         cx="50"
                         cy="50"
@@ -116,7 +120,7 @@ function CircularProgress({
                         dominantBaseline="middle"
                         fontSize={textSize}
                     >
-                        {value}%
+                        {progress}%
                     </text>
                 )}
             </svg>

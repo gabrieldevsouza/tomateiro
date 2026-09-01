@@ -12,13 +12,12 @@ function AppShell({ children }: AppShellProps) {
 
 	return (
 		<div
-			data-theme="light"
+			data-theme="dark"
 			className="
 				relative
 				h-screen
 				w-screen
 				overflow-hidden
-				bg-white
 			"
 		>
 			<CustomTitlebar
