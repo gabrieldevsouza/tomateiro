@@ -8,7 +8,7 @@ function CycleCounter() {
 
 			grid
 
-			grid-cols-[minmax(0,9fr)_minmax(0,16fr)_minmax(0,9fr)]
+			grid-cols-[minmax(0,16fr)_minmax(0,43fr)_minmax(0,16fr)]
 		" >
 
 			<div className="
@@ -25,7 +25,44 @@ function CycleCounter() {
 				col-start-2
 				min-h-0
 				min-w-0
-			"/>
+
+				grid
+				grid-cols-4
+			">
+				<div className="
+					bg-white
+					col-start-1
+					min-h-0
+					min-w-0
+					h-full
+					w-full
+				"/>
+				<div className="
+					bg-pink-200
+					col-start-2
+					min-h-0
+					min-w-0
+					h-full
+					w-full
+				"/>
+
+				<div className="
+					bg-white
+					col-start-3
+					min-h-0
+					min-w-0
+					h-full
+					w-full
+				"/>
+				<div className="
+					bg-pink-200
+					col-start-4
+					min-h-0
+					min-w-0
+					h-full
+					w-full
+				"/>
+			</div>
 
 			<div className="
 				bg-emerald-400
