@@ -4,12 +4,14 @@ type TimerControlButtonProps = {
 	ariaLabel: string;
 	children: ReactNode;
 	title?: string;
+	onClick?: () => void;
 };
 
 function TimerControlButton({
 	ariaLabel,
 	children,
 	title = ariaLabel,
+	onClick,
 }: TimerControlButtonProps) {
 	return (
 		<button
@@ -27,7 +29,8 @@ function TimerControlButton({
 				leading-none
 			"
 			aria-label={ariaLabel}
-			title={title}
+			 title={title}
+			onClick={onClick}
 		>
 			{children}
 		</button>

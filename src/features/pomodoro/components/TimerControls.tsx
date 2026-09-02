@@ -4,7 +4,20 @@ import PlayButton from "./controls/PlayButton";
 import RestartCycleButton from "./controls/RestartCycleButton";
 import SkipCycleButton from "./controls/SkipCycleButton";
 
-function TimerControls() {
+type TimerControlsProps = {
+	onAddMinute: () => void;
+	onRestart: () => void;
+	onStart: () => void;
+	onSkip: () => void;
+};
+
+function TimerControls({
+	onAddMinute,
+	onRestart,
+	onStart,
+	onSkip,
+}: TimerControlsProps) {
+
 	return (
 		<div className="
 			bg-green-500
@@ -36,10 +49,10 @@ function TimerControls() {
 				min-w-0
 				grid-cols-5
 			">
-				<AddMinuteButton />
-				<RestartCycleButton />
-				<PlayButton />
-				<SkipCycleButton />
+				<AddMinuteButton onClick={onAddMinute} />
+				<RestartCycleButton onClick={onRestart} />
+				<PlayButton onClick={onStart} />
+				<SkipCycleButton onClick={onSkip} />
 				<PictureInPictureButton />
 			</div>
 

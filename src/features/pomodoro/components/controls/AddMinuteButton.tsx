@@ -1,8 +1,8 @@
 import TimerControlButton from "./TimerControlButton";
 
-function AddMinuteButton() {
+function AddMinuteButton({ onClick }: { onClick: () => void }) {
 	return (
-		<TimerControlButton ariaLabel="Adicionar um minuto">
+		<TimerControlButton ariaLabel="Adicionar um minuto" onClick={onClick}>
 			<span aria-hidden="true">+1</span>
 		</TimerControlButton>
 	);

@@ -2,8 +2,37 @@ import CycleCounter from "./components/CycleCounter";
 import ProgressIndicator from "./components/ProgressIndicator";
 import TimerControls from "./components/TimerControls";
 import TimerDisplay from "./components/TimerDisplay";
+import {
+	createInitialPomodoroTimerState,
+	pomodoroTimerReducer,
+} from "./model/pomodoroTimer";
+
+import { useEffect, useReducer } from "react";
 
 function PomodoroPanel() {
+	const [timerState, dispatch] = useReducer(
+		pomodoroTimerReducer,
+		undefined,
+		createInitialPomodoroTimerState,
+	);
+
+	useEffect(() => {
+		if (timerState.status !== "running") {
+			return;
+		}
+
+		const intervalId = window.setInterval(() => {
+			dispatch({
+				type: "tick",
+				nowMs: Date.now(),
+			});
+		}, 250);
+
+		return () => {
+			window.clearInterval(intervalId);
+		};
+	}, [timerState.status]);
+
 	return (
 		<div
 			className="
@@ -29,7 +58,7 @@ function PomodoroPanel() {
 				min-h-0
 				min-w-0
 			">
-				<TimerDisplay />
+				<TimerDisplay remainingMs={timerState.remainingMs} />
 			</div>
 
 			<div className="
@@ -45,7 +74,12 @@ function PomodoroPanel() {
 				min-h-0
 				min-w-0
 			">
-				<TimerControls />
+				<TimerControls
+					onAddMinute={() => dispatch({ type: "addMinute" })}
+					onRestart={() => dispatch({ type: "restart" })}
+					onStart={() => dispatch({ type: "start", nowMs: Date.now() })}
+					onSkip={() => dispatch({ type: "skip" })}
+				/>
 			</div>
 		</div>
 	);

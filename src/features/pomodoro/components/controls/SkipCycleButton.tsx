@@ -1,8 +1,8 @@
 import TimerControlButton from "./TimerControlButton";
 
-function SkipCycleButton() {
+function SkipCycleButton({ onClick }: { onClick: () => void }) {
 	return (
-		<TimerControlButton ariaLabel="Pular ciclo">
+		<TimerControlButton ariaLabel="Pular ciclo" onClick={onClick}>
 			<span aria-hidden="true">⏭</span>
 		</TimerControlButton>
 	);

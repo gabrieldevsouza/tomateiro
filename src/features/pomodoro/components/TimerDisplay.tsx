@@ -1,4 +1,13 @@
-function TimerDisplay() {
+type TimerDisplayProps = {
+	remainingMs: number;
+};
+
+function TimerDisplay({ remainingMs }: TimerDisplayProps) {
+	const totalSeconds = Math.ceil(remainingMs / 1_000);
+	const minutes = Math.floor(totalSeconds / 60);
+	const seconds = totalSeconds % 60;
+	const formattedTime = `${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
+
 	return (
 		<div className="
 			bg-green-500
@@ -27,7 +36,7 @@ function TimerDisplay() {
 				min-w-0
 			">
 				<time
-					dateTime="PT25M"
+					dateTime={`PT${totalSeconds}S`}
 					className="
 						flex
 						h-full
@@ -39,9 +48,9 @@ function TimerDisplay() {
 						leading-none
 						tabular-nums
 					"
-					aria-label="25 minutos restantes"
+					aria-label={`${minutes} minutos e ${seconds} segundos restantes`}
 				>
-					25:00
+					{formattedTime}
 				</time>
 			</div>
 
