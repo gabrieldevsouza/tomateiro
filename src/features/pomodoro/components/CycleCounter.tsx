@@ -1,42 +1,36 @@
+import CircularProgress from "./pomodoroViewer/CircularProgress";
+
 function CycleCounter() {
-	return (
-		<div className="
-			bg-green-500
+    return (
+        <div
+            className="
+                h-full
+                w-full
 
-			h-full
-			w-full
+                grid
 
-			grid
+                grid-cols-[minmax(0,16fr)_minmax(0,43fr)_minmax(0,16fr)]
+            "
+        >
+            <div
+                className="
+                    col-start-2
+                    min-h-0
+                    min-w-0
 
-			grid-cols-[minmax(0,9fr)_minmax(0,16fr)_minmax(0,9fr)]
-		" >
-
-			<div className="
-				bg-fuchsia-500
-
-				col-start-1
-				min-h-0
-				min-w-0
-			"/>
-
-			<div className="
-				bg-blue-400
-
-				col-start-2
-				min-h-0
-				min-w-0
-			"/>
-
-			<div className="
-				bg-emerald-400
-
-				col-start-3
-				min-h-0
-				min-w-0
-			"/>
-
-		</div>
-	);
+                    flex
+                    flex-row
+                    justify-between
+                    items-center
+                "
+            >
+                <CircularProgress value={70} />
+                <CircularProgress value={30} />
+                <CircularProgress value={0} />
+                <CircularProgress value={100} />
+            </div>
+        </div>
+    );
 }
 
 export default CycleCounter;

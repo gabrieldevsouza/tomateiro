@@ -42,7 +42,6 @@ function PomodoroPanel() {
 				min-h-0
 				min-w-0
 				grid-rows-[minmax(0,18fr)_minmax(0,25fr)_minmax(0,46fr)_minmax(0,25fr)_minmax(0,13fr)_minmax(0,25fr)_minmax(0,28fr)]
-				bg-red-400
 			"
 		>
 			<div className="
