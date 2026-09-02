@@ -12,7 +12,6 @@ function AppShell({ children }: AppShellProps) {
 
 	return (
 		<div
-			data-theme="dark"
 			className="
 				relative
 				h-screen
