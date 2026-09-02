@@ -8,7 +8,6 @@ function PomodoroView() {
 				h-full
 				w-full
 				items-center
-				border-4
 				justify-center
 				@container-size
 			"

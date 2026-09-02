@@ -28,7 +28,7 @@ body,
   color-scheme: dark;
   
   --background: #212940;
-  --foreground: #00CBEA;
+  --foreground: #ffffff;
 }
 
 @layer base {
