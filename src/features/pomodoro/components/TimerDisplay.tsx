@@ -35,7 +35,7 @@ function TimerDisplay() {
 						items-center
 						justify-center
 						text-4xl
-						font-medium
+						font-[assistant]
 						leading-none
 						tabular-nums
 					"

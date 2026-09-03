@@ -45,3 +45,7 @@ body,
         color: var(--foreground);
     }
 }
+@font-face{
+  font-family: assistant;
+  src: url("/fonts/Assistant-VariableFont_wght.ttf") format("truetype");
+}
