@@ -46,6 +46,11 @@ body,
     }
 }
 @font-face{
-  font-family: assistant;
-  src: url("/fonts/Assistant-VariableFont_wght.ttf") format("truetype");
+  font-family: Assistant;
+  src: url("../assets/fonts/Assistant-VariableFont_wght.ttf") format("truetype");
+}
+
+@font-face{
+  font-family: Epilogue;
+  src: url("../assets/fonts/Epilogue-VariableFont_wght.ttf") format("truetype");
 }
