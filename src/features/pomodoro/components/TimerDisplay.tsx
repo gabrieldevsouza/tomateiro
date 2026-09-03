@@ -1,16 +1,6 @@
-type TimerDisplayProps = {
-	remainingMs: number;
-};
-
-function TimerDisplay({ remainingMs }: TimerDisplayProps) {
-	const totalSeconds = Math.ceil(remainingMs / 1_000);
-	const minutes = Math.floor(totalSeconds / 60);
-	const seconds = totalSeconds % 60;
-	const formattedTime = `${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
-
+function TimerDisplay() {
 	return (
 		<div className="
-			bg-green-500
 
 			h-full
 			w-full
@@ -21,7 +11,6 @@ function TimerDisplay({ remainingMs }: TimerDisplayProps) {
 		" >
 
 			<div className="
-				bg-fuchsia-500
 
 				col-start-1
 				min-h-0
@@ -29,33 +18,38 @@ function TimerDisplay({ remainingMs }: TimerDisplayProps) {
 			"/>
 
 			<div className="
-				bg-blue-400
 
 				col-start-2
 				min-h-0
 				min-w-0
-			">
+			"
+			style={{containerType: "size"}}
+			>
+				
 				<time
-					dateTime={`PT${totalSeconds}S`}
+					dateTime="PT25M"
 					className="
 						flex
 						h-full
 						w-full
 						items-center
 						justify-center
-						text-4xl
-						font-medium
+						font-[Epilogue]
+						text-[#00CBEA]
 						leading-none
 						tabular-nums
 					"
-					aria-label={`${minutes} minutos e ${seconds} segundos restantes`}
+					style={{
+						fontSize: "min(46cqw,71cqh)",
+						transform: "translateY(0.09em)",
+					}}
+					aria-label="25 minutos restantes"
 				>
-					{formattedTime}
+					25:00
 				</time>
 			</div>
 
 			<div className="
-				bg-emerald-400
 
 				col-start-3
 				min-h-0
