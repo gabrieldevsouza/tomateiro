@@ -2,6 +2,7 @@ import CycleCounter from "./components/CycleCounter";
 import ProgressIndicator from "./components/ProgressIndicator";
 import TimerControls from "./components/TimerControls";
 import TimerDisplay from "./components/TimerDisplay";
+
 import {
 	createInitialPomodoroTimerState,
 	pomodoroTimerReducer,
@@ -73,12 +74,30 @@ function PomodoroPanel() {
 				min-h-0
 				min-w-0
 			">
-				<TimerControls
-					onAddMinute={() => dispatch({ type: "addMinute" })}
-					onRestart={() => dispatch({ type: "restart" })}
-					onStart={() => dispatch({ type: "start", nowMs: Date.now() })}
-					onSkip={() => dispatch({ type: "skip" })}
-				/>
+				 <TimerControls
+                    status={timerState.status}
+                    onAddMinute={() => {
+                        dispatch({ type: "addMinute" });
+                    }}
+                    onRestart={() => {
+                        dispatch({ type: "restart" });
+                    }}
+                    onStart={() => {
+                        dispatch({
+                            type: "start",
+                            nowMs: Date.now(),
+                        });
+                    }}
+                    onPause={() => {
+                        dispatch({
+                            type: "pause",
+                            nowMs: Date.now(),
+                        });
+                    }}
+                    onSkip={() => {
+                        dispatch({ type: "skip" });
+                    }}
+                />
 			</div>
 		</div>
 	);

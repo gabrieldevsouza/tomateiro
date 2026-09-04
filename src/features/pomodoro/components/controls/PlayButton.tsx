@@ -1,11 +1,32 @@
 import TimerControlButton from "./TimerControlButton";
 
-function PlayButton({ onClick }: { onClick: () => void }) {
-	return (
-		<TimerControlButton ariaLabel="Iniciar ciclo" onClick={onClick}>
-			<span aria-hidden="true">▶</span>
-		</TimerControlButton>
-	);
+type PlayButtonProps = {
+    isRunning: boolean;
+    onStart: () => void;
+    onPause: () => void;
+};
+
+function PlayButton({
+    isRunning,
+    onStart,
+    onPause,
+}: PlayButtonProps) {
+    const ariaLabel = isRunning
+        ? "Pausar ciclo"
+        : "Iniciar ciclo";
+
+    const icon = isRunning ? "Ⅱ" : "▶";
+
+    return (
+        <TimerControlButton
+            ariaLabel={ariaLabel}
+            onClick={isRunning ? onPause : onStart}
+        >
+            <span aria-hidden="true">
+                {icon}
+            </span>
+        </TimerControlButton>
+    );
 }
 
 export default PlayButton;
