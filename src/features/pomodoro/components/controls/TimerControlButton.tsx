@@ -4,9 +4,13 @@ enum CircularProgressOrientation {Horizontal,Vertical}
 
 interface TimerControlButtonProps {
 	ariaLabel: string;
-	children: ReactNode;
 	title?: string;
+	
 	orientation?: CircularProgressOrientation;
+	
+	children: ReactNode;
+
+	bgColor?: string;
 };
 
 function TimerControlButton({
@@ -14,6 +18,8 @@ function TimerControlButton({
 	children,
 	title = ariaLabel,
 	orientation = CircularProgressOrientation.Horizontal,
+	bgColor = "bg-red-400",
+	
 }: TimerControlButtonProps) {
 	const sizeClassName =
         orientation === CircularProgressOrientation.Vertical
@@ -23,15 +29,18 @@ function TimerControlButton({
 		<button
 			type="button"
 			className={`
+
 				btn
 				btn-ghost
-
+				
 				min-h-0
 				min-w-0
 				
+				${bgColor}
+				
 				rounded-full
-				bg-red-400
 				shrink
+				aspect-square
 				${sizeClassName}
 			`}
 			aria-label={ariaLabel}

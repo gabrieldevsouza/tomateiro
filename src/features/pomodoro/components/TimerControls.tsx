@@ -35,7 +35,7 @@ function TimerControls() {
 				min-w-0
 
 				grid
-				grid-cols-[minmax(0,21fr)_minmax(0,16fr)_minmax(0,21fr)]
+				grid-cols-[minmax(0,22fr)_minmax(0,15fr)_minmax(0,22fr)]
 			">
 				<div className="
 					bg-orange-400
@@ -85,7 +85,12 @@ function TimerControls() {
 
 					min-w-0
 					min-h-0
+
+					flex
+                	items-center
+					justify-center
 					">
+						<PlayButton />
 				</div>
 				<div className="
 					bg-violet-600
