@@ -14,7 +14,7 @@ function TimerControls() {
 
 			grid
 
-			grid-cols-[minmax(0,4fr)_minmax(0,7fr)_minmax(0,4fr)]
+			grid-cols-[minmax(0,8fr)_minmax(0,59fr)_minmax(0,8fr)]
 		" >
 
 			<div className="
@@ -30,17 +30,108 @@ function TimerControls() {
 				bg-blue-400
 
 				col-start-2
-				grid
-				h-full
+
 				min-h-0
 				min-w-0
-				grid-cols-5
+
+				grid
+				grid-cols-[minmax(0,21fr)_minmax(0,16fr)_minmax(0,21fr)]
 			">
-				<AddMinuteButton />
+				<div className="
+					bg-orange-400
+
+					col-start-1
+
+					min-w-0
+					min-h-0
+
+					grid
+					grid-rows-[minmax(0,9fr)_minmax(0,38fr)_minmax(0,9fr)]
+					">
+						<div className="
+						bg-amber-900
+
+						row-start-1
+						">
+						</div>
+
+						<div className="
+						bg-red-200
+
+						row-start-2
+						 flex
+                		flex-row
+                		justify-between
+                		items-center
+						
+						">
+							<AddMinuteButton />
+							<RestartCycleButton />
+						</div>
+			
+						<div className="
+						bg-amber-900
+
+						row-start-3
+						">
+						</div>
+			
+
+				</div>
+			<div className="
+					bg-white
+
+					col-start-2
+
+					min-w-0
+					min-h-0
+					">
+				</div>
+				<div className="
+					bg-violet-600
+
+					col-start-3
+
+					min-w-0
+					min-h-0
+
+					grid
+					grid-rows-[minmax(0,9fr)_minmax(0,38fr)_minmax(0,9fr)]
+					">
+						<div className="
+						bg-purple-200
+
+						row-start-1
+						">
+						</div>
+
+						<div className="
+						bg-blue-300
+
+						row-start-2
+						
+						flex
+                		flex-row
+                		justify-between
+                		items-center
+						">
+							<SkipCycleButton />
+							<PictureInPictureButton />
+						</div>
+			
+						<div className="
+						bg-purple-200
+
+						row-start-3
+						">
+						</div>
+			
+				</div>
+				{/*<AddMinuteButton />
 				<RestartCycleButton />
 				<PlayButton />
 				<SkipCycleButton />
-				<PictureInPictureButton />
+				<PictureInPictureButton /> */}
 			</div>
 
 			<div className="

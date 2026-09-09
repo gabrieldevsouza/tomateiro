@@ -1,31 +1,39 @@
 import type { ReactNode } from "react";
 
-type TimerControlButtonProps = {
+enum CircularProgressOrientation {Horizontal,Vertical}
+
+interface TimerControlButtonProps {
 	ariaLabel: string;
 	children: ReactNode;
 	title?: string;
+	orientation?: CircularProgressOrientation;
 };
 
 function TimerControlButton({
 	ariaLabel,
 	children,
 	title = ariaLabel,
+	orientation = CircularProgressOrientation.Horizontal,
 }: TimerControlButtonProps) {
+	const sizeClassName =
+        orientation === CircularProgressOrientation.Vertical
+            ? "h-auto w-full"
+            : "h-full w-auto";
 	return (
 		<button
 			type="button"
-			className="
+			className={`
 				btn
 				btn-ghost
-				h-full
-				w-full
+
 				min-h-0
 				min-w-0
-				overflow-hidden
-				rounded-none
-				p-0
-				leading-none
-			"
+				
+				rounded-full
+				bg-red-400
+				shrink
+				${sizeClassName}
+			`}
 			aria-label={ariaLabel}
 			title={title}
 		>
