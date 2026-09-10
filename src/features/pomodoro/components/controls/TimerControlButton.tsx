@@ -29,27 +29,38 @@ function TimerControlButton({
         <button
             type="button"
             className={`
-
-                btn
-                p-0
-                btn-ghost
-                
-                min-h-0
-                min-w-0
-                
-                ${bgColor}
-
-                hover:bg-red-500
-                active:bg-red-600
-
-                
-                rounded-full
-                shrink-0
-                aspect-square
-                ${sizeClassName}
+				btn
+				btn-ghost
 				
+				p-0
+
+				min-h-0
+				min-w-0
+
+				${bgColor}
+
+				border-0
+				shadow-none
+				bg-none
+				text-[#C2C7DA]
+
+				hover:brightness-110
+				active:brightness-90
+				transition-[background-color,filter]
+
+				outline-none
+				focus-visible:outline-2
+				focus-visible:outline-solid
+				focus-visible:outline-[#C2C7DA]
+				focus-visible:outline-offset-4
+
+				rounded-full
+				shrink-0
+				aspect-square
+				${sizeClassName}
+
 				flex
-            `}
+			`}
             aria-label={ariaLabel}
             title={title}
         >
