@@ -1,3 +1,4 @@
+import ReactSvg from "../../../../assets/react.svg";
 import TimerControlButton from "./TimerControlButton";
 
 
@@ -6,10 +7,10 @@ function PlayButton() {
 		<TimerControlButton 
 			ariaLabel="Iniciar ciclo"
 			bgColor= "bg-[#00CBEA]"
-		>
-			<span aria-hidden="true">▶</span>
-			
-		</TimerControlButton>
+			icon={
+				<img src={ReactSvg} alt="" aria-hidden="true" className="size-1/2" />
+			}
+		/>
 	);
 }
 

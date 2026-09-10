@@ -1,3 +1,4 @@
+import ReactSvg from "../../../../assets/react.svg";
 import TimerControlButton from "./TimerControlButton";
 
 function RestartCycleButton() {
@@ -6,13 +7,7 @@ function RestartCycleButton() {
 			ariaLabel = "Reiniciar ciclo"
 			bgColor = "bg-[#374468]"
 			icon = {
-				<svg
-					viewBox="0 0 24 24"
-					fill="currentColor"
-					className="size-1/2"
-				>
-					<path d="src/assets/React.svg" />
-				</svg>
+				<img src={ReactSvg} alt="" aria-hidden="true" className="size-1/2" />
 			}
 		/>
 	);

@@ -1,3 +1,4 @@
+import ReactSvg from "../../../../assets/react.svg";
 import TimerControlButton from "./TimerControlButton";
 
 function AddMinuteButton() {
@@ -5,9 +6,10 @@ function AddMinuteButton() {
 		<TimerControlButton ariaLabel=
 		"Adicionar um minuto"
 		bgColor= "bg-[#374468]"
-		>
-			<span aria-hidden="true">+1</span>
-		</TimerControlButton>
+		icon={
+			<img src={ReactSvg} alt="" aria-hidden="true" className="size-1/2" />
+		}
+		/>
 	);
 }
 

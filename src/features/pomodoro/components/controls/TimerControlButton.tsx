@@ -8,14 +8,14 @@ interface TimerControlButtonProps {
 	
 	orientation?: CircularProgressOrientation;
 	
-	children: ReactNode;
+	icon: ReactNode;
 
 	bgColor?: string;
 };
 
 function TimerControlButton({
 	ariaLabel,
-	children,
+	icon: icon,
 	title = ariaLabel,
 	orientation = CircularProgressOrientation.Horizontal,
 	bgColor = "bg-red-400",
@@ -46,7 +46,7 @@ function TimerControlButton({
 			aria-label={ariaLabel}
 			title={title}
 		>
-			{children}
+			{icon}
 		</button>
 	);
 }
