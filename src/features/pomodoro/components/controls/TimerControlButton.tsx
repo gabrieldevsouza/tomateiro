@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 
-enum CircularProgressOrientation {Horizontal,Vertical}
+enum CircularProgressOrientation { Horizontal, Vertical}
 
 interface TimerControlButtonProps {
 	ariaLabel: string;
