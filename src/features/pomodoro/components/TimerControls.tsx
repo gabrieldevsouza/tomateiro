@@ -36,6 +36,7 @@ function TimerControls() {
 				
 				flex-row
 				justify-between
+
 			">
 				<div className="
 
@@ -47,34 +48,40 @@ function TimerControls() {
 					grid
 					grid-rows-[minmax(0,9fr)_minmax(0,38fr)_minmax(0,9fr)]
 					">
-						<div className="
-
-						row-start-1
-						">
-						</div>
 
 						<div className="
-	
-
-						row-start-2
-						flex
-                		flex-row
-						gap-2
-                		justify-between
-                		items-center
-						
+							row-start-2
+							flex
+							flex-row
+							gap-2
+							justify-between
+							items-center
 						">
 							<AddMinuteButton />
+						</div>
+
+				</div>
+				<div className="
+
+					col-start-1
+
+					min-w-0
+					min-h-0
+
+					grid
+					grid-rows-[minmax(0,9fr)_minmax(0,38fr)_minmax(0,9fr)]
+					">
+
+						<div className="
+							row-start-2
+							flex
+							flex-row
+							gap-2
+							justify-between
+							items-center
+						">
 							<RestartCycleButton />
 						</div>
-			
-						<div className="
-
-
-						row-start-3
-						">
-						</div>
-			
 
 				</div>
 			<div className="
@@ -102,13 +109,6 @@ function TimerControls() {
 					grid-rows-[minmax(0,9fr)_minmax(0,38fr)_minmax(0,9fr)]
 					">
 						<div className="
-	
-
-						row-start-1
-						">
-						</div>
-
-						<div className="
 
 						row-start-2
 						
@@ -119,13 +119,32 @@ function TimerControls() {
                 		items-center
 						">
 							<SkipCycleButton />
-							<PictureInPictureButton />
 						</div>
 			
+				</div>
+				<div className="
+
+					col-start-3
+
+					min-w-0
+					min-h-0
+
+					grid
+					grid-rows-[minmax(0,9fr)_minmax(0,38fr)_minmax(0,9fr)]
+					">
+
+						
 						<div className="
 
-						row-start-3
+						row-start-2
+						
+						flex
+						gap-2
+                		flex-row
+                		justify-between
+                		items-center
 						">
+							<PictureInPictureButton />
 						</div>
 			
 				</div>
