@@ -34,8 +34,10 @@ function TimerControls() {
 				min-h-0
 				min-w-0
 
-				grid
-				grid-cols-[minmax(0,22fr)_minmax(0,15fr)_minmax(0,22fr)]
+				flex
+				
+				flex-row
+				justify-between
 			">
 				<div className="
 					bg-orange-400
@@ -59,8 +61,9 @@ function TimerControls() {
 						bg-red-200
 
 						row-start-2
-						 flex
+						flex
                 		flex-row
+						gap-2
                 		justify-between
                 		items-center
 						
@@ -116,6 +119,7 @@ function TimerControls() {
 						row-start-2
 						
 						flex
+						gap-2
                 		flex-row
                 		justify-between
                 		items-center
