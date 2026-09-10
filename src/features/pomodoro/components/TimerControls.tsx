@@ -7,7 +7,6 @@ import SkipCycleButton from "./controls/SkipCycleButton";
 function TimerControls() {
 	return (
 		<div className="
-			bg-green-500
 
 			h-full
 			w-full
@@ -18,7 +17,7 @@ function TimerControls() {
 		" >
 
 			<div className="
-				bg-fuchsia-500
+			
 
 				col-start-1
 				h-full
@@ -27,7 +26,6 @@ function TimerControls() {
 			" />
 
 			<div className="
-				bg-blue-400
 
 				col-start-2
 
@@ -40,7 +38,6 @@ function TimerControls() {
 				justify-between
 			">
 				<div className="
-					bg-orange-400
 
 					col-start-1
 
@@ -51,14 +48,13 @@ function TimerControls() {
 					grid-rows-[minmax(0,9fr)_minmax(0,38fr)_minmax(0,9fr)]
 					">
 						<div className="
-						bg-amber-900
 
 						row-start-1
 						">
 						</div>
 
 						<div className="
-						bg-red-200
+	
 
 						row-start-2
 						flex
@@ -73,7 +69,7 @@ function TimerControls() {
 						</div>
 			
 						<div className="
-						bg-amber-900
+
 
 						row-start-3
 						">
@@ -82,7 +78,7 @@ function TimerControls() {
 
 				</div>
 			<div className="
-					bg-white
+
 
 					col-start-2
 
@@ -96,7 +92,6 @@ function TimerControls() {
 						<PlayButton />
 				</div>
 				<div className="
-					bg-violet-600
 
 					col-start-3
 
@@ -107,14 +102,13 @@ function TimerControls() {
 					grid-rows-[minmax(0,9fr)_minmax(0,38fr)_minmax(0,9fr)]
 					">
 						<div className="
-						bg-purple-200
+	
 
 						row-start-1
 						">
 						</div>
 
 						<div className="
-						bg-blue-300
 
 						row-start-2
 						
@@ -129,7 +123,6 @@ function TimerControls() {
 						</div>
 			
 						<div className="
-						bg-purple-200
 
 						row-start-3
 						">
@@ -144,7 +137,6 @@ function TimerControls() {
 			</div>
 
 			<div className="
-				bg-emerald-400
 
 				col-start-3
 				h-full

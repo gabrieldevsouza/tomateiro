@@ -1,15 +1,19 @@
-import ReactSvg from "../../../../assets/react.svg";
 import TimerControlButton from "./TimerControlButton";
+import { PiPlayFill } from "react-icons/pi";
 
 
 function PlayButton() {
 	return (
 		<TimerControlButton 
 			ariaLabel="Iniciar ciclo"
-			bgColor= "bg-[#00CBEA]"
-			icon={
-				<img src={ReactSvg} alt="" aria-hidden="true" className="size-1/2" />
-			}
+			icon={<PiPlayFill className="
+				fill-[#FFFFFF]
+
+				w-[70%]
+				h-[70%]
+
+			" />}
+			bgColor="bg-[#00CBEA]"
 		/>
 	);
 }
