@@ -11,6 +11,9 @@ interface TimerControlButtonProps {
     icon: ReactNode;
 
     bgColor?: string;
+
+    hoverColor?: string;
+    activeColor?: string;
 };
 
 function TimerControlButton({
@@ -19,6 +22,8 @@ function TimerControlButton({
     title = ariaLabel,
     orientation = CircularProgressOrientation.Horizontal,
     bgColor = "bg-red-400",
+    hoverColor = "hover:bg-[#5F77B8]",
+    activeColor = "active:bg-[#1D2230]",
     
 }: TimerControlButtonProps) {
     const sizeClassName =
@@ -38,6 +43,8 @@ function TimerControlButton({
 				min-w-0
 
 				${bgColor}
+                ${hoverColor}
+                ${activeColor}
 
 				border-0
 				shadow-none
