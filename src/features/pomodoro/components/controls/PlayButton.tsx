@@ -14,6 +14,7 @@ function PlayButton() {
 
 			" />}
 			bgColor="bg-[#00CBEA]"
+			hoverColor="hover:bg-[#0473B8]"
 		/>
 	);
 }
