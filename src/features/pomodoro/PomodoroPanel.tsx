@@ -50,7 +50,7 @@ function PomodoroPanel() {
 				min-h-0
 				min-w-0
 			">
-				<CycleCounter />
+				<CycleCounter completedFocusCycles={timerState.completedFocusCycles} />
 			</div>
 
 			<div className="
@@ -58,7 +58,10 @@ function PomodoroPanel() {
 				min-h-0
 				min-w-0
 			">
-				<TimerDisplay remainingMs={timerState.remainingMs} />
+				<TimerDisplay
+					phase={timerState.phase}
+					remainingMs={timerState.remainingMs}
+				/>
 			</div>
 
 			<div className="
@@ -66,7 +69,10 @@ function PomodoroPanel() {
 				min-h-0
 				min-w-0
 			">
-				<ProgressIndicator />
+				<ProgressIndicator
+					totalDurationMs={timerState.totalDurationMs}
+					remainingMs={timerState.remainingMs}
+				/>
 			</div>
 
 			<div className="

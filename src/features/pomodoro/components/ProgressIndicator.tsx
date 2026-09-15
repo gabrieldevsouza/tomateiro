@@ -1,4 +1,14 @@
-function ProgressIndicator() {
+type ProgressIndicatorProps = {
+	totalDurationMs: number;
+	remainingMs: number;
+};
+
+function ProgressIndicator({ totalDurationMs, remainingMs }: ProgressIndicatorProps) {
+	const elapsedMs = totalDurationMs - remainingMs;
+	const progress = totalDurationMs > 0
+		? Math.max(0, Math.min(100, Math.round((elapsedMs / totalDurationMs) * 100)))
+		: 0;
+
 	return (
 		<div className="
 
@@ -36,8 +46,9 @@ function ProgressIndicator() {
 						[&::-webkit-progress-value]:rounded-full
 						[&::-moz-progress-bar]:rounded-full
 					"
-  					value={90}
+					value={progress}
   					max={100}
+					aria-label="Progresso da fase atual"
 				/>
 				<span
 					className="
@@ -56,7 +67,7 @@ function ProgressIndicator() {
 						transform: "translateY(0.1em)",
 					}}
 						>
-							{38}%
+							{progress}%
 						</span>
 			</div>
 				
