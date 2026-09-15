@@ -5,10 +5,18 @@ import TimerDisplay from "./components/TimerDisplay";
 
 import {
 	createInitialPomodoroTimerState,
+	getPomodoroCycleProgress,
 	pomodoroTimerReducer,
+	type PomodoroPhase,
 } from "./model/pomodoroTimer";
 
 import { useEffect, useReducer } from "react";
+
+const phaseLabels: Record<PomodoroPhase, string> = {
+	focus: "Foco",
+	shortBreak: "Pausa curta",
+	longBreak: "Pausa longa",
+};
 
 function PomodoroPanel() {
 	const [timerState, dispatch] = useReducer(
@@ -16,6 +24,7 @@ function PomodoroPanel() {
 		undefined,
 		createInitialPomodoroTimerState,
 	);
+	const cycleProgress = getPomodoroCycleProgress(timerState);
 
 	useEffect(() => {
 		if (timerState.status !== "running") {
@@ -37,6 +46,7 @@ function PomodoroPanel() {
 	return (
 		<div
 			className="
+				relative
 				grid
 				h-full
 				w-full
@@ -45,12 +55,22 @@ function PomodoroPanel() {
 				grid-rows-[minmax(0,18fr)_minmax(0,25fr)_minmax(0,46fr)_minmax(0,25fr)_minmax(0,13fr)_minmax(0,25fr)_minmax(0,28fr)]
 			"
 		>
+			<div className="absolute inset-x-0 bottom-full h-[12.5%] @container-size">
+				<p
+					className="flex h-full items-center justify-center whitespace-nowrap font-[Epilogue] text-[#00CBEA] leading-none"
+					style={{ fontSize: "min(7cqw,40cqh)" }}
+					aria-live="polite"
+				>
+					{phaseLabels[timerState.phase]}
+				</p>
+			</div>
+
 			<div className="
 				row-start-1
 				min-h-0
 				min-w-0
 			">
-				<CycleCounter completedFocusCycles={timerState.completedFocusCycles} />
+				<CycleCounter focusProgress={cycleProgress.focusProgress} />
 			</div>
 
 			<div className="
@@ -58,10 +78,7 @@ function PomodoroPanel() {
 				min-h-0
 				min-w-0
 			">
-				<TimerDisplay
-					phase={timerState.phase}
-					remainingMs={timerState.remainingMs}
-				/>
+				<TimerDisplay remainingMs={timerState.remainingMs} />
 			</div>
 
 			<div className="
@@ -70,8 +87,8 @@ function PomodoroPanel() {
 				min-w-0
 			">
 				<ProgressIndicator
-					totalDurationMs={timerState.totalDurationMs}
-					remainingMs={timerState.remainingMs}
+					totalDurationMs={cycleProgress.totalDurationMs}
+					remainingMs={cycleProgress.remainingMs}
 				/>
 			</div>
 

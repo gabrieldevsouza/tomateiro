@@ -1,19 +1,14 @@
 import CircularProgress from "./pomodoroViewer/CircularProgress";
 
 type CycleCounterProps = {
-    completedFocusCycles: number;
+    focusProgress: number[];
 };
 
-function CycleCounter({ completedFocusCycles }: CycleCounterProps) {
-    // Mantém os quatro indicadores cheios até a conclusão do próximo foco.
-    const completedCyclesInSet = completedFocusCycles > 0
-        ? ((completedFocusCycles - 1) % 4) + 1
-        : 0;
-
+function CycleCounter({ focusProgress }: CycleCounterProps) {
     return (
         <div
             role="group"
-            aria-label={`${completedFocusCycles} ciclos de foco concluídos`}
+            aria-label="Progresso dos quatro focos do ciclo"
             className="
                 h-full
                 w-full
@@ -35,10 +30,10 @@ function CycleCounter({ completedFocusCycles }: CycleCounterProps) {
                     items-center
                 "
             >
-                <CircularProgress value={completedCyclesInSet >= 1 ? 100 : 0} />
-                <CircularProgress value={completedCyclesInSet >= 2 ? 100 : 0} />
-                <CircularProgress value={completedCyclesInSet >= 3 ? 100 : 0} />
-                <CircularProgress value={completedCyclesInSet >= 4 ? 100 : 0} />
+                <CircularProgress value={focusProgress[0]} />
+                <CircularProgress value={focusProgress[1]} />
+                <CircularProgress value={focusProgress[2]} />
+                <CircularProgress value={focusProgress[3]} />
             </div>
         </div>
     );

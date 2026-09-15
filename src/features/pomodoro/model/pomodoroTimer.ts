@@ -4,6 +4,11 @@ export const MINUTE_MS = 60 * SECOND_MS;
 export const FOCUS_DURATION_MS = 25 * MINUTE_MS;
 export const SHORT_BREAK_DURATION_MS = 5 * MINUTE_MS;
 export const LONG_BREAK_DURATION_MS = 15 * MINUTE_MS;
+export const FOCUS_PHASES_PER_CYCLE = 4;
+export const CYCLE_DURATION_MS =
+	FOCUS_PHASES_PER_CYCLE * FOCUS_DURATION_MS +
+	(FOCUS_PHASES_PER_CYCLE - 1) * SHORT_BREAK_DURATION_MS +
+	LONG_BREAK_DURATION_MS;
 
 export type PomodoroPhase = 
 	| "focus"
@@ -25,6 +30,9 @@ export type PomodoroTimerState = {
 	endsAtMs: number | null;
 	completedFocusCycles: number;
 	completionId: number;
+	cyclePhaseIndex: number;
+	cycleElapsedBeforePhaseMs: number;
+	cycleTotalDurationMs: number;
 }
 
 export function createInitialPomodoroTimerState(): PomodoroTimerState{
@@ -37,6 +45,9 @@ export function createInitialPomodoroTimerState(): PomodoroTimerState{
 		endsAtMs: null,
 		completedFocusCycles: 0,
 		completionId: 0,
+		cyclePhaseIndex: 0,
+		cycleElapsedBeforePhaseMs: 0,
+		cycleTotalDurationMs: CYCLE_DURATION_MS,
 	};
 }
 
@@ -64,7 +75,7 @@ export function getNextPhase(
 	}
 
 	return completedFocusCycles %
-		4 === 0
+		FOCUS_PHASES_PER_CYCLE === 0
 		? "longBreak"
 		: "shortBreak";
 }
@@ -99,40 +110,72 @@ export type PomodoroTimerAction =
 
 
 function createPhaseState(
+	state: PomodoroTimerState,
 	phase: PomodoroPhase,
-	completedFocusCycles: number,
-	status: PomodoroTimerStatus,
-	completionId: number,
 ): PomodoroTimerState{
 	const durationMs = getPhaseDurationMs(phase);
 
 	return{
+		...state,
 		phase,
-		status,
+		status: "ready",
 		baseDurationMs: durationMs,
 		totalDurationMs: durationMs,
 		remainingMs: durationMs,
 		endsAtMs: null,
-		completedFocusCycles,
-		completionId
 	};
 }
 
 function advancePhase(
 	state: PomodoroTimerState,
-	completedFocusCyclesForPhase = state.completedFocusCycles,
 ): PomodoroTimerState{
+	const nextPhaseIndex =
+		(state.cyclePhaseIndex + 1) % (FOCUS_PHASES_PER_CYCLE * 2);
 	const nextPhase = getNextPhase(
 		state.phase,
-		completedFocusCyclesForPhase,
+		Math.floor(state.cyclePhaseIndex / 2) + 1,
 	);
 
-	return createPhaseState(
-		nextPhase,
-		state.completedFocusCycles,
-		"ready",
-		state.completionId
+	return {
+		...createPhaseState(state, nextPhase),
+		cyclePhaseIndex: nextPhaseIndex,
+		cycleElapsedBeforePhaseMs: nextPhaseIndex === 0
+			? 0
+			: state.cycleElapsedBeforePhaseMs + state.totalDurationMs,
+		cycleTotalDurationMs: nextPhaseIndex === 0
+			? CYCLE_DURATION_MS
+			: state.cycleTotalDurationMs,
+	};
+}
+
+export function getPomodoroCycleProgress(state: PomodoroTimerState) {
+	const elapsedMs = Math.max(
+		0,
+		Math.min(state.totalDurationMs, state.totalDurationMs - state.remainingMs),
 	);
+	const phaseProgress = state.totalDurationMs > 0
+		? (elapsedMs / state.totalDurationMs) * 100
+		: 0;
+	const currentFocusIndex = Math.floor(state.cyclePhaseIndex / 2);
+
+	const focusProgress = Array.from({ length: FOCUS_PHASES_PER_CYCLE }, (_, index) => {
+		if (index < currentFocusIndex) {
+			return 100;
+		}
+		if (index > currentFocusIndex) {
+			return 0;
+		}
+		return state.phase === "focus" ? phaseProgress : 100;
+	});
+
+	return {
+		focusProgress,
+		totalDurationMs: state.cycleTotalDurationMs,
+		remainingMs: Math.max(
+			0,
+			state.cycleTotalDurationMs - state.cycleElapsedBeforePhaseMs - elapsedMs,
+		),
+	};
 }
 
 export function pomodoroTimerReducer(
@@ -236,6 +279,7 @@ export function pomodoroTimerReducer(
 
 			return {
 				...state,
+				cycleTotalDurationMs: state.cycleTotalDurationMs + MINUTE_MS,
 				totalDurationMs:
 					state.totalDurationMs +
 					MINUTE_MS,
@@ -251,21 +295,15 @@ export function pomodoroTimerReducer(
 		}
 
 		case "restart": {
-			return createPhaseState(
-				state.phase,
-				state.completedFocusCycles,
-				"ready",
-				state.completionId,
-			);
+			return {
+				...createPhaseState(state, state.phase),
+				cycleTotalDurationMs: state.cycleTotalDurationMs -
+					(state.totalDurationMs - state.baseDurationMs),
+			};
 		}
 
 		case "skip": {
-			return advancePhase(
-				state,
-				state.phase === "focus"
-					? state.completedFocusCycles + 1
-					: state.completedFocusCycles,
-			);
+			return advancePhase(state);
 		}
 	}
 }

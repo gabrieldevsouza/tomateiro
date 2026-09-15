@@ -1,17 +1,8 @@
-import type { PomodoroPhase } from "../model/pomodoroTimer";
-
 type TimerDisplayProps = {
-	phase: PomodoroPhase;
 	remainingMs: number;
 };
 
-const phaseLabels: Record<PomodoroPhase, string> = {
-	focus: "Foco",
-	shortBreak: "Pausa curta",
-	longBreak: "Pausa longa",
-};
-
-function TimerDisplay({ phase, remainingMs }: TimerDisplayProps) {
+function TimerDisplay({ remainingMs }: TimerDisplayProps) {
 	const totalSeconds = Math.ceil(remainingMs / 1_000);
 	const minutes = Math.floor(totalSeconds / 60);
 	const seconds = totalSeconds % 60;
@@ -40,18 +31,9 @@ function TimerDisplay({ phase, remainingMs }: TimerDisplayProps) {
 				col-start-2
 				min-h-0
 				min-w-0
-				relative
 			"
 			style={{containerType: "size"}}
 			>
-
-				<p
-					className="absolute inset-x-0 bottom-full text-center whitespace-nowrap font-[Epilogue] text-[#00CBEA] leading-none"
-					style={{ fontSize: "min(14cqw,22cqh)" }}
-					aria-live="polite"
-				>
-					{phaseLabels[phase]}
-				</p>
 
 				<time
 					dateTime={`PT${totalSeconds}S`}
@@ -70,7 +52,7 @@ function TimerDisplay({ phase, remainingMs }: TimerDisplayProps) {
 						fontSize: "min(46cqw,71cqh)",
 						transform: "translateY(0.09em)",
 					}}
-					aria-label={`${phaseLabels[phase]}: ${minutes} minutos e ${seconds} segundos restantes`}
+					aria-label={`${minutes} minutos e ${seconds} segundos restantes`}
 				>
 					{formattedTime}
 				</time>

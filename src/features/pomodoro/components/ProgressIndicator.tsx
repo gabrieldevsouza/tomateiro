@@ -48,7 +48,7 @@ function ProgressIndicator({ totalDurationMs, remainingMs }: ProgressIndicatorPr
 					"
 					value={progress}
   					max={100}
-					aria-label="Progresso da fase atual"
+					aria-label="Progresso do ciclo completo"
 				/>
 				<span
 					className="
