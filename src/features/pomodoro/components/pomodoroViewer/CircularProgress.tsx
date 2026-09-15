@@ -1,4 +1,4 @@
-type CircularProgressOrientation = "horizontal" | "vertical";
+enum CircularProgressOrientation {Horizontal,Vertical}
 
 interface CircularProgressProps {
     value: number;
@@ -11,7 +11,7 @@ function CircularProgress({
     value,
     showText = false,
     textSize = 36,
-    orientation = "horizontal",
+    orientation = CircularProgressOrientation.Horizontal,
 }: CircularProgressProps) {
     const createSlice = (
         startAngle: number,
@@ -48,7 +48,7 @@ function CircularProgress({
     const progressEndAngle = startAngle + progressAngle;
 
     const sizeClassName =
-        orientation === "vertical"
+        orientation === CircularProgressOrientation.Vertical
             ? "h-auto w-full"
             : "h-full w-auto";
 

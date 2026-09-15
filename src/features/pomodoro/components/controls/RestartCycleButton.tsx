@@ -1,10 +1,22 @@
+/*import ReactSvg from "../../../../assets/react.svg";*/
 import TimerControlButton from "./TimerControlButton";
+import { MdOutlineReplay } from "react-icons/md";
 
 function RestartCycleButton({ onClick }: { onClick: () => void }) {
 	return (
-		<TimerControlButton ariaLabel="Reiniciar ciclo" onClick={onClick}>
-			<span aria-hidden="true">↻</span>
-		</TimerControlButton>
+		<TimerControlButton
+			onClick={onClick}
+			ariaLabel = "Reiniciar ciclo"
+
+			icon={<MdOutlineReplay className="
+				fill-[#C2C7DA]
+
+				w-[65%]
+				h-[65%]
+
+			"/>}
+			bgColor = "bg-[#374468]"
+		/>
 	);
 }
 

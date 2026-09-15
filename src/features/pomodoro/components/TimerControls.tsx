@@ -7,83 +7,182 @@ import RestartCycleButton from "./controls/RestartCycleButton";
 import SkipCycleButton from "./controls/SkipCycleButton";
 
 type TimerControlsProps = {
-    status: PomodoroTimerStatus;
-    onAddMinute: () => void;
-    onRestart: () => void;
-    onStart: () => void;
-    onPause: () => void;
-    onSkip: () => void;
+	status: PomodoroTimerStatus;
+	onAddMinute: () => void;
+	onRestart: () => void;
+	onStart: () => void;
+	onPause: () => void;
+	onSkip: () => void;
 };
 
 function TimerControls({
-    status,
-    onAddMinute,
-    onRestart,
-    onStart,
-    onPause,
-    onSkip,
+	status,
+	onAddMinute,
+	onRestart,
+	onStart,
+	onPause,
+	onSkip,
 }: TimerControlsProps) {
-    const isRunning = status === "running";
+	const isRunning = status === "running";
+	return (
+		<div className="
 
-    return (
-        <div
-            className="
-                grid
-                h-full
-                w-full
-                min-h-0
-                min-w-0
-                grid-cols-[minmax(0,4fr)_minmax(0,7fr)_minmax(0,4fr)]
-                bg-green-500
-            "
-        >
-            <div
-                className="
-                    col-start-1
-                    h-full
-                    min-h-0
-                    min-w-0
-                    bg-fuchsia-500
-                "
-            />
+			h-full
+			w-full
 
-            <div
-                className="
-                    col-start-2
-                    grid
-                    h-full
-                    min-h-0
-                    min-w-0
-                    grid-cols-5
-                    bg-blue-400
-                "
-            >
-                <AddMinuteButton onClick={onAddMinute} />
+			grid
 
-                <RestartCycleButton onClick={onRestart} />
+			grid-cols-[minmax(0,8fr)_minmax(0,59fr)_minmax(0,8fr)]
+		" >
 
-                <PlayButton
-                    isRunning={isRunning}
-                    onStart={onStart}
-                    onPause={onPause}
-                />
+			<div className="
 
-                <SkipCycleButton onClick={onSkip} />
 
-                <PictureInPictureButton />
-            </div>
+				col-start-1
+				h-full
+				min-h-0
+				min-w-0
+			" />
 
-            <div
-                className="
-                    col-start-3
-                    h-full
-                    min-h-0
-                    min-w-0
-                    bg-emerald-400
-                "
-            />
-        </div>
-    );
+			<div className="
+
+				col-start-2
+
+				min-h-0
+				min-w-0
+
+				flex
+
+				flex-row
+				justify-between
+
+			">
+				<div className="
+
+					col-start-1
+
+					min-w-0
+					min-h-0
+
+					grid
+					grid-rows-[minmax(0,9fr)_minmax(0,38fr)_minmax(0,9fr)]
+					">
+
+						<div className="
+							row-start-2
+							flex
+							flex-row
+							gap-2
+							justify-between
+							items-center
+						">
+							<AddMinuteButton onClick={onAddMinute} />
+						</div>
+
+				</div>
+				<div className="
+
+					col-start-1
+
+					min-w-0
+					min-h-0
+
+					grid
+					grid-rows-[minmax(0,9fr)_minmax(0,38fr)_minmax(0,9fr)]
+					">
+
+						<div className="
+							row-start-2
+							flex
+							flex-row
+							gap-2
+							justify-between
+							items-center
+						">
+							<RestartCycleButton onClick={onRestart} />
+						</div>
+
+				</div>
+			<div className="
+
+
+					col-start-2
+
+					min-w-0
+					min-h-0
+
+					flex
+					items-center
+					justify-center
+					">
+						<PlayButton
+							isRunning={isRunning}
+							onStart={onStart}
+							onPause={onPause}
+						/>
+				</div>
+				<div className="
+
+					col-start-3
+
+					min-w-0
+					min-h-0
+
+					grid
+					grid-rows-[minmax(0,9fr)_minmax(0,38fr)_minmax(0,9fr)]
+					">
+						<div className="
+
+						row-start-2
+
+						flex
+						gap-2
+						flex-row
+						justify-between
+						items-center
+						">
+							<SkipCycleButton onClick={onSkip} />
+						</div>
+
+				</div>
+				<div className="
+
+					col-start-3
+
+					min-w-0
+					min-h-0
+
+					grid
+					grid-rows-[minmax(0,9fr)_minmax(0,38fr)_minmax(0,9fr)]
+					">
+
+
+						<div className="
+
+						row-start-2
+
+						flex
+						gap-2
+						flex-row
+						justify-between
+						items-center
+						">
+							<PictureInPictureButton />
+						</div>
+
+				</div>
+			</div>
+
+			<div className="
+
+				col-start-3
+				h-full
+				min-h-0
+				min-w-0
+			" />
+
+		</div>
+	);
 }
 
 export default TimerControls;

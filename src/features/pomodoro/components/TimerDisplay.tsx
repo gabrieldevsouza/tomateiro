@@ -1,75 +1,72 @@
 type TimerDisplayProps = {
-    remainingMs: number;
+	remainingMs: number;
 };
 
-function TimerDisplay({
-    remainingMs,
-}: TimerDisplayProps) {
-    const totalSeconds = Math.ceil(
-        remainingMs / 1_000,
-    );
+function TimerDisplay({ remainingMs }: TimerDisplayProps) {
+	const totalSeconds = Math.ceil(remainingMs / 1_000);
+	const minutes = Math.floor(totalSeconds / 60);
+	const seconds = totalSeconds % 60;
+	const formattedTime = `${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
 
-    const minutes = Math.floor(totalSeconds / 60);
-    const seconds = totalSeconds % 60;
+	return (
+		<div className="
 
-    const formattedTime = `${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
+			h-full
+			w-full
 
-    return (
-        <div
-            className="
-                grid
-                h-full
-                w-full
-                grid-cols-[minmax(0,43fr)_minmax(0,92fr)_minmax(0,43fr)]
-                bg-green-500
-            "
-        >
-            <div
-                className="
-                    col-start-1
-                    min-h-0
-                    min-w-0
-                    bg-fuchsia-500
-                "
-            />
+			grid
 
-            <div
-                className="
-                    col-start-2
-                    min-h-0
-                    min-w-0
-                    bg-blue-400
-                "
-            >
-                <time
-                    dateTime={`PT${totalSeconds}S`}
-                    className="
-                        flex
-                        h-full
-                        w-full
-                        items-center
-                        justify-center
-                        text-4xl
-                        font-medium
-                        leading-none
-                        tabular-nums
-                    "
-                    aria-label={`${minutes} minutos e ${seconds} segundos restantes`}
-                >
-                    {formattedTime}
-                </time>
-            </div>
+			grid-cols-[minmax(0,43fr)_minmax(0,92fr)_minmax(0,43fr)]
+		" >
 
-            <div
-                className="
-                    col-start-3
-                    min-h-0
-                    min-w-0
-                    bg-emerald-400
-                "
-            />
-        </div>
-    );
+			<div className="
+
+				col-start-1
+				min-h-0
+				min-w-0
+			"/>
+
+			<div className="
+
+				col-start-2
+				min-h-0
+				min-w-0
+			"
+			style={{containerType: "size"}}
+			>
+
+				<time
+					dateTime={`PT${totalSeconds}S`}
+					className="
+						flex
+						h-full
+						w-full
+						items-center
+						justify-center
+						font-[Epilogue]
+						text-[#00CBEA]
+						leading-none
+						tabular-nums
+					"
+					style={{
+						fontSize: "min(46cqw,71cqh)",
+						transform: "translateY(0.09em)",
+					}}
+					aria-label={`${minutes} minutos e ${seconds} segundos restantes`}
+				>
+					{formattedTime}
+				</time>
+			</div>
+
+			<div className="
+
+				col-start-3
+				min-h-0
+				min-w-0
+			"/>
+
+		</div>
+	);
 }
 
 export default TimerDisplay;
