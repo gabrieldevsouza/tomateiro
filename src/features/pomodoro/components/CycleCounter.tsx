@@ -5,10 +5,11 @@ type CycleCounterProps = {
 };
 
 function CycleCounter({ focusProgress }: CycleCounterProps) {
+    const alignment = focusProgress.length === 1 ? "justify-center" : "justify-between";
     return (
         <div
             role="group"
-            aria-label="Progresso dos quatro focos do ciclo"
+            aria-label={focusProgress.length === 1 ? "Progresso do foco do ciclo" : `Progresso dos ${focusProgress.length} focos do ciclo`}
             className="
                 h-full
                 w-full
@@ -19,21 +20,20 @@ function CycleCounter({ focusProgress }: CycleCounterProps) {
             "
         >
             <div
-                className="
+                className={`
                     col-start-2
                     min-h-0
                     min-w-0
 
                     flex
                     flex-row
-                    justify-between
+                    ${alignment}
                     items-center
-                "
+                `}
             >
-                <CircularProgress value={focusProgress[0]} />
-                <CircularProgress value={focusProgress[1]} />
-                <CircularProgress value={focusProgress[2]} />
-                <CircularProgress value={focusProgress[3]} />
+                {focusProgress.map((progress, index) => (
+                    <CircularProgress key={index} value={progress} />
+                ))}
             </div>
         </div>
     );

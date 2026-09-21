@@ -5,10 +5,49 @@ export const FOCUS_DURATION_MS = 25 * MINUTE_MS;
 export const SHORT_BREAK_DURATION_MS = 5 * MINUTE_MS;
 export const LONG_BREAK_DURATION_MS = 15 * MINUTE_MS;
 export const FOCUS_PHASES_PER_CYCLE = 4;
-export const CYCLE_DURATION_MS =
-	FOCUS_PHASES_PER_CYCLE * FOCUS_DURATION_MS +
-	(FOCUS_PHASES_PER_CYCLE - 1) * SHORT_BREAK_DURATION_MS +
-	LONG_BREAK_DURATION_MS;
+
+export type PomodoroSettings = {
+	focusDurationMs: number;
+	shortBreakDurationMs: number;
+	longBreakDurationMs: number;
+	focusPhasesPerCycle: number;
+};
+
+export const DEFAULT_POMODORO_SETTINGS: PomodoroSettings = {
+	focusDurationMs: FOCUS_DURATION_MS,
+	shortBreakDurationMs: SHORT_BREAK_DURATION_MS,
+	longBreakDurationMs: LONG_BREAK_DURATION_MS,
+	focusPhasesPerCycle: FOCUS_PHASES_PER_CYCLE,
+};
+
+export const POMODORO_SETTINGS_LIMITS = {
+	minMinutes: 1,
+	maxMinutes: 180,
+	minFocusPhases: 1,
+	maxFocusPhases: 12,
+} as const;
+
+export function isValidPomodoroSettings(settings: PomodoroSettings): boolean {
+	const durations = [
+		settings.focusDurationMs,
+		settings.shortBreakDurationMs,
+		settings.longBreakDurationMs,
+	];
+	return durations.every((durationMs) => {
+		const minutes = durationMs / MINUTE_MS;
+		return Number.isInteger(minutes) &&
+			minutes >= POMODORO_SETTINGS_LIMITS.minMinutes &&
+			minutes <= POMODORO_SETTINGS_LIMITS.maxMinutes;
+	}) && Number.isInteger(settings.focusPhasesPerCycle) &&
+		settings.focusPhasesPerCycle >= POMODORO_SETTINGS_LIMITS.minFocusPhases &&
+		settings.focusPhasesPerCycle <= POMODORO_SETTINGS_LIMITS.maxFocusPhases;
+}
+
+export function getCycleDurationMs(settings: PomodoroSettings): number {
+	return settings.focusPhasesPerCycle * settings.focusDurationMs +
+		(settings.focusPhasesPerCycle - 1) * settings.shortBreakDurationMs +
+		settings.longBreakDurationMs;
+}
 
 export type PomodoroPhase = 
 	| "focus"
@@ -22,65 +61,81 @@ export type PomodoroTimerStatus =
 	| "completed";
 
 export type PomodoroTimerState = {
+	settings: PomodoroSettings;
 	phase: PomodoroPhase;
 	status: PomodoroTimerStatus;
 	baseDurationMs: number;
 	totalDurationMs: number;
 	remainingMs: number;
+	// Deadline on the same monotonic clock supplied by action.nowMs.
 	endsAtMs: number | null;
-	completedFocusCycles: number;
+	completedFocusCount: number;
 	completionId: number;
 	cyclePhaseIndex: number;
-	cycleElapsedBeforePhaseMs: number;
+	// Includes the full duration of skipped phases, as well as completed phases.
+	cycleAccountedBeforePhaseMs: number;
 	cycleTotalDurationMs: number;
 }
 
-export function createInitialPomodoroTimerState(): PomodoroTimerState{
+export function createInitialPomodoroTimerState(
+	settings: PomodoroSettings = DEFAULT_POMODORO_SETTINGS,
+): PomodoroTimerState{
+	if (!isValidPomodoroSettings(settings)) {
+		throw new RangeError("Configuração do Pomodoro inválida.");
+	}
 	return{
+		settings: { ...settings },
 		phase: "focus",
 		status: "ready",
-		baseDurationMs: FOCUS_DURATION_MS,
-		totalDurationMs: FOCUS_DURATION_MS,
-		remainingMs: FOCUS_DURATION_MS,
+		baseDurationMs: settings.focusDurationMs,
+		totalDurationMs: settings.focusDurationMs,
+		remainingMs: settings.focusDurationMs,
 		endsAtMs: null,
-		completedFocusCycles: 0,
+		completedFocusCount: 0,
 		completionId: 0,
 		cyclePhaseIndex: 0,
-		cycleElapsedBeforePhaseMs: 0,
-		cycleTotalDurationMs: CYCLE_DURATION_MS,
+		cycleAccountedBeforePhaseMs: 0,
+		cycleTotalDurationMs: getCycleDurationMs(settings),
 	};
 }
 
 export function getPhaseDurationMs(
 	phase: PomodoroPhase,
+	settings: PomodoroSettings = DEFAULT_POMODORO_SETTINGS,
 ): number{
 	switch(phase){
 		case "focus":
-			return FOCUS_DURATION_MS;
+			return settings.focusDurationMs;
 
 		case "shortBreak":
-			return SHORT_BREAK_DURATION_MS;
+			return settings.shortBreakDurationMs;
 
 		case "longBreak":
-			return LONG_BREAK_DURATION_MS;
+			return settings.longBreakDurationMs;
 	}
 }
 
 export function getNextPhase(
 	currentPhase: PomodoroPhase,
-	completedFocusCycles: number,
+	focusNumberInCycle: number,
+	focusPhasesPerCycle = FOCUS_PHASES_PER_CYCLE,
 ): PomodoroPhase{
 	if (currentPhase !== "focus"){
 		return "focus";
 	}
 
-	return completedFocusCycles %
-		FOCUS_PHASES_PER_CYCLE === 0
+	return focusNumberInCycle %
+		focusPhasesPerCycle === 0
 		? "longBreak"
 		: "shortBreak";
 }
 
 export type PomodoroTimerAction = 
+	| {
+		type: "configure";
+		settings: PomodoroSettings;
+	}
+
 	| {
 		type: "start";
 		nowMs: number;
@@ -98,6 +153,7 @@ export type PomodoroTimerAction =
 
 	| {
 		type: "addMinute";
+		nowMs: number;
 	}
 
 	| {
@@ -113,7 +169,7 @@ function createPhaseState(
 	state: PomodoroTimerState,
 	phase: PomodoroPhase,
 ): PomodoroTimerState{
-	const durationMs = getPhaseDurationMs(phase);
+	const durationMs = getPhaseDurationMs(phase, state.settings);
 
 	return{
 		...state,
@@ -130,20 +186,21 @@ function advancePhase(
 	state: PomodoroTimerState,
 ): PomodoroTimerState{
 	const nextPhaseIndex =
-		(state.cyclePhaseIndex + 1) % (FOCUS_PHASES_PER_CYCLE * 2);
+		(state.cyclePhaseIndex + 1) % (state.settings.focusPhasesPerCycle * 2);
 	const nextPhase = getNextPhase(
 		state.phase,
 		Math.floor(state.cyclePhaseIndex / 2) + 1,
+		state.settings.focusPhasesPerCycle,
 	);
 
 	return {
 		...createPhaseState(state, nextPhase),
 		cyclePhaseIndex: nextPhaseIndex,
-		cycleElapsedBeforePhaseMs: nextPhaseIndex === 0
+		cycleAccountedBeforePhaseMs: nextPhaseIndex === 0
 			? 0
-			: state.cycleElapsedBeforePhaseMs + state.totalDurationMs,
+			: state.cycleAccountedBeforePhaseMs + state.totalDurationMs,
 		cycleTotalDurationMs: nextPhaseIndex === 0
-			? CYCLE_DURATION_MS
+			? getCycleDurationMs(state.settings)
 			: state.cycleTotalDurationMs,
 	};
 }
@@ -158,7 +215,7 @@ export function getPomodoroCycleProgress(state: PomodoroTimerState) {
 		: 0;
 	const currentFocusIndex = Math.floor(state.cyclePhaseIndex / 2);
 
-	const focusProgress = Array.from({ length: FOCUS_PHASES_PER_CYCLE }, (_, index) => {
+	const focusProgress = Array.from({ length: state.settings.focusPhasesPerCycle }, (_, index) => {
 		if (index < currentFocusIndex) {
 			return 100;
 		}
@@ -173,9 +230,43 @@ export function getPomodoroCycleProgress(state: PomodoroTimerState) {
 		totalDurationMs: state.cycleTotalDurationMs,
 		remainingMs: Math.max(
 			0,
-			state.cycleTotalDurationMs - state.cycleElapsedBeforePhaseMs - elapsedMs,
+			state.cycleTotalDurationMs - state.cycleAccountedBeforePhaseMs - elapsedMs,
 		),
 	};
+}
+
+export function getProgressPercentage(totalDurationMs: number, remainingMs: number): number {
+	if (totalDurationMs <= 0) {
+		return 0;
+	}
+	if (remainingMs <= 0) {
+		return 100;
+	}
+	const percentage = ((totalDurationMs - remainingMs) / totalDurationMs) * 100;
+	// Rounded values must not announce completion while time remains.
+	return Math.max(0, Math.min(99, Math.round(percentage)));
+}
+
+function completeCurrentPhase(state: PomodoroTimerState): PomodoroTimerState {
+	if (state.status === "completed") {
+		return state;
+	}
+	return {
+		...state,
+		status: "completed",
+		remainingMs: 0,
+		endsAtMs: null,
+		completedFocusCount: state.completedFocusCount + (state.phase === "focus" ? 1 : 0),
+		completionId: state.completionId + 1,
+	};
+}
+
+function getRunningRemainingMs(state: PomodoroTimerState, nowMs: number): number {
+	if (state.endsAtMs === null) {
+		return state.remainingMs;
+	}
+	// A delayed/out-of-order timestamp must never add time to a running phase.
+	return Math.max(0, Math.min(state.remainingMs, state.endsAtMs - nowMs));
 }
 
 export function pomodoroTimerReducer(
@@ -183,6 +274,25 @@ export function pomodoroTimerReducer(
 	action: PomodoroTimerAction,
 ): PomodoroTimerState {
 	switch (action.type) {
+		case "configure": {
+			if (!isValidPomodoroSettings(action.settings)) {
+				return state;
+			}
+			if (
+				state.settings.focusDurationMs === action.settings.focusDurationMs &&
+				state.settings.shortBreakDurationMs === action.settings.shortBreakDurationMs &&
+				state.settings.longBreakDurationMs === action.settings.longBreakDurationMs &&
+				state.settings.focusPhasesPerCycle === action.settings.focusPhasesPerCycle
+			) {
+				return state;
+			}
+			return {
+				...createInitialPomodoroTimerState(action.settings),
+				completedFocusCount: state.completedFocusCount,
+				completionId: state.completionId,
+			};
+		}
+
 		case "start": {
 			if (state.status === "running") {
 				return state;
@@ -210,23 +320,10 @@ export function pomodoroTimerReducer(
 				return state;
 			}
 
-			const remainingMs = Math.max(
-				0,
-				state.endsAtMs - action.nowMs,
-			);
+			const remainingMs = getRunningRemainingMs(state, action.nowMs);
 
 			if (remainingMs === 0) {
-				return {
-					...state,
-					status: "completed",
-					remainingMs: 0,
-					endsAtMs: null,
-					completedFocusCycles:
-						state.phase === "focus"
-							? state.completedFocusCycles + 1
-							: state.completedFocusCycles,
-					completionId: state.completionId + 1,
-				}
+				return completeCurrentPhase(state);
 			}
 
 			return {
@@ -245,10 +342,7 @@ export function pomodoroTimerReducer(
 				return state;
 			}
 
-			const remainingMs = Math.max(
-				0,
-				state.endsAtMs - action.nowMs,
-			);
+			const remainingMs = getRunningRemainingMs(state, action.nowMs);
 
 			if (remainingMs > 0) {
 				return {
@@ -257,24 +351,19 @@ export function pomodoroTimerReducer(
 				};
 			}
 
-			const completedFocusCycles =
-				state.phase === "focus"
-					? state.completedFocusCycles + 1
-					: state.completedFocusCycles;
-
-			return {
-				...state,
-				status: "completed",
-				remainingMs: 0,
-				endsAtMs: null,
-				completedFocusCycles,
-				completionId: state.completionId + 1,
-			};
+			return completeCurrentPhase(state);
 		}
 
 		case "addMinute": {
 			if (state.status === "completed") {
 				return state;
+			}
+			const remainingMs = state.status === "running" && state.endsAtMs !== null
+				? getRunningRemainingMs(state, action.nowMs)
+				: state.remainingMs;
+			// The click timestamp decides expiry, even between interval updates.
+			if (remainingMs === 0) {
+				return completeCurrentPhase(state);
 			}
 
 			return {
@@ -284,7 +373,7 @@ export function pomodoroTimerReducer(
 					state.totalDurationMs +
 					MINUTE_MS,
 				remainingMs:
-					state.remainingMs +
+					remainingMs +
 					MINUTE_MS,
 				endsAtMs:
 					state.endsAtMs === null

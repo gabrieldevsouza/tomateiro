@@ -15,6 +15,7 @@ interface TimerControlButtonProps {
 
     hoverColor?: string;
     activeColor?: string;
+    className?: string;
 };
 
 function TimerControlButton({
@@ -26,6 +27,7 @@ function TimerControlButton({
     bgColor = "bg-red-400",
     hoverColor = "hover:bg-[#5F77B8]",
     activeColor = "active:bg-[#1D2230]",
+    className = "",
 
 }: TimerControlButtonProps) {
     const sizeClassName =
@@ -67,6 +69,7 @@ function TimerControlButton({
 				shrink-0
 				aspect-square
 				${sizeClassName}
+                ${className}
 
 				flex
 			`}

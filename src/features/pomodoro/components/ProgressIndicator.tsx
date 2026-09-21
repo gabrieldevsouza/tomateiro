@@ -1,13 +1,12 @@
+import { getProgressPercentage } from "../model/pomodoroTimer";
+
 type ProgressIndicatorProps = {
 	totalDurationMs: number;
 	remainingMs: number;
 };
 
 function ProgressIndicator({ totalDurationMs, remainingMs }: ProgressIndicatorProps) {
-	const elapsedMs = totalDurationMs - remainingMs;
-	const progress = totalDurationMs > 0
-		? Math.max(0, Math.min(100, Math.round((elapsedMs / totalDurationMs) * 100)))
-		: 0;
+	const progress = getProgressPercentage(totalDurationMs, remainingMs);
 
 	return (
 		<div className="
