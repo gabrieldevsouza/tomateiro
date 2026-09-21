@@ -1,4 +1,3 @@
-import CardSelection from "../features/pomodoro/components/selectionViewer/CardSelection";
 import TimersGrid from "../features/pomodoro/components/selectionViewer/TimersGrid";
 
 
