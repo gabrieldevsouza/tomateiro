@@ -1,4 +1,5 @@
 import CardSelection from "../features/pomodoro/components/selectionViewer/CardSelection";
+import TimersGrid from "../features/pomodoro/components/selectionViewer/TimersGrid";
 
 
 function SelectionView() {
@@ -6,38 +7,35 @@ function SelectionView() {
         <section
             className="
                 bg-pink-900
-                grid
+
                 h-full
                 w-full
+
+                grid
+
                 grid-cols-[minmax(0,7fr)_minmax(0,146fr)_minmax(0,7fr)]
                 grid-rows-[minmax(0,7fr)_minmax(0,76fr)_minmax(0,7fr)]
-            "
-
-        >
-            <div
-                className="
-                    
-                    bg-blue-400
-
-                    col-2
-                    row-2
-
-                    h-full
-                    w-full
-                    min-w-0
-                    min-h-0
-
-                    flex
-                    flex-wrap
-                    gap-2
                 
-            ">
-                <CardSelection/>
-                <CardSelection/>
-                <CardSelection/>
-                <CardSelection/>
-               
-            </div>
+                [grid-template-areas:'._._.'_'._main_.'_'conf_._.']
+            "
+        >
+        <div className="
+            [grid-area:main]
+            bg-green-400
+        ">
+            Main
+            <TimersGrid />
+        </div>
+
+        <div className="
+            [grid-area:conf]
+            bg-yellow-600
+        ">
+            Conf
+        </div>
+
+
+
         </section>
     );
 }
