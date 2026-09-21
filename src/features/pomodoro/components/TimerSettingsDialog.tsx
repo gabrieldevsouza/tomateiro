@@ -74,7 +74,7 @@ function TimerSettingsDialog({ settings, onSave, onClose }: TimerSettingsDialogP
 			}}
 		>
 			<form
-				className="modal-box max-h-[calc(100dvh_-_2rem)] w-[calc(100%_-_2rem)] max-w-md border border-[#374468] bg-[#212940] p-5 font-[Epilogue] text-[#C2C7DA] [@media(max-height:400px)]:p-3"
+				className="modal-box max-h-[calc(100dvh-2rem)] w-[calc(100%-2rem)] max-w-md border border-[#374468] bg-[#212940] p-5 font-[Epilogue] text-[#C2C7DA] [@media(max-height:400px)]:p-3"
 				onSubmit={handleSubmit}
 				onInput={() => setError("")}
 			>
