@@ -17,7 +17,12 @@ export default function TimersGrid({
     <section
       aria-label="Temporizadores"
       className="
-        grid w-full min-w-0 content-start gap-3 p-3
+        grid 
+        w-full 
+        min-w-0
+        content-start 
+        gap-3 
+        p-3
         auto-rows-68
         grid-cols-[repeat(auto-fill,minmax(min(100%,16rem),1fr))]
       "
