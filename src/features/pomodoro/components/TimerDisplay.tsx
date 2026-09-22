@@ -4,9 +4,11 @@ type TimerDisplayProps = {
 
 function TimerDisplay({ remainingMs }: TimerDisplayProps) {
 	const totalSeconds = Math.ceil(remainingMs / 1_000);
-	const minutes = Math.floor(totalSeconds / 60);
+	const hours = Math.floor(totalSeconds / 3_600);
+	const minutes = Math.floor(totalSeconds / 60) % 60;
 	const seconds = totalSeconds % 60;
-	const formattedTime = `${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
+	const formattedTime = [...(hours > 0 ? [hours] : []), minutes, seconds]
+		.map((part) => String(part).padStart(2, "0")).join(":");
 
 	return (
 		<div className="
@@ -47,12 +49,13 @@ function TimerDisplay({ remainingMs }: TimerDisplayProps) {
 						text-[#00CBEA]
 						leading-none
 						tabular-nums
+						select-none
 					"
 					style={{
-						fontSize: "min(46cqw,71cqh)",
+						fontSize: `min(${46 * 5 / formattedTime.length}cqw,71cqh)`,
 						transform: "translateY(0.09em)",
 					}}
-					aria-label={`${minutes} minutos e ${seconds} segundos restantes`}
+					aria-label={`${hours > 0 ? `${hours} horas, ` : ""}${minutes} minutos e ${seconds} segundos restantes`}
 				>
 					{formattedTime}
 				</time>

@@ -1,5 +1,6 @@
 export const SECOND_MS = 1_000;
 export const MINUTE_MS = 60 * SECOND_MS;
+export const HOUR_MS = 60 * MINUTE_MS;
 
 export const FOCUS_DURATION_MS = 25 * MINUTE_MS;
 export const SHORT_BREAK_DURATION_MS = 5 * MINUTE_MS;
@@ -21,8 +22,8 @@ export const DEFAULT_POMODORO_SETTINGS: PomodoroSettings = {
 };
 
 export const POMODORO_SETTINGS_LIMITS = {
-	minMinutes: 1,
-	maxMinutes: 180,
+	minDurationMs: SECOND_MS,
+	maxDurationMs: 99 * HOUR_MS,
 	minFocusPhases: 1,
 	maxFocusPhases: 12,
 } as const;
@@ -34,10 +35,9 @@ export function isValidPomodoroSettings(settings: PomodoroSettings): boolean {
 		settings.longBreakDurationMs,
 	];
 	return durations.every((durationMs) => {
-		const minutes = durationMs / MINUTE_MS;
-		return Number.isInteger(minutes) &&
-			minutes >= POMODORO_SETTINGS_LIMITS.minMinutes &&
-			minutes <= POMODORO_SETTINGS_LIMITS.maxMinutes;
+		return Number.isInteger(durationMs / SECOND_MS) &&
+			durationMs >= POMODORO_SETTINGS_LIMITS.minDurationMs &&
+			durationMs <= POMODORO_SETTINGS_LIMITS.maxDurationMs;
 	}) && Number.isInteger(settings.focusPhasesPerCycle) &&
 		settings.focusPhasesPerCycle >= POMODORO_SETTINGS_LIMITS.minFocusPhases &&
 		settings.focusPhasesPerCycle <= POMODORO_SETTINGS_LIMITS.maxFocusPhases;

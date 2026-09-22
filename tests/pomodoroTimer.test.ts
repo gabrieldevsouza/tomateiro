@@ -4,6 +4,8 @@ import {
     FOCUS_DURATION_MS,
     LONG_BREAK_DURATION_MS,
     MINUTE_MS,
+    HOUR_MS,
+    SECOND_MS,
     SHORT_BREAK_DURATION_MS,
     createInitialPomodoroTimerState,
     getPomodoroCycleProgress,
@@ -94,11 +96,11 @@ describe("pomodoroTimerReducer", () => {
                 expect(() => createInitialPomodoroTimerState({ ...settings, [key]: value })).toThrow(RangeError);
             }
         }
-        expect(() => createInitialPomodoroTimerState({ ...settings, focusDurationMs: 90_000 })).toThrow(RangeError);
-        expect(() => createInitialPomodoroTimerState({ ...settings, focusDurationMs: 181 * MINUTE_MS })).toThrow(RangeError);
+        expect(() => createInitialPomodoroTimerState({ ...settings, focusDurationMs: 1_500 })).toThrow(RangeError);
+        expect(() => createInitialPomodoroTimerState({ ...settings, focusDurationMs: 99 * HOUR_MS + SECOND_MS })).toThrow(RangeError);
         expect(() => createInitialPomodoroTimerState({ ...settings, focusPhasesPerCycle: 13 })).toThrow(RangeError);
-        expect(createInitialPomodoroTimerState({ ...settings, focusDurationMs: MINUTE_MS, focusPhasesPerCycle: 1 }).remainingMs).toBe(MINUTE_MS);
-        expect(createInitialPomodoroTimerState({ ...settings, focusDurationMs: 180 * MINUTE_MS, focusPhasesPerCycle: 12 }).remainingMs).toBe(180 * MINUTE_MS);
+        expect(createInitialPomodoroTimerState({ ...settings, focusDurationMs: SECOND_MS, focusPhasesPerCycle: 1 }).remainingMs).toBe(SECOND_MS);
+        expect(createInitialPomodoroTimerState({ ...settings, focusDurationMs: 99 * HOUR_MS, focusPhasesPerCycle: 12 }).remainingMs).toBe(99 * HOUR_MS);
     });
 
     test("um horário antigo não aumenta o restante nem desfaz progresso", () => {
@@ -482,7 +484,7 @@ describe("configuração do Pomodoro", () => {
     test("rejeita tempos e quantidades inválidos sem alterar o timer", () => {
         const running = pomodoroTimerReducer(initialState(), { type: "start", nowMs: NOW_MS });
         for (const key of ["focusDurationMs", "shortBreakDurationMs", "longBreakDurationMs"] as const) {
-            for (const value of [0, -MINUTE_MS, 90_000, 181 * MINUTE_MS, NaN, Infinity]) {
+            for (const value of [0, -SECOND_MS, 1_500, 99 * HOUR_MS + SECOND_MS, NaN, Infinity]) {
                 const invalid = { ...settings, [key]: value };
                 expect(isValidPomodoroSettings(invalid)).toBe(false);
                 expect(pomodoroTimerReducer(running, { type: "configure", settings: invalid })).toBe(running);
@@ -493,8 +495,29 @@ describe("configuração do Pomodoro", () => {
             expect(isValidPomodoroSettings(invalid)).toBe(false);
             expect(pomodoroTimerReducer(running, { type: "configure", settings: invalid })).toBe(running);
         }
-        expect(isValidPomodoroSettings({ ...settings, focusDurationMs: MINUTE_MS, focusPhasesPerCycle: 1 })).toBe(true);
-        expect(isValidPomodoroSettings({ ...settings, focusDurationMs: 180 * MINUTE_MS, focusPhasesPerCycle: 12 })).toBe(true);
+        expect(isValidPomodoroSettings({ ...settings, focusDurationMs: SECOND_MS, focusPhasesPerCycle: 1 })).toBe(true);
+        expect(isValidPomodoroSettings({ ...settings, focusDurationMs: 99 * HOUR_MS, focusPhasesPerCycle: 12 })).toBe(true);
+    });
+
+    test("durações de segundos e horas usam o mesmo relógio e progresso do bloco", () => {
+        const custom = { ...settings, focusDurationMs: 90 * SECOND_MS, shortBreakDurationMs: 5 * SECOND_MS, longBreakDurationMs: HOUR_MS, focusPhasesPerCycle: 2 };
+        const configured = pomodoroTimerReducer(initialState(), { type: "configure", settings: custom });
+        const running = pomodoroTimerReducer(configured, { type: "start", nowMs: NOW_MS });
+        const halfway = pomodoroTimerReducer(running, { type: "tick", nowMs: NOW_MS + 45 * SECOND_MS });
+        expect(getPomodoroCycleProgress(halfway)).toEqual({ focusProgress: [50, 0], totalDurationMs: 3_785_000, remainingMs: 3_740_000 });
+        const completed = pomodoroTimerReducer(halfway, { type: "tick", nowMs: NOW_MS + 90 * SECOND_MS });
+        expect(completed.status).toBe("completed");
+        expect(pomodoroTimerReducer(completed, { type: "start", nowMs: NOW_MS + 90 * SECOND_MS }).remainingMs).toBe(5 * SECOND_MS);
+    });
+
+    test("um foco de um segundo conclui no prazo e um bloco máximo mantém valores finitos", () => {
+        const minimal = createInitialPomodoroTimerState({ ...settings, focusDurationMs: SECOND_MS });
+        const running = pomodoroTimerReducer(minimal, { type: "start", nowMs: NOW_MS });
+        expect(pomodoroTimerReducer(running, { type: "tick", nowMs: NOW_MS + 999 }).status).toBe("running");
+        expect(pomodoroTimerReducer(running, { type: "tick", nowMs: NOW_MS + SECOND_MS }).status).toBe("completed");
+        const maximum = createInitialPomodoroTimerState({ focusDurationMs: 99 * HOUR_MS, shortBreakDurationMs: 99 * HOUR_MS, longBreakDurationMs: 99 * HOUR_MS, focusPhasesPerCycle: 12 });
+        expect(getPomodoroCycleProgress(maximum).totalDurationMs).toBe(24 * 99 * HOUR_MS);
+        expect(getProgressPercentage(maximum.cycleTotalDurationMs, maximum.cycleTotalDurationMs)).toBe(0);
     });
 
     test("copia a configuração para evitar mudanças externas no estado", () => {
