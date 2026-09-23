@@ -137,12 +137,7 @@ function PomodoroPanel() {
 			</div>
 			{isEditing && (
 				<TimerSettingsDialog
-					settings={timerState.settings}
 					onClose={() => setIsEditing(false)}
-					onSave={(settings) => {
-						dispatch({ type: "configure", settings });
-						setIsEditing(false);
-					}}
 				/>
 			)}
 		</div>

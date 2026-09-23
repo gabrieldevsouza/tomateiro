@@ -1,0 +1,143 @@
+import { useContext, useId, useLayoutEffect, useRef, useState, type FormEvent } from "react";
+import { createPortal } from "react-dom";
+import { PiXBold } from "react-icons/pi";
+import {
+	POMODORO_SETTINGS_LIMITS,
+	type PomodoroSettings,
+} from "../model/pomodoroTimer";
+import { POMODORO_SETTINGS_FIELDS, readPomodoroSettingsForm } from "../model/pomodoroSettingsForm";
+import TimerControlButton from "./controls/TimerControlButton";
+import DurationInput from "./DurationInput";
+import { TitlebarPortalContext } from "../../../window/TitlebarPortalContext";
+
+type TimerSettingsDialogLegacyProps = {
+	settings: PomodoroSettings;
+	onSave: (settings: PomodoroSettings) => void;
+	onClose: () => void;
+};
+
+function TimerSettingsDialogLegacy({ settings, onSave, onClose }: TimerSettingsDialogLegacyProps) {
+	const dialogRef = useRef<HTMLDialogElement>(null);
+	const id = useId();
+	const [error, setError] = useState("");
+	const titlebar = useContext(TitlebarPortalContext);
+	const setTitlebarContainer = titlebar?.setContainer;
+	const titlebarHeight = titlebar?.height ?? "0px";
+
+	useLayoutEffect(() => {
+		const dialog = dialogRef.current;
+		if (!dialog) {
+			return;
+		}
+		dialog.showModal();
+		setTitlebarContainer?.(dialog);
+		// Use a DOM listener: the portaled titlebar has a different React ancestry.
+		function handleDialogKeyDown(event: KeyboardEvent) {
+			if (event.key !== "Tab") return;
+			const controls = dialog!.querySelectorAll<HTMLElement>(
+				'button:not([disabled]):not([tabindex="-1"]), input:not([disabled])',
+			);
+			const first = controls[0];
+			const last = controls[controls.length - 1];
+			if (event.shiftKey && document.activeElement === first) {
+				event.preventDefault();
+				last?.focus();
+			} else if (!event.shiftKey && document.activeElement === last) {
+				event.preventDefault();
+				first?.focus();
+			}
+		}
+		dialog.addEventListener("keydown", handleDialogKeyDown);
+		// Focus the input after the modal is presented.
+		const focusFrame = window.requestAnimationFrame(() => {
+			dialog.querySelector<HTMLInputElement>("input")?.focus({ preventScroll: true });
+		});
+		return () => {
+			window.cancelAnimationFrame(focusFrame);
+			dialog.removeEventListener("keydown", handleDialogKeyDown);
+			setTitlebarContainer?.(null);
+			dialog.close();
+		};
+	}, [setTitlebarContainer]);
+
+	function handleSubmit(event: FormEvent<HTMLFormElement>) {
+		event.preventDefault();
+		const formData = new FormData(event.currentTarget);
+		const nextSettings = readPomodoroSettingsForm(formData);
+		if (!nextSettings) {
+			setError(`Use durações de 00:00:01 a 99:00:00 e de ${POMODORO_SETTINGS_LIMITS.minFocusPhases} a ${POMODORO_SETTINGS_LIMITS.maxFocusPhases} focos.`);
+			return;
+		}
+		onSave(nextSettings);
+	}
+
+	return createPortal(
+		<dialog
+			ref={dialogRef}
+			className="modal"
+			style={{ paddingTop: `calc(${titlebarHeight} + 0.5rem)`, paddingBottom: "0.5rem" }}
+			aria-labelledby={`${id}-title`}
+			aria-describedby={`${id}-description`}
+			onCancel={(event) => {
+				event.preventDefault();
+				onClose();
+			}}
+		>
+			<form
+				className="modal-box w-[calc(100%-2rem)] max-w-lg border border-[#374468] bg-[#212940] p-5 font-[Epilogue] text-[#C2C7DA] [@media(max-height:400px)]:px-3 [@media(max-height:400px)]:py-2"
+				style={{ maxHeight: `calc(100dvh - ${titlebarHeight} - 1rem)` }}
+				onSubmit={handleSubmit}
+				onInput={() => setError("")}
+			>
+				<div className="flex items-center justify-between gap-4">
+					<h2 id={`${id}-title`} className="text-lg font-semibold text-[#00CBEA] [@media(max-height:400px)]:leading-tight">Editar Pomodoro</h2>
+					<div className="size-8 shrink-0 [@media(max-height:400px)]:size-6">
+						<TimerControlButton
+							ariaLabel="Fechar edição"
+							onClick={onClose}
+							bgColor="bg-transparent"
+							icon={<PiXBold aria-hidden="true" className="size-1/2" />}
+						/>
+					</div>
+				</div>
+				<p id={`${id}-description`} className="mt-2 text-xs leading-relaxed text-[#C2C7DA]/80 [@media(max-height:400px)]:mt-1 [@media(max-height:400px)]:leading-snug">
+					Tempos em horas:minutos:segundos. O timer continua durante a edição; salvar alterações reinicia o bloco, pronto para Play.
+				</p>
+				<div className="mt-4 grid grid-cols-2 items-end gap-3 [@media(max-height:400px)]:mt-2 [@media(max-height:400px)]:gap-2 [@media(min-width:480px)_and_(max-height:400px)]:grid-cols-4">
+					{POMODORO_SETTINGS_FIELDS.map((field) => field.kind === "duration" ? (
+						<DurationInput key={field.name} name={field.name} label={field.label} defaultValue={settings[field.name]} />
+					) : (
+						<label key={field.name} htmlFor={`${id}-${field.name}`} className="flex min-w-0 flex-col gap-2 text-xs [@media(max-height:400px)]:gap-1">
+							{field.label}
+							<input
+								id={`${id}-${field.name}`}
+								name={field.name}
+								type="number"
+								required
+								step={1}
+								min={field.min}
+								max={field.max}
+								title={`Use um número inteiro de ${field.min} a ${field.max}.`}
+								defaultValue={settings[field.name]}
+								className="input h-10 w-full border-[#5F77B8] bg-[#1D2230] text-base text-[#FFFFFF] focus:border-[#00CBEA] focus:outline-2 focus:outline-[#00CBEA] [@media(max-height:400px)]:h-8"
+							/>
+						</label>
+					))}
+				</div>
+				{error && <p role="alert" className="mt-3 text-xs text-red-300">{error}</p>}
+				<div className="mt-5 flex justify-end gap-2 [@media(max-height:400px)]:mt-2 [@media(max-height:400px)]:[&>button]:h-8">
+					<button type="button" className="btn rounded-full border-0 bg-[#374468] text-[#C2C7DA] shadow-none hover:bg-[#5F77B8]" onClick={onClose}>
+						Cancelar
+					</button>
+					<button type="submit" className="btn rounded-full border-0 bg-[#00CBEA] text-[#212940] shadow-none hover:bg-[#0473B8] hover:text-white">
+						Salvar
+					</button>
+				</div>
+			</form>
+			<button type="button" tabIndex={-1} className="modal-backdrop" aria-label="Cancelar edição" onClick={onClose} />
+		</dialog>,
+		document.body,
+	);
+}
+
+export default TimerSettingsDialogLegacy;
