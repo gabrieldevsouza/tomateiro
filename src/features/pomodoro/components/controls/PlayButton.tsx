@@ -1,5 +1,6 @@
 import TimerControlButton from "./TimerControlButton";
-import { PiPauseFill, PiPlayFill } from "react-icons/pi";
+import { BsFillPauseFill } from "react-icons/bs";
+import { PiPlayFill } from "react-icons/pi";
 
 
 type PlayButtonProps = {
@@ -10,7 +11,7 @@ type PlayButtonProps = {
 
 function PlayButton({ isRunning, onStart, onPause }: PlayButtonProps) {
 	const ariaLabel = isRunning ? "Pausar ciclo" : "Iniciar ciclo";
-	const Icon = isRunning ? PiPauseFill : PiPlayFill;
+	const Icon = isRunning ? BsFillPauseFill : PiPlayFill;
 
 	return (
 		<TimerControlButton
