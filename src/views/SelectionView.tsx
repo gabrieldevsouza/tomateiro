@@ -9,7 +9,7 @@ function SelectionView() {
                 min-h-0 min-w-0
                 overflow-y-auto
                 overflow-x-hidden
-                scrollbar-gutter-both
+                 scrollbar-gutter-stable
             "
         >
             <div
