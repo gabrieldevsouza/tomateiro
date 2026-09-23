@@ -1,4 +1,13 @@
-function ProgressIndicator() {
+import { getProgressPercentage } from "../model/pomodoroTimer";
+
+type ProgressIndicatorProps = {
+	totalDurationMs: number;
+	remainingMs: number;
+};
+
+function ProgressIndicator({ totalDurationMs, remainingMs }: ProgressIndicatorProps) {
+	const progress = getProgressPercentage(totalDurationMs, remainingMs);
+
 	return (
 		<div className="
 
@@ -36,8 +45,9 @@ function ProgressIndicator() {
 						[&::-webkit-progress-value]:rounded-full
 						[&::-moz-progress-bar]:rounded-full
 					"
-  					value={90}
+					value={progress}
   					max={100}
+					aria-label="Progresso do ciclo completo"
 				/>
 				<span
 					className="
@@ -56,7 +66,7 @@ function ProgressIndicator() {
 						transform: "translateY(0.1em)",
 					}}
 						>
-							{38}%
+							{progress}%
 						</span>
 			</div>
 				
