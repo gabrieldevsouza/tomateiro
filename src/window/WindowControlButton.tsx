@@ -1,15 +1,6 @@
 import type { ReactNode } from "react";
 
-const WINDOW_CONTROL_MIN_WIDTH = "1.75rem";
-const WINDOW_CONTROL_PREFERRED_WIDTH = "7dvw";
-const WINDOW_CONTROL_MAX_WIDTH = "2.5rem";
-
-const WINDOW_CONTROL_WIDTH =
-	`clamp(
-		${WINDOW_CONTROL_MIN_WIDTH},
-		${WINDOW_CONTROL_PREFERRED_WIDTH},
-		${WINDOW_CONTROL_MAX_WIDTH}
-	)`;
+const WINDOW_CONTROL_WIDTH = "var(--window-control-width)";
 
 type WindowControlButtonProps = {
 	ariaLabel: string;
@@ -17,6 +8,9 @@ type WindowControlButtonProps = {
 	children: ReactNode;
 	onClick: () => void;
 	variant?: "default" | "danger";
+	pressed?: boolean;
+	disabled?: boolean;
+	busy?: boolean;
 };
 
 function WindowControlButton({
@@ -25,23 +19,25 @@ function WindowControlButton({
 	children,
 	onClick,
 	variant = "default",
+	pressed,
+	disabled = false,
+	busy = false,
 }: WindowControlButtonProps) {
 	const variantClass =
 		variant === "danger"
-			? "hover:bg-error hover:text-error-content"
-			: "";
+			? "hover:bg-red-700 hover:text-white"
+			: "hover:bg-black/10";
 
 	return (
 		<button
 			type="button"
 			className={`
-				btn
-				btn-ghost
-				min-h-0
-				shrink-0
-				overflow-hidden
-				rounded-none
-				leading-none
+				flex items-center justify-center min-h-0 shrink-0
+				cursor-pointer overflow-hidden rounded-none text-sm leading-none
+				text-inherit focus-visible:outline-2 focus-visible:-outline-offset-2
+				focus-visible:outline-current aria-disabled:opacity-60
+				aria-pressed:bg-black/15
+				aria-pressed:text-slate-950
 				${variantClass}
 			`}
 			style={{
@@ -55,8 +51,14 @@ function WindowControlButton({
 				textShadow: "none",
 			}}
 			aria-label={ariaLabel}
+			aria-pressed={pressed}
+			aria-disabled={disabled || busy || undefined}
+			aria-busy={busy || undefined}
+			disabled={disabled}
 			title={title}
-			onClick={onClick}
+			onClick={() => {
+				if (!disabled && !busy) onClick();
+			}}
 		>
 			{children}
 		</button>

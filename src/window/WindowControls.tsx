@@ -1,4 +1,5 @@
 import { getCurrentWindow } from "@tauri-apps/api/window";
+import { PiCopySimple, PiMinusBold, PiSquare, PiXBold } from "react-icons/pi";
 import WindowControlButton from "./WindowControlButton";
 
 const appWindow = getCurrentWindow();
@@ -12,12 +13,11 @@ function executeWindowAction(action: () => Promise<void>) {
 	});
 }
 
-function WindowControls() {
+function WindowControls({ isMaximized }: { isMaximized: boolean }) {
 	return (
 		<div className="flex h-full items-stretch">
 			<WindowControlButton
-				title="Minimize"
-				ariaLabel="Minimizes the window."
+				ariaLabel="Minimizar janela"
 				variant="default"
 				onClick={() =>
 					executeWindowAction(() =>
@@ -25,12 +25,11 @@ function WindowControls() {
 					)
 				}
 			>
-				<span aria-hidden="true">−</span>
+				<PiMinusBold aria-hidden="true" className="size-3.5" />
 			</WindowControlButton>
 
 			<WindowControlButton
-				title="Maximize or restore"
-				ariaLabel="Maximizes or restores the window."
+				ariaLabel={isMaximized ? "Restaurar janela" : "Maximizar janela"}
 				variant="default"
 				onClick={() =>
 					executeWindowAction(() =>
@@ -38,12 +37,15 @@ function WindowControls() {
 					)
 				}
 			>
-				<span aria-hidden="true">□</span>
+				{isMaximized ? (
+					<PiCopySimple aria-hidden="true" className="size-3.5" />
+				) : (
+					<PiSquare aria-hidden="true" className="size-3.5" />
+				)}
 			</WindowControlButton>
 
 			<WindowControlButton
-				title="Close"
-				ariaLabel="Closes the window."
+				ariaLabel="Fechar janela"
 				variant="danger"
 				onClick={() =>
 					executeWindowAction(() =>
@@ -51,7 +53,7 @@ function WindowControls() {
 					)
 				}
 			>
-				<span aria-hidden="true">×</span>
+				<PiXBold aria-hidden="true" className="size-3.5" />
 			</WindowControlButton>
 		</div>
 	);

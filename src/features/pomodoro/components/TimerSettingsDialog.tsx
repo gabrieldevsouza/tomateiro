@@ -1,4 +1,4 @@
-import { useId, useLayoutEffect, useRef, useState, type FormEvent } from "react";
+import { useContext, useId, useLayoutEffect, useRef, useState, type FormEvent } from "react";
 import { createPortal } from "react-dom";
 import { PiXBold } from "react-icons/pi";
 import {
@@ -8,6 +8,7 @@ import {
 import { POMODORO_SETTINGS_FIELDS, readPomodoroSettingsForm } from "../model/pomodoroSettingsForm";
 import TimerControlButton from "./controls/TimerControlButton";
 import DurationInput from "./DurationInput";
+import { TitlebarPortalContext } from "../../../window/TitlebarPortalContext";
 
 type TimerSettingsDialogProps = {
 	settings: PomodoroSettings;
@@ -19,6 +20,9 @@ function TimerSettingsDialog({ settings, onSave, onClose }: TimerSettingsDialogP
 	const dialogRef = useRef<HTMLDialogElement>(null);
 	const id = useId();
 	const [error, setError] = useState("");
+	const titlebar = useContext(TitlebarPortalContext);
+	const setTitlebarContainer = titlebar?.setContainer;
+	const titlebarHeight = titlebar?.height ?? "0px";
 
 	useLayoutEffect(() => {
 		const dialog = dialogRef.current;
@@ -26,15 +30,35 @@ function TimerSettingsDialog({ settings, onSave, onClose }: TimerSettingsDialogP
 			return;
 		}
 		dialog.showModal();
+		setTitlebarContainer?.(dialog);
+		// Use a DOM listener: the portaled titlebar has a different React ancestry.
+		function handleDialogKeyDown(event: KeyboardEvent) {
+			if (event.key !== "Tab") return;
+			const controls = dialog!.querySelectorAll<HTMLElement>(
+				'button:not([disabled]):not([tabindex="-1"]), input:not([disabled])',
+			);
+			const first = controls[0];
+			const last = controls[controls.length - 1];
+			if (event.shiftKey && document.activeElement === first) {
+				event.preventDefault();
+				last?.focus();
+			} else if (!event.shiftKey && document.activeElement === last) {
+				event.preventDefault();
+				first?.focus();
+			}
+		}
+		dialog.addEventListener("keydown", handleDialogKeyDown);
 		// Focus the input after the modal is presented.
 		const focusFrame = window.requestAnimationFrame(() => {
 			dialog.querySelector<HTMLInputElement>("input")?.focus({ preventScroll: true });
 		});
 		return () => {
 			window.cancelAnimationFrame(focusFrame);
+			dialog.removeEventListener("keydown", handleDialogKeyDown);
+			setTitlebarContainer?.(null);
 			dialog.close();
 		};
-	}, []);
+	}, [setTitlebarContainer]);
 
 	function handleSubmit(event: FormEvent<HTMLFormElement>) {
 		event.preventDefault();
@@ -51,30 +75,17 @@ function TimerSettingsDialog({ settings, onSave, onClose }: TimerSettingsDialogP
 		<dialog
 			ref={dialogRef}
 			className="modal"
+			style={{ paddingTop: `calc(${titlebarHeight} + 0.5rem)`, paddingBottom: "0.5rem" }}
 			aria-labelledby={`${id}-title`}
 			aria-describedby={`${id}-description`}
-			onKeyDown={(event) => {
-				if (event.key !== "Tab") return;
-				const controls = event.currentTarget.querySelectorAll<HTMLElement>(
-					'button:not([disabled]):not([tabindex="-1"]), input:not([disabled])',
-				);
-				const first = controls[0];
-				const last = controls[controls.length - 1];
-				if (event.shiftKey && document.activeElement === first) {
-					event.preventDefault();
-					last?.focus();
-				} else if (!event.shiftKey && document.activeElement === last) {
-					event.preventDefault();
-					first?.focus();
-				}
-			}}
 			onCancel={(event) => {
 				event.preventDefault();
 				onClose();
 			}}
 		>
 			<form
-				className="modal-box max-h-[calc(100dvh-2rem)] w-[calc(100%-2rem)] max-w-lg border border-[#374468] bg-[#212940] p-5 font-[Epilogue] text-[#C2C7DA] [@media(max-height:400px)]:p-3"
+				className="modal-box w-[calc(100%-2rem)] max-w-lg border border-[#374468] bg-[#212940] p-5 font-[Epilogue] text-[#C2C7DA] [@media(max-height:400px)]:px-3 [@media(max-height:400px)]:py-2"
+				style={{ maxHeight: `calc(100dvh - ${titlebarHeight} - 1rem)` }}
 				onSubmit={handleSubmit}
 				onInput={() => setError("")}
 			>
