@@ -45,18 +45,16 @@ function TimerSettingsDialog({ onClose }: TimerSettingsDialogProps) {
 	return createPortal(
 		<dialog
 			ref={dialogRef}
-			className="modal"
-			style={{ paddingTop: `calc(${titlebarHeight} + 0.5rem)`, paddingBottom: "0.5rem" }}
+			className="modal @container-size"
+			style={{ paddingTop: titlebarHeight }}
 			aria-label="Editar Pomodoro"
 			onCancel={(event) => {
 				event.preventDefault();
 				onClose();
 			}}
 		>
-			<div
-				className="modal-box relative h-40 w-[calc(100%-2rem)] max-w-lg border border-[#374468] bg-[#212940] p-0"
-				style={{ maxHeight: `calc(100dvh - ${titlebarHeight} - 1rem)` }}
-			>
+			{/* 70cqmin = 70% do menor lado da área disponível abaixo da titlebar. */}
+			<div className="modal-box relative aspect-square h-auto max-h-none w-[70cqmin] max-w-none border border-[#374468] bg-[#212940] p-0">
 				<div className="absolute right-3 top-3 size-8">
 					<TimerControlButton
 						ariaLabel="Fechar edição"
@@ -66,7 +64,7 @@ function TimerSettingsDialog({ onClose }: TimerSettingsDialogProps) {
 					/>
 				</div>
 			</div>
-			<button type="button" tabIndex={-1} className="modal-backdrop" aria-label="Fechar edição" onClick={onClose} />
+			<button type="button" tabIndex={-1} className="modal-backdrop absolute inset-0 col-auto row-auto" aria-label="Fechar edição" onClick={onClose} />
 		</dialog>,
 		document.body,
 	);
