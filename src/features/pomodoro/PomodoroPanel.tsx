@@ -47,7 +47,17 @@ function PomodoroPanel() {
 	}, [timerState.status]);
 
 	return (
-		<div className="grid aspect-8/9 w-[min(100cqw,88.8889cqh)] grid-cols-[minmax(0,3fr)_minmax(0,10fr)_minmax(0,3fr)] grid-rows-[minmax(0,1fr)_minmax(0,4fr)_minmax(0,1fr)]">
+		<div 
+			className="
+				pomodoro-panel
+				grid 
+				aspect-8/9 
+				w-[min(100cqw,88.8889cqh)] 
+				grid-cols-[minmax(0,3fr)_minmax(0,10fr)_minmax(0,3fr)] 
+				grid-rows-[minmax(0,1fr)_minmax(0,4fr)_minmax(0,1fr)]
+				bg-blue-600
+			"
+		>
 			<div
 				className="
 					row-start-2
@@ -61,9 +71,25 @@ function PomodoroPanel() {
 					grid-rows-[minmax(0,18fr)_minmax(0,25fr)_minmax(0,46fr)_minmax(0,25fr)_minmax(0,13fr)_minmax(0,25fr)_minmax(0,28fr)]
 				"
 			>
-				<div className="absolute inset-x-0 bottom-full h-[12.5%] @container-size">
+				<div 
+					className="
+						absolute 
+						inset-x-0 
+						bottom-full 
+						h-[12.5%] 
+						@container-size
+					">
 					<p
-						className="flex h-full items-center justify-center whitespace-nowrap font-[Epilogue] text-[#00CBEA] leading-none"
+						className="
+							flex 
+							h-full 
+							items-center 
+							justify-center 
+							whitespace-nowrap 
+							font-[Epilogue] 
+							text-[#00CBEA] 
+							leading-none
+						"
 						style={{ fontSize: "min(7cqw,40cqh)" }}
 						aria-live="polite"
 					>
@@ -130,8 +156,24 @@ function PomodoroPanel() {
 				</div>
 			</div>
 			{/* The edit control occupies the existing bottom grid row. */}
-			<div className="row-start-3 col-start-2 flex min-h-0 min-w-0 items-center justify-center overflow-clip">
-				<div className="aspect-square h-[40%]">
+			<div 
+				className="
+					row-start-3 
+					col-start-2 
+					flex 
+					min-h-0 
+					min-w-0 
+					items-center 
+					justify-center 
+					overflow-clip
+				"
+			>
+				<div 
+					className="
+						aspect-square 
+						h-[40%]
+					"
+				>
 					<EditTimerButton onClick={() => setIsEditing(true)} />
 				</div>
 			</div>

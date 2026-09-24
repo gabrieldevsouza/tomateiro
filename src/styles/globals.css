@@ -55,3 +55,18 @@ body,
   font-family: Epilogue;
   src: url("../assets/fonts/Epilogue-VariableFont_wght.ttf") format("truetype");
 }
+
+/*[data-panel-layout="width"] .pomodoro-panel,*/
+[data-panel-layout="height"] .pomodoro-panel {
+  aspect-ratio: auto;
+  width: 100%;
+  height: 100%;
+}
+
+[data-panel-layout="height"] .pomodoro-panel {
+  background-color: #FFF000;
+}
+
+[data-panel-layout="width"] .pomodoro-panel {
+  background-color: #FF0000;
+}
