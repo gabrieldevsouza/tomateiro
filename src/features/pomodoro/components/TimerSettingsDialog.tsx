@@ -55,6 +55,258 @@ function TimerSettingsDialog({ onClose }: TimerSettingsDialogProps) {
 		>
 			{/* 70cqmin = 70% do menor lado da área disponível abaixo da titlebar. */}
 			<div className="modal-box relative aspect-square h-auto max-h-none w-[70cqmin] max-w-none border border-[#374468] bg-[#212940] p-0">
+				<div className="
+					bg-pink-500
+					h-full
+					w-full
+					
+					grid
+					grid-cols-[minmax(0,15fr)_minmax(0,164fr)_minmax(0,82fr)_minmax(0,164fr)_minmax(0,15fr)]
+					grid-rows-[minmax(0,15fr)_minmax(0,52fr)_minmax(0,10fr)_minmax(0,10fr)_minmax(0,44fr)_minmax(0,22fr)_minmax(0,10fr)_minmax(0,10fr)_minmax(0,52fr)_minmax(0,22fr)_minmax(0,10fr)_minmax(0,10fr)_minmax(0,52fr)_minmax(0,30fr)_minmax(0,40fr)_minmax(0,15fr)]
+				">
+
+					<div className="
+						row-start-1
+						col-start-2
+						bg-pink-100
+						min-w-0
+						min-h-0
+						h-full
+						w-full
+					"/>
+					<div className="
+						row-start-2
+						col-start-2
+						bg-yellow-600
+						min-w-0
+						min-h-0
+						h-full
+						w-full
+					">
+						<div className="
+						inset-0
+						flex
+						items-center
+						justify-center
+						font-[Epilogue]
+						font-semibold
+						pointer-events-none
+						text-[#00CBEA]
+					"
+					style={{
+						fontSize: "min(6cqw,4cqh)",
+					}}
+					>
+							Editar Tomateiro
+						</div>
+						
+					</div>
+					<div className="
+						row-start-3
+						col-start-2
+						bg-pink-600
+						min-w-0
+						min-h-0
+						h-full
+						w-full
+					"/>
+
+					<div className="
+						col-start-2
+						row-start-4
+						bg-pink-800
+						min-w-0
+						min-h-0
+						h-full
+						w-full
+					">
+					 Nome do Temporizador
+					</div>
+
+					<div className="
+						col-start-2
+						row-start-5
+						bg-pink-300
+						min-w-0
+						min-h-0
+						h-full
+						w-full
+					"/>
+
+					<div className="
+						col-start-2
+						row-start-6
+						bg-purple-600
+						min-w-0
+						min-h-0
+						h-full
+						w-full
+					"/>
+
+					<div className="
+						col-start-2
+						row-start-7
+						bg-purple-400
+						min-w-0
+						min-h-0
+						h-full
+						w-full
+					">
+					 Temporizador
+					</div>
+
+					<div className="
+						col-start-2
+						row-start-8
+						bg-purple-600
+						min-w-0
+						min-h-0
+						h-full
+						w-full
+					"/>
+
+					<div className="
+						col-start-2
+						row-start-9
+						bg-purple-400
+						min-w-0
+						min-h-0
+						h-full
+						w-full
+					"/>
+
+					<div className="
+						col-start-2
+						row-start-10
+						bg-yellow-600
+						min-w-0
+						min-h-0
+						h-full
+						w-full
+					"/>
+
+					<div className="
+						col-start-4
+						row-start-11
+						bg-green-400
+						min-w-0
+						min-h-0
+						h-full
+						w-full
+					">
+					 Pausa Longa
+					</div>
+
+					<div className="
+						col-start-4
+						row-start-9
+						bg-purple-600
+						min-w-0
+						min-h-0
+						h-full
+						w-full
+					"/>
+
+					<div className="
+						col-start-2
+						row-start-3
+						bg-blue-600
+						min-w-0
+						min-h-0
+						h-full
+						w-full
+					"/>
+
+					<div className="
+						col-start-4
+						row-start-7
+						bg-red-600
+						min-w-0
+						min-h-0
+						h-full
+						w-full
+					">
+						Ciclos
+					</div>
+
+					<div className="
+						col-start-2
+						row-start-11
+						bg-red-300
+						min-w-0
+						min-h-0
+						h-full
+						w-full
+					">
+						Pausa Curta
+					</div>
+
+					<div className="
+						col-start-2
+						row-start-12
+						bg-red-800
+						min-w-0
+						min-h-0
+						h-full
+						w-full
+					"/>
+
+					<div className="
+						col-start-2
+						row-start-13
+						bg-red-300
+						min-w-0
+						min-h-0
+						h-full
+						w-full
+					"/>
+
+					<div className="
+						col-start-2
+						row-start-14
+						bg-yellow-400
+						min-w-0
+						min-h-0
+						h-full
+						w-full
+					"/>
+
+					<div className="
+						col-start-2
+						row-start-15
+						bg-blue-600
+						min-w-0
+						min-h-0
+						h-full
+						w-full
+					"/>
+
+					<div className="
+						col-start-2
+						row-start-16
+						bg-blue-400
+						min-w-0
+						min-h-0
+						h-full
+						w-full
+					"/>
+
+					<div className="
+						col-start-4
+						row-start-15
+						bg-blue-400
+						min-w-0
+						min-h-0
+						h-full
+						w-full
+					">
+						Salvar
+					</div>
+
+				</div>
+
+				
+				
 				<div className="absolute right-3 top-3 size-8">
 					<TimerControlButton
 						ariaLabel="Fechar edição"
