@@ -2,7 +2,7 @@ import CycleCounter from "./components/CycleCounter";
 import ProgressIndicator from "./components/ProgressIndicator";
 import TimerControls from "./components/TimerControls";
 import TimerDisplay from "./components/TimerDisplay";
-import TimerSettingsDialog from "./components/TimerSettingsDialog";
+import TimerSettingsDialog from "./components/dialogs/TimerSettingsDialog";
 import EditTimerButton from "./components/controls/EditTimerButton";
 
 import {
