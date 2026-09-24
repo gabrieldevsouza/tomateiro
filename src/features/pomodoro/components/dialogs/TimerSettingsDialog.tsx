@@ -151,8 +151,6 @@ function TimerSettingsDialog({ onClose }: TimerSettingsDialogProps) {
 								transform: "translateY(1px)"
 							}}
 					/>
-						
-						
 
 					<div className="
 						col-start-2
@@ -182,7 +180,6 @@ function TimerSettingsDialog({ onClose }: TimerSettingsDialogProps) {
 					<div className="
 						col-start-2
 						row-start-9
-						bg-purple-400
 
 						relative
 						
@@ -192,7 +189,7 @@ function TimerSettingsDialog({ onClose }: TimerSettingsDialogProps) {
 						h-full
 						w-full
 					">
-						<TimeInputModal></TimeInputModal>
+						<TimeInputModal label="Temporizador" minutes="25"/>
 					</div>
 
 					<div className="
@@ -205,6 +202,7 @@ function TimerSettingsDialog({ onClose }: TimerSettingsDialogProps) {
 					"/>
 
 					<div className="
+						relative
 						col-start-2
 						row-start-11
 						min-w-0
@@ -261,7 +259,6 @@ function TimerSettingsDialog({ onClose }: TimerSettingsDialogProps) {
 						row-start-9
 						w-[40%]
 						relative
-						bg-purple-600
 						min-w-0
 						min-h-0
 						h-full
@@ -271,14 +268,16 @@ function TimerSettingsDialog({ onClose }: TimerSettingsDialogProps) {
 					</div>
 
 					<div className="
+						relative
 						col-start-4
 						row-start-13
-						bg-green-300
 						min-w-0
 						min-h-0
 						h-full
 						w-full
-					"/>
+					">
+						<TimeInputModal label="Pausa longa" minutes="15"/>
+					</div>
 
 					<div className="
 						col-start-4
@@ -308,12 +307,14 @@ function TimerSettingsDialog({ onClose }: TimerSettingsDialogProps) {
 					<div className="
 						col-start-2
 						row-start-13
-						bg-red-300
+						relative
 						min-w-0
 						min-h-0
 						h-full
 						w-full
-					"/>
+					">
+						<TimeInputModal label="Pausa curta" minutes="05"/>
+					</div>
 
 					<div className="
 						col-start-2
