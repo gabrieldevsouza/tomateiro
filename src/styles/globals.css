@@ -47,8 +47,16 @@ body,
     }
 }
 @font-face{
+  font-family: Inter;
+  src: url("../assets/fonts/Inter-VariableFont_opsz,wght.ttf") format("truetype");
+}
+@font-face{
   font-family: Assistant;
   src: url("../assets/fonts/Assistant-VariableFont_wght.ttf") format("truetype");
+}
+@font-face{
+  font-family: Beiruti;
+  src: url("../assets/fonts/Beiruti-VariableFont_wght.ttf") format("truetype");
 }
 
 @font-face{

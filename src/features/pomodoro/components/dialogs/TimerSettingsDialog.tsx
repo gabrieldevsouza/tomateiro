@@ -42,6 +42,60 @@ function TimerSettingsDialog({ onClose }: TimerSettingsDialogProps) {
 		};
 	}, [setTitlebarContainer]);
 
+	useLayoutEffect(() => {
+		const dialog = dialogRef.current;
+		const context = document.createElement("canvas").getContext("2d");
+		if (!dialog || !context) return;
+		const inputs = [...dialog.querySelectorAll<HTMLInputElement>('input[type="number"]')];
+		let disposed = false;
+
+		function alignNumberInputs() {
+			if (disposed) return;
+			for (const input of inputs) {
+				const style = getComputedStyle(input);
+				context!.font = `${style.fontStyle} ${style.fontWeight} ${style.fontSize} ${style.fontFamily}`;
+				const metrics = context!.measureText(input.value || "0");
+				// A diferença entre o centro dos glifos e o da fonte define o padding.
+				const padding = metrics.actualBoundingBoxAscent - metrics.actualBoundingBoxDescent
+					- metrics.fontBoundingBoxAscent + metrics.fontBoundingBoxDescent;
+				if (!Number.isFinite(padding)) continue;
+				const top = `${Math.max(0, padding)}px`;
+				const bottom = `${Math.max(0, -padding)}px`;
+				if (input.style.paddingTop !== top) input.style.paddingTop = top;
+				if (input.style.paddingBottom !== bottom) input.style.paddingBottom = bottom;
+			}
+		}
+
+		function handleValueChange() {
+			queueMicrotask(alignNumberInputs);
+		}
+
+		const resizeObserver = new ResizeObserver(alignNumberInputs);
+		inputs.forEach(input => resizeObserver.observe(input, { box: "border-box" }));
+		const styleObserver = new MutationObserver(alignNumberInputs);
+		styleObserver.observe(dialog, {
+			attributes: true,
+			attributeFilter: ["class", "style"],
+			subtree: true,
+		});
+		dialog.addEventListener("input", handleValueChange);
+		dialog.addEventListener("change", handleValueChange);
+		dialog.addEventListener("focusout", handleValueChange);
+		document.fonts.addEventListener("loadingdone", alignNumberInputs);
+		void document.fonts.ready.then(alignNumberInputs);
+		alignNumberInputs();
+
+		return () => {
+			disposed = true;
+			resizeObserver.disconnect();
+			styleObserver.disconnect();
+			dialog.removeEventListener("input", handleValueChange);
+			dialog.removeEventListener("change", handleValueChange);
+			dialog.removeEventListener("focusout", handleValueChange);
+			document.fonts.removeEventListener("loadingdone", alignNumberInputs);
+		};
+	}, []);
+
 	return createPortal(
 		<dialog
 			ref={dialogRef}
@@ -78,13 +132,13 @@ function TimerSettingsDialog({ onClose }: TimerSettingsDialogProps) {
 						flex w-full items-center leading-none
 						h-full
 						whitespace-nowrap
-						font-[Epilogue]
+						font-[Beiruti]
 						font-bold
 						pointer-events-none
 						text-[#00CBEA]
 					"
 					style={{
-						fontSize: "min(10cqw,65cqh)",
+						fontSize: "min(14cqw,80cqh)",
 					}}
 					>
 							Editar Tomateiro
@@ -112,14 +166,14 @@ function TimerSettingsDialog({ onClose }: TimerSettingsDialogProps) {
 						<div 
 							className="
 							
-								font-[Epilogue]
+								font-[Beiruti]
 								font-bold
 								pointer-events-none
 								text-[#ffffff]
 								flex h-full w-full items-center whitespace-nowrap leading-none
 							"
 							style={{
-								fontSize: "min(8cqw,100cqh)",
+								fontSize: "min(12cqw,140cqh)",
 							}}
 						>
 								Nome do Temporizador
@@ -145,7 +199,7 @@ function TimerSettingsDialog({ onClose }: TimerSettingsDialogProps) {
 							
 						"
 						style={{
-								fontSize: "min(9cqw,45cqh)",
+								fontSize: "min(7cqw,34cqh)",
 							}}
 					/>
 					</div>
@@ -160,14 +214,14 @@ function TimerSettingsDialog({ onClose }: TimerSettingsDialogProps) {
 					">
 						<div 
 							className="
-								font-[Epilogue]
+								font-[Beiruti]
 								font-bold
 								pointer-events-none
 								text-[#ffffff]
 								flex h-full w-full items-center whitespace-nowrap leading-none
 							"
 							style={{
-								fontSize: "min(8cqw,100cqh)",
+								fontSize: "min(12cqw,140cqh)",
 							}}
 						>
 							Temporizador
@@ -209,14 +263,14 @@ function TimerSettingsDialog({ onClose }: TimerSettingsDialogProps) {
 					">
 						<div 
 							className="
-								font-[Epilogue]
+								font-[Beiruti]
 								font-bold
 								pointer-events-none
 								text-[#ffffff]
 								flex h-full w-full items-center whitespace-nowrap leading-none
 							"
 							style={{
-								fontSize: "min(8cqw,100cqh)",
+								fontSize: "min(12cqw,140cqh)",
 							}}
 						>
 							Pausa Curta
@@ -233,14 +287,14 @@ function TimerSettingsDialog({ onClose }: TimerSettingsDialogProps) {
 					">
 						<div 
 							className="
-								font-[Epilogue]
+								font-[Beiruti]
 								font-bold
 								pointer-events-none
 								text-[#ffffff]
 								flex h-full w-full items-center whitespace-nowrap leading-none
 							"
 							style={{
-								fontSize: "min(8cqw,100cqh)",
+								fontSize: "min(12cqw,140cqh)",
 							}}
 						>
 							Pausa Longa
@@ -284,14 +338,14 @@ function TimerSettingsDialog({ onClose }: TimerSettingsDialogProps) {
 					">
 						<div 
 							className="
-								font-[Epilogue]
+								font-[Beiruti]
 								font-bold
 								pointer-events-none
 								text-[#ffffff]
 								flex h-full w-full items-center whitespace-nowrap leading-none
 							"
 							style={{
-								fontSize: "min(8cqw,100cqh)",
+								fontSize: "min(12cqw,140cqh)",
 							}}
 						>
 							Ciclos
