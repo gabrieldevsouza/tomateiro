@@ -133,7 +133,7 @@ function TimerSettingsDialog({ onClose }: TimerSettingsDialogProps) {
 						placeholder="Nome aqui.."
 						className="
 							input
-							px-[4cqw] py-0 rounded-[8cqh]
+							px-[4cqw] py-0 rounded-none
 							bg-[#17243F]
 
 							min-w-0
