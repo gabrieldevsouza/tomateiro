@@ -374,7 +374,13 @@ function TimerSettingsDialog({ onClose }: TimerSettingsDialogProps) {
 					"/>
 
 					
-					<div className="
+					<button type="button" className="
+						btn btn-ghost
+						@container-size select-text p-0
+						focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-black
+						shadow-none border-0 text-black
+						hover:bg-[#00B8D4]
+						active:bg-[#00A5BE]
 						col-start-4
 						row-start-15
 						bg-[#00CBEA]
@@ -387,37 +393,38 @@ function TimerSettingsDialog({ onClose }: TimerSettingsDialogProps) {
 						w-full
 						rounded-full
 					">
-						<div 
-							className="
-								flex h-full w-full items-center justify-center whitespace-nowrap leading-none font-[Epilogue]
-								font-bold
-								pointer-events-none
-								text-[#000000]
-							"
+					<div
+						className="
+							flex h-full w-full select-text items-center justify-center whitespace-nowrap leading-none font-[Inter]
+							font-bold
+							text-[#000000]
+						"
 							style={{
 								fontSize: "min(14cqw,42cqh)",
 							}}
 						>
 							Salvar
 						</div>
-					</div>
+					</button>
 
 					<button
 					type="button"
 					onClick={onClose}				
 					className={`
-						@container-size p-0
-						focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-[#00CBEA]
-						shadow-none
-						hover:bg-[#5F77B8]
-						active:bg-[#1D2230]
+						btn
+						btn-ghost
+						@container-size select-text p-0
+						focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-white
+						shadow-none text-white ring-1 ring-inset ring-[#838CA4]
+						hover:bg-[#5F667D]
+						active:bg-[#4A5268]
 						border-0
 
 
 						col-start-2
 						col-span-2
 						row-start-15
-						bg-[#374468]
+						bg-[#535A6F]
 						flex
 						justify-center
 						items-center
@@ -430,13 +437,12 @@ function TimerSettingsDialog({ onClose }: TimerSettingsDialogProps) {
 						w-[62%]
 						rounded-full
 					`}>
-						<div 
-							className="
-								flex h-full w-full items-center justify-center whitespace-nowrap leading-none font-[Epilogue]
-								font-bold
-								pointer-events-none
-								text-[#ffffff]
-							"
+					<div
+						className="
+							flex h-full w-full select-text items-center justify-center whitespace-nowrap leading-none font-[Inter]
+							font-bold
+							text-white
+						"
 							style={{
 								fontSize: "min(14cqw,42cqh)",
 							}}

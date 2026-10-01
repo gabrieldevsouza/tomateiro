@@ -1,6 +1,6 @@
-import { useRef } from "react";
 import { PiCaretDown, PiCaretUp } from "react-icons/pi";
 import { POMODORO_SETTINGS_LIMITS } from "../../model/pomodoroTimer";
+import { useNumberInput } from "./useNumberInput";
 
 type CyclesAmountInputModalProps ={
     defaultValue?: number;
@@ -9,10 +9,10 @@ type CyclesAmountInputModalProps ={
 function CyclesAmountInputModal({
     defaultValue = 4,
 }: CyclesAmountInputModalProps) {
-    const inputRef = useRef<HTMLInputElement>(null);
+    const cyclesInput = useNumberInput(defaultValue, POMODORO_SETTINGS_LIMITS.minFocusPhases, POMODORO_SETTINGS_LIMITS.maxFocusPhases);
 
     function changeCycles(direction: number){
-        const input = inputRef.current;
+        const input = cyclesInput.ref.current;
         if (!input) return;
         
         if (direction > 0){
@@ -25,8 +25,9 @@ function CyclesAmountInputModal({
     }
 
     const inputClasses = "input input-ghost box-border block h-full w-full min-h-0 min-w-0 max-w-none content-center appearance-none rounded-none border-0 bg-transparent px-0 py-0 text-center font-[Inter] text-[min(64cqw,80cqh)] leading-[normal] tabular-nums shadow-none select-none caret-transparent selection:bg-transparent selection:text-inherit focus:bg-white/10 focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-[#00CBEA] [--font-size-min:0px] [-moz-appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-inner-spin-button]:m-0 [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-outer-spin-button]:m-0";
-    const arrowButtonClasses = "flex h-full w-full min-h-0 min-w-0 items-center justify-center rounded-none border-0 bg-transparent p-0 text-white/60 hover:bg-white/5 hover:text-white active:bg-white/10";
-    const arrowIconClasses = "aspect-square h-[80%] w-auto max-w-full";
+    const arrowButtonClasses = "grid h-full w-full min-h-0 min-w-0 justify-items-center rounded-none border-0 bg-transparent p-0 text-white/60 hover:bg-white/5 hover:text-white active:bg-white/10";
+    // Mesmo tamanho dos temporizadores, relativo ao campo inteiro, independente do botão.
+    const arrowIconClasses = "block size-[22cqh] shrink-0";
     
 
     return(
@@ -52,38 +53,36 @@ function CyclesAmountInputModal({
         `}>
         <div className="flex h-full w-full min-h-0 min-w-0 items-center justify-center @container-size">
         <input
-            ref={inputRef}
+            {...cyclesInput}
             type = "number"
             inputMode="numeric"
-            min={POMODORO_SETTINGS_LIMITS.minFocusPhases}
-            max={POMODORO_SETTINGS_LIMITS.maxFocusPhases}
             step={1}
             required
-            defaultValue= {defaultValue}
             onFocus={(event) => event.currentTarget.select()}
             onClick={(event) => event.currentTarget.select()}
             aria-label="Quantidade de ciclos"
             className={inputClasses}
             />
             </div>
-            <div className="grid h-[60%] w-full min-h-0 min-w-0 grid-rows-2 self-center">
+            {/* Folga entre cada SVG e a borda central: percentual da altura do botão. */}
+            <div className="grid h-full w-full min-h-0 min-w-0 grid-rows-2 self-stretch [--arrow-inner-gap:15%]">
                 <button
                     type="button"
                     tabIndex={-1}
-                    className={arrowButtonClasses}
+                    className={`${arrowButtonClasses} grid-rows-[minmax(0,1fr)_var(--arrow-inner-gap)]`}
                     aria-label="Aumentar quantidade de ciclos"
                     onClick={() => changeCycles(1)}
                 >
-                    <PiCaretUp aria-hidden="true" className={arrowIconClasses}/>
+                    <PiCaretUp aria-hidden="true" className={`${arrowIconClasses} self-end`}/>
                 </button>
                 <button
                     type="button"
                     tabIndex={-1}
-                    className={arrowButtonClasses}
+                    className={`${arrowButtonClasses} grid-rows-[var(--arrow-inner-gap)_minmax(0,1fr)]`}
                     aria-label="Diminuir quantidade de ciclos"
                     onClick={() => changeCycles(-1)}
                 >
-                    <PiCaretDown aria-hidden="true" className={arrowIconClasses}/>
+                    <PiCaretDown aria-hidden="true" className={`${arrowIconClasses} row-start-2 self-start`}/>
                 </button>
             </div>
                     </div>

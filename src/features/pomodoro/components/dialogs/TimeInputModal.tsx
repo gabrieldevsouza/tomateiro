@@ -1,5 +1,5 @@
 import { PiCaretDown, PiCaretUp } from "react-icons/pi";
-import { useRef } from "react";
+import { useNumberInput } from "./useNumberInput";
 
 
 type TimeInputModalProps = {
@@ -16,19 +16,9 @@ function TimeInputModal({
     minutes = "25",
     seconds = "0",
 }: TimeInputModalProps) {
-    const hoursRef = useRef <HTMLInputElement>(null);
-    const minutesRef = useRef <HTMLInputElement>(null);
-    const secondsRef = useRef <HTMLInputElement>(null);
-    function normalizeTimePart(value: string, max: number){
-        const amount = Number(value);
-        return String(Math.min(max, Math.max(0, Number.isNaN(amount) ? 0 : Math.trunc(amount))));
-    }
-
-    function formatTimePart(input: HTMLInputElement){
-        if (input.value !== "" || input.validity.badInput){
-            input.value = normalizeTimePart(input.value, Number(input.max));
-        }
-    }
+    const hoursInput = useNumberInput(hours, 0, 99);
+    const minutesInput = useNumberInput(minutes, 0, 59);
+    const secondsInput = useNumberInput(seconds, 0, 59);
 
     function changeTimePart(
         input: HTMLInputElement | null,
@@ -40,7 +30,6 @@ function TimeInputModal({
         } else {
             input.stepDown();
         }
-        formatTimePart(input);
         input.dispatchEvent(new Event("input", { bubbles: true }));
         input.focus({ preventScroll: true });
         }
@@ -51,7 +40,8 @@ function TimeInputModal({
     const valueClasses = "flex h-full w-full min-h-0 min-w-0 items-center justify-center @container-size";
     const separatorClasses = "flex h-full w-full min-h-0 min-w-0 items-center justify-center text-[min(14cqw,40cqh)] leading-none";
     const arrowButtonClasses = "flex h-full w-full min-h-0 min-w-0 items-center justify-center rounded-none border-0 bg-transparent p-0 text-white/60 hover:bg-white/5 hover:text-white active:bg-white/10";
-    const arrowIconClasses = "aspect-square h-[80%] w-auto max-w-full";
+    // 10% maior que o tamanho anterior de 20cqh, relativo à altura total do campo.
+    const arrowIconClasses = "block size-[22cqh] shrink-0";
 
     return(
     <div role="group" aria-label={label} className="h-full w-full min-h-0 min-w-0 @container-size">
@@ -83,23 +73,18 @@ function TimeInputModal({
                 tabIndex={-1}
                 className={arrowButtonClasses}
                 aria-label={label + ": aumentar horas"}
-                onClick={() => changeTimePart(hoursRef.current,1)}
+                onClick={() => changeTimePart(hoursInput.ref.current,1)}
             >
                 <PiCaretUp aria-hidden="true" className={arrowIconClasses}/>
             </button>
 
         <div className={valueClasses}>
         <input 
-            ref={hoursRef}
+            {...hoursInput}
             type="number"
             inputMode="numeric"
-            min={0}
-            max={99}
             step={1}
             required
-            defaultValue={normalizeTimePart(hours, 99)}
-            onInput={(event) => formatTimePart(event.currentTarget)}
-            onBlur={(event) => formatTimePart(event.currentTarget)}
             onFocus={(event) => event.currentTarget.select()}
             onClick={(event) => event.currentTarget.select()}
             aria-label={label + ":horas"}
@@ -111,7 +96,7 @@ function TimeInputModal({
         tabIndex={-1}
         className={arrowButtonClasses}
         aria-label={label + ":diminuir horas"}
-        onClick={() => changeTimePart(hoursRef.current, -1)}
+        onClick={() => changeTimePart(hoursInput.ref.current, -1)}
         >
             <PiCaretDown aria-hidden="true" className={arrowIconClasses} />
         </button>
@@ -125,22 +110,17 @@ function TimeInputModal({
             tabIndex={-1}
             className={arrowButtonClasses}
             aria-label={label + ":aumentar minutos"}
-            onClick = {() => changeTimePart(minutesRef.current, 1)}
+            onClick = {() => changeTimePart(minutesInput.ref.current, 1)}
             >
                 <PiCaretUp aria-hidden="true" className={arrowIconClasses} />
             </button>
         <div className={valueClasses}>
         <input 
-            ref={minutesRef}
+            {...minutesInput}
             type="number"
             inputMode="numeric"
-            min={0}
-            max={59}
             step={1}
             required
-            defaultValue = {normalizeTimePart(minutes, 59)}
-            onInput={(event) => formatTimePart(event.currentTarget)}
-            onBlur={(event) => formatTimePart(event.currentTarget)}
             onFocus={(event) => event.currentTarget.select()}
             onClick={(event) => event.currentTarget.select()}
             aria-label={label + ":minutos"}
@@ -153,7 +133,7 @@ function TimeInputModal({
             tabIndex={-1}
             className={arrowButtonClasses}
             aria-label={label + ":diminuir minutos"}
-            onClick={() => changeTimePart(minutesRef.current, -1)}
+            onClick={() => changeTimePart(minutesInput.ref.current, -1)}
             >
                 <PiCaretDown aria-hidden="true" className={arrowIconClasses} />
             </button>
@@ -167,22 +147,17 @@ function TimeInputModal({
             tabIndex={-1}
             className={arrowButtonClasses}
             aria-label={label + ":aumentar segundos"}
-            onClick={() => changeTimePart (secondsRef.current, 1)}
+            onClick={() => changeTimePart (secondsInput.ref.current, 1)}
             >
                 <PiCaretUp aria-hidden="true" className={arrowIconClasses}/>
             </button>
         <div className={valueClasses}>
         <input 
-            ref={secondsRef}
+            {...secondsInput}
             type="number"
             inputMode="numeric"
-            min={0}
-            max={59}
             step={1}
             required
-            defaultValue = {normalizeTimePart(seconds, 59)}
-            onInput={(event) => formatTimePart(event.currentTarget)}
-            onBlur = {(event) => formatTimePart(event.currentTarget)}
             onFocus={(event) => event.currentTarget.select()}
             onClick={(event) => event.currentTarget.select()}
             aria-label={label + ":segundos"}
@@ -195,7 +170,7 @@ function TimeInputModal({
             tabIndex={-1}
             className={arrowButtonClasses}
             aria-label={label + ":diminuir segundos"}
-            onClick={() => changeTimePart(secondsRef.current, -1)}
+            onClick={() => changeTimePart(secondsInput.ref.current, -1)}
             >
                 <PiCaretDown aria-hidden="true" className={arrowIconClasses}/>
             </button>
