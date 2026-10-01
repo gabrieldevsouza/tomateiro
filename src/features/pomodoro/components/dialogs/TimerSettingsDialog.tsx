@@ -1,8 +1,6 @@
 import { useContext, useLayoutEffect, useRef } from "react";
 import { createPortal } from "react-dom";
-import { PiXBold } from "react-icons/pi";
 import { TitlebarPortalContext } from "../../../../window/TitlebarPortalContext";
-import TimerControlButton from "../controls/TimerControlButton";
 import TimeInputModal from "./TimeInputModal";
 import CyclesAmountInputModal from "./CyclesAmountInputModal";
 
@@ -25,7 +23,7 @@ function TimerSettingsDialog({ onClose }: TimerSettingsDialogProps) {
 		// Include the portaled window controls in the modal's keyboard navigation.
 		function handleDialogKeyDown(event: KeyboardEvent) {
 			if (event.key !== "Tab") return;
-			const controls = dialog!.querySelectorAll<HTMLButtonElement>('button:not([disabled]):not([tabindex="-1"])');
+			const controls = dialog!.querySelectorAll<HTMLElement>('button:not([disabled]):not([tabindex="-1"]), input:not([disabled]):not([tabindex="-1"])');
 			const first = controls[0];
 			const last = controls[controls.length - 1];
 			if (event.shiftKey && document.activeElement === first) {
@@ -63,6 +61,7 @@ function TimerSettingsDialog({ onClose }: TimerSettingsDialogProps) {
 					w-full
 					
 					grid
+					@container-size [&>div]:@container-size
 					grid-cols-[minmax(0,15fr)_minmax(0,164fr)_minmax(0,82fr)_minmax(0,164fr)_minmax(0,15fr)]
 					grid-rows-[minmax(0,15fr)_minmax(0,52fr)_minmax(0,10fr)_minmax(0,10fr)_minmax(0,44fr)_minmax(0,22fr)_minmax(0,10fr)_minmax(0,10fr)_minmax(0,52fr)_minmax(0,22fr)_minmax(0,10fr)_minmax(0,10fr)_minmax(0,52fr)_minmax(0,30fr)_minmax(0,40fr)_minmax(0,15fr)]
 				">
@@ -76,7 +75,7 @@ function TimerSettingsDialog({ onClose }: TimerSettingsDialogProps) {
 						w-full
 					">
 						<div className="
-						inset-0
+						flex w-full items-center leading-none
 						h-full
 						whitespace-nowrap
 						font-[Epilogue]
@@ -85,7 +84,7 @@ function TimerSettingsDialog({ onClose }: TimerSettingsDialogProps) {
 						text-[#00CBEA]
 					"
 					style={{
-						fontSize: "min(6cqw,4cqh)",
+						fontSize: "min(10cqw,65cqh)",
 					}}
 					>
 							Editar Tomateiro
@@ -117,25 +116,24 @@ function TimerSettingsDialog({ onClose }: TimerSettingsDialogProps) {
 								font-bold
 								pointer-events-none
 								text-[#ffffff]
-								leading-none
+								flex h-full w-full items-center whitespace-nowrap leading-none
 							"
 							style={{
-								fontSize: "min(2cqw,2cqh)",
-								transform: "translateY(1px)"
+								fontSize: "min(8cqw,100cqh)",
 							}}
 						>
 								Nome do Temporizador
 						</div>
 					</div>
 
-					<input 
+					<div className="col-start-2 row-start-5 col-span-2 flex h-full w-full min-h-0 min-w-0 items-center @container-size">
+					<input
 						type="text"
+						aria-label="Nome do Temporizador"
 						placeholder="Nome aqui.."
 						className="
 							input
-							col-start-2
-							row-start-5
-							col-span-2
+							px-[4cqw] py-0 rounded-[8cqh]
 							bg-[#17243F]
 
 							min-w-0
@@ -147,10 +145,10 @@ function TimerSettingsDialog({ onClose }: TimerSettingsDialogProps) {
 							
 						"
 						style={{
-								fontSize: "min(2cqw,2cqh)",
-								transform: "translateY(1px)"
+								fontSize: "min(9cqw,45cqh)",
 							}}
 					/>
+					</div>
 
 					<div className="
 						col-start-2
@@ -166,11 +164,10 @@ function TimerSettingsDialog({ onClose }: TimerSettingsDialogProps) {
 								font-bold
 								pointer-events-none
 								text-[#ffffff]
-								leading-none
+								flex h-full w-full items-center whitespace-nowrap leading-none
 							"
 							style={{
-								fontSize: "min(2cqw,2cqh)",
-								transform: "translateY(1px)"
+								fontSize: "min(8cqw,100cqh)",
 							}}
 						>
 							Temporizador
@@ -216,11 +213,10 @@ function TimerSettingsDialog({ onClose }: TimerSettingsDialogProps) {
 								font-bold
 								pointer-events-none
 								text-[#ffffff]
-								leading-none
+								flex h-full w-full items-center whitespace-nowrap leading-none
 							"
 							style={{
-								fontSize: "min(2cqw,2cqh)",
-								transform: "translateY(1px)"
+								fontSize: "min(8cqw,100cqh)",
 							}}
 						>
 							Pausa Curta
@@ -241,11 +237,10 @@ function TimerSettingsDialog({ onClose }: TimerSettingsDialogProps) {
 								font-bold
 								pointer-events-none
 								text-[#ffffff]
-								leading-none
+								flex h-full w-full items-center whitespace-nowrap leading-none
 							"
 							style={{
-								fontSize: "min(2cqw,2cqh)",
-								transform: "translateY(1px)"
+								fontSize: "min(8cqw,100cqh)",
 							}}
 						>
 							Pausa Longa
@@ -293,11 +288,10 @@ function TimerSettingsDialog({ onClose }: TimerSettingsDialogProps) {
 								font-bold
 								pointer-events-none
 								text-[#ffffff]
-								leading-none
+								flex h-full w-full items-center whitespace-nowrap leading-none
 							"
 							style={{
-								fontSize: "min(2cqw,2cqh)",
-								transform: "translateY(1px)"
+								fontSize: "min(8cqw,100cqh)",
 							}}
 						>
 							Ciclos
@@ -341,14 +335,13 @@ function TimerSettingsDialog({ onClose }: TimerSettingsDialogProps) {
 					">
 						<div 
 							className="
-								font-[Epilogue]
+								flex h-full w-full items-center justify-center whitespace-nowrap leading-none font-[Epilogue]
 								font-bold
 								pointer-events-none
 								text-[#000000]
 							"
 							style={{
-								fontSize: "min(2cqw,2cqh)",
-								transform: "translateY(1px)"
+								fontSize: "min(14cqw,42cqh)",
 							}}
 						>
 							Salvar
@@ -359,9 +352,8 @@ function TimerSettingsDialog({ onClose }: TimerSettingsDialogProps) {
 					type="button"
 					onClick={onClose}				
 					className={`
-						btn
-						btn-ghost
-						outline-none
+						@container-size p-0
+						focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-[#00CBEA]
 						shadow-none
 						hover:bg-[#5F77B8]
 						active:bg-[#1D2230]
@@ -376,7 +368,7 @@ function TimerSettingsDialog({ onClose }: TimerSettingsDialogProps) {
 						justify-center
 						items-center
 							
-						mr-5
+						mr-[8%]
 						justify-self-end
 						min-w-0
 						min-h-0
@@ -386,14 +378,13 @@ function TimerSettingsDialog({ onClose }: TimerSettingsDialogProps) {
 					`}>
 						<div 
 							className="
-								font-[Epilogue]
+								flex h-full w-full items-center justify-center whitespace-nowrap leading-none font-[Epilogue]
 								font-bold
 								pointer-events-none
 								text-[#ffffff]
 							"
 							style={{
-								fontSize: "min(2cqw,2cqh)",
-								transform: "translateY(1px)"
+								fontSize: "min(14cqw,42cqh)",
 							}}
 						>
 							Cancelar

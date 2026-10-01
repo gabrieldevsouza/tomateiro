@@ -20,17 +20,17 @@ function CyclesAmountInputModal({
         }else {
             input.stepDown();
         }
+        input.dispatchEvent(new Event("input", { bubbles: true }));
+        input.focus({ preventScroll: true });
     }
 
-    const inputClasses = "h-full w-full min-h-0 min-w-0 bg-transparent p-0 text-center text-[1em] leading-none tabular-nums focus:bg-white/10 [-moz-appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none";
-    const arrowButtonClasses =  "btn btn-ghost flex h-full w-full min-h-0 min-w-0 items-center justify-center rounded-none border-0 bg-transparent p-0 shadow-none text-white/35 hover:bg-white/5 hover:text-white";
+    const inputClasses = "h-full w-full min-h-0 min-w-0 appearance-none border-0 bg-transparent p-0 text-center text-[min(64cqw,80cqh)] leading-none tabular-nums focus:bg-white/10 focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-[#00CBEA] [-moz-appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-inner-spin-button]:m-0 [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-outer-spin-button]:m-0";
+    const arrowButtonClasses = "flex h-full w-full min-h-0 min-w-0 items-center justify-center rounded-none border-0 bg-transparent p-0 text-white/60 hover:bg-white/5 hover:text-white active:bg-white/10";
     const arrowIconClasses = "aspect-square h-[80%] w-auto max-w-full";
     
 
     return(
         <div className="
-            absolute 
-            inset-0 
             h-full 
             w-full 
             min-h-0 
@@ -38,44 +38,47 @@ function CyclesAmountInputModal({
             @container-size"
         >
             <div className="
-            input grid
-            grid-cols-[minmax(0,3fr)_minmax(0,1fr)]
+            grid
+            grid-rows-[minmax(0,1fr)_minmax(0,2fr)_minmax(0,1fr)]
             items-center
             h-full w-full min-h-0 min-w-0
-            gap-0 px-[6cqw] py-0
-            rounded-none border-0
+            gap-0 px-[4cqw] py-0
+            rounded-[8cqh] border-0
             bg-[#17243F] font-[Epilogue] text-white
-            text-[min(40cqw,45cqh)]
         ">
+        <button
+            type="button"
+            tabIndex={-1}
+            className={arrowButtonClasses}
+            aria-label="Aumentar quantidade de ciclos"
+            onClick={() => changeCycles(1)}
+        >
+            <PiCaretUp aria-hidden="true" className={arrowIconClasses}/>
+        </button>
+        <div className="flex h-full w-full min-h-0 min-w-0 items-center justify-center @container-size">
         <input
             ref={inputRef}
             type = "number"
+            inputMode="numeric"
             min={POMODORO_SETTINGS_LIMITS.minFocusPhases}
             max={POMODORO_SETTINGS_LIMITS.maxFocusPhases}
             step={1}
             required
             defaultValue= {defaultValue}
+            onFocus={(event) => event.currentTarget.select()}
             aria-label="Quantidade de ciclos"
             className={inputClasses}
             />
-            <div className="grid h-[60%] w-full min-h-0 min-w-0 grid-rows-2">
-                <button 
-                    type= "button"
-                    className = {arrowButtonClasses}
-                    aria-label="Aumentar quantidade de cilos"
-                    onClick={() => changeCycles(1)}
-                    >
-                        <PiCaretUp aria-hidden="true" className={arrowIconClasses}/>
-                    </button>
+            </div>
                     <button
                         type="button"
+                        tabIndex={-1}
                         className={arrowButtonClasses}
                         aria-label="Diminuir quantidade de ciclos"
                         onClick={() => changeCycles(-1)}
                         >
                         <PiCaretDown aria-hidden="true" className={arrowIconClasses}/>
                         </button>
-                        </div>
                     </div>
                 </div>
     );
