@@ -1,7 +1,7 @@
 import CycleCounter from "./components/CycleCounter";
 import ProgressIndicator from "./components/ProgressIndicator";
 import TimerControls from "./components/TimerControls";
-import TimerDisplay from "./components/TimerDisplay";
+import TimerDisplay, { type TimerDisplayMode } from "./components/TimerDisplay";
 
 import {
 	createInitialPomodoroTimerState,
@@ -11,6 +11,9 @@ import {
 } from "./model/pomodoroTimer";
 
 import { useEffect, useReducer } from "react";
+
+// Choose "digital" for instant updates or "countdown" for animated digits.
+const TIMER_DISPLAY_MODE: TimerDisplayMode = "countdown";
 
 const phaseLabels: Record<PomodoroPhase, string> = {
 	focus: "Foco",
@@ -82,7 +85,7 @@ function PomodoroPanel() {
 					min-h-0
 					min-w-0
 				">
-					<TimerDisplay remainingMs={timerState.remainingMs} />
+					<TimerDisplay remainingMs={timerState.remainingMs} mode={TIMER_DISPLAY_MODE} />
 				</div>
 
 				<div className="

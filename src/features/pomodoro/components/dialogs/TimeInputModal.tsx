@@ -23,11 +23,11 @@ function TimeInputModal({
     const secondsInput = useNumberInput(seconds, 0, 59, { wrap: true, onInputFeedback });
 
          
-    const inputClasses = "input input-ghost box-border block h-full w-full min-h-0 min-w-0 max-w-none content-center appearance-none rounded-none border-0 bg-transparent px-0 py-0 text-center font-[Inter] text-[min(64cqw,80cqh)] leading-[normal] tabular-nums shadow-none select-none caret-transparent selection:bg-transparent selection:text-inherit focus:bg-white/10 focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-[#00CBEA] [--font-size-min:0px] [-moz-appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-inner-spin-button]:m-0 [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-outer-spin-button]:m-0";
+    const inputClasses = "input input-ghost box-border block h-full w-full min-h-0 min-w-0 max-w-none content-center appearance-none rounded-none border-0 bg-transparent px-0 py-0 text-center font-[Inter] text-[min(64cqw,80cqh)] leading-[normal] lining-nums tabular-nums shadow-none select-none caret-transparent selection:bg-transparent selection:text-inherit focus:bg-white/10 focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-[#00CBEA] [--font-size-min:0px] [-moz-appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-inner-spin-button]:m-0 [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-outer-spin-button]:m-0";
     const columnClasses = "grid h-full w-full min-h-0 min-w-0 grid-rows-[minmax(0,1fr)_minmax(0,2fr)_minmax(0,1fr)]";
     const valueClasses = "flex h-full w-full min-h-0 min-w-0 items-center justify-center @container-size";
     const separatorClasses = "flex h-full w-full min-h-0 min-w-0 items-center justify-center text-[min(14cqw,40cqh)] leading-none";
-    const arrowButtonClasses = "flex h-full w-full min-h-0 min-w-0 items-center justify-center rounded-none border-0 bg-transparent p-0 text-white/60 hover:bg-white/5 hover:text-white active:bg-white/10";
+    const arrowButtonClasses = "btn btn-ghost flex h-full w-full min-h-0 min-w-0 cursor-pointer items-center justify-center gap-0 rounded-none border-0 bg-[#17243F] bg-none p-0 text-white/60 shadow-none outline-none hover:bg-[#5F77B8] hover:text-white active:bg-[#435F91] active:text-white";
     // 10% maior que o tamanho anterior de 20cqh, relativo à altura total do campo.
     const arrowIconClasses = "block size-[22cqh] shrink-0";
 

@@ -1,14 +1,20 @@
+import { Fragment, type CSSProperties } from "react";
+
+export type TimerDisplayMode = "digital" | "countdown";
+
 type TimerDisplayProps = {
 	remainingMs: number;
+	mode?: TimerDisplayMode;
 };
 
-function TimerDisplay({ remainingMs }: TimerDisplayProps) {
+function TimerDisplay({ remainingMs, mode = "countdown" }: TimerDisplayProps) {
 	const totalSeconds = Math.ceil(remainingMs / 1_000);
 	const hours = Math.floor(totalSeconds / 3_600);
 	const minutes = Math.floor(totalSeconds / 60) % 60;
 	const seconds = totalSeconds % 60;
-	const formattedTime = [...(hours > 0 ? [hours] : []), minutes, seconds]
-		.map((part) => String(part).padStart(2, "0")).join(":");
+	const timeParts = [...(hours > 0 ? [hours] : []), minutes, seconds]
+		.map((part) => String(part).padStart(2, "0"));
+	const formattedTime = timeParts.join(":");
 
 	return (
 		<div className="
@@ -57,7 +63,30 @@ function TimerDisplay({ remainingMs }: TimerDisplayProps) {
 					}}
 					aria-label={`${hours > 0 ? `${hours} horas, ` : ""}${minutes} minutos e ${seconds} segundos restantes`}
 				>
-					{formattedTime}
+					{mode === "digital" ? formattedTime : timeParts.map((part, index) => (
+						<Fragment key={timeParts.length - index}>
+							{index > 0 && ":"}
+							<span
+								className="countdown pomodoro-countdown shrink-0"
+								aria-hidden="true"
+							>
+								{/* DaisyUI wraps at 1000; split longer hour fields to keep every digit. */}
+								{(part.length > 3 ? part.split("") : [part]).map((value, digitIndex) => (
+									<span
+										key={digitIndex}
+										style={{
+											"--value": Number(value),
+											"--digits": value.length,
+											// Keep Epilogue's next row outside the countdown window.
+											clipPath: "inset(0 0 0.08em)",
+										} as CSSProperties}
+									>
+										{value}
+									</span>
+								))}
+							</span>
+						</Fragment>
+					))}
 				</time>
 			</div>
 

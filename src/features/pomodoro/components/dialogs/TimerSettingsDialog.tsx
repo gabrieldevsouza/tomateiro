@@ -79,8 +79,9 @@ function TimerSettingsDialog({ onClose }: TimerSettingsDialogProps) {
 			for (const input of inputs) {
 				const style = getComputedStyle(input);
 				context!.font = `${style.fontStyle} ${style.fontWeight} ${style.fontSize} ${style.fontFamily}`;
-				const metrics = context!.measureText(input.value || "0");
-				// A diferença entre o centro dos glifos e o da fonte define o padding.
+				// Referência fixa: trocar o valor nunca desloca a linha de base dos números.
+				const metrics = context!.measureText("0123456789");
+				// Centraliza o conjunto de dígitos usando as métricas da fonte atual.
 				const padding = metrics.actualBoundingBoxAscent - metrics.actualBoundingBoxDescent
 					- metrics.fontBoundingBoxAscent + metrics.fontBoundingBoxDescent;
 				if (!Number.isFinite(padding)) continue;
@@ -91,10 +92,6 @@ function TimerSettingsDialog({ onClose }: TimerSettingsDialogProps) {
 			}
 		}
 
-		function handleValueChange() {
-			queueMicrotask(alignNumberInputs);
-		}
-
 		const resizeObserver = new ResizeObserver(alignNumberInputs);
 		inputs.forEach(input => resizeObserver.observe(input, { box: "border-box" }));
 		const styleObserver = new MutationObserver(alignNumberInputs);
@@ -103,9 +100,6 @@ function TimerSettingsDialog({ onClose }: TimerSettingsDialogProps) {
 			attributeFilter: ["class", "style"],
 			subtree: true,
 		});
-		dialog.addEventListener("input", handleValueChange);
-		dialog.addEventListener("change", handleValueChange);
-		dialog.addEventListener("focusout", handleValueChange);
 		document.fonts.addEventListener("loadingdone", alignNumberInputs);
 		void document.fonts.ready.then(alignNumberInputs);
 		alignNumberInputs();
@@ -114,9 +108,6 @@ function TimerSettingsDialog({ onClose }: TimerSettingsDialogProps) {
 			disposed = true;
 			resizeObserver.disconnect();
 			styleObserver.disconnect();
-			dialog.removeEventListener("input", handleValueChange);
-			dialog.removeEventListener("change", handleValueChange);
-			dialog.removeEventListener("focusout", handleValueChange);
 			document.fonts.removeEventListener("loadingdone", alignNumberInputs);
 		};
 	}, []);

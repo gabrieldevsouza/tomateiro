@@ -63,3 +63,49 @@ body,
   font-family: Epilogue;
   src: url("../assets/fonts/Epilogue-VariableFont_wght.ttf") format("truetype");
 }
+
+@property --pomodoro-countdown-row {
+  syntax: "<number>";
+  inherits: false;
+  initial-value: 0;
+}
+
+@property --pomodoro-countdown-digits {
+  syntax: "<number>";
+  inherits: false;
+  initial-value: 1;
+}
+
+/* Animate numeric positions and digit counts so em/ch resize immediately. */
+.pomodoro-countdown > span {
+  --pomodoro-countdown-digits: calc(1 + var(--show-tens) + var(--show-hundreds));
+  width: calc(var(--pomodoro-countdown-digits) * 1ch);
+  transition: --pomodoro-countdown-digits 0.4s ease-out 0.2s;
+}
+
+.pomodoro-countdown > span::before,
+.pomodoro-countdown > span::after {
+  top: calc(var(--pomodoro-countdown-row) * -1em);
+  width: calc(var(--pomodoro-countdown-digits) * 1ch);
+  transition:
+    --pomodoro-countdown-row 1s cubic-bezier(1, 0, 0, 1),
+    --pomodoro-countdown-digits 0.2s ease-out 0.2s,
+    opacity 0.2s ease-out 0.2s;
+}
+
+.pomodoro-countdown > span::before {
+  --pomodoro-countdown-row: var(--first-digits);
+  --pomodoro-countdown-digits: calc(1 + var(--show-hundreds));
+}
+
+.pomodoro-countdown > span::after {
+  --pomodoro-countdown-row: var(--value-ones);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pomodoro-countdown > span,
+  .pomodoro-countdown > span::before,
+  .pomodoro-countdown > span::after {
+    transition: none;
+  }
+}
