@@ -1,7 +1,10 @@
-import { type ClipboardEvent, useContext, useLayoutEffect, useRef } from "react";
+import { type ClipboardEvent, useCallback, useContext, useEffect, useId, useLayoutEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import PrimaryButton from "../../../../components/buttons/PrimaryButton";
 import SecondaryButton from "../../../../components/buttons/SecondaryButton";
+import FieldLabel from "../../../../components/forms/FieldLabel";
+import TextInput from "../../../../components/forms/TextInput";
+import DialogTitle from "../../../../components/typography/DialogTitle";
 import { TitlebarPortalContext } from "../../../../window/TitlebarPortalContext";
 import TimeInputModal from "./TimeInputModal";
 import CyclesAmountInputModal from "./CyclesAmountInputModal";
@@ -12,9 +15,25 @@ type TimerSettingsDialogProps = {
 
 function TimerSettingsDialog({ onClose }: TimerSettingsDialogProps) {
 	const dialogRef = useRef<HTMLDialogElement>(null);
+	const titleId = useId();
+	const nameInputId = useId();
 	const titlebar = useContext(TitlebarPortalContext);
 	const setTitlebarContainer = titlebar?.setContainer;
 	const titlebarHeight = titlebar?.height ?? "0px";
+	const [inputFeedback, setInputFeedback] = useState<string | null>(null);
+	const feedbackTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
+	const handleInputFeedback = useCallback((message: string | null) => {
+		if (feedbackTimeout.current !== null) clearTimeout(feedbackTimeout.current);
+		feedbackTimeout.current = null;
+		setInputFeedback(message);
+		if (message !== null) feedbackTimeout.current = setTimeout(() => {
+			setInputFeedback(null);
+			feedbackTimeout.current = null;
+		}, 8000);
+	}, []);
+	useEffect(() => () => {
+		if (feedbackTimeout.current !== null) clearTimeout(feedbackTimeout.current);
+	}, []);
 
 	function handleClipboard(event: ClipboardEvent<HTMLDialogElement>) {
 		if (!(event.target instanceof HTMLInputElement)) event.preventDefault();
@@ -107,7 +126,7 @@ function TimerSettingsDialog({ onClose }: TimerSettingsDialogProps) {
 			ref={dialogRef}
 			className="modal @container-size select-none"
 			style={{ paddingTop: titlebarHeight }}
-			aria-label="Editar Pomodoro"
+			aria-labelledby={titleId}
 			onCopy={handleClipboard}
 			onCut={handleClipboard}
 			onCancel={(event) => {
@@ -127,32 +146,9 @@ function TimerSettingsDialog({ onClose }: TimerSettingsDialogProps) {
 					grid-cols-[minmax(0,15fr)_minmax(0,164fr)_minmax(0,82fr)_minmax(0,164fr)_minmax(0,15fr)]
 					grid-rows-[minmax(0,15fr)_minmax(0,52fr)_minmax(0,10fr)_minmax(0,10fr)_minmax(0,44fr)_minmax(0,22fr)_minmax(0,10fr)_minmax(0,10fr)_minmax(0,52fr)_minmax(0,22fr)_minmax(0,10fr)_minmax(0,10fr)_minmax(0,52fr)_minmax(0,30fr)_minmax(0,40fr)_minmax(0,15fr)]
 				">
-					<div className="
-						row-start-2
-						col-start-2
-						col-span-2
-						min-w-0
-						min-h-0
-						h-full
-						w-full
-					">
-						<div className="
-						flex w-full items-center leading-none
-						h-full
-						whitespace-nowrap
-						font-[Beiruti]
-						font-bold
-						pointer-events-none
-						text-[#00CBEA]
-					"
-					style={{
-						fontSize: "min(14cqw,80cqh)",
-					}}
-					>
-							Editar Tomateiro
-						</div>
-						
-					</div>
+					<DialogTitle id={titleId} className="col-start-2 col-span-2 row-start-2">
+						Editar Tomateiro
+					</DialogTitle>
 					<div className="
 						row-start-3
 						col-start-2
@@ -162,79 +158,19 @@ function TimerSettingsDialog({ onClose }: TimerSettingsDialogProps) {
 						w-full
 					"/>
 
-					<div className="
-						col-start-2
-						row-start-3
-					
-						min-w-0
-						min-h-0
-						h-full
-						w-full
-					">
-						<div 
-							className="
-							
-								font-[Beiruti]
-								font-bold
-								pointer-events-none
-								text-[#ffffff]
-								flex h-full w-full items-center whitespace-nowrap leading-none
-							"
-							style={{
-								fontSize: "min(12cqw,140cqh)",
-							}}
-						>
-								Nome do Temporizador
-						</div>
-					</div>
+					<FieldLabel htmlFor={nameInputId} className="col-start-2 row-start-3">
+						Nome do Temporizador
+					</FieldLabel>
 
-					<div className="col-start-2 row-start-5 col-span-2 flex h-full w-full min-h-0 min-w-0 items-center @container-size">
-					<input
-						type="text"
-						aria-label="Nome do Temporizador"
+					<TextInput
+						id={nameInputId}
 						placeholder="Nome aqui.."
-						className="
-							input select-text
-							px-[4cqw] py-0 rounded-none
-							bg-[#17243F]
-
-							min-w-0
-							min-h-0
-							h-full
-							w-full
-
-							font-[Epilogue]
-							
-						"
-						style={{
-								fontSize: "min(7cqw,34cqh)",
-							}}
+						containerClassName="col-start-2 col-span-2 row-start-5"
 					/>
-					</div>
 
-					<div className="
-						col-start-2
-						row-start-7
-						min-w-0
-						min-h-0
-						h-full
-						w-full
-					">
-						<div 
-							className="
-								font-[Beiruti]
-								font-bold
-								pointer-events-none
-								text-[#ffffff]
-								flex h-full w-full items-center whitespace-nowrap leading-none
-							"
-							style={{
-								fontSize: "min(12cqw,140cqh)",
-							}}
-						>
-							Temporizador
-						</div>
-					</div>
+					<FieldLabel className="col-start-2 row-start-7">
+						Temporizador
+					</FieldLabel>
 
 					<div className="
 						col-start-2
@@ -248,7 +184,7 @@ function TimerSettingsDialog({ onClose }: TimerSettingsDialogProps) {
 						h-full
 						w-full
 					">
-						<TimeInputModal label="Temporizador" minutes="25"/>
+						<TimeInputModal label="Temporizador" minutes="25" onInputFeedback={handleInputFeedback}/>
 					</div>
 
 					<div className="
@@ -260,54 +196,13 @@ function TimerSettingsDialog({ onClose }: TimerSettingsDialogProps) {
 						w-full
 					"/>
 
-					<div className="
-						relative
-						col-start-2
-						row-start-11
-						min-w-0
-						min-h-0
-						h-full
-						w-full
-					">
-						<div 
-							className="
-								font-[Beiruti]
-								font-bold
-								pointer-events-none
-								text-[#ffffff]
-								flex h-full w-full items-center whitespace-nowrap leading-none
-							"
-							style={{
-								fontSize: "min(12cqw,140cqh)",
-							}}
-						>
-							Pausa Curta
-						</div>
-					</div>
+					<FieldLabel className="relative col-start-2 row-start-11">
+						Pausa Curta
+					</FieldLabel>
 
-					<div className="
-						col-start-4
-						row-start-11
-						min-w-0
-						min-h-0
-						h-full
-						w-full
-					">
-						<div 
-							className="
-								font-[Beiruti]
-								font-bold
-								pointer-events-none
-								text-[#ffffff]
-								flex h-full w-full items-center whitespace-nowrap leading-none
-							"
-							style={{
-								fontSize: "min(12cqw,140cqh)",
-							}}
-						>
-							Pausa Longa
-						</div>
-					</div>
+					<FieldLabel className="col-start-4 row-start-11">
+						Pausa Longa
+					</FieldLabel>
 
 
 
@@ -321,7 +216,7 @@ function TimerSettingsDialog({ onClose }: TimerSettingsDialogProps) {
 						h-full
 						
 					">
-						<CyclesAmountInputModal></CyclesAmountInputModal>
+						<CyclesAmountInputModal onInputFeedback={handleInputFeedback}></CyclesAmountInputModal>
 					</div>
 
 					<div className="
@@ -333,32 +228,12 @@ function TimerSettingsDialog({ onClose }: TimerSettingsDialogProps) {
 						h-full
 						w-full
 					">
-						<TimeInputModal label="Pausa longa" minutes="15"/>
+						<TimeInputModal label="Pausa longa" minutes="15" onInputFeedback={handleInputFeedback}/>
 					</div>
 
-					<div className="
-						col-start-4
-						row-start-7
-						min-w-0
-						min-h-0
-						h-full
-						w-full
-					">
-						<div 
-							className="
-								font-[Beiruti]
-								font-bold
-								pointer-events-none
-								text-[#ffffff]
-								flex h-full w-full items-center whitespace-nowrap leading-none
-							"
-							style={{
-								fontSize: "min(12cqw,140cqh)",
-							}}
-						>
-							Ciclos
-						</div>
-					</div>
+					<FieldLabel className="col-start-4 row-start-7">
+						Ciclos
+					</FieldLabel>
 
 					<div className="
 						col-start-2
@@ -369,7 +244,7 @@ function TimerSettingsDialog({ onClose }: TimerSettingsDialogProps) {
 						h-full
 						w-full
 					">
-						<TimeInputModal label="Pausa curta" minutes="5"/>
+						<TimeInputModal label="Pausa curta" minutes="5" onInputFeedback={handleInputFeedback}/>
 					</div>
 
 					<div className="
@@ -397,6 +272,11 @@ function TimerSettingsDialog({ onClose }: TimerSettingsDialogProps) {
 				
 				
 				
+			</div>
+			<div role="status" aria-live="polite" aria-atomic="true" style={{ top: `calc(${titlebarHeight} + 1cqmin)` }} className="toast toast-top toast-center pointer-events-none z-10 w-[90%] max-w-[36rem] whitespace-normal p-[2cqmin] font-[Beiruti] text-[clamp(1rem,3cqmin,1.25rem)]">
+				{inputFeedback && <div className="alert alert-warning alert-soft grid-cols-[minmax(0,1fr)] rounded-none p-[2cqmin] font-medium [font-size:inherit] leading-snug">
+					<span className="min-w-0 break-words">{inputFeedback}</span>
+				</div>}
 			</div>
 			<button type="button" tabIndex={-1} className="modal-backdrop absolute inset-0 col-auto row-auto" aria-label="Fechar edição" onClick={onClose} />
 		</dialog>,

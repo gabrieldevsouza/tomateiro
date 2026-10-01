@@ -7,6 +7,7 @@ type TimeInputModalProps = {
     hours?: string;
     minutes?: string;
     seconds?: string;
+    onInputFeedback?: (message: string | null) => void;
 };
 
 
@@ -15,10 +16,11 @@ function TimeInputModal({
     hours = "0",
     minutes = "25",
     seconds = "0",
+    onInputFeedback,
 }: TimeInputModalProps) {
-    const hoursInput = useNumberInput(hours, 0, 99);
-    const minutesInput = useNumberInput(minutes, 0, 59);
-    const secondsInput = useNumberInput(seconds, 0, 59);
+    const hoursInput = useNumberInput(hours, 0, 99, { wrap: true, onInputFeedback });
+    const minutesInput = useNumberInput(minutes, 0, 59, { wrap: true, onInputFeedback });
+    const secondsInput = useNumberInput(seconds, 0, 59, { wrap: true, onInputFeedback });
 
          
     const inputClasses = "input input-ghost box-border block h-full w-full min-h-0 min-w-0 max-w-none content-center appearance-none rounded-none border-0 bg-transparent px-0 py-0 text-center font-[Inter] text-[min(64cqw,80cqh)] leading-[normal] tabular-nums shadow-none select-none caret-transparent selection:bg-transparent selection:text-inherit focus:bg-white/10 focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-[#00CBEA] [--font-size-min:0px] [-moz-appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-inner-spin-button]:m-0 [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-outer-spin-button]:m-0";
@@ -32,7 +34,7 @@ function TimeInputModal({
     return(
     <div role="group" aria-label={label} className="h-full w-full min-h-0 min-w-0 @container-size">
         <div className={`
-            input grid
+            input grid cursor-default
             grid-cols-[minmax(0,0.92fr)_minmax(0,0.24fr)_minmax(0,0.92fr)_minmax(0,0.24fr)_minmax(0,0.92fr)]
             items-center
             h-full
@@ -59,7 +61,7 @@ function TimeInputModal({
                 tabIndex={-1}
                 className={arrowButtonClasses}
                 aria-label={label + ": aumentar horas"}
-                onClick={() => hoursInput.step(1)}
+                {...hoursInput.getStepButtonProps(1)}
             >
                 <PiCaretUp aria-hidden="true" className={arrowIconClasses}/>
             </button>
@@ -82,7 +84,7 @@ function TimeInputModal({
         tabIndex={-1}
         className={arrowButtonClasses}
         aria-label={label + ":diminuir horas"}
-        onClick={() => hoursInput.step(-1)}
+        {...hoursInput.getStepButtonProps(-1)}
         >
             <PiCaretDown aria-hidden="true" className={arrowIconClasses} />
         </button>
@@ -96,7 +98,7 @@ function TimeInputModal({
             tabIndex={-1}
             className={arrowButtonClasses}
             aria-label={label + ":aumentar minutos"}
-            onClick = {() => minutesInput.step(1)}
+            {...minutesInput.getStepButtonProps(1)}
             >
                 <PiCaretUp aria-hidden="true" className={arrowIconClasses} />
             </button>
@@ -119,7 +121,7 @@ function TimeInputModal({
             tabIndex={-1}
             className={arrowButtonClasses}
             aria-label={label + ":diminuir minutos"}
-            onClick={() => minutesInput.step(-1)}
+            {...minutesInput.getStepButtonProps(-1)}
             >
                 <PiCaretDown aria-hidden="true" className={arrowIconClasses} />
             </button>
@@ -133,7 +135,7 @@ function TimeInputModal({
             tabIndex={-1}
             className={arrowButtonClasses}
             aria-label={label + ":aumentar segundos"}
-            onClick={() => secondsInput.step(1)}
+            {...secondsInput.getStepButtonProps(1)}
             >
                 <PiCaretUp aria-hidden="true" className={arrowIconClasses}/>
             </button>
@@ -156,7 +158,7 @@ function TimeInputModal({
             tabIndex={-1}
             className={arrowButtonClasses}
             aria-label={label + ":diminuir segundos"}
-            onClick={() => secondsInput.step(-1)}
+            {...secondsInput.getStepButtonProps(-1)}
             >
                 <PiCaretDown aria-hidden="true" className={arrowIconClasses}/>
             </button>

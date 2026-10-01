@@ -5,8 +5,11 @@ function SecondaryButton({ className = "", ...props }: ButtonProps) {
 		<Button
 			{...props}
 			className={`
-				bg-[#535A6F] text-white
-				hover:bg-[#5F667D] focus-visible:bg-[#5F667D] active:bg-[#4A5268]
+				not-[:is(:disabled,[aria-disabled=true],.btn-disabled)]:bg-[#535A6F]
+				not-[:is(:disabled,[aria-disabled=true],.btn-disabled)]:text-white
+				not-[:is(:disabled,[aria-disabled=true],.btn-disabled)]:hover:bg-[#5F667D]
+				not-[:is(:disabled,[aria-disabled=true],.btn-disabled)]:focus-visible:bg-[#5F667D]
+				not-[:is(:disabled,[aria-disabled=true],.btn-disabled)]:active:bg-[#4A5268]
 				${className}
 			`}
 		/>

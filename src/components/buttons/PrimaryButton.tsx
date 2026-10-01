@@ -5,8 +5,11 @@ function PrimaryButton({ className = "", ...props }: ButtonProps) {
 		<Button
 			{...props}
 			className={`
-				bg-[#00CBEA] text-black
-				hover:bg-[#00B8D4] focus-visible:bg-[#00B8D4] active:bg-[#00A5BE]
+				not-[:is(:disabled,[aria-disabled=true],.btn-disabled)]:bg-[#00CBEA]
+				not-[:is(:disabled,[aria-disabled=true],.btn-disabled)]:text-black
+				not-[:is(:disabled,[aria-disabled=true],.btn-disabled)]:hover:bg-[#43DCF3]
+				not-[:is(:disabled,[aria-disabled=true],.btn-disabled)]:focus-visible:bg-[#43DCF3]
+				not-[:is(:disabled,[aria-disabled=true],.btn-disabled)]:active:bg-[#00A5BE]
 				${className}
 			`}
 		/>

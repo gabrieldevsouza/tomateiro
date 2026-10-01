@@ -4,12 +4,14 @@ import { useNumberInput } from "./useNumberInput";
 
 type CyclesAmountInputModalProps ={
     defaultValue?: number;
+    onInputFeedback?: (message: string | null) => void;
 };
 
 function CyclesAmountInputModal({
     defaultValue = 4,
+    onInputFeedback,
 }: CyclesAmountInputModalProps) {
-    const cyclesInput = useNumberInput(defaultValue, POMODORO_SETTINGS_LIMITS.minFocusPhases, POMODORO_SETTINGS_LIMITS.maxFocusPhases, { allowZeroWhileEditing: true });
+    const cyclesInput = useNumberInput(defaultValue, POMODORO_SETTINGS_LIMITS.minFocusPhases, POMODORO_SETTINGS_LIMITS.maxFocusPhases, { allowZeroWhileEditing: true, onInputFeedback });
 
     const inputClasses = "input input-ghost box-border block h-full w-full min-h-0 min-w-0 max-w-none content-center appearance-none rounded-none border-0 bg-transparent px-0 py-0 text-center font-[Inter] text-[min(64cqw,80cqh)] leading-[normal] tabular-nums shadow-none select-none caret-transparent selection:bg-transparent selection:text-inherit focus:bg-white/10 focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-[#00CBEA] [--font-size-min:0px] [-moz-appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-inner-spin-button]:m-0 [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-outer-spin-button]:m-0";
     const arrowButtonClasses = "grid h-full w-full min-h-0 min-w-0 justify-items-center rounded-none border-0 bg-transparent p-0 text-white/60 hover:bg-white/5 hover:text-white active:bg-white/10";
@@ -26,7 +28,7 @@ function CyclesAmountInputModal({
             @container-size"
         >
             <div className={`
-            input grid
+            input grid cursor-default
             grid-cols-[minmax(0,3fr)_minmax(0,1fr)]
             items-center
             h-full w-full min-h-0 min-w-0 max-w-none
@@ -58,8 +60,7 @@ function CyclesAmountInputModal({
                     tabIndex={-1}
                     className={`${arrowButtonClasses} grid-rows-[minmax(0,1fr)_var(--arrow-inner-gap)]`}
                     aria-label="Aumentar quantidade de ciclos"
-                    onPointerDown={(event) => event.preventDefault()}
-                    onClick={() => cyclesInput.step(1)}
+                    {...cyclesInput.getStepButtonProps(1)}
                 >
                     <PiCaretUp aria-hidden="true" className={`${arrowIconClasses} self-end`}/>
                 </button>
@@ -68,8 +69,7 @@ function CyclesAmountInputModal({
                     tabIndex={-1}
                     className={`${arrowButtonClasses} grid-rows-[var(--arrow-inner-gap)_minmax(0,1fr)]`}
                     aria-label="Diminuir quantidade de ciclos"
-                    onPointerDown={(event) => event.preventDefault()}
-                    onClick={() => cyclesInput.step(-1)}
+                    {...cyclesInput.getStepButtonProps(-1)}
                 >
                     <PiCaretDown aria-hidden="true" className={`${arrowIconClasses} row-start-2 self-start`}/>
                 </button>
