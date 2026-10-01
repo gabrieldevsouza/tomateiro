@@ -361,7 +361,7 @@ function TimerSettingsDialog({ onClose }: TimerSettingsDialogProps) {
 						h-full
 						w-full
 					">
-						<TimeInputModal label="Pausa curta" minutes="05"/>
+						<TimeInputModal label="Pausa curta" minutes="5"/>
 					</div>
 
 					<div className="

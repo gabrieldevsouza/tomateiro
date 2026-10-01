@@ -12,16 +12,21 @@ type TimeInputModalProps = {
 
 function TimeInputModal({
     label = "Temporizador",
-    hours = "00",
+    hours = "0",
     minutes = "25",
-    seconds = "00",
+    seconds = "0",
 }: TimeInputModalProps) {
     const hoursRef = useRef <HTMLInputElement>(null);
     const minutesRef = useRef <HTMLInputElement>(null);
     const secondsRef = useRef <HTMLInputElement>(null);
+    function normalizeTimePart(value: string, max: number){
+        const amount = Number(value);
+        return String(Math.min(max, Math.max(0, Number.isNaN(amount) ? 0 : Math.trunc(amount))));
+    }
+
     function formatTimePart(input: HTMLInputElement){
-        if (input.value !=="" && input.validity.valid){
-            input.value = String(input.valueAsNumber).padStart(2, "0");
+        if (input.value !== "" || input.validity.badInput){
+            input.value = normalizeTimePart(input.value, Number(input.max));
         }
     }
 
@@ -50,20 +55,26 @@ function TimeInputModal({
 
     return(
     <div role="group" aria-label={label} className="h-full w-full min-h-0 min-w-0 @container-size">
-        <div className="
+        <div className={`
             input grid
-            grid-cols-[minmax(0,1fr)_minmax(0,0.12fr)_minmax(0,1fr)_minmax(0,0.12fr)_minmax(0,1fr)]
+            grid-cols-[minmax(0,0.92fr)_minmax(0,0.24fr)_minmax(0,0.92fr)_minmax(0,0.24fr)_minmax(0,0.92fr)]
             items-center
             h-full
             w-full
             min-h-0
             min-w-0 max-w-none
             gap-0
-            px-[4cqw] py-0 border-0 shadow-none
+
+			${/*px-[4cqw]*/`px-0`}
+			py-0 
+			border-0 
+			shadow-none
+
             rounded-none
             bg-[#17243F] 
             font-[Epilogue]
-            text-white"
+            text-white
+			`}
         >
 
         <div className={columnClasses}>
@@ -86,7 +97,8 @@ function TimeInputModal({
             max={99}
             step={1}
             required
-            defaultValue={hours}
+            defaultValue={normalizeTimePart(hours, 99)}
+            onInput={(event) => formatTimePart(event.currentTarget)}
             onBlur={(event) => formatTimePart(event.currentTarget)}
             onFocus={(event) => event.currentTarget.select()}
             onClick={(event) => event.currentTarget.select()}
@@ -126,7 +138,8 @@ function TimeInputModal({
             max={59}
             step={1}
             required
-            defaultValue = {minutes}
+            defaultValue = {normalizeTimePart(minutes, 59)}
+            onInput={(event) => formatTimePart(event.currentTarget)}
             onBlur={(event) => formatTimePart(event.currentTarget)}
             onFocus={(event) => event.currentTarget.select()}
             onClick={(event) => event.currentTarget.select()}
@@ -167,7 +180,8 @@ function TimeInputModal({
             max={59}
             step={1}
             required
-            defaultValue = {seconds}
+            defaultValue = {normalizeTimePart(seconds, 59)}
+            onInput={(event) => formatTimePart(event.currentTarget)}
             onBlur = {(event) => formatTimePart(event.currentTarget)}
             onFocus={(event) => event.currentTarget.select()}
             onClick={(event) => event.currentTarget.select()}

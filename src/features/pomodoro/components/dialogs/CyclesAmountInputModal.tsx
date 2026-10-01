@@ -37,15 +37,19 @@ function CyclesAmountInputModal({
             min-w-0 
             @container-size"
         >
-            <div className="
+            <div className={`
             input grid
             grid-cols-[minmax(0,3fr)_minmax(0,1fr)]
             items-center
             h-full w-full min-h-0 min-w-0 max-w-none
-            gap-0 px-[4cqw] py-0
+            
+			gap-0 
+			${/*px-[4cqw]*/`px-0`}
+			py-0
+
             rounded-none border-0 shadow-none
             bg-[#17243F] font-[Epilogue] text-white
-        ">
+        `}>
         <div className="flex h-full w-full min-h-0 min-w-0 items-center justify-center @container-size">
         <input
             ref={inputRef}
