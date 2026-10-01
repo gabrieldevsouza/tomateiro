@@ -1,5 +1,7 @@
-import { useContext, useLayoutEffect, useRef } from "react";
+import { type ClipboardEvent, useContext, useLayoutEffect, useRef } from "react";
 import { createPortal } from "react-dom";
+import PrimaryButton from "../../../../components/buttons/PrimaryButton";
+import SecondaryButton from "../../../../components/buttons/SecondaryButton";
 import { TitlebarPortalContext } from "../../../../window/TitlebarPortalContext";
 import TimeInputModal from "./TimeInputModal";
 import CyclesAmountInputModal from "./CyclesAmountInputModal";
@@ -13,6 +15,10 @@ function TimerSettingsDialog({ onClose }: TimerSettingsDialogProps) {
 	const titlebar = useContext(TitlebarPortalContext);
 	const setTitlebarContainer = titlebar?.setContainer;
 	const titlebarHeight = titlebar?.height ?? "0px";
+
+	function handleClipboard(event: ClipboardEvent<HTMLDialogElement>) {
+		if (!(event.target instanceof HTMLInputElement)) event.preventDefault();
+	}
 
 	useLayoutEffect(() => {
 		const dialog = dialogRef.current;
@@ -99,9 +105,11 @@ function TimerSettingsDialog({ onClose }: TimerSettingsDialogProps) {
 	return createPortal(
 		<dialog
 			ref={dialogRef}
-			className="modal @container-size"
+			className="modal @container-size select-none"
 			style={{ paddingTop: titlebarHeight }}
 			aria-label="Editar Pomodoro"
+			onCopy={handleClipboard}
+			onCut={handleClipboard}
 			onCancel={(event) => {
 				event.preventDefault();
 				onClose();
@@ -186,7 +194,7 @@ function TimerSettingsDialog({ onClose }: TimerSettingsDialogProps) {
 						aria-label="Nome do Temporizador"
 						placeholder="Nome aqui.."
 						className="
-							input
+							input select-text
 							px-[4cqw] py-0 rounded-none
 							bg-[#17243F]
 
@@ -374,82 +382,16 @@ function TimerSettingsDialog({ onClose }: TimerSettingsDialogProps) {
 					"/>
 
 					
-					<button type="button" className="
-						btn btn-ghost
-						@container-size select-text p-0
-						focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-black
-						shadow-none border-0 text-black
-						hover:bg-[#00B8D4]
-						active:bg-[#00A5BE]
-						col-start-4
-						row-start-15
-						bg-[#00CBEA]
-						flex
-						justify-center
-						items-center
-						min-w-0
-						min-h-0
-						h-full
-						w-full
-						rounded-full
-					">
-					<div
-						className="
-							flex h-full w-full select-text items-center justify-center whitespace-nowrap leading-none font-[Inter]
-							font-bold
-							text-[#000000]
-						"
-							style={{
-								fontSize: "min(14cqw,42cqh)",
-							}}
-						>
-							Salvar
-						</div>
-					</button>
+					<PrimaryButton className="col-start-4 row-start-15 h-full w-full">
+						Salvar
+					</PrimaryButton>
 
-					<button
-					type="button"
-					onClick={onClose}				
-					className={`
-						btn
-						btn-ghost
-						@container-size select-text p-0
-						focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-white
-						shadow-none text-white ring-1 ring-inset ring-[#838CA4]
-						hover:bg-[#5F667D]
-						active:bg-[#4A5268]
-						border-0
-
-
-						col-start-2
-						col-span-2
-						row-start-15
-						bg-[#535A6F]
-						flex
-						justify-center
-						items-center
-							
-						mr-[8%]
-						justify-self-end
-						min-w-0
-						min-h-0
-						h-full
-						w-[62%]
-						rounded-full
-					`}>
-					<div
-						className="
-							flex h-full w-full select-text items-center justify-center whitespace-nowrap leading-none font-[Inter]
-							font-bold
-							text-white
-						"
-							style={{
-								fontSize: "min(14cqw,42cqh)",
-							}}
-						>
-							Cancelar
-						</div>
-					</button>
+					<SecondaryButton
+						onClick={onClose}
+						className="col-start-2 col-span-2 row-start-15 mr-[8%] justify-self-end h-full w-[62%]"
+					>
+						Cancelar
+					</SecondaryButton>
 				</div>
 
 				

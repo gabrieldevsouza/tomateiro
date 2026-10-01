@@ -20,20 +20,6 @@ function TimeInputModal({
     const minutesInput = useNumberInput(minutes, 0, 59);
     const secondsInput = useNumberInput(seconds, 0, 59);
 
-    function changeTimePart(
-        input: HTMLInputElement | null,
-        direction: number,
-    ) {
-        if (!input) return;
-        if (direction > 0){
-            input.stepUp();
-        } else {
-            input.stepDown();
-        }
-        input.dispatchEvent(new Event("input", { bubbles: true }));
-        input.focus({ preventScroll: true });
-        }
-
          
     const inputClasses = "input input-ghost box-border block h-full w-full min-h-0 min-w-0 max-w-none content-center appearance-none rounded-none border-0 bg-transparent px-0 py-0 text-center font-[Inter] text-[min(64cqw,80cqh)] leading-[normal] tabular-nums shadow-none select-none caret-transparent selection:bg-transparent selection:text-inherit focus:bg-white/10 focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-[#00CBEA] [--font-size-min:0px] [-moz-appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-inner-spin-button]:m-0 [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-outer-spin-button]:m-0";
     const columnClasses = "grid h-full w-full min-h-0 min-w-0 grid-rows-[minmax(0,1fr)_minmax(0,2fr)_minmax(0,1fr)]";
@@ -73,14 +59,14 @@ function TimeInputModal({
                 tabIndex={-1}
                 className={arrowButtonClasses}
                 aria-label={label + ": aumentar horas"}
-                onClick={() => changeTimePart(hoursInput.ref.current,1)}
+                onClick={() => hoursInput.step(1)}
             >
                 <PiCaretUp aria-hidden="true" className={arrowIconClasses}/>
             </button>
 
         <div className={valueClasses}>
         <input 
-            {...hoursInput}
+            {...hoursInput.inputProps}
             type="number"
             inputMode="numeric"
             step={1}
@@ -96,7 +82,7 @@ function TimeInputModal({
         tabIndex={-1}
         className={arrowButtonClasses}
         aria-label={label + ":diminuir horas"}
-        onClick={() => changeTimePart(hoursInput.ref.current, -1)}
+        onClick={() => hoursInput.step(-1)}
         >
             <PiCaretDown aria-hidden="true" className={arrowIconClasses} />
         </button>
@@ -110,13 +96,13 @@ function TimeInputModal({
             tabIndex={-1}
             className={arrowButtonClasses}
             aria-label={label + ":aumentar minutos"}
-            onClick = {() => changeTimePart(minutesInput.ref.current, 1)}
+            onClick = {() => minutesInput.step(1)}
             >
                 <PiCaretUp aria-hidden="true" className={arrowIconClasses} />
             </button>
         <div className={valueClasses}>
         <input 
-            {...minutesInput}
+            {...minutesInput.inputProps}
             type="number"
             inputMode="numeric"
             step={1}
@@ -133,7 +119,7 @@ function TimeInputModal({
             tabIndex={-1}
             className={arrowButtonClasses}
             aria-label={label + ":diminuir minutos"}
-            onClick={() => changeTimePart(minutesInput.ref.current, -1)}
+            onClick={() => minutesInput.step(-1)}
             >
                 <PiCaretDown aria-hidden="true" className={arrowIconClasses} />
             </button>
@@ -147,13 +133,13 @@ function TimeInputModal({
             tabIndex={-1}
             className={arrowButtonClasses}
             aria-label={label + ":aumentar segundos"}
-            onClick={() => changeTimePart (secondsInput.ref.current, 1)}
+            onClick={() => secondsInput.step(1)}
             >
                 <PiCaretUp aria-hidden="true" className={arrowIconClasses}/>
             </button>
         <div className={valueClasses}>
         <input 
-            {...secondsInput}
+            {...secondsInput.inputProps}
             type="number"
             inputMode="numeric"
             step={1}
@@ -170,7 +156,7 @@ function TimeInputModal({
             tabIndex={-1}
             className={arrowButtonClasses}
             aria-label={label + ":diminuir segundos"}
-            onClick={() => changeTimePart(secondsInput.ref.current, -1)}
+            onClick={() => secondsInput.step(-1)}
             >
                 <PiCaretDown aria-hidden="true" className={arrowIconClasses}/>
             </button>

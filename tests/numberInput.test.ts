@@ -18,7 +18,7 @@ describe("valores dos inputs numéricos do editor", () => {
         }
     });
 
-    test("limpar o tempo produz zero; vazio e zero nos ciclos preservam o valor válido", () => {
+    test("normalização estrita usa o mínimo informado, sem habilitar zero de edição", () => {
         expect(normalizeNumberInput("", 0, 59, "25")).toBe("0");
         for (const value of ["", "0", "000"]) {
             expect(normalizeNumberInput(value, 1, 12, "4")).toBe("4");
