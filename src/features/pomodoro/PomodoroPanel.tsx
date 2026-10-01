@@ -2,12 +2,16 @@ import CycleCounter from "./components/CycleCounter";
 import ProgressIndicator from "./components/ProgressIndicator";
 import TimerControls from "./components/TimerControls";
 import TimerDisplay, { type TimerDisplayMode } from "./components/TimerDisplay";
+import TimerSettingsDialog from "./components/dialogs/TimerSettingsDialog";
 
 import {
 	createInitialPomodoroTimerState,
+	canAddPomodoroMinute,
 	getPomodoroCycleProgress,
 	pomodoroTimerReducer,
+	isValidPomodoroSettings,
 	type PomodoroPhase,
+	type PomodoroSettings,
 } from "./model/pomodoroTimer";
 
 import { useEffect, useReducer } from "react";
@@ -21,7 +25,12 @@ const phaseLabels: Record<PomodoroPhase, string> = {
 	longBreak: "Pausa longa",
 };
 
-function PomodoroPanel() {
+type PomodoroPanelProps = {
+	isEditing: boolean;
+	onCloseEditor: () => void;
+};
+
+function PomodoroPanel({ isEditing, onCloseEditor }: PomodoroPanelProps) {
 	const [timerState, dispatch] = useReducer(
 		pomodoroTimerReducer,
 		undefined,
@@ -46,9 +55,18 @@ function PomodoroPanel() {
 		};
 	}, [timerState.status]);
 
-	// Inner tracks grow from 180 to 198 units; 2:11:2 keeps each unit at H/270.
+	function handleSaveSettings(settings: PomodoroSettings) {
+		if (!isValidPomodoroSettings(settings)) return;
+		// Account for a deadline reached since the last display tick before replacing the block.
+		dispatch({ type: "tick", nowMs: performance.now() });
+		dispatch({ type: "configure", settings });
+		onCloseEditor();
+	}
+
+	// Inner tracks total 213.84 units; only the bottom spacer funds the added cycle height.
 	return (
-		<div className="grid aspect-8/9 w-[min(100cqw,88.8889cqh)] grid-cols-[minmax(0,3fr)_minmax(0,10fr)_minmax(0,3fr)] grid-rows-[minmax(0,2fr)_minmax(0,11fr)_minmax(0,2fr)]">
+		<>
+		<div className="grid aspect-8/9 w-[min(100cqw,88.8889cqh)] grid-cols-[minmax(0,3fr)_minmax(0,10fr)_minmax(0,3fr)] grid-rows-[minmax(0,3fr)_minmax(0,19.8fr)_minmax(0,2.2fr)]">
 			<div
 				className="
 					row-start-2
@@ -59,10 +77,10 @@ function PomodoroPanel() {
 					w-full
 					min-h-0
 					min-w-0
-					grid-rows-[minmax(0,36fr)_minmax(0,25fr)_minmax(0,46fr)_minmax(0,25fr)_minmax(0,13fr)_minmax(0,25fr)_minmax(0,28fr)]
+					grid-rows-[minmax(0,51.84fr)_minmax(0,25fr)_minmax(0,46fr)_minmax(0,25fr)_minmax(0,13fr)_minmax(0,25fr)_minmax(0,28fr)]
 				"
 			>
-				<div className="absolute inset-x-0 bottom-full h-[calc(100%*5/44)] @container-size">
+				<div className="absolute inset-x-0 bottom-full h-[calc(100%*125/1188)] @container-size">
 					<p
 						className="flex h-full items-center justify-center whitespace-nowrap font-[Epilogue] text-[#00CBEA] leading-none"
 						style={{ fontSize: "min(7cqw,40cqh)" }}
@@ -106,6 +124,7 @@ function PomodoroPanel() {
 				">
 					<TimerControls
 						status={timerState.status}
+						canAddMinute={canAddPomodoroMinute(timerState)}
 						onAddMinute={() => {
 							dispatch({ type: "addMinute", nowMs: performance.now() });
 						}}
@@ -131,6 +150,14 @@ function PomodoroPanel() {
 				</div>
 			</div>
 		</div>
+		{isEditing && (
+			<TimerSettingsDialog
+				settings={timerState.settings}
+				onSave={handleSaveSettings}
+				onClose={onCloseEditor}
+			/>
+		)}
+		</>
 	);
 }
 

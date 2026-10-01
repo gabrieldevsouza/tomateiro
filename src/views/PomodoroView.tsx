@@ -1,6 +1,5 @@
 import PomodoroPanel from "../features/pomodoro/PomodoroPanel";
 import EditTimerButton from "../features/pomodoro/components/controls/EditTimerButton";
-import TimerSettingsDialog from "../features/pomodoro/components/dialogs/TimerSettingsDialog";
 import { useState } from "react";
 
 function PomodoroView() {
@@ -18,11 +17,10 @@ function PomodoroView() {
 				@container-size
 			"
 		>
-			<PomodoroPanel />
+			<PomodoroPanel isEditing={isEditing} onCloseEditor={() => setIsEditing(false)} />
 			<div className="absolute bottom-[min(1.5cqw,2.5cqh)] right-[min(1.5cqw,2.5cqh)] aspect-square h-[5.93cqh]">
 				<EditTimerButton onClick={() => setIsEditing(true)} />
 			</div>
-			{isEditing && <TimerSettingsDialog onClose={() => setIsEditing(false)} />}
 		</section>
 	);
 }

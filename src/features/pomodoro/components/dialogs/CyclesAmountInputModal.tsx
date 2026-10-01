@@ -3,13 +3,21 @@ import { POMODORO_SETTINGS_LIMITS } from "../../model/pomodoroTimer";
 import { useNumberInput } from "./useNumberInput";
 import CountdownNumberInput from "./CountdownNumberInput";
 
-type CyclesAmountInputModalProps ={
+export type CyclesAmountInputModalProps ={
+    name?: "focusPhasesPerCycle";
+    id?: string;
     defaultValue?: number;
+    descriptionId?: string;
+    invalid?: boolean;
     onInputFeedback?: (message: string | null) => void;
 };
 
 function CyclesAmountInputModal({
+    name = "focusPhasesPerCycle",
+    id,
     defaultValue = 4,
+    descriptionId,
+    invalid,
     onInputFeedback,
 }: CyclesAmountInputModalProps) {
     const cyclesInput = useNumberInput(defaultValue, POMODORO_SETTINGS_LIMITS.minFocusPhases, POMODORO_SETTINGS_LIMITS.maxFocusPhases, { allowZeroWhileEditing: true, onInputFeedback });
@@ -41,7 +49,7 @@ function CyclesAmountInputModal({
             bg-[#17243F] font-[Epilogue] text-white
         `}>
         <div className="flex h-full w-full min-h-0 min-w-0 items-center justify-center @container-size">
-        <CountdownNumberInput numberInput={cyclesInput} label="Quantidade de ciclos" />
+        <CountdownNumberInput numberInput={cyclesInput} label="Quantidade de ciclos" name={name} id={id} descriptionId={descriptionId} invalid={invalid} />
             </div>
             {/* Folga entre cada SVG e a borda central: percentual da altura do botão. */}
             <div className="grid h-full w-full min-h-0 min-w-0 grid-rows-2 self-stretch [--arrow-inner-gap:15%]">

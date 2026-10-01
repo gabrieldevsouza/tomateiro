@@ -44,6 +44,30 @@ describe("valores dos inputs numéricos do editor", () => {
         }
     });
 
+    test("não devolve um fallback inválido ou fora dos limites", () => {
+        for (const previous of ["", "abc", "NaN", "Infinity", "-1", "1.5", "13"]) {
+            expect(normalizeNumberInput("inválido", 1, 12, previous)).toBe("1");
+            expect(normalizeTypedNumberInput("inválido", 1, 12, previous)).toBe("1");
+        }
+        expect(normalizeNumberInput("inválido", 1, 12, "04")).toBe("4");
+        expect(normalizeNumberInput("inválido", 1, 12, "0")).toBe("1");
+    });
+
+    test("rejeita limites inválidos antes de normalizar ou procurar um sufixo", () => {
+        for (const [min, max] of [[0, -1], [-1, 12], [12, 1], [NaN, 12], [0, NaN], [0, Infinity], [0.5, 12], [0, 12.5], [0, Number.MAX_SAFE_INTEGER + 1]]) {
+            expect(() => normalizeNumberInput("99", min, max)).toThrow(RangeError);
+            expect(() => normalizeTypedNumberInput("99", min, max)).toThrow(RangeError);
+            expect(() => stepNumberInput(4, min, max, 1)).toThrow(RangeError);
+        }
+        expect(normalizeTypedNumberInput("99", 0, 0)).toBe("0");
+    });
+
+    test("não calcula passos com um valor não inteiro ou não finito", () => {
+        for (const value of [NaN, Infinity, -Infinity, -1, 1.5]) {
+            expect(() => stepNumberInput(value, 0, 59, 1)).toThrow(RangeError);
+        }
+    });
+
     test("mantém o maior sufixo válido ao continuar digitando minutos ou segundos", () => {
         let value = "54";
         value = normalizeTypedNumberInput(value + "3", 0, 59, value);

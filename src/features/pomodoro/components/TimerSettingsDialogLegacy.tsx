@@ -65,7 +65,7 @@ function TimerSettingsDialogLegacy({ settings, onSave, onClose }: TimerSettingsD
 		const formData = new FormData(event.currentTarget);
 		const nextSettings = readPomodoroSettingsForm(formData);
 		if (!nextSettings) {
-			setError(`Use durações de 00:00:01 a 99:00:00 e de ${POMODORO_SETTINGS_LIMITS.minFocusPhases} a ${POMODORO_SETTINGS_LIMITS.maxFocusPhases} focos.`);
+			setError(`Use durações de 00:00:01 a 99:59:59 e de ${POMODORO_SETTINGS_LIMITS.minFocusPhases} a ${POMODORO_SETTINGS_LIMITS.maxFocusPhases} focos.`);
 			return;
 		}
 		onSave(nextSettings);

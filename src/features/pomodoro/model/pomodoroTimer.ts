@@ -1,52 +1,68 @@
 export const SECOND_MS = 1_000;
-export const MINUTE_MS = 60 * SECOND_MS;
-export const HOUR_MS = 60 * MINUTE_MS;
+export const MINUTE_SECONDS = 60;
+export const HOUR_SECONDS = 60 * MINUTE_SECONDS;
+export const MINUTE_MS = MINUTE_SECONDS * SECOND_MS;
+export const HOUR_MS = HOUR_SECONDS * SECOND_MS;
 
-export const FOCUS_DURATION_MS = 25 * MINUTE_MS;
-export const SHORT_BREAK_DURATION_MS = 5 * MINUTE_MS;
-export const LONG_BREAK_DURATION_MS = 15 * MINUTE_MS;
+export const FOCUS_DURATION_SECONDS = 25 * MINUTE_SECONDS;
+export const SHORT_BREAK_DURATION_SECONDS = 5 * MINUTE_SECONDS;
+export const LONG_BREAK_DURATION_SECONDS = 15 * MINUTE_SECONDS;
+export const FOCUS_DURATION_MS = FOCUS_DURATION_SECONDS * SECOND_MS;
+export const SHORT_BREAK_DURATION_MS = SHORT_BREAK_DURATION_SECONDS * SECOND_MS;
+export const LONG_BREAK_DURATION_MS = LONG_BREAK_DURATION_SECONDS * SECOND_MS;
 export const FOCUS_PHASES_PER_CYCLE = 4;
 
 export type PomodoroSettings = {
-	focusDurationMs: number;
-	shortBreakDurationMs: number;
-	longBreakDurationMs: number;
+	focusDurationSeconds: number;
+	shortBreakDurationSeconds: number;
+	longBreakDurationSeconds: number;
 	focusPhasesPerCycle: number;
 };
 
 export const DEFAULT_POMODORO_SETTINGS: PomodoroSettings = {
-	focusDurationMs: FOCUS_DURATION_MS,
-	shortBreakDurationMs: SHORT_BREAK_DURATION_MS,
-	longBreakDurationMs: LONG_BREAK_DURATION_MS,
+	focusDurationSeconds: FOCUS_DURATION_SECONDS,
+	shortBreakDurationSeconds: SHORT_BREAK_DURATION_SECONDS,
+	longBreakDurationSeconds: LONG_BREAK_DURATION_SECONDS,
 	focusPhasesPerCycle: FOCUS_PHASES_PER_CYCLE,
 };
 
 export const POMODORO_SETTINGS_LIMITS = {
-	minDurationMs: SECOND_MS,
-	maxDurationMs: 99 * HOUR_MS,
+	minDurationSeconds: 1,
+	maxDurationSeconds: 99 * HOUR_SECONDS + 59 * MINUTE_SECONDS + 59,
 	minFocusPhases: 1,
 	maxFocusPhases: 12,
 } as const;
 
-export function isValidPomodoroSettings(settings: PomodoroSettings): boolean {
+export function isValidPomodoroSettings(settings: unknown): settings is PomodoroSettings {
+	if (typeof settings !== "object" || settings === null || Array.isArray(settings)) {
+		return false;
+	}
+	const values = settings as Record<string, unknown>;
+	const names = ["focusDurationSeconds", "shortBreakDurationSeconds", "longBreakDurationSeconds", "focusPhasesPerCycle"];
+	if (Object.keys(values).length !== names.length || names.some((name) => !Object.prototype.hasOwnProperty.call(values, name))) {
+		return false;
+	}
 	const durations = [
-		settings.focusDurationMs,
-		settings.shortBreakDurationMs,
-		settings.longBreakDurationMs,
+		values.focusDurationSeconds,
+		values.shortBreakDurationSeconds,
+		values.longBreakDurationSeconds,
 	];
-	return durations.every((durationMs) => {
-		return Number.isInteger(durationMs / SECOND_MS) &&
-			durationMs >= POMODORO_SETTINGS_LIMITS.minDurationMs &&
-			durationMs <= POMODORO_SETTINGS_LIMITS.maxDurationMs;
-	}) && Number.isInteger(settings.focusPhasesPerCycle) &&
-		settings.focusPhasesPerCycle >= POMODORO_SETTINGS_LIMITS.minFocusPhases &&
-		settings.focusPhasesPerCycle <= POMODORO_SETTINGS_LIMITS.maxFocusPhases;
+	return durations.every((durationSeconds) => {
+		return typeof durationSeconds === "number" && Number.isInteger(durationSeconds) &&
+			durationSeconds >= POMODORO_SETTINGS_LIMITS.minDurationSeconds &&
+			durationSeconds <= POMODORO_SETTINGS_LIMITS.maxDurationSeconds;
+	}) && typeof values.focusPhasesPerCycle === "number" && Number.isInteger(values.focusPhasesPerCycle) &&
+		values.focusPhasesPerCycle >= POMODORO_SETTINGS_LIMITS.minFocusPhases &&
+		values.focusPhasesPerCycle <= POMODORO_SETTINGS_LIMITS.maxFocusPhases;
 }
 
 export function getCycleDurationMs(settings: PomodoroSettings): number {
-	return settings.focusPhasesPerCycle * settings.focusDurationMs +
-		(settings.focusPhasesPerCycle - 1) * settings.shortBreakDurationMs +
-		settings.longBreakDurationMs;
+	if (!isValidPomodoroSettings(settings)) {
+		throw new RangeError("Configuração do Pomodoro inválida.");
+	}
+	return (settings.focusPhasesPerCycle * settings.focusDurationSeconds +
+		(settings.focusPhasesPerCycle - 1) * settings.shortBreakDurationSeconds +
+		settings.longBreakDurationSeconds) * SECOND_MS;
 }
 
 export type PomodoroPhase = 
@@ -87,9 +103,9 @@ export function createInitialPomodoroTimerState(
 		settings: { ...settings },
 		phase: "focus",
 		status: "ready",
-		baseDurationMs: settings.focusDurationMs,
-		totalDurationMs: settings.focusDurationMs,
-		remainingMs: settings.focusDurationMs,
+		baseDurationMs: settings.focusDurationSeconds * SECOND_MS,
+		totalDurationMs: settings.focusDurationSeconds * SECOND_MS,
+		remainingMs: settings.focusDurationSeconds * SECOND_MS,
 		endsAtMs: null,
 		completedFocusCount: 0,
 		completionId: 0,
@@ -103,15 +119,18 @@ export function getPhaseDurationMs(
 	phase: PomodoroPhase,
 	settings: PomodoroSettings = DEFAULT_POMODORO_SETTINGS,
 ): number{
+	if (!isValidPomodoroSettings(settings)) {
+		throw new RangeError("Configuração do Pomodoro inválida.");
+	}
 	switch(phase){
 		case "focus":
-			return settings.focusDurationMs;
+			return settings.focusDurationSeconds * SECOND_MS;
 
 		case "shortBreak":
-			return settings.shortBreakDurationMs;
+			return settings.shortBreakDurationSeconds * SECOND_MS;
 
 		case "longBreak":
-			return settings.longBreakDurationMs;
+			return settings.longBreakDurationSeconds * SECOND_MS;
 	}
 }
 
@@ -269,6 +288,11 @@ function getRunningRemainingMs(state: PomodoroTimerState, nowMs: number): number
 	return Math.max(0, Math.min(state.remainingMs, state.endsAtMs - nowMs));
 }
 
+export function canAddPomodoroMinute(state: PomodoroTimerState): boolean {
+	return state.status !== "completed" &&
+		state.totalDurationMs <= POMODORO_SETTINGS_LIMITS.maxDurationSeconds * SECOND_MS - MINUTE_MS;
+}
+
 export function pomodoroTimerReducer(
 	state: PomodoroTimerState,
 	action: PomodoroTimerAction,
@@ -279,9 +303,9 @@ export function pomodoroTimerReducer(
 				return state;
 			}
 			if (
-				state.settings.focusDurationMs === action.settings.focusDurationMs &&
-				state.settings.shortBreakDurationMs === action.settings.shortBreakDurationMs &&
-				state.settings.longBreakDurationMs === action.settings.longBreakDurationMs &&
+				state.settings.focusDurationSeconds === action.settings.focusDurationSeconds &&
+				state.settings.shortBreakDurationSeconds === action.settings.shortBreakDurationSeconds &&
+				state.settings.longBreakDurationSeconds === action.settings.longBreakDurationSeconds &&
 				state.settings.focusPhasesPerCycle === action.settings.focusPhasesPerCycle
 			) {
 				return state;
@@ -364,6 +388,10 @@ export function pomodoroTimerReducer(
 			// The click timestamp decides expiry, even between interval updates.
 			if (remainingMs === 0) {
 				return completeCurrentPhase(state);
+			}
+
+			if (!canAddPomodoroMinute(state)) {
+				return remainingMs === state.remainingMs ? state : { ...state, remainingMs };
 			}
 
 			return {

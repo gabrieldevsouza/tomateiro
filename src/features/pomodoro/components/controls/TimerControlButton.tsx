@@ -6,6 +6,7 @@ interface TimerControlButtonProps {
     ariaLabel: string;
     title?: string;
     onClick?: () => void;
+    disabled?: boolean;
 
     orientation?: CircularProgressOrientation;
 
@@ -23,6 +24,7 @@ function TimerControlButton({
     icon: icon,
     title = ariaLabel,
     onClick,
+    disabled = false,
     orientation = CircularProgressOrientation.Horizontal,
     bgColor = "bg-red-400",
     hoverColor = "hover:bg-[#5F77B8]",
@@ -76,6 +78,7 @@ function TimerControlButton({
             aria-label={ariaLabel}
             title={title}
             onClick={onClick}
+            disabled={disabled}
         >
             {icon}
         </button>

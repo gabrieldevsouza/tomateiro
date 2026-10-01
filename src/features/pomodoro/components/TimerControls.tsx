@@ -8,6 +8,7 @@ import SkipCycleButton from "./controls/SkipCycleButton";
 
 type TimerControlsProps = {
 	status: PomodoroTimerStatus;
+	canAddMinute: boolean;
 	onAddMinute: () => void;
 	onRestart: () => void;
 	onStart: () => void;
@@ -17,6 +18,7 @@ type TimerControlsProps = {
 
 function TimerControls({
 	status,
+	canAddMinute,
 	onAddMinute,
 	onRestart,
 	onStart,
@@ -76,7 +78,7 @@ function TimerControls({
 							justify-between
 							items-center
 						">
-							<AddMinuteButton onClick={onAddMinute} />
+							<AddMinuteButton onClick={onAddMinute} disabled={!canAddMinute} />
 						</div>
 
 				</div>

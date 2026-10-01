@@ -16,6 +16,10 @@ describe("aceleração ao segurar as setas dos inputs numéricos", () => {
         }
     });
 
+    test("usa o intervalo inicial quando o tempo decorrido é NaN", () => {
+        expect(getNumberInputRepeatInterval(NaN)).toBe(250);
+    });
+
     test("atinge sete passos por segundo no meio da transição", () => {
         expect(getNumberInputRepeatInterval(1250)).toBeCloseTo(1000 / 7, 10);
     });

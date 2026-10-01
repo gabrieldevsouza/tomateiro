@@ -1,27 +1,35 @@
+import { useId } from "react";
 import { PiCaretDown, PiCaretUp } from "react-icons/pi";
+import { DURATION_SEGMENTS, getPomodoroDurationSegments, type PomodoroDurationSettingName } from "../../model/pomodoroSettingsForm";
 import { useNumberInput } from "./useNumberInput";
 import CountdownNumberInput from "./CountdownNumberInput";
 
 
-type TimeInputModalProps = {
-    label?: string;
-    hours?: string;
-    minutes?: string;
-    seconds?: string;
+export type TimeInputModalProps = {
+    name: PomodoroDurationSettingName;
+    label: string;
+    labelledBy?: string;
+    defaultValue: number;
+    inputDescriptionId?: string;
+    invalid?: boolean;
     onInputFeedback?: (message: string | null) => void;
 };
 
 
 function TimeInputModal({
-    label = "Temporizador",
-    hours = "0",
-    minutes = "25",
-    seconds = "0",
+    name,
+    label,
+    labelledBy,
+    defaultValue,
+    inputDescriptionId,
+    invalid,
     onInputFeedback,
 }: TimeInputModalProps) {
-    const hoursInput = useNumberInput(hours, 0, 99, { wrap: true, onInputFeedback });
-    const minutesInput = useNumberInput(minutes, 0, 59, { wrap: true, onInputFeedback });
-    const secondsInput = useNumberInput(seconds, 0, 59, { wrap: true, onInputFeedback });
+    const id = useId();
+    const { hours, minutes, seconds } = getPomodoroDurationSegments(defaultValue);
+    const hoursInput = useNumberInput(hours, 0, DURATION_SEGMENTS[0].max, { wrap: true, onInputFeedback });
+    const minutesInput = useNumberInput(minutes, 0, DURATION_SEGMENTS[1].max, { wrap: true, onInputFeedback });
+    const secondsInput = useNumberInput(seconds, 0, DURATION_SEGMENTS[2].max, { wrap: true, onInputFeedback });
 
          
     const columnClasses = "grid h-full w-full min-h-0 min-w-0 grid-rows-[minmax(0,1fr)_minmax(0,2fr)_minmax(0,1fr)]";
@@ -32,7 +40,7 @@ function TimeInputModal({
     const arrowIconClasses = "block size-[22cqh] shrink-0";
 
     return(
-    <div role="group" aria-label={label} className="h-full w-full min-h-0 min-w-0 @container-size">
+    <div role="group" aria-labelledby={labelledBy} aria-label={labelledBy ? undefined : label} className="h-full w-full min-h-0 min-w-0 @container-size">
         <div className={`
             input grid cursor-default
             grid-cols-[minmax(0,0.92fr)_minmax(0,0.24fr)_minmax(0,0.92fr)_minmax(0,0.24fr)_minmax(0,0.92fr)]
@@ -67,7 +75,7 @@ function TimeInputModal({
             </button>
 
         <div className={valueClasses}>
-        <CountdownNumberInput numberInput={hoursInput} label={label + ":horas"} />
+        <CountdownNumberInput numberInput={hoursInput} label={label + ":horas"} name={`${name}.hours`} id={`${id}-hours`} descriptionId={inputDescriptionId} invalid={invalid} />
         </div>
         <button
         type="button"
@@ -93,7 +101,7 @@ function TimeInputModal({
                 <PiCaretUp aria-hidden="true" className={arrowIconClasses} />
             </button>
         <div className={valueClasses}>
-        <CountdownNumberInput numberInput={minutesInput} label={label + ":minutos"} />
+        <CountdownNumberInput numberInput={minutesInput} label={label + ":minutos"} name={`${name}.minutes`} id={`${id}-minutes`} descriptionId={inputDescriptionId} invalid={invalid} />
             </div>
 
             <button
@@ -120,7 +128,7 @@ function TimeInputModal({
                 <PiCaretUp aria-hidden="true" className={arrowIconClasses}/>
             </button>
         <div className={valueClasses}>
-        <CountdownNumberInput numberInput={secondsInput} label={label + ":segundos"} />
+        <CountdownNumberInput numberInput={secondsInput} label={label + ":segundos"} name={`${name}.seconds`} id={`${id}-seconds`} descriptionId={inputDescriptionId} invalid={invalid} />
             </div>
 
             <button
