@@ -1,4 +1,4 @@
-import { useLayoutEffect, useRef, type MouseEvent as ReactMouseEvent, type PointerEvent as ReactPointerEvent } from "react";
+import { useLayoutEffect, useRef, useState, type MouseEvent as ReactMouseEvent, type PointerEvent as ReactPointerEvent } from "react";
 
 export function normalizeNumberInput(value: string, min: number, max: number, previousValue = String(min)) {
     if (value === "") return min === 0 ? "0" : previousValue;
@@ -60,6 +60,7 @@ type NumberInputOptions = {
 export function useNumberInput(value: string | number, min: number, max: number, { allowZeroWhileEditing = false, wrap = false, onInputFeedback }: NumberInputOptions = {}) {
     const ref = useRef<HTMLInputElement>(null);
     const defaultValue = normalizeNumberInput(String(value), min, max);
+    const [display, setDisplay] = useState({ value: defaultValue, durationMs: getNumberInputRepeatInterval(0) });
     const previousValue = useRef(defaultValue);
     const effectiveValue = useRef(Number(defaultValue));
     const feedback = useRef(onInputFeedback);
@@ -72,6 +73,10 @@ export function useNumberInput(value: string | number, min: number, max: number,
         effectiveValue.current = Math.min(max, Math.max(min, Number(displayValue)));
         const input = ref.current;
         if (input && (input.value !== displayValue || input.validity.badInput)) input.value = displayValue;
+        const elapsed = press.current?.repeatStartedAt;
+        const durationMs = getNumberInputRepeatInterval(elapsed === undefined ? 0 : performance.now() - elapsed);
+        // Espelha o valor já validado sem controlar o input nem alterar a cadência dos passos.
+        setDisplay(current => current.value === displayValue ? current : { value: displayValue, durationMs });
     }
 
     function step(direction: 1 | -1) {
@@ -333,5 +338,5 @@ export function useNumberInput(value: string | number, min: number, max: number,
         };
     }, [min, max, allowZeroWhileEditing, wrap]);
 
-    return { inputProps: { ref, defaultValue, min, max }, getValue: () => effectiveValue.current, step, getStepButtonProps };
+    return { inputProps: { ref, defaultValue, min, max }, displayValue: display.value, transitionMs: display.durationMs, getValue: () => effectiveValue.current, step, getStepButtonProps };
 }

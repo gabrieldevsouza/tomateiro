@@ -1,5 +1,6 @@
 import { PiCaretDown, PiCaretUp } from "react-icons/pi";
 import { useNumberInput } from "./useNumberInput";
+import CountdownNumberInput from "./CountdownNumberInput";
 
 
 type TimeInputModalProps = {
@@ -23,7 +24,6 @@ function TimeInputModal({
     const secondsInput = useNumberInput(seconds, 0, 59, { wrap: true, onInputFeedback });
 
          
-    const inputClasses = "input input-ghost box-border block h-full w-full min-h-0 min-w-0 max-w-none content-center appearance-none rounded-none border-0 bg-transparent px-0 py-0 text-center font-[Inter] text-[min(64cqw,80cqh)] leading-[normal] lining-nums tabular-nums shadow-none select-none caret-transparent selection:bg-transparent selection:text-inherit focus:bg-white/10 focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-[#00CBEA] [--font-size-min:0px] [-moz-appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-inner-spin-button]:m-0 [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-outer-spin-button]:m-0";
     const columnClasses = "grid h-full w-full min-h-0 min-w-0 grid-rows-[minmax(0,1fr)_minmax(0,2fr)_minmax(0,1fr)]";
     const valueClasses = "flex h-full w-full min-h-0 min-w-0 items-center justify-center @container-size";
     const separatorClasses = "flex h-full w-full min-h-0 min-w-0 items-center justify-center text-[min(14cqw,40cqh)] leading-none";
@@ -67,17 +67,7 @@ function TimeInputModal({
             </button>
 
         <div className={valueClasses}>
-        <input 
-            {...hoursInput.inputProps}
-            type="number"
-            inputMode="numeric"
-            step={1}
-            required
-            onFocus={(event) => event.currentTarget.select()}
-            onClick={(event) => event.currentTarget.select()}
-            aria-label={label + ":horas"}
-            className={inputClasses}
-        />
+        <CountdownNumberInput numberInput={hoursInput} label={label + ":horas"} />
         </div>
         <button
         type="button"
@@ -103,17 +93,7 @@ function TimeInputModal({
                 <PiCaretUp aria-hidden="true" className={arrowIconClasses} />
             </button>
         <div className={valueClasses}>
-        <input 
-            {...minutesInput.inputProps}
-            type="number"
-            inputMode="numeric"
-            step={1}
-            required
-            onFocus={(event) => event.currentTarget.select()}
-            onClick={(event) => event.currentTarget.select()}
-            aria-label={label + ":minutos"}
-            className= {inputClasses}
-            />
+        <CountdownNumberInput numberInput={minutesInput} label={label + ":minutos"} />
             </div>
 
             <button
@@ -140,17 +120,7 @@ function TimeInputModal({
                 <PiCaretUp aria-hidden="true" className={arrowIconClasses}/>
             </button>
         <div className={valueClasses}>
-        <input 
-            {...secondsInput.inputProps}
-            type="number"
-            inputMode="numeric"
-            step={1}
-            required
-            onFocus={(event) => event.currentTarget.select()}
-            onClick={(event) => event.currentTarget.select()}
-            aria-label={label + ":segundos"}
-            className={inputClasses}
-            />
+        <CountdownNumberInput numberInput={secondsInput} label={label + ":segundos"} />
             </div>
 
             <button

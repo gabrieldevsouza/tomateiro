@@ -102,6 +102,32 @@ body,
   --pomodoro-countdown-row: var(--value-ones);
 }
 
+.pomodoro-number-input > input,
+.pomodoro-number-input > input::selection {
+  color: transparent;
+}
+
+.pomodoro-input-countdown {
+  transform: translateY(var(--pomodoro-input-offset, 0em));
+}
+
+.pomodoro-number-input:focus-within .pomodoro-input-countdown {
+  color: var(--color-base-content);
+}
+
+/* Input animation follows the existing 4–10 Hz repeat rate without delaying edits. */
+.pomodoro-input-countdown > span {
+  transition: --pomodoro-countdown-digits var(--pomodoro-input-duration) ease-out;
+}
+
+.pomodoro-input-countdown > span::before,
+.pomodoro-input-countdown > span::after {
+  transition:
+    --pomodoro-countdown-row var(--pomodoro-input-duration) cubic-bezier(1, 0, 0, 1),
+    --pomodoro-countdown-digits var(--pomodoro-input-duration) ease-out,
+    opacity var(--pomodoro-input-duration) ease-out;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .pomodoro-countdown > span,
   .pomodoro-countdown > span::before,

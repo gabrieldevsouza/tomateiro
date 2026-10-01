@@ -89,6 +89,12 @@ function TimerSettingsDialog({ onClose }: TimerSettingsDialogProps) {
 				const bottom = `${Number(Math.max(0, -padding).toFixed(3))}px`;
 				if (input.style.paddingTop !== top) input.style.paddingTop = top;
 				if (input.style.paddingBottom !== bottom) input.style.paddingBottom = bottom;
+				// O countdown usa a mesma linha de base, em em para acompanhar o resize imediatamente.
+				const wrapper = input.closest<HTMLElement>(".pomodoro-number-input");
+				const offset = `${Number((padding / (2 * parseFloat(style.fontSize))).toFixed(6))}em`;
+				if (wrapper && wrapper.style.getPropertyValue("--pomodoro-input-offset") !== offset) {
+					wrapper.style.setProperty("--pomodoro-input-offset", offset);
+				}
 			}
 		}
 

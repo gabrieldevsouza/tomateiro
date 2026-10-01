@@ -1,6 +1,7 @@
 import { PiCaretDown, PiCaretUp } from "react-icons/pi";
 import { POMODORO_SETTINGS_LIMITS } from "../../model/pomodoroTimer";
 import { useNumberInput } from "./useNumberInput";
+import CountdownNumberInput from "./CountdownNumberInput";
 
 type CyclesAmountInputModalProps ={
     defaultValue?: number;
@@ -13,7 +14,6 @@ function CyclesAmountInputModal({
 }: CyclesAmountInputModalProps) {
     const cyclesInput = useNumberInput(defaultValue, POMODORO_SETTINGS_LIMITS.minFocusPhases, POMODORO_SETTINGS_LIMITS.maxFocusPhases, { allowZeroWhileEditing: true, onInputFeedback });
 
-    const inputClasses = "input input-ghost box-border block h-full w-full min-h-0 min-w-0 max-w-none content-center appearance-none rounded-none border-0 bg-transparent px-0 py-0 text-center font-[Inter] text-[min(64cqw,80cqh)] leading-[normal] lining-nums tabular-nums shadow-none select-none caret-transparent selection:bg-transparent selection:text-inherit focus:bg-white/10 focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-[#00CBEA] [--font-size-min:0px] [-moz-appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-inner-spin-button]:m-0 [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-outer-spin-button]:m-0";
     const arrowButtonClasses = "btn btn-ghost grid h-full w-full min-h-0 min-w-0 cursor-pointer justify-items-center gap-0 rounded-none border-0 bg-[#17243F] bg-none p-0 text-white/60 shadow-none outline-none hover:bg-[#5F77B8] hover:text-white active:bg-[#435F91] active:text-white";
     // Mesmo tamanho dos temporizadores, relativo ao campo inteiro, independente do botão.
     const arrowIconClasses = "block size-[22cqh] shrink-0";
@@ -41,17 +41,7 @@ function CyclesAmountInputModal({
             bg-[#17243F] font-[Epilogue] text-white
         `}>
         <div className="flex h-full w-full min-h-0 min-w-0 items-center justify-center @container-size">
-        <input
-            {...cyclesInput.inputProps}
-            type = "number"
-            inputMode="numeric"
-            step={1}
-            required
-            onFocus={(event) => event.currentTarget.select()}
-            onClick={(event) => event.currentTarget.select()}
-            aria-label="Quantidade de ciclos"
-            className={inputClasses}
-            />
+        <CountdownNumberInput numberInput={cyclesInput} label="Quantidade de ciclos" />
             </div>
             {/* Folga entre cada SVG e a borda central: percentual da altura do botão. */}
             <div className="grid h-full w-full min-h-0 min-w-0 grid-rows-2 self-stretch [--arrow-inner-gap:15%]">
