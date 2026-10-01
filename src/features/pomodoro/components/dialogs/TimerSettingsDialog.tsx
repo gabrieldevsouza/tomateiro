@@ -59,8 +59,8 @@ function TimerSettingsDialog({ onClose }: TimerSettingsDialogProps) {
 				const padding = metrics.actualBoundingBoxAscent - metrics.actualBoundingBoxDescent
 					- metrics.fontBoundingBoxAscent + metrics.fontBoundingBoxDescent;
 				if (!Number.isFinite(padding)) continue;
-				const top = `${Math.max(0, padding)}px`;
-				const bottom = `${Math.max(0, -padding)}px`;
+				const top = `${Number(Math.max(0, padding).toFixed(3))}px`;
+				const bottom = `${Number(Math.max(0, -padding).toFixed(3))}px`;
 				if (input.style.paddingTop !== top) input.style.paddingTop = top;
 				if (input.style.paddingBottom !== bottom) input.style.paddingBottom = bottom;
 			}
