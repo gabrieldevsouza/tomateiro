@@ -24,7 +24,9 @@ function CyclesAmountInputModal({
         input.focus({ preventScroll: true });
     }
 
-    const inputClasses = "h-full w-full min-h-0 min-w-0 appearance-none border-0 bg-transparent p-0 text-center text-[min(64cqw,80cqh)] leading-none tabular-nums focus:bg-white/10 focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-[#00CBEA] [-moz-appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-inner-spin-button]:m-0 [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-outer-spin-button]:m-0";
+    // Epilogue: (0.7465 - 0.01 - 0.79 + 0.235)em = 0.1815em.
+    // Compensa os dígitos sem deslocar o fundo nem alterar a altura responsiva.
+    const inputClasses = "input input-ghost box-border block h-full w-full min-h-0 min-w-0 max-w-none content-center appearance-none border-0 bg-transparent px-0 pb-0 pt-[0.1815em] text-center text-[min(64cqw,80cqh)] leading-[normal] tabular-nums shadow-none select-none caret-transparent selection:bg-transparent selection:text-inherit focus:bg-white/10 focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-[#00CBEA] [--font-size-min:0px] [-moz-appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-inner-spin-button]:m-0 [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-outer-spin-button]:m-0";
     const arrowButtonClasses = "flex h-full w-full min-h-0 min-w-0 items-center justify-center rounded-none border-0 bg-transparent p-0 text-white/60 hover:bg-white/5 hover:text-white active:bg-white/10";
     const arrowIconClasses = "aspect-square h-[80%] w-auto max-w-full";
     
@@ -38,23 +40,14 @@ function CyclesAmountInputModal({
             @container-size"
         >
             <div className="
-            grid
-            grid-rows-[minmax(0,1fr)_minmax(0,2fr)_minmax(0,1fr)]
+            input grid
+            grid-cols-[minmax(0,3fr)_minmax(0,1fr)]
             items-center
-            h-full w-full min-h-0 min-w-0
+            h-full w-full min-h-0 min-w-0 max-w-none
             gap-0 px-[4cqw] py-0
-            rounded-[8cqh] border-0
+            rounded-[8cqh] border-0 shadow-none
             bg-[#17243F] font-[Epilogue] text-white
         ">
-        <button
-            type="button"
-            tabIndex={-1}
-            className={arrowButtonClasses}
-            aria-label="Aumentar quantidade de ciclos"
-            onClick={() => changeCycles(1)}
-        >
-            <PiCaretUp aria-hidden="true" className={arrowIconClasses}/>
-        </button>
         <div className="flex h-full w-full min-h-0 min-w-0 items-center justify-center @container-size">
         <input
             ref={inputRef}
@@ -66,19 +59,31 @@ function CyclesAmountInputModal({
             required
             defaultValue= {defaultValue}
             onFocus={(event) => event.currentTarget.select()}
+            onClick={(event) => event.currentTarget.select()}
             aria-label="Quantidade de ciclos"
             className={inputClasses}
             />
             </div>
-                    <button
-                        type="button"
-                        tabIndex={-1}
-                        className={arrowButtonClasses}
-                        aria-label="Diminuir quantidade de ciclos"
-                        onClick={() => changeCycles(-1)}
-                        >
-                        <PiCaretDown aria-hidden="true" className={arrowIconClasses}/>
-                        </button>
+            <div className="grid h-[60%] w-full min-h-0 min-w-0 grid-rows-2 self-center">
+                <button
+                    type="button"
+                    tabIndex={-1}
+                    className={arrowButtonClasses}
+                    aria-label="Aumentar quantidade de ciclos"
+                    onClick={() => changeCycles(1)}
+                >
+                    <PiCaretUp aria-hidden="true" className={arrowIconClasses}/>
+                </button>
+                <button
+                    type="button"
+                    tabIndex={-1}
+                    className={arrowButtonClasses}
+                    aria-label="Diminuir quantidade de ciclos"
+                    onClick={() => changeCycles(-1)}
+                >
+                    <PiCaretDown aria-hidden="true" className={arrowIconClasses}/>
+                </button>
+            </div>
                     </div>
                 </div>
     );
