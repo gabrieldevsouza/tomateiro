@@ -1,4 +1,4 @@
-import { memo } from "react";
+import { memo, useLayoutEffect, useRef, useState } from "react";
 
 enum CircularProgressOrientation {Horizontal,Vertical}
 
@@ -7,6 +7,27 @@ interface CircularProgressProps {
     showText?: boolean;
     textSize?: number;
     orientation?: CircularProgressOrientation;
+    transitionId?: number;
+}
+
+// CSS "ease": cubic-bezier(.25, .1, .25, 1), with time resolved on the x axis.
+function getProgressTransitionEase(fraction: number) {
+    if (fraction <= 0) return 0;
+    if (fraction >= 1) return 1;
+    let low = 0;
+    let high = 1;
+    for (let iteration = 0; iteration < 24; iteration += 1) {
+        const position = (low + high) / 2;
+        const inverse = 1 - position;
+        const time = 3 * inverse * inverse * position * .25 +
+            3 * inverse * position * position * .25 + position * position * position;
+        if (time < fraction) low = position;
+        else high = position;
+    }
+    const position = (low + high) / 2;
+    const inverse = 1 - position;
+    return 3 * inverse * inverse * position * .1 +
+        3 * inverse * position * position + position * position * position;
 }
 
 function CircularProgress({
@@ -14,7 +35,79 @@ function CircularProgress({
     showText = false,
     textSize = 36,
     orientation = CircularProgressOrientation.Horizontal,
+    transitionId = 0,
 }: CircularProgressProps) {
+    const progress = Math.max(0, Math.min(100, value));
+    const latestProgressRef = useRef(progress);
+    const visualProgressRef = useRef(progress);
+    const transitionIdRef = useRef(transitionId);
+    const reducedMotionRef = useRef(false);
+    const animationRef = useRef<{ from: number; startedAtMs: number } | null>(null);
+    const frameRef = useRef<number | null>(null);
+    const [visualProgress, setVisualProgress] = useState({ value: progress, isAnimating: false });
+
+    function cancelProgressTransition() {
+        if (frameRef.current !== null) window.cancelAnimationFrame(frameRef.current);
+        frameRef.current = null;
+        animationRef.current = null;
+    }
+
+    useLayoutEffect(() => {
+        const motion = window.matchMedia("(prefers-reduced-motion: reduce)");
+        reducedMotionRef.current = motion.matches;
+        function handleMotionChange() {
+            reducedMotionRef.current = motion.matches;
+            if (!motion.matches) return;
+            cancelProgressTransition();
+            visualProgressRef.current = latestProgressRef.current;
+            setVisualProgress({ value: latestProgressRef.current, isAnimating: false });
+        }
+        motion.addEventListener("change", handleMotionChange);
+        return () => {
+            cancelProgressTransition();
+            motion.removeEventListener("change", handleMotionChange);
+        };
+    }, []);
+
+    useLayoutEffect(() => {
+        latestProgressRef.current = progress;
+        if (transitionIdRef.current === transitionId) {
+            if (animationRef.current === null) visualProgressRef.current = progress;
+            return;
+        }
+        transitionIdRef.current = transitionId;
+        const from = visualProgressRef.current;
+        cancelProgressTransition();
+        if (reducedMotionRef.current || from === progress) {
+            visualProgressRef.current = progress;
+            setVisualProgress({ value: progress, isAnimating: false });
+            return;
+        }
+
+        const animation = { from, startedAtMs: performance.now() };
+        animationRef.current = animation;
+        setVisualProgress({ value: from, isAnimating: true });
+        function frame(nowMs: number) {
+            if (animationRef.current !== animation) return;
+            frameRef.current = null;
+            const fraction = Math.max(0, Math.min(1, (nowMs - animation.startedAtMs) / 300));
+            const target = latestProgressRef.current;
+            const next = fraction >= 1
+                ? target
+                : animation.from + (target - animation.from) * getProgressTransitionEase(fraction);
+            visualProgressRef.current = next;
+            if (fraction >= 1) {
+                animationRef.current = null;
+                setVisualProgress({ value: next, isAnimating: false });
+                return;
+            }
+            setVisualProgress({ value: next, isAnimating: true });
+            frameRef.current = window.requestAnimationFrame(frame);
+        }
+        frameRef.current = window.requestAnimationFrame(frame);
+    }, [progress, transitionId]);
+
+    const displayedProgress = visualProgress.isAnimating ? visualProgress.value : progress;
     const createSlice = (
         startAngle: number,
         endAngle: number
@@ -42,9 +135,7 @@ function CircularProgress({
         `;
     };
 
-    const progress = Math.max(0, Math.min(100, value));
-
-    const progressAngle = (progress / 100) * 360;
+    const progressAngle = (displayedProgress / 100) * 360;
 
     const startAngle = -90;
     const progressEndAngle = startAngle + progressAngle;
@@ -71,7 +162,7 @@ function CircularProgress({
                 aria-label={`Progresso: ${progress}%`}
             >
                 {/* 0% */}
-                {progress <= 0 && (
+                {displayedProgress <= 0 && (
                     <circle
                         cx="50"
                         cy="50"
@@ -81,7 +172,7 @@ function CircularProgress({
                 )}
 
                 {/* Entre 0% e 100% */}
-                {progress > 0 && progress < 100 && (
+                {displayedProgress > 0 && displayedProgress < 100 && (
                     <>
                         {/* Progresso */}
                         <path
@@ -104,7 +195,7 @@ function CircularProgress({
                 )}
 
                 {/* 100% */}
-                {progress >= 100 && (
+                {displayedProgress >= 100 && (
                     <circle
                         cx="50"
                         cy="50"

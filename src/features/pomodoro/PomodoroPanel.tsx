@@ -12,6 +12,7 @@ import {
 	isValidPomodoroSettings,
 	type PomodoroPhase,
 	type PomodoroSettings,
+	type PomodoroTimerAction,
 } from "./model/pomodoroTimer";
 
 import { useEffect, useReducer } from "react";
@@ -36,7 +37,14 @@ function PomodoroPanel({ isEditing, onCloseEditor }: PomodoroPanelProps) {
 		undefined,
 		createInitialPomodoroTimerState,
 	);
+	// Only user actions request a short catch-up; millisecond ticks keep their natural motion.
+	const [progressTransitionId, requestProgressTransition] = useReducer((id: number) => id + 1, 0);
 	const cycleProgress = getPomodoroCycleProgress(timerState);
+
+	function dispatchWithProgressTransition(action: PomodoroTimerAction) {
+		dispatch(action);
+		if (pomodoroTimerReducer(timerState, action) !== timerState) requestProgressTransition();
+	}
 
 	useEffect(() => {
 		if (timerState.status !== "running") {
@@ -63,7 +71,7 @@ function PomodoroPanel({ isEditing, onCloseEditor }: PomodoroPanelProps) {
 		if (!isValidPomodoroSettings(settings)) return;
 		// Account for a deadline reached since the last display tick before replacing the block.
 		dispatch({ type: "tick", nowMs: performance.now() });
-		dispatch({ type: "configure", settings });
+		dispatchWithProgressTransition({ type: "configure", settings });
 		onCloseEditor();
 	}
 
@@ -98,7 +106,7 @@ function PomodoroPanel({ isEditing, onCloseEditor }: PomodoroPanelProps) {
 					min-h-0
 					min-w-0
 				">
-					<CycleCounter focusProgress={cycleProgress.focusProgress} />
+					<CycleCounter focusProgress={cycleProgress.focusProgress} transitionId={progressTransitionId} />
 				</div>
 
 				<div className="
@@ -120,6 +128,7 @@ function PomodoroPanel({ isEditing, onCloseEditor }: PomodoroPanelProps) {
 						phaseDurationMs={timerState.totalDurationMs}
 						cycleAccountedBeforePhaseMs={timerState.cycleAccountedBeforePhaseMs}
 						endsAtMs={timerState.endsAtMs}
+						transitionId={progressTransitionId}
 					/>
 				</div>
 
@@ -132,13 +141,14 @@ function PomodoroPanel({ isEditing, onCloseEditor }: PomodoroPanelProps) {
 						status={timerState.status}
 						canAddMinute={canAddPomodoroMinute(timerState)}
 						onAddMinute={() => {
-							dispatch({ type: "addMinute", nowMs: performance.now() });
+							dispatchWithProgressTransition({ type: "addMinute", nowMs: performance.now() });
 						}}
 						onRestart={() => {
-							dispatch({ type: "restart" });
+							dispatchWithProgressTransition({ type: "restart" });
 						}}
 						onStart={() => {
-							dispatch({
+							const start = timerState.status === "completed" ? dispatchWithProgressTransition : dispatch;
+							start({
 								type: "start",
 								nowMs: performance.now(),
 							});
@@ -150,7 +160,7 @@ function PomodoroPanel({ isEditing, onCloseEditor }: PomodoroPanelProps) {
 							});
 						}}
 						onSkip={() => {
-							dispatch({ type: "skip" });
+							dispatchWithProgressTransition({ type: "skip" });
 						}}
 					/>
 				</div>

@@ -2,9 +2,10 @@ import CircularProgress from "./pomodoroViewer/CircularProgress";
 
 type CycleCounterProps = {
     focusProgress: number[];
+    transitionId?: number;
 };
 
-function CycleCounter({ focusProgress }: CycleCounterProps) {
+function CycleCounter({ focusProgress, transitionId = 0 }: CycleCounterProps) {
     const alignment = focusProgress.length === 1 ? "justify-center" : "justify-between";
     return (
         <div
@@ -32,7 +33,7 @@ function CycleCounter({ focusProgress }: CycleCounterProps) {
                 `}
             >
                 {focusProgress.map((progress, index) => (
-                    <CircularProgress key={index} value={progress} />
+                    <CircularProgress key={index} value={progress} transitionId={transitionId} />
                 ))}
             </div>
         </div>

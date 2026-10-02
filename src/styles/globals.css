@@ -70,6 +70,25 @@ body,
   initial-value: 0;
 }
 
+@property --pomodoro-progress-ratio {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 0;
+}
+
+/* Keep DaisyUI's native progress; override fill geometry for fractional, deadline-based motion. */
+.pomodoro-progress::-webkit-progress-value {
+  /* Blink sets an inline size on its internal fill; this override prevents applying the ratio twice. */
+  inline-size: 100% !important;
+  clip-path: inset(0 calc((1 - var(--pomodoro-progress-ratio)) * 100%) 0 0 round 9999px);
+  transition: none;
+}
+
+/* Gecko sizes its native fill from value/max in layout; retain that fractional sizing. */
+.pomodoro-progress::-moz-progress-bar {
+  transition: none;
+}
+
 @property --pomodoro-countdown-digits {
   syntax: "<number>";
   inherits: false;
