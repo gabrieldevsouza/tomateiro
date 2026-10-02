@@ -1,6 +1,7 @@
 import {
-	MINUTE_SECONDS,
-	HOUR_SECONDS,
+	MINUTE_MS,
+	HOUR_MS,
+	SECOND_MS,
 	POMODORO_SETTINGS_LIMITS,
 	isValidPomodoroSettings,
 	type PomodoroSettings,
@@ -15,18 +16,18 @@ type SettingsField = {
 	| { kind: "count"; min: number; max: number }
 );
 
-// Units are seconds, matching the canonical configuration rather than the runtime clock.
+// Convert the visible HH:MM:SS segments directly to the canonical millisecond duration.
 export const DURATION_SEGMENTS = [
-	{ name: "hours", label: "horas", unit: HOUR_SECONDS, max: 99 },
-	{ name: "minutes", label: "minutos", unit: MINUTE_SECONDS, max: 59 },
-	{ name: "seconds", label: "segundos", unit: 1, max: 59 },
+	{ name: "hours", label: "horas", unit: HOUR_MS, max: 99 },
+	{ name: "minutes", label: "minutos", unit: MINUTE_MS, max: 59 },
+	{ name: "seconds", label: "segundos", unit: SECOND_MS, max: 59 },
 ] as const;
 
 // These keys drive both input names and parsing; every setting must have a field.
 const fields: Record<keyof PomodoroSettings, SettingsField> = {
-	focusDurationSeconds: { label: "Temporizador", kind: "duration" },
-	shortBreakDurationSeconds: { label: "Pausa curta", kind: "duration" },
-	longBreakDurationSeconds: { label: "Pausa longa", kind: "duration" },
+	focusDurationMs: { label: "Temporizador", kind: "duration" },
+	shortBreakDurationMs: { label: "Pausa curta", kind: "duration" },
+	longBreakDurationMs: { label: "Pausa longa", kind: "duration" },
 	focusPhasesPerCycle: {
 		label: "Ciclos",
 		kind: "count",
@@ -48,15 +49,15 @@ export type PomodoroSettingsFormResult =
 	| { ok: true; settings: PomodoroSettings }
 	| { ok: false; errors: PomodoroSettingsFormError[] };
 
-export function getPomodoroDurationSegments(durationSeconds: number) {
-	if (!Number.isInteger(durationSeconds) || durationSeconds < POMODORO_SETTINGS_LIMITS.minDurationSeconds ||
-		durationSeconds > POMODORO_SETTINGS_LIMITS.maxDurationSeconds) {
+export function getPomodoroDurationSegments(durationMs: number) {
+	if (!Number.isInteger(durationMs) || durationMs < POMODORO_SETTINGS_LIMITS.minDurationMs ||
+		durationMs > POMODORO_SETTINGS_LIMITS.maxDurationMs) {
 		throw new RangeError("Duração do Pomodoro inválida.");
 	}
 	return {
-		hours: String(Math.floor(durationSeconds / HOUR_SECONDS)),
-		minutes: String(Math.floor(durationSeconds / MINUTE_SECONDS) % 60),
-		seconds: String(durationSeconds % 60),
+		hours: String(Math.floor(durationMs / HOUR_MS)),
+		minutes: String(Math.floor(durationMs / MINUTE_MS) % 60),
+		seconds: String(Math.floor(durationMs / SECOND_MS) % 60),
 	};
 }
 
@@ -83,10 +84,10 @@ export function parsePomodoroSettingsForm(formData: FormData): PomodoroSettingsF
 			}
 			// Do not carry an invalid segment into another unit before validating it.
 			if (amounts.length !== DURATION_SEGMENTS.length) continue;
-			const durationSeconds = amounts.reduce((total, amount, index) => total + amount * DURATION_SEGMENTS[index].unit, 0);
-			if (durationSeconds < POMODORO_SETTINGS_LIMITS.minDurationSeconds || durationSeconds > POMODORO_SETTINGS_LIMITS.maxDurationSeconds) {
+			const durationMs = amounts.reduce((total, amount, index) => total + amount * DURATION_SEGMENTS[index].unit, 0);
+			if (durationMs < POMODORO_SETTINGS_LIMITS.minDurationMs || durationMs > POMODORO_SETTINGS_LIMITS.maxDurationMs) {
 				errors.push({ field: field.name, inputName: `${field.name}.hours`, message: `${field.label}: use uma duração de 00:00:01 a 99:59:59.` });
-			} else settings[field.name] = durationSeconds;
+			} else settings[field.name] = durationMs;
 		} else {
 			const values = formData.getAll(field.name);
 			const value = values[0];
@@ -97,7 +98,7 @@ export function parsePomodoroSettingsForm(formData: FormData): PomodoroSettingsF
 	}
 	if (errors.length > 0) return { ok: false, errors };
 	if (!isValidPomodoroSettings(settings)) {
-		return { ok: false, errors: [{ field: "focusDurationSeconds", inputName: "focusDurationSeconds.hours", message: "Configuração do Pomodoro inválida." }] };
+		return { ok: false, errors: [{ field: "focusDurationMs", inputName: "focusDurationMs.hours", message: "Configuração do Pomodoro inválida." }] };
 	}
 	return { ok: true, settings };
 }

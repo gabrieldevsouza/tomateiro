@@ -43,15 +43,19 @@ function PomodoroPanel({ isEditing, onCloseEditor }: PomodoroPanelProps) {
 			return;
 		}
 
-		const intervalId = window.setInterval(() => {
+		function tick() {
 			dispatch({
 				type: "tick",
 				nowMs: performance.now(),
 			});
-		}, 250);
+		}
+		// Request 1 ms updates; browser scheduling may clamp or delay callbacks.
+		const intervalId = window.setInterval(tick, 1);
+		document.addEventListener("visibilitychange", tick);
 
 		return () => {
 			window.clearInterval(intervalId);
+			document.removeEventListener("visibilitychange", tick);
 		};
 	}, [timerState.status]);
 
@@ -113,6 +117,9 @@ function PomodoroPanel({ isEditing, onCloseEditor }: PomodoroPanelProps) {
 					<ProgressIndicator
 						totalDurationMs={cycleProgress.totalDurationMs}
 						remainingMs={cycleProgress.remainingMs}
+						phaseDurationMs={timerState.totalDurationMs}
+						cycleAccountedBeforePhaseMs={timerState.cycleAccountedBeforePhaseMs}
+						endsAtMs={timerState.endsAtMs}
 					/>
 				</div>
 

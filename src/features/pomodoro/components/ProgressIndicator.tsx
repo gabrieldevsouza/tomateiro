@@ -1,12 +1,44 @@
+import { useLayoutEffect, useRef } from "react";
 import { getProgressPercentage } from "../model/pomodoroTimer";
 
 type ProgressIndicatorProps = {
 	totalDurationMs: number;
 	remainingMs: number;
+	phaseDurationMs?: number;
+	cycleAccountedBeforePhaseMs?: number;
+	endsAtMs?: number | null;
 };
 
-function ProgressIndicator({ totalDurationMs, remainingMs }: ProgressIndicatorProps) {
+function getFillClipPath(ratio: number) {
+	return `inset(0 ${(1 - ratio) * 100}% 0 0 round 9999px)`;
+}
+
+function ProgressIndicator({
+	totalDurationMs,
+	remainingMs,
+	phaseDurationMs = 0,
+	cycleAccountedBeforePhaseMs = 0,
+	endsAtMs = null,
+}: ProgressIndicatorProps) {
+	const fillRef = useRef<HTMLDivElement>(null);
 	const progress = getProgressPercentage(totalDurationMs, remainingMs);
+	const elapsedMs = Math.max(0, Math.min(totalDurationMs, totalDurationMs - remainingMs));
+	const progressRatio = totalDurationMs > 0 ? elapsedMs / totalDurationMs : 0;
+	const isAnimating = endsAtMs !== null && phaseDurationMs > 0 && totalDurationMs > 0;
+
+	useLayoutEffect(() => {
+		const fill = fillRef.current;
+		if (!fill || endsAtMs === null || phaseDurationMs <= 0 || totalDurationMs <= 0) return;
+		const startRatio = Math.max(0, Math.min(1, cycleAccountedBeforePhaseMs / totalDurationMs));
+		const endRatio = Math.max(0, Math.min(1, (cycleAccountedBeforePhaseMs + phaseDurationMs) / totalDurationMs));
+		const animation = fill.animate([
+			{ clipPath: getFillClipPath(startRatio) },
+			{ clipPath: getFillClipPath(endRatio) },
+		], { duration: phaseDurationMs, easing: "linear", fill: "both" });
+		// Document.timeline shares performance.now()'s origin. Resume at the real phase position.
+		animation.startTime = endsAtMs - phaseDurationMs;
+		return () => animation.cancel();
+	}, [endsAtMs, phaseDurationMs, cycleAccountedBeforePhaseMs, totalDurationMs]);
 
 	return (
 		<div className="
@@ -32,22 +64,25 @@ function ProgressIndicator({ totalDurationMs, remainingMs }: ProgressIndicatorPr
 			"
 				style={{containerType: "size"}}
 			>
+				<div
+					aria-hidden="true"
+					className="h-full w-full overflow-hidden rounded-full bg-[#696D79]"
+				>
+					<div
+						ref={fillRef}
+						className="h-full w-full bg-[#C2C4D8]"
+						style={{
+							clipPath: isAnimating ? undefined : getFillClipPath(progressRatio),
+							willChange: isAnimating ? "clip-path" : undefined,
+						}}
+					/>
+				</div>
 				<progress
-  					className="
-						progress
-						w-full 
-						h-full
-						rounded-full
-						[&::-webkit-progress-bar]:bg-[#696D79]
-						[&::-moz-progress-bar]:bg-[#696D79]
-						[&::-webkit-progress-value]:bg-[#C2C4D8]
-						[&::-moz-progress-value]:bg-[#C2C4D8]
-						[&::-webkit-progress-value]:rounded-full
-						[&::-moz-progress-bar]:rounded-full
-					"
-					value={progress}
-  					max={100}
+					className="sr-only"
+					value={elapsedMs}
+					max={Math.max(1, totalDurationMs)}
 					aria-label="Progresso do ciclo completo"
+					aria-valuetext={`${progress}%`}
 				/>
 				<span
 					className="

@@ -18,7 +18,7 @@ type TimerSettingsDialogProps = {
 };
 
 const editorFieldOrder: (keyof PomodoroSettings)[] = [
-	"focusDurationSeconds", "focusPhasesPerCycle", "shortBreakDurationSeconds", "longBreakDurationSeconds",
+	"focusDurationMs", "focusPhasesPerCycle", "shortBreakDurationMs", "longBreakDurationMs",
 ];
 
 function readFormErrors(form: HTMLFormElement): PomodoroSettingsFormError[] {
@@ -150,7 +150,7 @@ function TimerSettingsDialog({ settings, onSave, onClose }: TimerSettingsDialogP
 		}
 		dialog.addEventListener("keydown", handleDialogKeyDown);
 		const focusFrame = window.requestAnimationFrame(() => {
-			formRef.current?.querySelector<HTMLInputElement>('input[name="focusDurationSeconds.hours"]')?.focus({ preventScroll: true });
+			formRef.current?.querySelector<HTMLInputElement>('input[name="focusDurationMs.hours"]')?.focus({ preventScroll: true });
 		});
 		return () => {
 			window.cancelAnimationFrame(focusFrame);
@@ -272,12 +272,12 @@ function TimerSettingsDialog({ settings, onSave, onClose }: TimerSettingsDialogP
 					</FieldLabel>
 					<div className="col-start-2 row-start-9 relative min-w-0 min-h-0 h-full w-full">
 						<TimeInputModal
-							name="focusDurationSeconds"
+							name="focusDurationMs"
 							label="Temporizador"
 							labelledBy={fieldId + "-focus-label"}
-							defaultValue={settings.focusDurationSeconds}
-							inputDescriptionId={descriptionFor("focusDurationSeconds")}
-							invalid={errors.some((error) => error.field === "focusDurationSeconds")}
+							defaultValue={settings.focusDurationMs}
+							inputDescriptionId={descriptionFor("focusDurationMs")}
+							invalid={errors.some((error) => error.field === "focusDurationMs")}
 							onInputFeedback={handleInputFeedback}
 						/>
 					</div>
@@ -299,12 +299,12 @@ function TimerSettingsDialog({ settings, onSave, onClose }: TimerSettingsDialogP
 					</FieldLabel>
 					<div className="col-start-2 row-start-13 relative min-w-0 min-h-0 h-full w-full">
 						<TimeInputModal
-							name="shortBreakDurationSeconds"
+							name="shortBreakDurationMs"
 							label="Pausa curta"
 							labelledBy={fieldId + "-short-label"}
-							defaultValue={settings.shortBreakDurationSeconds}
-							inputDescriptionId={descriptionFor("shortBreakDurationSeconds")}
-							invalid={errors.some((error) => error.field === "shortBreakDurationSeconds")}
+							defaultValue={settings.shortBreakDurationMs}
+							inputDescriptionId={descriptionFor("shortBreakDurationMs")}
+							invalid={errors.some((error) => error.field === "shortBreakDurationMs")}
 							onInputFeedback={handleInputFeedback}
 						/>
 					</div>
@@ -313,12 +313,12 @@ function TimerSettingsDialog({ settings, onSave, onClose }: TimerSettingsDialogP
 					</FieldLabel>
 					<div className="col-start-4 row-start-13 relative min-w-0 min-h-0 h-full w-full">
 						<TimeInputModal
-							name="longBreakDurationSeconds"
+							name="longBreakDurationMs"
 							label="Pausa longa"
 							labelledBy={fieldId + "-long-label"}
-							defaultValue={settings.longBreakDurationSeconds}
-							inputDescriptionId={descriptionFor("longBreakDurationSeconds")}
-							invalid={errors.some((error) => error.field === "longBreakDurationSeconds")}
+							defaultValue={settings.longBreakDurationMs}
+							inputDescriptionId={descriptionFor("longBreakDurationMs")}
+							invalid={errors.some((error) => error.field === "longBreakDurationMs")}
 							onInputFeedback={handleInputFeedback}
 						/>
 					</div>

@@ -1,3 +1,5 @@
+import { memo } from "react";
+
 enum CircularProgressOrientation {Horizontal,Vertical}
 
 interface CircularProgressProps {
@@ -128,4 +130,5 @@ function CircularProgress({
     );
 }
 
-export default CircularProgress;
+// Skip unchanged focus markers while the active marker receives fractional progress.
+export default memo(CircularProgress);

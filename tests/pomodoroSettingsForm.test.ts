@@ -1,6 +1,6 @@
 import { describe, expect, test } from "bun:test";
 import { DURATION_SEGMENTS, POMODORO_SETTINGS_FIELDS, getPomodoroDurationSegments, parsePomodoroSettingsForm, readPomodoroSettingsForm } from "../src/features/pomodoro/model/pomodoroSettingsForm";
-import { createInitialPomodoroTimerState, getPomodoroCycleProgress, MINUTE_MS, pomodoroTimerReducer } from "../src/features/pomodoro/model/pomodoroTimer";
+import { createInitialPomodoroTimerState, getPomodoroCycleProgress, HOUR_MS, MINUTE_MS, SECOND_MS, pomodoroTimerReducer } from "../src/features/pomodoro/model/pomodoroTimer";
 
 function setDuration(data: FormData, name: string, hours: string, minutes: string, seconds: string) {
 	data.set(`${name}.hours`, hours);
@@ -10,17 +10,17 @@ function setDuration(data: FormData, name: string, hours: string, minutes: strin
 
 function validForm() {
 	const data = new FormData();
-	setDuration(data, "focusDurationSeconds", "00", "20", "00");
-	setDuration(data, "shortBreakDurationSeconds", "00", "03", "00");
-	setDuration(data, "longBreakDurationSeconds", "00", "10", "00");
+	setDuration(data, "focusDurationMs", "00", "20", "00");
+	setDuration(data, "shortBreakDurationMs", "00", "03", "00");
+	setDuration(data, "longBreakDurationMs", "00", "10", "00");
 	data.set("focusPhasesPerCycle", "3");
 	return data;
 }
 
 describe("campos e conversão do editor", () => {
-	test("converte HH:MM:SS para a configuração e aplica o bloco de 76 minutos", () => {
+	test("converte HH:MM:SS diretamente para milissegundos e aplica o bloco de 76 minutos", () => {
 		const settings = readPomodoroSettingsForm(validForm());
-		expect(settings).toEqual({ focusDurationSeconds: 1200, shortBreakDurationSeconds: 180, longBreakDurationSeconds: 600, focusPhasesPerCycle: 3 });
+		expect(settings).toEqual({ focusDurationMs: 1_200_000, shortBreakDurationMs: 180_000, longBreakDurationMs: 600_000, focusPhasesPerCycle: 3 });
 		if (!settings) throw new Error("Formulário válido rejeitado");
 		const running = pomodoroTimerReducer(createInitialPomodoroTimerState(), { type: "start", nowMs: 1_000 });
 		const configured = pomodoroTimerReducer(running, { type: "configure", settings });
@@ -31,18 +31,18 @@ describe("campos e conversão do editor", () => {
 
 	test("preserva horas, minutos e segundos distintos nos três tempos", () => {
 		const data = validForm();
-		setDuration(data, "focusDurationSeconds", "01", "02", "03");
-		setDuration(data, "shortBreakDurationSeconds", "00", "03", "04");
-		setDuration(data, "longBreakDurationSeconds", "02", "05", "06");
+		setDuration(data, "focusDurationMs", "01", "02", "03");
+		setDuration(data, "shortBreakDurationMs", "00", "03", "04");
+		setDuration(data, "longBreakDurationMs", "02", "05", "06");
 		const settings = readPomodoroSettingsForm(data);
-		expect(settings).toEqual({ focusDurationSeconds: 3_723, shortBreakDurationSeconds: 184, longBreakDurationSeconds: 7_506, focusPhasesPerCycle: 3 });
+		expect(settings).toEqual({ focusDurationMs: 3_723_000, shortBreakDurationMs: 184_000, longBreakDurationMs: 7_506_000, focusPhasesPerCycle: 3 });
 		if (!settings) throw new Error("Formulário válido rejeitado");
 		expect(getPomodoroCycleProgress(createInitialPomodoroTimerState(settings)).totalDurationMs).toBe(19_043_000);
 	});
 
 	test("reapresentar a configuração em segmentos não altera seus valores nem reinicia o timer", () => {
 		const data = validForm();
-		setDuration(data, "focusDurationSeconds", "12", "34", "56");
+		setDuration(data, "focusDurationMs", "12", "34", "56");
 		const settings = readPomodoroSettingsForm(data)!;
 		const running = pomodoroTimerReducer(createInitialPomodoroTimerState(settings), { type: "start", nowMs: 1_000 });
 		const displayed = new FormData();
@@ -61,7 +61,7 @@ describe("campos e conversão do editor", () => {
 	});
 
 	test("rejeita segmentos ausentes, arquivos, texto, frações e valores acima de cada unidade", () => {
-		for (const field of ["focusDurationSeconds", "shortBreakDurationSeconds", "longBreakDurationSeconds"]) {
+		for (const field of ["focusDurationMs", "shortBreakDurationMs", "longBreakDurationMs"]) {
 			for (const segment of ["hours", "minutes", "seconds"]) {
 				const name = `${field}.${segment}`;
 				const missing = validForm();
@@ -80,7 +80,7 @@ describe("campos e conversão do editor", () => {
 	});
 
 	test("rejeita zero total e segmentos acima dos limites", () => {
-		for (const field of ["focusDurationSeconds", "shortBreakDurationSeconds", "longBreakDurationSeconds"]) {
+		for (const field of ["focusDurationMs", "shortBreakDurationMs", "longBreakDurationMs"]) {
 			for (const value of [["00", "00", "00"], ["100", "00", "00"], ["99", "60", "00"], ["99", "00", "60"]]) {
 				const data = validForm();
 				setDuration(data, field, value[0], value[1], value[2]);
@@ -98,42 +98,51 @@ describe("campos e conversão do editor", () => {
 		}
 	});
 
-	test.each([1, 359_999])("aceita o limite de %i segundos nos três tempos", (durationSeconds) => {
+	test.each([1_000, 359_999_000])("aceita o limite de %i milissegundos nos três tempos", (durationMs) => {
 		const data = validForm();
-		for (const field of ["focusDurationSeconds", "shortBreakDurationSeconds", "longBreakDurationSeconds"]) {
-			setDuration(data, field, durationSeconds === 1 ? "00" : "99", durationSeconds === 1 ? "00" : "59", durationSeconds === 1 ? "01" : "59");
+		for (const field of ["focusDurationMs", "shortBreakDurationMs", "longBreakDurationMs"]) {
+			setDuration(data, field, durationMs === SECOND_MS ? "00" : "99", durationMs === SECOND_MS ? "00" : "59", durationMs === SECOND_MS ? "01" : "59");
 		}
-		data.set("focusPhasesPerCycle", durationSeconds === 1 ? "1" : "12");
-		expect(readPomodoroSettingsForm(data)).toEqual({ focusDurationSeconds: durationSeconds, shortBreakDurationSeconds: durationSeconds, longBreakDurationSeconds: durationSeconds, focusPhasesPerCycle: durationSeconds === 1 ? 1 : 12 });
+		data.set("focusPhasesPerCycle", durationMs === SECOND_MS ? "1" : "12");
+		expect(readPomodoroSettingsForm(data)).toEqual({ focusDurationMs: durationMs, shortBreakDurationMs: durationMs, longBreakDurationMs: durationMs, focusPhasesPerCycle: durationMs === SECOND_MS ? 1 : 12 });
 	});
 
 	test.each([
-		[1, { hours: "0", minutes: "0", seconds: "1" }],
-		[3723, { hours: "1", minutes: "2", seconds: "3" }],
-		[7384, { hours: "2", minutes: "3", seconds: "4" }],
-		[11045, { hours: "3", minutes: "4", seconds: "5" }],
-		[359999, { hours: "99", minutes: "59", seconds: "59" }],
-	] as const)("decompõe %i segundos sem zeros à esquerda", (durationSeconds, expected) => {
-		expect(getPomodoroDurationSegments(durationSeconds)).toEqual(expected);
+		[1_000, { hours: "0", minutes: "0", seconds: "1" }],
+		[3_723_000, { hours: "1", minutes: "2", seconds: "3" }],
+		[7_384_000, { hours: "2", minutes: "3", seconds: "4" }],
+		[11_045_000, { hours: "3", minutes: "4", seconds: "5" }],
+		[359_999_000, { hours: "99", minutes: "59", seconds: "59" }],
+	] as const)("decompõe %i milissegundos sem zeros à esquerda", (durationMs, expected) => {
+		expect(getPomodoroDurationSegments(durationMs)).toEqual(expected);
 	});
 
 	test("não decompõe duração inválida por normalização ou arredondamento", () => {
-		for (const durationSeconds of [0, -1, 1.5, 360_000, NaN, Infinity]) {
-			expect(() => getPomodoroDurationSegments(durationSeconds)).toThrow(RangeError);
+		for (const durationMs of [0, -1, 999, 1_000.5, 360_000_000, NaN, Infinity]) {
+			expect(() => getPomodoroDurationSegments(durationMs)).toThrow(RangeError);
 		}
+	});
+
+	test("mantém a precisão armazenada e descarta somente a fração de segundo na apresentação HH:MM:SS", () => {
+		const durationMs = HOUR_MS + 2 * MINUTE_MS + 3 * SECOND_MS + 456;
+		const settings = { ...readPomodoroSettingsForm(validForm())!, focusDurationMs: durationMs };
+		expect(getPomodoroDurationSegments(settings.focusDurationMs)).toEqual({ hours: "1", minutes: "2", seconds: "3" });
+		const initial = createInitialPomodoroTimerState(settings);
+		expect(initial.settings.focusDurationMs).toBe(durationMs);
+		expect(initial.remainingMs).toBe(durationMs);
 	});
 
 	test("identifica múltiplos erros pelo campo e segmento antes da soma", () => {
 		const data = validForm();
-		data.set("focusDurationSeconds.minutes", "87");
-		setDuration(data, "shortBreakDurationSeconds", "0", "0", "0");
+		data.set("focusDurationMs.minutes", "87");
+		setDuration(data, "shortBreakDurationMs", "0", "0", "0");
 		data.set("focusPhasesPerCycle", "13");
 		const result = parsePomodoroSettingsForm(data);
 		expect(result.ok).toBe(false);
 		if (result.ok) throw new Error("Formulário inválido aceito");
 		expect(result.errors.map(({ field, inputName }) => ({ field, inputName }))).toEqual([
-			{ field: "focusDurationSeconds", inputName: "focusDurationSeconds.minutes" },
-			{ field: "shortBreakDurationSeconds", inputName: "shortBreakDurationSeconds.hours" },
+			{ field: "focusDurationMs", inputName: "focusDurationMs.minutes" },
+			{ field: "shortBreakDurationMs", inputName: "shortBreakDurationMs.hours" },
 			{ field: "focusPhasesPerCycle", inputName: "focusPhasesPerCycle" },
 		]);
 		expect(result.errors[0].message).toContain("Temporizador");
@@ -143,7 +152,7 @@ describe("campos e conversão do editor", () => {
 	});
 
 	test("rejeita 87 minutos ou segundos em qualquer duração sem transporte", () => {
-		for (const field of ["focusDurationSeconds", "shortBreakDurationSeconds", "longBreakDurationSeconds"]) {
+		for (const field of ["focusDurationMs", "shortBreakDurationMs", "longBreakDurationMs"]) {
 			for (const segment of ["minutes", "seconds"]) {
 				const data = validForm();
 				data.set(`${field}.${segment}`, "87");
@@ -157,7 +166,7 @@ describe("campos e conversão do editor", () => {
 	});
 
 	test("rejeita nomes duplicados em vez de aceitar o primeiro valor", () => {
-		for (const name of ["focusDurationSeconds.minutes", "focusPhasesPerCycle"]) {
+		for (const name of ["focusDurationMs.minutes", "focusPhasesPerCycle"]) {
 			const data = validForm();
 			data.append(name, "13");
 			expect(parsePomodoroSettingsForm(data).ok).toBe(false);
@@ -167,11 +176,11 @@ describe("campos e conversão do editor", () => {
 
 	test("aceita 99:00:01 e o formato discriminado mantém o wrapper compatível", () => {
 		const data = validForm();
-		setDuration(data, "focusDurationSeconds", "99", "00", "01");
+		setDuration(data, "focusDurationMs", "99", "00", "01");
 		const result = parsePomodoroSettingsForm(data);
 		expect(result.ok).toBe(true);
 		if (!result.ok) throw new Error("Formulário válido rejeitado");
-		expect(result.settings.focusDurationSeconds).toBe(356401);
+		expect(result.settings.focusDurationMs).toBe(356_401_000);
 		expect(readPomodoroSettingsForm(data)).toEqual(result.settings);
 	});
 });
