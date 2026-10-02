@@ -63,10 +63,9 @@ function PomodoroPanel({ isEditing, onCloseEditor }: PomodoroPanelProps) {
 		onCloseEditor();
 	}
 
-	// Inner tracks total 213.84 units; only the bottom spacer funds the added cycle height.
 	return (
 		<>
-		<div className="grid aspect-8/9 w-[min(100cqw,88.8889cqh)] grid-cols-[minmax(0,3fr)_minmax(0,10fr)_minmax(0,3fr)] grid-rows-[minmax(0,3fr)_minmax(0,19.8fr)_minmax(0,2.2fr)]">
+		<div className="grid aspect-8/9 w-[min(100cqw,88.8889cqh)] grid-cols-[minmax(0,3fr)_minmax(0,10fr)_minmax(0,3fr)] grid-rows-[minmax(0,1fr)_minmax(0,4fr)_minmax(0,1fr)]">
 			<div
 				className="
 					row-start-2
@@ -77,10 +76,10 @@ function PomodoroPanel({ isEditing, onCloseEditor }: PomodoroPanelProps) {
 					w-full
 					min-h-0
 					min-w-0
-					grid-rows-[minmax(0,51.84fr)_minmax(0,25fr)_minmax(0,46fr)_minmax(0,25fr)_minmax(0,13fr)_minmax(0,25fr)_minmax(0,28fr)]
+					grid-rows-[minmax(0,18fr)_minmax(0,25fr)_minmax(0,46fr)_minmax(0,25fr)_minmax(0,13fr)_minmax(0,25fr)_minmax(0,28fr)]
 				"
 			>
-				<div className="absolute inset-x-0 bottom-full h-[calc(100%*125/1188)] @container-size">
+				<div className="absolute inset-x-0 bottom-full h-[12.5%] @container-size">
 					<p
 						className="flex h-full items-center justify-center whitespace-nowrap font-[Epilogue] text-[#00CBEA] leading-none"
 						style={{ fontSize: "min(7cqw,40cqh)" }}

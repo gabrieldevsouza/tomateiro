@@ -5,7 +5,6 @@ interface CircularProgressProps {
     showText?: boolean;
     textSize?: number;
     orientation?: CircularProgressOrientation;
-    maxDiameter?: string;
 }
 
 function CircularProgress({
@@ -13,7 +12,6 @@ function CircularProgress({
     showText = false,
     textSize = 36,
     orientation = CircularProgressOrientation.Horizontal,
-    maxDiameter,
 }: CircularProgressProps) {
     const createSlice = (
         startAngle: number,
@@ -63,7 +61,6 @@ function CircularProgress({
                 shrink
                 ${sizeClassName}
             `}
-            style={{ maxWidth: maxDiameter, maxHeight: maxDiameter }}
         >
             <svg
                 viewBox="0 0 100 100"
