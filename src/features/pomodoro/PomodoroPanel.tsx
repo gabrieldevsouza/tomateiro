@@ -1,4 +1,3 @@
-import CycleCounter from "./components/CycleCounter";
 import ProgressIndicator from "./components/ProgressIndicator";
 import TimerControls from "./components/TimerControls";
 import TimerDisplay, { type TimerDisplayMode } from "./components/TimerDisplay";
@@ -105,9 +104,7 @@ function PomodoroPanel({ isEditing, onCloseEditor }: PomodoroPanelProps) {
 					row-start-1
 					min-h-0
 					min-w-0
-				">
-					<CycleCounter focusProgress={cycleProgress.focusProgress} transitionId={progressTransitionId} />
-				</div>
+				" />
 
 				<div className="
 					row-start-3

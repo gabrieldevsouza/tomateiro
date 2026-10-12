@@ -1,4 +1,4 @@
-import CircularProgress from "./pomodoroViewer/CircularProgress";
+import CircularProgress from "./pomodoroViewer/CircularProgressLegacy";
 
 type CycleCounterProps = {
     focusProgress: number[];

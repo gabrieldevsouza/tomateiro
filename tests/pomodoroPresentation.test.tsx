@@ -3,7 +3,7 @@ import { renderToStaticMarkup } from "react-dom/server";
 import ProgressIndicator from "../src/features/pomodoro/components/ProgressIndicator";
 import ProgressIndicatorLegacy from "../src/features/pomodoro/components/ProgressIndicatorLegacy";
 import TimerDisplay from "../src/features/pomodoro/components/TimerDisplay";
-import CycleCounter from "../src/features/pomodoro/components/CycleCounter";
+import CycleCounterLegacy from "../src/features/pomodoro/components/CycleCounterLegacy";
 
 function getVisualRatio(markup: string) {
     const rightInset = markup.match(/clip-path:inset\(0 ([\d.e+-]+)% 0 0 round 9999px\)/)?.[1];
@@ -114,9 +114,9 @@ describe("apresentação do Pomodoro com precisão de milissegundos", () => {
         }
     });
 
-    test("os medidores circulares acompanham progresso fracionário", () => {
-        const before = renderToStaticMarkup(<CycleCounter focusProgress={[50, 0]} />);
-        const after = renderToStaticMarkup(<CycleCounter focusProgress={[50.1, 0]} />);
+    test("os medidores circulares legados acompanham progresso fracionário", () => {
+        const before = renderToStaticMarkup(<CycleCounterLegacy focusProgress={[50, 0]} />);
+        const after = renderToStaticMarkup(<CycleCounterLegacy focusProgress={[50.1, 0]} />);
         expect(before).toContain('aria-label="Progresso: 50%"');
         expect(after).toContain('aria-label="Progresso: 50.1%"');
         expect(after).not.toBe(before);
