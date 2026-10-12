@@ -8,21 +8,30 @@ function CardSelection() {
   return (
     <div
       className="
-        card  
-        shadow-sm
         h-full 
         w-full
-        outline-[#151E38]
-        outline-1
-        outline-offset-0
         min-w-0 
         min-h-0
-
-        grid
-        grid-rows-[minmax(0,7fr)_minmax(0,18fr)_minmax(0,7fr)_minmax(0,9fr)_minmax(0,24fr)_minmax(0,11fr)_minmax(0,26fr)_minmax(0,10fr)_minmax(0,10fr)_minmax(0,8fr)_minmax(0,7fr)]
-        grid-cols-[minmax(0,7fr)_minmax(0,102fr)_minmax(0,7fr)]
+        hover-3d
       "
     >
+      <div
+        className="
+          card
+          shadow-sm
+          h-full
+          w-full
+          outline-[#151E38]
+          outline-1
+          outline-offset-0
+          min-w-0
+          min-h-0
+
+          grid
+          grid-rows-[minmax(0,7fr)_minmax(0,18fr)_minmax(0,7fr)_minmax(0,9fr)_minmax(0,24fr)_minmax(0,11fr)_minmax(0,26fr)_minmax(0,10fr)_minmax(0,10fr)_minmax(0,8fr)_minmax(0,7fr)]
+          grid-cols-[minmax(0,7fr)_minmax(0,102fr)_minmax(0,7fr)]
+        "
+      >
         <div 
           className="
             h-full
@@ -191,6 +200,10 @@ function CardSelection() {
         </div>
 
 
+      </div>
+      {Array.from({ length: 8 }, (_, index) => (
+        <span key={index} aria-hidden="true" />
+      ))}
     </div>
 
     
