@@ -57,7 +57,8 @@ function CardSelection() {
             text-[#00CBEA] 
             leading-none"
 						style={{ 
-              fontSize: `min(${88 / title.length}cqw,80cqh)`,
+              fontSize: "100cqh",
+              transform: `scaleX(${Math.min(1, 6.3 / (title.length * 0.9))})`,
             }}
 					>
 						{title}
