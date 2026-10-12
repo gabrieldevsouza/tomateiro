@@ -1,24 +1,26 @@
+import ProgressIndicator from "../ProgressIndicator";
+import CycleCounter from "../CycleCounter";
+
 function CardSelection() {
   return (
     <div
       className="
-        card 
-        bg-blue-500 
+        card  
         shadow-sm
         h-full 
         w-full
-
+        outline-[#151E38]
+        outline-1
         min-w-0 
         min-h-0
 
         grid
-        grid-rows-[minmax(0,7fr)_minmax(0,18fr)_minmax(0,7fr)_minmax(0,10fr)_minmax(0,22fr)_minmax(0,12fr)_minmax(0,26fr)_minmax(0,13fr)_minmax(0,7fr)_minmax(0,8fr)_minmax(0,7fr)]
+        grid-rows-[minmax(0,7fr)_minmax(0,18fr)_minmax(0,7fr)_minmax(0,9fr)_minmax(0,24fr)_minmax(0,11fr)_minmax(0,26fr)_minmax(0,10fr)_minmax(0,10fr)_minmax(0,8fr)_minmax(0,7fr)]
         grid-cols-[minmax(0,7fr)_minmax(0,102fr)_minmax(0,7fr)]
       "
     >
         <div 
           className="
-          bg-blue-500
             h-full
             w-full
             min-h-0
@@ -30,7 +32,6 @@ function CardSelection() {
 
          <div 
           className="
-          bg-red-400
             h-full
             w-full
             min-h-0
@@ -38,11 +39,29 @@ function CardSelection() {
             row-start-2
             col-start-2
             ">
+              <p
+						className="flex 
+            h-full 
+            
+            justify-center
+            items-center
+             
+            whitespace-nowrap 
+            font-[Epilogue]
+            font-semibold
+            text-[#00CBEA] 
+            leading-none"
+						style={{ 
+              fontSize: "min(4cqw,40cqh)",
+              transform: "translateY(0.1em)",
+            }}
+					>
+						WWWWWWWWWWW
+					</p>
         </div>
 
         <div 
           className="
-          bg-blue-300
             h-full
             w-full
             min-h-0
@@ -50,11 +69,30 @@ function CardSelection() {
             row-start-3
             col-start-2
             ">
+              
+              <p
+						className="flex 
+            h-full 
+            
+            justify-center
+            items-center
+             
+            whitespace-nowrap 
+            font-[Epilogue]
+            font-semibold
+            text-[#00CBEA] 
+            leading-none"
+						style={{ 
+              fontSize: "min(2cqw,40cqh)",
+              transform: "translateY(0.1em)",
+            }}
+					>
+						WWWWW
+					</p>
         </div>
 
         <div 
           className="
-          bg-yellow-300
             h-full
             w-full
             min-h-0
@@ -62,11 +100,11 @@ function CardSelection() {
             row-start-4
             col-start-2
             ">
+             
         </div>
 
          <div 
           className="
-          bg-green-300
             h-full
             w-full
             min-h-0
@@ -74,11 +112,11 @@ function CardSelection() {
             row-start-5
             col-start-2
             ">
+              <CycleCounter focusProgress={[5,15,30,30,30,30,30,30,30,30,40,40]} />
         </div>
 
         <div 
           className="
-          bg-purple-400
             h-full
             w-full
             min-h-0
@@ -90,7 +128,6 @@ function CardSelection() {
 
          <div 
           className="
-          bg-blue-200
             h-full
             w-full
             min-h-0
@@ -98,11 +135,29 @@ function CardSelection() {
             row-start-7
             col-start-2
             ">
+              <p
+						className="flex 
+            h-full 
+            
+            justify-center
+            items-center
+             
+            whitespace-nowrap 
+            font-[Epilogue]
+            text-[#00CBEA] 
+            leading-none"
+						style={{ 
+              fontSize: "min(8cqw,40cqh)",
+              transform: "translateY(0.1em)",
+            }}
+					>
+						00:20
+					</p>
+              
         </div>
 
         <div 
           className="
-          bg-pink-400
             h-full
             w-full
             min-h-0
@@ -114,7 +169,6 @@ function CardSelection() {
 
         <div 
           className="
-          bg-yellow-200
             h-full
             w-full
             min-h-0
@@ -122,11 +176,14 @@ function CardSelection() {
             row-start-9
             col-start-2
             ">
+               <ProgressIndicator
+						totalDurationMs={10}
+						remainingMs={3}
+					/>
         </div>
 
         <div 
           className="
-          bg-blue-200
             h-full
             w-full
             min-h-0
@@ -138,7 +195,6 @@ function CardSelection() {
 
         <div 
           className="
-          bg-blue-500
             h-full
             w-full
             min-h-0
@@ -150,6 +206,8 @@ function CardSelection() {
 
 
     </div>
+
+    
   );
 }
 

@@ -4,7 +4,7 @@ function SelectionView() {
     return (
         <section
             className="
-                bg-pink-900
+                bg-[#212940]
                 h-full w-full
                 min-h-0 min-w-0
                 overflow-y-auto
@@ -26,7 +26,6 @@ function SelectionView() {
                 <div
                     className="
                         [grid-area:main]
-                        bg-green-400
                         min-w-0
                     "
                 >
@@ -43,6 +42,7 @@ function SelectionView() {
                     Conf
                 </div>
             </div>
+            
         </section>
     );
 }
