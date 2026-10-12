@@ -1,7 +1,10 @@
 import ProgressIndicator from "../ProgressIndicator";
 import CycleCounter from "../CycleCounter";
+import PhaseLabel from "../PhaseLabel";
 
 function CardSelection() {
+  const title = "WWWWWWWWWWW";
+
   return (
     <div
       className="
@@ -33,6 +36,7 @@ function CardSelection() {
 
          <div 
           className="
+            @container-size
             h-full
             w-full
             min-h-0
@@ -53,11 +57,10 @@ function CardSelection() {
             text-[#00CBEA] 
             leading-none"
 						style={{ 
-              fontSize: "min(4cqw,40cqh)",
-              transform: "translateY(0.1em)",
+              fontSize: `min(${88 / title.length}cqw,80cqh)`,
             }}
 					>
-						WWWWWWWWWWW
+						{title}
 					</p>
         </div>
 
@@ -70,26 +73,7 @@ function CardSelection() {
             row-start-3
             col-start-2
             ">
-              
-              <p
-						className="flex 
-            h-full 
-            
-            justify-center
-            items-center
-             
-            whitespace-nowrap 
-            font-[Epilogue]
-            font-semibold
-            text-[#00CBEA] 
-            leading-none"
-						style={{ 
-              fontSize: "min(2cqw,40cqh)",
-              transform: "translateY(0.1em)",
-            }}
-					>
-						WWWWW
-					</p>
+              <PhaseLabel phase="focus" />
         </div>
 
         <div 

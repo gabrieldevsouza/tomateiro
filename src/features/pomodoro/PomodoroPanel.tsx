@@ -1,4 +1,5 @@
 import CycleCounter from "./components/CycleCounter";
+import PhaseLabel from "./components/PhaseLabel";
 import ProgressIndicator from "./components/ProgressIndicator";
 import TimerControls from "./components/TimerControls";
 import TimerDisplay, { type TimerDisplayMode } from "./components/TimerDisplay";
@@ -10,7 +11,6 @@ import {
 	getPomodoroCycleProgress,
 	pomodoroTimerReducer,
 	isValidPomodoroSettings,
-	type PomodoroPhase,
 	type PomodoroSettings,
 } from "./model/pomodoroTimer";
 
@@ -18,12 +18,6 @@ import { useEffect, useReducer } from "react";
 
 // Choose "digital" for instant updates or "countdown" for animated digits.
 const TIMER_DISPLAY_MODE: TimerDisplayMode = "countdown";
-
-const phaseLabels: Record<PomodoroPhase, string> = {
-	focus: "Foco",
-	shortBreak: "Pausa curta",
-	longBreak: "Pausa longa",
-};
 
 type PomodoroPanelProps = {
 	isEditing: boolean;
@@ -80,15 +74,10 @@ function PomodoroPanel({ isEditing, onCloseEditor }: PomodoroPanelProps) {
 					grid-rows-[minmax(0,51.84fr)_minmax(0,25fr)_minmax(0,46fr)_minmax(0,25fr)_minmax(0,13fr)_minmax(0,25fr)_minmax(0,28fr)]
 				"
 			>
-				<div className="absolute inset-x-0 bottom-full h-[calc(100%*125/1188)] @container-size">
-					<p
-						className="flex h-full items-center justify-center whitespace-nowrap font-[Epilogue] text-[#00CBEA] leading-none"
-						style={{ fontSize: "min(7cqw,40cqh)" }}
-						aria-live="polite"
-					>
-						{phaseLabels[timerState.phase]}
-					</p>
-				</div>
+				<PhaseLabel
+					phase={timerState.phase}
+					className="absolute inset-x-0 bottom-full h-[calc(100%*125/1188)]"
+				/>
 
 				<div className="
 					row-start-1
