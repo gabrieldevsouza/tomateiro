@@ -11,6 +11,7 @@ function CardSelection() {
         w-full
         outline-[#151E38]
         outline-1
+        outline-offset-0
         min-w-0 
         min-h-0
 
