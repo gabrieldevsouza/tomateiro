@@ -1,3 +1,4 @@
+import CycleSteps from "./components/CycleSteps";
 import ProgressIndicator from "./components/ProgressIndicator";
 import TimerControls from "./components/TimerControls";
 import TimerDisplay, { type TimerDisplayMode } from "./components/TimerDisplay";
@@ -104,7 +105,18 @@ function PomodoroPanel({ isEditing, onCloseEditor }: PomodoroPanelProps) {
 					row-start-1
 					min-h-0
 					min-w-0
-				" />
+				">
+					<CycleSteps
+						focusProgress={cycleProgress.focusProgress}
+						currentFocusIndex={Math.floor(timerState.cyclePhaseIndex / 2)}
+						isCurrentFocusComplete={timerState.phase !== "focus" || timerState.status === "completed"}
+						transitionId={progressTransitionId}
+						phase={timerState.phase}
+						phaseDurationMs={timerState.totalDurationMs}
+						phaseRemainingMs={timerState.remainingMs}
+						endsAtMs={timerState.endsAtMs}
+					/>
+				</div>
 
 				<div className="
 					row-start-3

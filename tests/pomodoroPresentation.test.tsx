@@ -4,6 +4,13 @@ import ProgressIndicator from "../src/features/pomodoro/components/ProgressIndic
 import ProgressIndicatorLegacy from "../src/features/pomodoro/components/ProgressIndicatorLegacy";
 import TimerDisplay from "../src/features/pomodoro/components/TimerDisplay";
 import CycleCounterLegacy from "../src/features/pomodoro/components/CycleCounterLegacy";
+import CycleSteps from "../src/features/pomodoro/components/CycleSteps";
+import {
+    createInitialPomodoroTimerState,
+    getPomodoroCycleProgress,
+    pomodoroTimerReducer,
+    type PomodoroTimerState,
+} from "../src/features/pomodoro/model/pomodoroTimer";
 
 function getVisualRatio(markup: string) {
     const rightInset = markup.match(/clip-path:inset\(0 ([\d.e+-]+)% 0 0 round 9999px\)/)?.[1];
@@ -120,5 +127,99 @@ describe("apresentação do Pomodoro com precisão de milissegundos", () => {
         expect(before).toContain('aria-label="Progresso: 50%"');
         expect(after).toContain('aria-label="Progresso: 50.1%"');
         expect(after).not.toBe(before);
+    });
+});
+
+describe("conectores dos Steps acompanham as pausas curtas", () => {
+    function initialState(focusPhasesPerCycle = 4) {
+        return createInitialPomodoroTimerState({
+            focusDurationMs: 4_000,
+            shortBreakDurationMs: 2_000,
+            longBreakDurationMs: 6_000,
+            focusPhasesPerCycle,
+        });
+    }
+
+    function connectors(state: PomodoroTimerState) {
+        const markup = renderToStaticMarkup(<CycleSteps
+            focusProgress={getPomodoroCycleProgress(state).focusProgress}
+            currentFocusIndex={Math.floor(state.cyclePhaseIndex / 2)}
+            isCurrentFocusComplete={state.phase !== "focus" || state.status === "completed"}
+            transitionId={0}
+            phase={state.phase}
+            phaseDurationMs={state.totalDurationMs}
+            phaseRemainingMs={state.remainingMs}
+            endsAtMs={state.endsAtMs}
+        />);
+        return [...markup.matchAll(/<progress\b[^>]*>/g)].map(([element]) => {
+            const value = Number(element.match(/\bvalue="([^"]+)"/)?.[1]);
+            const max = Number(element.match(/\bmax="([^"]+)"/)?.[1]);
+            expect(Number.isFinite(value)).toBe(true);
+            expect(max).toBeGreaterThan(0);
+            return { value, max, ratio: value / max, element };
+        });
+    }
+
+    test("permanece vazio no foco e recebe frações reais da pausa, sem antecipar os próximos", () => {
+        let state = initialState();
+        expect(connectors(state).map(({ ratio }) => ratio)).toEqual([0, 0, 0]);
+        state = pomodoroTimerReducer(state, { type: "start", nowMs: 0 });
+        state = pomodoroTimerReducer(state, { type: "tick", nowMs: 2_000 });
+        expect(connectors(state).map(({ ratio }) => ratio)).toEqual([0, 0, 0]);
+        state = pomodoroTimerReducer(state, { type: "skip" });
+        expect(connectors(state).map(({ ratio }) => ratio)).toEqual([0, 0, 0]);
+        state = pomodoroTimerReducer(state, { type: "start", nowMs: 2_000 });
+        state = pomodoroTimerReducer(state, { type: "tick", nowMs: 2_001.5 });
+        const fractional = connectors(state);
+        expect(fractional[0].value).toBe(1.5);
+        expect(fractional[0].max).toBe(2_000);
+        expect(fractional[0].element).toContain('aria-label="Progresso da pausa entre os focos 1 e 2"');
+        expect(fractional.slice(1).map(({ ratio }) => ratio)).toEqual([0, 0]);
+        state = pomodoroTimerReducer(state, { type: "pause", nowMs: 3_000 });
+        expect(connectors(state).map(({ ratio }) => ratio)).toEqual([0.5, 0, 0]);
+        state = pomodoroTimerReducer(state, { type: "start", nowMs: 8_000 });
+        expect(connectors(state).map(({ ratio }) => ratio)).toEqual([0.5, 0, 0]);
+        state = pomodoroTimerReducer(state, { type: "tick", nowMs: 8_999.5 });
+        expect(connectors(state)[0].ratio).toBeLessThan(1);
+        state = pomodoroTimerReducer(state, { type: "tick", nowMs: 9_000 });
+        expect(connectors(state).map(({ ratio }) => ratio)).toEqual([1, 0, 0]);
+    });
+
+    test("extras, reinício e Skip alteram apenas a pausa correspondente", () => {
+        let state = pomodoroTimerReducer(initialState(), { type: "skip" });
+        state = pomodoroTimerReducer(state, { type: "skip" });
+        state = pomodoroTimerReducer(state, { type: "skip" });
+        state = pomodoroTimerReducer(state, { type: "start", nowMs: 0 });
+        state = pomodoroTimerReducer(state, { type: "pause", nowMs: 1_000 });
+        expect(connectors(state).map(({ ratio }) => ratio)).toEqual([1, 0.5, 0]);
+        state = pomodoroTimerReducer(state, { type: "addMinute", nowMs: 1_000 });
+        const extended = connectors(state);
+        expect(extended.map(({ ratio }) => ratio)).toEqual([1, 1_000 / 62_000, 0]);
+        expect(extended[1].value).toBe(1_000);
+        expect(extended[1].max).toBe(62_000);
+        state = pomodoroTimerReducer(state, { type: "restart" });
+        expect(connectors(state).map(({ ratio }) => ratio)).toEqual([1, 0, 0]);
+        state = pomodoroTimerReducer(state, { type: "skip" });
+        expect(connectors(state).map(({ ratio }) => ratio)).toEqual([1, 1, 0]);
+        state = pomodoroTimerReducer(state, { type: "start", nowMs: 2_000 });
+        state = pomodoroTimerReducer(state, { type: "tick", nowMs: 4_000 });
+        expect(connectors(state).map(({ ratio }) => ratio)).toEqual([1, 1, 0]);
+    });
+
+    test("pausa longa mantém as conexões, novo bloco zera e quantidade limita linhas", () => {
+        let state = initialState();
+        for (let index = 0; index < 7; index += 1) {
+            state = pomodoroTimerReducer(state, { type: "skip" });
+        }
+        state = pomodoroTimerReducer(state, { type: "start", nowMs: 0 });
+        state = pomodoroTimerReducer(state, { type: "tick", nowMs: 3_000 });
+        expect(state.phase).toBe("longBreak");
+        expect(connectors(state).map(({ ratio }) => ratio)).toEqual([1, 1, 1]);
+        state = pomodoroTimerReducer(state, { type: "skip" });
+        expect(connectors(state).map(({ ratio }) => ratio)).toEqual([0, 0, 0]);
+        state = pomodoroTimerReducer(state, { type: "configure", settings: initialState(1).settings });
+        expect(connectors(state)).toHaveLength(0);
+        state = pomodoroTimerReducer(state, { type: "configure", settings: initialState(12).settings });
+        expect(connectors(state).map(({ ratio }) => ratio)).toEqual(Array(11).fill(0));
     });
 });

@@ -8,6 +8,8 @@ type ProgressIndicatorProps = {
 	cycleAccountedBeforePhaseMs?: number;
 	endsAtMs?: number | null;
 	transitionId?: number;
+	variant?: "cycle" | "connector" | "connector-return";
+	ariaLabel?: string;
 };
 
 const PROGRESS_RATIO_PROPERTY = "--pomodoro-progress-ratio";
@@ -20,8 +22,11 @@ function ProgressIndicator({
 	cycleAccountedBeforePhaseMs = 0,
 	endsAtMs = null,
 	transitionId = 0,
+	variant = "cycle",
+	ariaLabel = "Progresso do ciclo completo",
 }: ProgressIndicatorProps) {
 	const progressRef = useRef<HTMLProgressElement>(null);
+	const returnRef = useRef<HTMLDivElement>(null);
 	const previousVisualRef = useRef<{
 		ratio: number;
 		transitionId: number;
@@ -34,7 +39,7 @@ function ProgressIndicator({
 	const staticRatio = isAnimating ? null : progressRatio;
 
 	useLayoutEffect(() => {
-		const element = progressRef.current;
+		const element = variant === "connector-return" ? returnRef.current : progressRef.current;
 		if (!element) return;
 		const nowMs = performance.now();
 		const previous = previousVisualRef.current;
@@ -105,7 +110,42 @@ function ProgressIndicator({
 			animation?.cancel();
 			motionPreference.removeEventListener("change", handleMotionPreferenceChange);
 		};
-	}, [endsAtMs, phaseDurationMs, cycleAccountedBeforePhaseMs, totalDurationMs, transitionId, staticRatio, isAnimating]);
+	}, [endsAtMs, phaseDurationMs, cycleAccountedBeforePhaseMs, totalDurationMs, transitionId, staticRatio, isAnimating, variant]);
+
+	if (variant === "connector-return") {
+		return (
+			<div
+				ref={returnRef}
+				className="pomodoro-cycle-return"
+				style={{ [PROGRESS_RATIO_PROPERTY]: isAnimating ? undefined : progressRatio } as CSSProperties}
+			>
+				<progress
+					className="sr-only"
+					value={elapsedMs}
+					max={Math.max(1, totalDurationMs)}
+					aria-label={ariaLabel}
+					aria-valuetext={`${progress}%`}
+				/>
+				<span className="pomodoro-cycle-return-start" aria-hidden="true"><span /></span>
+				<span className="pomodoro-cycle-return-middle" aria-hidden="true"><span /></span>
+				<span className="pomodoro-cycle-return-end" aria-hidden="true"><span /></span>
+			</div>
+		);
+	}
+
+	if (variant === "connector") {
+		return (
+			<progress
+				ref={progressRef}
+				className="progress pomodoro-progress pomodoro-cycle-connector"
+				style={{ [PROGRESS_RATIO_PROPERTY]: isAnimating ? undefined : progressRatio } as CSSProperties}
+				value={elapsedMs}
+				max={Math.max(1, totalDurationMs)}
+				aria-label={ariaLabel}
+				aria-valuetext={`${progress}%`}
+			/>
+		);
+	}
 
 	return (
 		<div className="
@@ -148,7 +188,7 @@ function ProgressIndicator({
 					style={{ [PROGRESS_RATIO_PROPERTY]: isAnimating ? undefined : progressRatio } as CSSProperties}
 					value={elapsedMs}
 					max={Math.max(1, totalDurationMs)}
-					aria-label="Progresso do ciclo completo"
+					aria-label={ariaLabel}
 					aria-valuetext={`${progress}%`}
 				/>
 				<span

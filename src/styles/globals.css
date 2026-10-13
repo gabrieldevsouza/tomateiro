@@ -70,6 +70,47 @@ body,
   initial-value: 0;
 }
 
+/* Fit DaisyUI Steps to the cycle markers' area, colors and spacing. */
+.pomodoro-cycle-steps {
+  --color-base-300: #6b7280;
+  --color-base-content: #111827;
+  /* TODO: Reavaliar se manteremos estas variáveis, sem uso após a remoção de step-primary. */
+  --color-primary: #fde047;
+  --color-primary-content: #111827;
+  position: relative;
+  grid-auto-flow: row;
+  justify-content: center;
+  overflow: hidden;
+  font-size: calc(var(--cycle-step-size) * 0.5);
+}
+
+.pomodoro-cycle-steps .step {
+  min-width: 0;
+  min-height: 0;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: minmax(0, 1fr);
+}
+
+.pomodoro-cycle-steps .step > .step-icon {
+  width: var(--cycle-step-size);
+  height: var(--cycle-step-size);
+  justify-self: end;
+  border: 0;
+  background-color: transparent;
+}
+
+.pomodoro-cycle-steps .step::before {
+  height: calc(var(--cycle-step-size) * 0.2);
+  margin-inline-start: 0;
+  justify-self: end;
+  transform: translateX(calc(var(--cycle-step-size) / -2));
+  border: 0;
+}
+
+.pomodoro-cycle-steps .pomodoro-cycle-row-start::before {
+  content: none;
+}
+
 @property --pomodoro-progress-ratio {
   syntax: "<number>";
   inherits: true;
@@ -87,6 +128,104 @@ body,
 /* Gecko sizes its native fill from value/max in layout; retain that fractional sizing. */
 .pomodoro-progress::-moz-progress-bar {
   transition: none;
+}
+
+/* Animate the visible gap, so no part of the pause is hidden behind a circle. */
+.pomodoro-cycle-steps .pomodoro-cycle-connector {
+  grid-column: 1;
+  grid-row: 1;
+  justify-self: end;
+  width: max(0px, calc(100% - var(--cycle-step-size)));
+  height: calc(var(--cycle-step-size) * 0.2);
+  transform: translateX(calc(-1 * var(--cycle-step-size)));
+  border-radius: 0;
+  background-color: #6b7280;
+  color: #fde047;
+}
+
+.pomodoro-cycle-connector::-webkit-progress-bar {
+  border-radius: 0;
+  background-color: #6b7280;
+}
+
+.pomodoro-cycle-connector::-webkit-progress-value {
+  border-radius: 0;
+  clip-path: inset(0 calc((1 - var(--pomodoro-progress-ratio)) * 100%) 0 0);
+}
+
+.pomodoro-cycle-connector::-moz-progress-bar {
+  border-radius: 0;
+}
+
+/* Keep the pause from 6 to 7 visible while both rows read left to right. */
+.pomodoro-cycle-return {
+  --cycle-return-width: calc(100cqw - var(--cycle-step-size));
+  --cycle-return-height: calc((100cqh + var(--cycle-step-row-gap)) / 2 - var(--cycle-step-size));
+  --cycle-return-half-height: calc(var(--cycle-return-height) / 2);
+  /* One distance along all three segments preserves the existing continuous animation. */
+  --cycle-return-distance: calc(var(--pomodoro-progress-ratio) * (var(--cycle-return-width) + var(--cycle-return-height)));
+  position: absolute;
+  left: calc(var(--cycle-step-size) / 2);
+  top: calc((100cqh - var(--cycle-step-row-gap)) / 4 + var(--cycle-step-size) / 2);
+  width: var(--cycle-return-width);
+  height: var(--cycle-return-height);
+  pointer-events: none;
+}
+
+.pomodoro-cycle-return > span,
+.pomodoro-cycle-return > span > span {
+  position: absolute;
+}
+
+.pomodoro-cycle-return > span {
+  background-color: #6b7280;
+}
+
+.pomodoro-cycle-return > span > span {
+  top: 0;
+  right: 0;
+  background-color: #fde047;
+}
+
+.pomodoro-cycle-return-start,
+.pomodoro-cycle-return-end {
+  width: calc(var(--cycle-step-size) * 0.2);
+  height: var(--cycle-return-half-height);
+}
+
+.pomodoro-cycle-return-start {
+  top: 0;
+  right: 0;
+  transform: translateX(50%);
+}
+
+.pomodoro-cycle-return-start > span {
+  width: 100%;
+  height: clamp(0px, var(--cycle-return-distance), var(--cycle-return-half-height));
+}
+
+.pomodoro-cycle-return-middle {
+  top: 50%;
+  left: 0;
+  width: 100%;
+  height: calc(var(--cycle-step-size) * 0.2);
+  transform: translateY(-50%);
+}
+
+.pomodoro-cycle-return-middle > span {
+  width: clamp(0px, calc(var(--cycle-return-distance) - var(--cycle-return-half-height)), var(--cycle-return-width));
+  height: 100%;
+}
+
+.pomodoro-cycle-return-end {
+  bottom: 0;
+  left: 0;
+  transform: translateX(-50%);
+}
+
+.pomodoro-cycle-return-end > span {
+  width: 100%;
+  height: clamp(0px, calc(var(--cycle-return-distance) - var(--cycle-return-half-height) - var(--cycle-return-width)), var(--cycle-return-half-height));
 }
 
 @property --pomodoro-countdown-digits {
