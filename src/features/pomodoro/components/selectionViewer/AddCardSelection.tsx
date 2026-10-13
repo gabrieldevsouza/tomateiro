@@ -29,8 +29,8 @@ function AddCardSelection() {
       >
       {<FiPlus aria-hidden="true" className="
               text-[#C2C7DA]
-              w-[55%]
-              h-[55%]
+              w-[75%]
+              h-[75%]
       
             " />}
       </div>
