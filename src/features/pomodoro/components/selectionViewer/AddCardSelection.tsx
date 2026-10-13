@@ -1,3 +1,5 @@
+import { FiPlus } from "react-icons/fi"
+
 function AddCardSelection() {
   return (
     <button
@@ -5,8 +7,6 @@ function AddCardSelection() {
       aria-label="Adicionar temporizador"
       className="
         card 
-        bg-green-500 
-        shadow-sm
         h-full 
         w-full 
         min-w-0 
@@ -14,14 +14,26 @@ function AddCardSelection() {
         flex 
         items-center 
         justify-center
-      ">
-        
-      <span aria-hidden="true" 
-      className="
-      text-4xl
-      ">
-        +
-      </span>
+      "
+      >        
+      <div className="
+      bg-[#374468]
+      flex
+      aspect-square
+      shrink-0
+      h-[50%]
+      items-center
+      justify-center
+      rounded-full
+      "
+      >
+      {<FiPlus aria-hidden="true" className="
+              text-[#C2C7DA]
+              w-[55%]
+              h-[55%]
+      
+            " />}
+      </div>
     </button>
   );
 }
