@@ -1,9 +1,13 @@
 import { useState, type ReactNode } from "react";
+import { RiGalleryView } from "react-icons/ri";
+import { MdOutlineTimer } from "react-icons/md";
+import { IoSettingsOutline } from "react-icons/io5";
 import CustomTitlebar, {
 	TITLEBAR_MAXIMIZED_HEIGHT,
 	TITLEBAR_DEFAULT_HEIGHT,
 } from "../window/CustomTitlebar";
 import { TitlebarPortalContext } from "../window/TitlebarPortalContext";
+import SidebarOption from "../features/pomodoro/components/controls/SidebarOption";
 
 type AppShellProps = {
 	children: ReactNode;
@@ -40,8 +44,9 @@ function AppShell({ children }: AppShellProps) {
 						<label htmlFor="my-drawer-1" aria-label="close sidebar" className="drawer-overlay"></label>
 						<ul className="menu bg-base-200 min-h-full w-80 p-4">
 						{/* Sidebar content here */}
-						<li><a>Sidebar Item 1</a></li>
-						<li><a>Sidebar Item 2</a></li>
+						<SidebarOption label="Current Pomodoro" icon={<MdOutlineTimer />} onClick={() => alert("Current Pomodoro clicked!")}></SidebarOption>
+						<SidebarOption label="Gallery" icon={<RiGalleryView />} onClick={() => alert("Gallery clicked!")}></SidebarOption>
+						<SidebarOption label="Settings" icon={<IoSettingsOutline />} onClick={() => alert("Settings clicked!")}></SidebarOption>
 						</ul>
   					</div>
 				</div>
