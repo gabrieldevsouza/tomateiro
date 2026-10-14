@@ -2,6 +2,7 @@ import { useState, type ReactNode } from "react";
 import { RiGalleryView } from "react-icons/ri";
 import { MdOutlineTimer } from "react-icons/md";
 import { IoSettingsOutline } from "react-icons/io5";
+import { FiMenu } from "react-icons/fi";
 import CustomTitlebar, {
 	TITLEBAR_MAXIMIZED_HEIGHT,
 	TITLEBAR_DEFAULT_HEIGHT,
@@ -17,7 +18,7 @@ function AppShell({ children }: AppShellProps) {
 	const [isMaximized, setIsMaximized] = useState(false);
 	const [titlebarContainer, setTitlebarContainer] = useState<HTMLElement | null>(null);
 	const titlebarHeight = isMaximized ? TITLEBAR_MAXIMIZED_HEIGHT : TITLEBAR_DEFAULT_HEIGHT;
-
+	const [selectedPage, setSelectedPage] = useState("pomodoro");
 	return (
 		<TitlebarPortalContext.Provider value={{ setContainer: setTitlebarContainer, height: titlebarHeight }}>
 			<div
@@ -38,15 +39,16 @@ function AppShell({ children }: AppShellProps) {
 						drawer-content
 					">
 						{/* Page content here */}
-						<label htmlFor="my-drawer-1" className="btn drawer-button">Open drawer</label>
+						<label htmlFor="my-drawer-1" aria-label="Open drawer" className="btn drawer-button"><FiMenu size={26} /> </label>
 					</div>
 					<div className="drawer-side">
 						<label htmlFor="my-drawer-1" aria-label="close sidebar" className="drawer-overlay"></label>
-						<ul className="menu bg-base-200 min-h-full w-80 p-4">
+						<ul className="menu bg-[#233E63] text-white min-h-full w-80 p-4 flex flex-col">
 						{/* Sidebar content here */}
-						<SidebarOption label="Current Pomodoro" icon={<MdOutlineTimer />} onClick={() => alert("Current Pomodoro clicked!")}></SidebarOption>
-						<SidebarOption label="Gallery" icon={<RiGalleryView />} onClick={() => alert("Gallery clicked!")}></SidebarOption>
-						<SidebarOption label="Settings" icon={<IoSettingsOutline />} onClick={() => alert("Settings clicked!")}></SidebarOption>
+						<SidebarOption label="Current Pomodoro" icon={<MdOutlineTimer />} isSelected={selectedPage === "pomodoro"} onClick={() => setSelectedPage("pomodoro")}></SidebarOption>
+						<SidebarOption label="Gallery" icon={<RiGalleryView />} isSelected={selectedPage === "gallery"} onClick={() => setSelectedPage("gallery")}></SidebarOption>
+						<div className="mt-auto"> 
+							<SidebarOption label="Settings" icon={<IoSettingsOutline />} isSelected={selectedPage === "settings"} onClick={() => setSelectedPage("settings")}></SidebarOption></div>
 						</ul>
   					</div>
 				</div>
