@@ -1,14 +1,10 @@
 import type { ReactNode } from "react";
 
-enum CircularProgressOrientation { Horizontal, Vertical}
-
 interface TimerControlButtonProps {
     ariaLabel: string;
     title?: string;
     onClick?: () => void;
     disabled?: boolean;
-
-    orientation?: CircularProgressOrientation;
 
     icon: ReactNode;
 
@@ -25,17 +21,12 @@ function TimerControlButton({
     title = ariaLabel,
     onClick,
     disabled = false,
-    orientation = CircularProgressOrientation.Horizontal,
     bgColor = "bg-red-400",
     hoverColor = "hover:bg-[#5F77B8]",
     activeColor = "active:bg-[#1D2230]",
     className = "",
 
 }: TimerControlButtonProps) {
-    const sizeClassName =
-        orientation === CircularProgressOrientation.Vertical
-            ? "h-auto w-full"
-            : "h-full w-auto";
     return (
         <button
             type="button"
@@ -70,7 +61,7 @@ function TimerControlButton({
 				rounded-full
 				shrink-0
 				aspect-square
-				${sizeClassName}
+				h-full w-auto
                 ${className}
 
 				flex

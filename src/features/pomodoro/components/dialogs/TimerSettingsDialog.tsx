@@ -160,57 +160,6 @@ function TimerSettingsDialog({ settings, onSave, onClose }: TimerSettingsDialogP
 		};
 	}, [setTitlebarContainer]);
 
-	useLayoutEffect(() => {
-		const dialog = dialogRef.current;
-		const context = document.createElement("canvas").getContext("2d");
-		if (!dialog || !context) return;
-		const inputs = [...dialog.querySelectorAll<HTMLInputElement>('input[type="number"]')];
-		let disposed = false;
-
-		function alignNumberInputs() {
-			if (disposed) return;
-			for (const input of inputs) {
-				const style = getComputedStyle(input);
-				context!.font = `${style.fontStyle} ${style.fontWeight} ${style.fontSize} ${style.fontFamily}`;
-				// Referência fixa: trocar o valor nunca desloca a linha de base dos números.
-				const metrics = context!.measureText("0123456789");
-				// Centraliza o conjunto de dígitos usando as métricas da fonte atual.
-				const padding = metrics.actualBoundingBoxAscent - metrics.actualBoundingBoxDescent
-					- metrics.fontBoundingBoxAscent + metrics.fontBoundingBoxDescent;
-				if (!Number.isFinite(padding)) continue;
-				const top = `${Number(Math.max(0, padding).toFixed(3))}px`;
-				const bottom = `${Number(Math.max(0, -padding).toFixed(3))}px`;
-				if (input.style.paddingTop !== top) input.style.paddingTop = top;
-				if (input.style.paddingBottom !== bottom) input.style.paddingBottom = bottom;
-				// O countdown usa a mesma linha de base, em em para acompanhar o resize imediatamente.
-				const wrapper = input.closest<HTMLElement>(".pomodoro-number-input");
-				const offset = `${Number((padding / (2 * parseFloat(style.fontSize))).toFixed(6))}em`;
-				if (wrapper && wrapper.style.getPropertyValue("--pomodoro-input-offset") !== offset) {
-					wrapper.style.setProperty("--pomodoro-input-offset", offset);
-				}
-			}
-		}
-
-		const resizeObserver = new ResizeObserver(alignNumberInputs);
-		inputs.forEach(input => resizeObserver.observe(input, { box: "border-box" }));
-		const styleObserver = new MutationObserver(alignNumberInputs);
-		styleObserver.observe(dialog, {
-			attributes: true,
-			attributeFilter: ["class", "style"],
-			subtree: true,
-		});
-		document.fonts.addEventListener("loadingdone", alignNumberInputs);
-		void document.fonts.ready.then(alignNumberInputs);
-		alignNumberInputs();
-
-		return () => {
-			disposed = true;
-			resizeObserver.disconnect();
-			styleObserver.disconnect();
-			document.fonts.removeEventListener("loadingdone", alignNumberInputs);
-		};
-	}, []);
-
 	const visibleError = errors.find((error) => error.field === focusedField) ?? errors[0];
 	const invalidFieldCount = new Set(errors.map((error) => error.field)).size;
 

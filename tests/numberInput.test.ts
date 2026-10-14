@@ -1,5 +1,5 @@
 import { describe, expect, test } from "bun:test";
-import { normalizeNumberInput, normalizeTypedNumberInput, stepNumberInput } from "../src/features/pomodoro/components/dialogs/useNumberInput";
+import { normalizeNumberInput, normalizeTypedNumberInput, stepNumberInput } from "../src/features/pomodoro/components/dialogs/numberInputModel";
 
 describe("valores dos inputs numéricos do editor", () => {
     test("remove zeros à esquerda em tempos e ciclos", () => {

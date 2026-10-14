@@ -2,15 +2,15 @@ import { getCurrentWindow } from "@tauri-apps/api/window";
 import { PiCopySimple, PiMinusBold, PiSquare, PiXBold } from "react-icons/pi";
 import WindowControlButton from "./WindowControlButton";
 
-const appWindow = getCurrentWindow();
-
-function executeWindowAction(action: () => Promise<void>) {
-	void action().catch((error: unknown) => {
+async function executeWindowAction(action: () => Promise<void>) {
+	try {
+		await action();
+	} catch (error: unknown) {
 		console.error(
 			"Falha ao executar comando de janela:",
 			error,
 		);
-	});
+	}
 }
 
 function WindowControls({ isMaximized }: { isMaximized: boolean }) {
@@ -20,8 +20,8 @@ function WindowControls({ isMaximized }: { isMaximized: boolean }) {
 				ariaLabel="Minimizar janela"
 				variant="default"
 				onClick={() =>
-					executeWindowAction(() =>
-						appWindow.minimize()
+					void executeWindowAction(() =>
+						getCurrentWindow().minimize()
 					)
 				}
 			>
@@ -32,8 +32,8 @@ function WindowControls({ isMaximized }: { isMaximized: boolean }) {
 				ariaLabel={isMaximized ? "Restaurar janela" : "Maximizar janela"}
 				variant="default"
 				onClick={() =>
-					executeWindowAction(() =>
-						appWindow.toggleMaximize()
+					void executeWindowAction(() =>
+						getCurrentWindow().toggleMaximize()
 					)
 				}
 			>
@@ -48,8 +48,8 @@ function WindowControls({ isMaximized }: { isMaximized: boolean }) {
 				ariaLabel="Fechar janela"
 				variant="danger"
 				onClick={() =>
-					executeWindowAction(() =>
-						appWindow.close()
+					void executeWindowAction(() =>
+						getCurrentWindow().close()
 					)
 				}
 			>

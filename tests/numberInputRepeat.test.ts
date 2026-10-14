@@ -1,5 +1,5 @@
 import { describe, expect, test } from "bun:test";
-import { getNumberInputRepeatInterval } from "../src/features/pomodoro/components/dialogs/useNumberInput";
+import { getNumberInputRepeatInterval } from "../src/features/pomodoro/components/dialogs/numberInputModel";
 
 describe("aceleração ao segurar as setas dos inputs numéricos", () => {
     test("começa em quatro passos por segundo e termina em dez", () => {

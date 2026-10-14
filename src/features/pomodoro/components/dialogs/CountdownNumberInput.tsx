@@ -1,8 +1,14 @@
-import { type CSSProperties } from "react";
-import { useNumberInput } from "./useNumberInput";
+import { type ComponentProps, type CSSProperties, type RefObject, useRef } from "react";
+import { useCountdownInputAlignment } from "./useCountdownInputAlignment";
 
 export type CountdownNumberInputProps = {
-    numberInput: ReturnType<typeof useNumberInput>;
+    numberInput: {
+        inputProps: Pick<ComponentProps<"input">, "defaultValue" | "min" | "max"> & {
+            ref: RefObject<HTMLInputElement | null>;
+        };
+        displayValue: string;
+        transitionMs: number;
+    };
     label: string;
     name?: string;
     id?: string;
@@ -11,8 +17,11 @@ export type CountdownNumberInputProps = {
 };
 
 function CountdownNumberInput({ numberInput, label, name, id, descriptionId, invalid }: CountdownNumberInputProps) {
+    const wrapperRef = useRef<HTMLDivElement>(null);
+    useCountdownInputAlignment(numberInput.inputProps.ref, wrapperRef);
+
     return (
-        <div className="pomodoro-number-input group/number-input relative h-full w-full min-h-0 min-w-0 font-[Inter] text-[min(64cqw,80cqh)] leading-[normal] lining-nums tabular-nums">
+        <div ref={wrapperRef} className="pomodoro-number-input group/number-input relative h-full w-full min-h-0 min-w-0 font-[Inter] text-[min(64cqw,80cqh)] leading-[normal] lining-nums tabular-nums">
             <input
                 {...numberInput.inputProps}
                 name={name}
