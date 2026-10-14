@@ -70,7 +70,24 @@ body,
   initial-value: 0;
 }
 
-/* Fit DaisyUI Steps to the cycle markers' area, colors and spacing. */
+/* Current Steps: wrap native-size items and center each row independently. */
+.pomodoro-steps {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  row-gap: 0.5rem;
+  width: calc(var(--pomodoro-steps-columns) * 4rem);
+}
+
+.pomodoro-steps > .step {
+  flex: 0 0 4rem;
+}
+
+.pomodoro-steps > .step[data-row-start]::before {
+  content: none;
+}
+
+/* Legacy 2: fit DaisyUI Steps to the archived cycle markers' area, colors and spacing. */
 .pomodoro-cycle-steps {
   --color-base-300: #6b7280;
   --color-base-content: #111827;
