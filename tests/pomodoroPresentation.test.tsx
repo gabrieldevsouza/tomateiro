@@ -4,7 +4,7 @@ import ProgressIndicator from "../src/features/pomodoro/components/ProgressIndic
 import ProgressIndicatorLegacy from "../src/features/pomodoro/components/ProgressIndicatorLegacy";
 import TimerDisplay from "../src/features/pomodoro/components/TimerDisplay";
 import CycleCounterLegacy from "../src/features/pomodoro/components/CycleCounterLegacy";
-import CycleSteps from "../src/features/pomodoro/components/CycleSteps";
+import CycleSteps from "../src/features/pomodoro/components/CycleStepsLegacy2";
 import {
     createInitialPomodoroTimerState,
     getPomodoroCycleProgress,
