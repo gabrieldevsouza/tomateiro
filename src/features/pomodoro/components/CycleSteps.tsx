@@ -10,16 +10,19 @@ type CycleStepsProps = {
 };
 
 function CycleSteps({ focusCount, currentFocusIndex, isCurrentFocusComplete }: CycleStepsProps) {
-    const columnCount = focusCount <= 4 ? focusCount : Math.ceil(focusCount / 2);
-    const unscaledHeight = focusCount <= 4 ? "40px" : "calc(80px + 0.5rem)";
+    const isSingleRow = focusCount <= 4;
+    const columnCount = isSingleRow ? focusCount : Math.ceil(focusCount / 2);
+    const unscaledHeight = "calc(80px + 0.5rem)";
 
     return (
         <div className="relative h-full w-full min-h-0 min-w-0 overflow-visible @container-size">
             <div
-                className="absolute top-1/2 left-1/2 flex w-max -translate-x-1/2 -translate-y-1/2"
+                className="absolute top-1/2 left-1/2 flex w-max -translate-x-1/2 -translate-y-1/2 flex-col"
                 // Fit the cell height; only Steps may extend beyond the cell horizontally.
                 style={{ scale: `calc(100cqh / ${unscaledHeight})` }}
             >
+                {/* Each spacer replaces half of a second native row and its gap. */}
+                {isSingleRow && <div aria-hidden="true" className="h-[calc(20px+0.25rem)] shrink-0" />}
                 <ol
                     className="steps pomodoro-steps"
                     style={{ "--pomodoro-steps-columns": columnCount } as CSSProperties}
@@ -42,6 +45,7 @@ function CycleSteps({ focusCount, currentFocusIndex, isCurrentFocusComplete }: C
                         );
                     })}
                 </ol>
+                {isSingleRow && <div aria-hidden="true" className="h-[calc(20px+0.25rem)] shrink-0" />}
             </div>
         </div>
     );
