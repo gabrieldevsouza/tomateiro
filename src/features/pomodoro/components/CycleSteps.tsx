@@ -1,5 +1,6 @@
-import type { CSSProperties } from "react";
+import { memo, useRef, type CSSProperties } from "react";
 import { POMODORO_SETTINGS_LIMITS } from "../model/pomodoroTimer";
+import { PROGRESS_RATIO_PROPERTY, useProgressAnimation } from "./useProgressAnimation";
 
 // Colunas: lateral / Steps / lateral. 3 / 34 / 3 reserva 7,5% em cada ponta.
 const STEPS_HORIZONTAL_GRID = "minmax(0, 3fr) minmax(0, 34fr) minmax(0, 3fr)";
@@ -8,12 +9,53 @@ const STEPS_HORIZONTAL_GRID = "minmax(0, 3fr) minmax(0, 34fr) minmax(0, 3fr)";
 const CENTER_LOWER_ROW_WITH_CONNECTOR = true;
 
 type CycleStepsProps = {
-    focusCount: number;
+    focusProgress: number[];
     currentFocusIndex: number;
     isCurrentFocusComplete: boolean;
+    phaseDurationMs: number;
+    endsAtMs: number | null;
+    transitionId: number;
 };
 
-function CycleSteps({ focusCount, currentFocusIndex, isCurrentFocusComplete }: CycleStepsProps) {
+type CycleStepProps = {
+    index: number;
+    focusCount: number;
+    progress: number;
+    isCurrent: boolean;
+    isReached: boolean;
+    isLowerRow: boolean;
+    phaseDurationMs: number;
+    endsAtMs: number | null;
+    transitionId: number;
+};
+
+const CycleStep = memo(function CycleStep({
+    index, focusCount, progress, isCurrent, isReached, isLowerRow,
+    phaseDurationMs, endsAtMs, transitionId,
+}: CycleStepProps) {
+    const stepRef = useRef<HTMLLIElement>(null);
+    const ratio = Math.max(0, Math.min(1, progress / 100));
+    useProgressAnimation(stepRef, { ratio, phaseDurationMs, endsAtMs, transitionId });
+    const state = isCurrent ? "atual" : isReached ? "percorrido" : "próximo";
+    // Keep accessibility updates at whole percentages, independently of visual frames.
+    const percentage = ratio === 1 ? 100 : Math.min(99, Math.floor(ratio * 100));
+
+    return (
+        <li
+            ref={stepRef}
+            className={isReached ? "step step-primary" : "step"}
+            style={{ [PROGRESS_RATIO_PROPERTY]: endsAtMs === null ? ratio : undefined } as CSSProperties}
+            data-lower-row={isLowerRow || undefined}
+            aria-current={isCurrent ? "step" : undefined}
+            aria-label={`Foco ${index + 1} de ${focusCount}: ${state}. Progresso: ${percentage}%`}
+        />
+    );
+});
+
+function CycleSteps({
+    focusProgress, currentFocusIndex, isCurrentFocusComplete, phaseDurationMs, endsAtMs, transitionId,
+}: CycleStepsProps) {
+    const focusCount = focusProgress.length;
     const isSingleRow = focusCount <= 4;
     const columnCount = isSingleRow ? focusCount : Math.ceil(focusCount / 2);
     const unscaledHeight = "calc(80px + 0.5rem)";
@@ -40,19 +82,20 @@ function CycleSteps({ focusCount, currentFocusIndex, isCurrentFocusComplete }: C
                         style={{ "--pomodoro-steps-columns": columnCount } as CSSProperties}
                         aria-label={`Progresso dos ${focusCount} focos do ciclo`}
                     >
-                        {Array.from({ length: focusCount }, (_, index) => {
+                        {focusProgress.map((progress, index) => {
                             const isCurrent = index === currentFocusIndex && !isCurrentFocusComplete;
-                            const state = index < currentFocusIndex || (index === currentFocusIndex && isCurrentFocusComplete)
-                                ? "percorrido"
-                                : isCurrent ? "atual" : "próximo";
-
                             return (
-                                <li
+                                <CycleStep
                                     key={index}
-                                    className={index <= currentFocusIndex ? "step step-primary" : "step"}
-                                    data-lower-row={(CENTER_LOWER_ROW_WITH_CONNECTOR && index >= columnCount) || undefined}
-                                    aria-current={isCurrent ? "step" : undefined}
-                                    aria-label={`Foco ${index + 1} de ${focusCount}: ${state}`}
+                                    index={index}
+                                    focusCount={focusCount}
+                                    progress={progress}
+                                    isCurrent={isCurrent}
+                                    isReached={index <= currentFocusIndex}
+                                    isLowerRow={CENTER_LOWER_ROW_WITH_CONNECTOR && index >= columnCount}
+                                    phaseDurationMs={isCurrent ? phaseDurationMs : 0}
+                                    endsAtMs={isCurrent ? endsAtMs : null}
+                                    transitionId={transitionId}
                                 />
                             );
                         })}

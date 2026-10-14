@@ -88,6 +88,18 @@ body,
   flex: 0 0 4rem;
 }
 
+/* Paint the native circle clockwise from 12 o'clock; its counter and geometry stay DaisyUI. */
+.pomodoro-steps > .step::after {
+  background-image:
+    conic-gradient(var(--color-primary-content) calc(var(--pomodoro-progress-ratio) * 1turn), var(--color-base-content) 0),
+    conic-gradient(var(--color-primary) calc(var(--pomodoro-progress-ratio) * 1turn), var(--color-base-300) 0);
+  /* The same slice makes the number dark on yellow and light on the unfilled background. */
+  background-clip: text, border-box;
+  background-origin: border-box;
+  color: transparent;
+  border-color: transparent;
+}
+
 .pomodoro-steps > .step[data-lower-row] {
   position: relative;
   /* Center the visible row, including the native connector's extra 3rem on the left. */

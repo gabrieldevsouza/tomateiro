@@ -5,6 +5,7 @@ import ProgressIndicatorLegacy from "../src/features/pomodoro/components/Progres
 import TimerDisplay from "../src/features/pomodoro/components/TimerDisplay";
 import CycleCounterLegacy from "../src/features/pomodoro/components/CycleCounterLegacy";
 import CycleSteps from "../src/features/pomodoro/components/CycleStepsLegacy2";
+import ActiveCycleSteps from "../src/features/pomodoro/components/CycleSteps";
 import {
     createInitialPomodoroTimerState,
     getPomodoroCycleProgress,
@@ -23,6 +24,66 @@ function getDaisyVisualRatio(markup: string) {
     if (ratio === undefined) throw new Error("Preenchimento fracionário da barra DaisyUI ausente");
     return Number(ratio);
 }
+
+describe("pizza nos Steps ativos", () => {
+    function markers(state: PomodoroTimerState) {
+        const markup = renderToStaticMarkup(<ActiveCycleSteps
+            focusProgress={getPomodoroCycleProgress(state).focusProgress}
+            currentFocusIndex={Math.floor(state.cyclePhaseIndex / 2)}
+            isCurrentFocusComplete={state.phase !== "focus" || state.status === "completed"}
+            phaseDurationMs={state.totalDurationMs}
+            endsAtMs={state.endsAtMs}
+            transitionId={0}
+        />);
+        return [...markup.matchAll(/<li\b[^>]*>/g)].map(([element]) => ({
+            element, ratio: getDaisyVisualRatio(element),
+        }));
+    }
+
+    function initialState() {
+        return createInitialPomodoroTimerState({
+            focusDurationMs: 1_000,
+            shortBreakDurationMs: 1_000,
+            longBreakDurationMs: 1_000,
+            focusPhasesPerCycle: 3,
+        });
+    }
+
+    test("preserva a fração ao pausar e só anuncia 100% após o prazo", () => {
+        const running = pomodoroTimerReducer(initialState(), { type: "start", nowMs: 0 });
+        const paused = pomodoroTimerReducer(running, { type: "pause", nowMs: 999.5 });
+        const incomplete = markers(paused);
+        expect(incomplete.map(marker => marker.ratio)).toEqual([0.9995, 0, 0]);
+        expect(incomplete[0].element).toContain('aria-current="step"');
+        expect(incomplete[0].element).toContain("Progresso: 99%");
+        const completed = markers(pomodoroTimerReducer(running, { type: "tick", nowMs: 1_000 }));
+        expect(completed[0].ratio).toBe(1);
+        expect(completed[0].element).toContain("Progresso: 100%");
+        expect(completed[0].element).not.toContain("aria-current");
+    });
+
+    test("Skip preenche o foco, a pausa o conserva e o próximo começa vazio", () => {
+        const shortBreak = pomodoroTimerReducer(initialState(), { type: "skip" });
+        expect(markers(shortBreak).map(marker => marker.ratio)).toEqual([1, 0, 0]);
+        expect(markers(shortBreak).every(marker => !marker.element.includes("aria-current"))).toBe(true);
+        const secondFocus = pomodoroTimerReducer(shortBreak, { type: "skip" });
+        expect(markers(secondFocus).map(marker => marker.ratio)).toEqual([1, 0, 0]);
+        expect(markers(secondFocus)[1].element).toContain('aria-current="step"');
+    });
+
+    test("+1 recalcula a pizza e restart preserva os focos anteriores", () => {
+        let state = initialState();
+        state = pomodoroTimerReducer(state, { type: "skip" });
+        state = pomodoroTimerReducer(state, { type: "skip" });
+        state = pomodoroTimerReducer(state, { type: "start", nowMs: 0 });
+        state = pomodoroTimerReducer(state, { type: "pause", nowMs: 500 });
+        expect(markers(state).map(marker => marker.ratio)).toEqual([1, 0.5, 0]);
+        state = pomodoroTimerReducer(state, { type: "addMinute", nowMs: 500 });
+        expect(markers(state)[1].ratio).toBeCloseTo(500 / 61_000, 12);
+        state = pomodoroTimerReducer(state, { type: "restart" });
+        expect(markers(state).map(marker => marker.ratio)).toEqual([1, 0, 0]);
+    });
+});
 
 describe("barra DaisyUI do Pomodoro com preenchimento fracionário", () => {
     test("avança em milissegundos enquanto mantém o percentual inteiro exibido", () => {
