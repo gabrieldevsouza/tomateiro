@@ -72,6 +72,9 @@ body,
 
 /* Current Steps: wrap native-size items and center each row independently. */
 .pomodoro-steps {
+  /* Keep DaisyUI's default base background and text; palette reference in context/architecture.md. */
+  --color-primary: #fde047;
+  --color-primary-content: #111827;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
