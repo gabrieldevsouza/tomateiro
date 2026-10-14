@@ -76,11 +76,11 @@ function TimerDisplay({ remainingMs, mode = "countdown" }: TimerDisplayProps) {
 									<span
 										key={digitIndex}
 										className="
-											[--pomodoro-countdown-digits:calc(1_+_var(--show-tens)_+_var(--show-hundreds))]
+											[--pomodoro-countdown-digits:calc(1+var(--show-tens)+var(--show-hundreds))]
 											w-[calc(var(--pomodoro-countdown-digits)*1ch)]
 											[transition:--pomodoro-countdown-digits_0.4s_ease-out_0.2s]
 											[&::before]:[--pomodoro-countdown-row:var(--first-digits)]
-											[&::before]:[--pomodoro-countdown-digits:calc(1_+_var(--show-hundreds))]
+											[&::before]:[--pomodoro-countdown-digits:calc(1+var(--show-hundreds))]
 											[&::after]:[--pomodoro-countdown-row:var(--value-ones)]
 											[&::before]:top-[calc(var(--pomodoro-countdown-row)*-1em)]
 											[&::after]:top-[calc(var(--pomodoro-countdown-row)*-1em)]

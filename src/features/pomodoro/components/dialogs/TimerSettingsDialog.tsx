@@ -350,10 +350,10 @@ function TimerSettingsDialog({ settings, onSave, onClose }: TimerSettingsDialogP
 				aria-live={visibleError ? "assertive" : "polite"}
 				aria-atomic="true"
 				style={{ top: "calc(" + titlebarHeight + " + 1cqmin)" }}
-				className="toast toast-top toast-center pointer-events-none z-10 w-[90%] max-w-[36rem] whitespace-normal p-[1cqmin] font-[Beiruti] text-[clamp(0.75rem,3cqmin,1.25rem)]"
+				className="toast toast-top toast-center pointer-events-none z-10 w-[90%] max-w-xl whitespace-normal p-[1cqmin] font-[Beiruti] text-[clamp(0.75rem,3cqmin,1.25rem)]"
 			>
 				{(visibleError || inputFeedback) && <div className="alert alert-warning alert-soft grid-cols-[minmax(0,1fr)] rounded-none p-[1cqmin] font-medium [font-size:inherit] leading-tight">
-					<span className="min-w-0 break-words">
+					<span className="min-w-0 wrap-break-word">
 						{visibleError?.message ?? inputFeedback}
 						{visibleError && invalidFieldCount > 1 && " (" + invalidFieldCount + " campos precisam de correção.)"}
 					</span>

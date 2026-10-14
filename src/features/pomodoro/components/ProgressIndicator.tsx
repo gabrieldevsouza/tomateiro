@@ -71,8 +71,8 @@ function ProgressIndicator({
 						text-[#C2C4D8]
 						[&::-webkit-progress-bar]:bg-[#696D79]
 						[&::-webkit-progress-value]:rounded-full
-						[&::-webkit-progress-value]:[inline-size:100%]!
-						[&::-webkit-progress-value]:[clip-path:inset(0_calc((1_-_var(--pomodoro-progress-ratio))*100%)_0_0_round_9999px)]
+						[&::-webkit-progress-value]:inline-full!
+						[&::-webkit-progress-value]:[clip-path:inset(0_calc((1-var(--pomodoro-progress-ratio))*100%)_0_0_round_9999px)]
 						[&::-webkit-progress-value]:transition-none
 						[&::-moz-progress-bar]:rounded-full
 						[&::-moz-progress-bar]:transition-none
