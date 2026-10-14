@@ -71,9 +71,27 @@ function TimerDisplay({ remainingMs, mode = "countdown" }: TimerDisplayProps) {
 								aria-hidden="true"
 							>
 								{/* DaisyUI wraps at 1000; split longer hour fields to keep every digit. */}
+								{/* Preserve its pseudo-element content while animating numeric rows and widths. */}
 								{(part.length > 3 ? part.split("") : [part]).map((value, digitIndex) => (
 									<span
 										key={digitIndex}
+										className="
+											[--pomodoro-countdown-digits:calc(1_+_var(--show-tens)_+_var(--show-hundreds))]
+											w-[calc(var(--pomodoro-countdown-digits)*1ch)]
+											[transition:--pomodoro-countdown-digits_0.4s_ease-out_0.2s]
+											[&::before]:[--pomodoro-countdown-row:var(--first-digits)]
+											[&::before]:[--pomodoro-countdown-digits:calc(1_+_var(--show-hundreds))]
+											[&::after]:[--pomodoro-countdown-row:var(--value-ones)]
+											[&::before]:top-[calc(var(--pomodoro-countdown-row)*-1em)]
+											[&::after]:top-[calc(var(--pomodoro-countdown-row)*-1em)]
+											[&::before]:w-[calc(var(--pomodoro-countdown-digits)*1ch)]
+											[&::after]:w-[calc(var(--pomodoro-countdown-digits)*1ch)]
+											[&::before]:[transition:--pomodoro-countdown-row_1s_cubic-bezier(1,0,0,1),--pomodoro-countdown-digits_0.2s_ease-out_0.2s,opacity_0.2s_ease-out_0.2s]
+											[&::after]:[transition:--pomodoro-countdown-row_1s_cubic-bezier(1,0,0,1),--pomodoro-countdown-digits_0.2s_ease-out_0.2s,opacity_0.2s_ease-out_0.2s]
+											motion-reduce:transition-none
+											motion-reduce:[&::before]:transition-none
+											motion-reduce:[&::after]:transition-none
+										"
 										style={{
 											"--value": Number(value),
 											"--digits": value.length,

@@ -9,8 +9,6 @@ type ProgressIndicatorProps = {
 	cycleAccountedBeforePhaseMs?: number;
 	endsAtMs?: number | null;
 	transitionId?: number;
-	variant?: "cycle" | "connector" | "connector-return";
-	ariaLabel?: string;
 };
 
 function ProgressIndicator({
@@ -20,18 +18,13 @@ function ProgressIndicator({
 	cycleAccountedBeforePhaseMs = 0,
 	endsAtMs = null,
 	transitionId = 0,
-	variant = "cycle",
-	ariaLabel = "Progresso do ciclo completo",
 }: ProgressIndicatorProps) {
 	const progressRef = useRef<HTMLProgressElement>(null);
-	const connectorRef = useRef<HTMLProgressElement>(null);
-	const returnRef = useRef<HTMLDivElement>(null);
 	const progress = getProgressPercentage(totalDurationMs, remainingMs);
 	const elapsedMs = Math.max(0, Math.min(totalDurationMs, totalDurationMs - remainingMs));
 	const progressRatio = totalDurationMs > 0 ? elapsedMs / totalDurationMs : 0;
 	const isAnimating = endsAtMs !== null && phaseDurationMs > 0 && totalDurationMs > 0;
-	const animationRef = variant === "connector-return" ? returnRef : variant === "connector" ? connectorRef : progressRef;
-	useProgressAnimation(animationRef, {
+	useProgressAnimation(progressRef, {
 		ratio: progressRatio,
 		phaseStartRatio: totalDurationMs > 0 ? Math.max(0, Math.min(1, cycleAccountedBeforePhaseMs / totalDurationMs)) : 0,
 		phaseEndRatio: totalDurationMs > 0 ? Math.max(0, Math.min(1, (cycleAccountedBeforePhaseMs + phaseDurationMs) / totalDurationMs)) : 0,
@@ -39,41 +32,6 @@ function ProgressIndicator({
 		endsAtMs: isAnimating ? endsAtMs : null,
 		transitionId,
 	});
-
-	if (variant === "connector-return") {
-		return (
-			<div
-				ref={returnRef}
-				className="pomodoro-cycle-return"
-				style={{ [PROGRESS_RATIO_PROPERTY]: isAnimating ? undefined : progressRatio } as CSSProperties}
-			>
-				<progress
-					className="sr-only"
-					value={elapsedMs}
-					max={Math.max(1, totalDurationMs)}
-					aria-label={ariaLabel}
-					aria-valuetext={`${progress}%`}
-				/>
-				<span className="pomodoro-cycle-return-start" aria-hidden="true"><span /></span>
-				<span className="pomodoro-cycle-return-middle" aria-hidden="true"><span /></span>
-				<span className="pomodoro-cycle-return-end" aria-hidden="true"><span /></span>
-			</div>
-		);
-	}
-
-	if (variant === "connector") {
-		return (
-			<progress
-				ref={connectorRef}
-				className="progress pomodoro-progress pomodoro-cycle-connector"
-				style={{ [PROGRESS_RATIO_PROPERTY]: isAnimating ? undefined : progressRatio } as CSSProperties}
-				value={elapsedMs}
-				max={Math.max(1, totalDurationMs)}
-				aria-label={ariaLabel}
-				aria-valuetext={`${progress}%`}
-			/>
-		);
-	}
 
 	return (
 		<div className="
@@ -99,6 +57,8 @@ function ProgressIndicator({
 			"
 				style={{containerType: "size"}}
 			>
+				{/* Blink's internal fill stays full width; clip its animated fraction only once.
+				    Gecko keeps native value/max sizing. Both retain DaisyUI's progress element. */}
 				<progress
 					ref={progressRef}
 					className="
@@ -111,12 +71,16 @@ function ProgressIndicator({
 						text-[#C2C4D8]
 						[&::-webkit-progress-bar]:bg-[#696D79]
 						[&::-webkit-progress-value]:rounded-full
+						[&::-webkit-progress-value]:[inline-size:100%]!
+						[&::-webkit-progress-value]:[clip-path:inset(0_calc((1_-_var(--pomodoro-progress-ratio))*100%)_0_0_round_9999px)]
+						[&::-webkit-progress-value]:transition-none
 						[&::-moz-progress-bar]:rounded-full
+						[&::-moz-progress-bar]:transition-none
 					"
 					style={{ [PROGRESS_RATIO_PROPERTY]: isAnimating ? undefined : progressRatio } as CSSProperties}
 					value={elapsedMs}
 					max={Math.max(1, totalDurationMs)}
-					aria-label={ariaLabel}
+					aria-label="Progresso do ciclo completo"
 					aria-valuetext={`${progress}%`}
 				/>
 				<span

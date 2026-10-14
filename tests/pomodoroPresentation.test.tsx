@@ -1,23 +1,14 @@
 import { describe, expect, test } from "bun:test";
 import { renderToStaticMarkup } from "react-dom/server";
 import ProgressIndicator from "../src/features/pomodoro/components/ProgressIndicator";
-import ProgressIndicatorLegacy from "../src/features/pomodoro/components/ProgressIndicatorLegacy";
 import TimerDisplay from "../src/features/pomodoro/components/TimerDisplay";
-import CycleCounterLegacy from "../src/features/pomodoro/components/CycleCounterLegacy";
-import CycleSteps from "../src/features/pomodoro/components/CycleStepsLegacy2";
-import ActiveCycleSteps from "../src/features/pomodoro/components/CycleSteps";
+import CycleSteps from "../src/features/pomodoro/components/CycleSteps";
 import {
     createInitialPomodoroTimerState,
     getPomodoroCycleProgress,
     pomodoroTimerReducer,
     type PomodoroTimerState,
 } from "../src/features/pomodoro/model/pomodoroTimer";
-
-function getVisualRatio(markup: string) {
-    const rightInset = markup.match(/clip-path:inset\(0 ([\d.e+-]+)% 0 0 round 9999px\)/)?.[1];
-    if (rightInset === undefined) throw new Error("Preenchimento visual ausente");
-    return 1 - Number(rightInset) / 100;
-}
 
 function getDaisyVisualRatio(markup: string) {
     const ratio = markup.match(/--pomodoro-progress-ratio:([\d.e+-]+)/)?.[1];
@@ -27,7 +18,7 @@ function getDaisyVisualRatio(markup: string) {
 
 describe("pizzas e pausas nos Steps ativos", () => {
     function markers(state: PomodoroTimerState) {
-        const markup = renderToStaticMarkup(<ActiveCycleSteps
+        const markup = renderToStaticMarkup(<CycleSteps
             focusProgress={getPomodoroCycleProgress(state).focusProgress}
             currentFocusIndex={Math.floor(state.cyclePhaseIndex / 2)}
             isCurrentFocusComplete={state.phase !== "focus" || state.status === "completed"}
@@ -71,8 +62,40 @@ describe("pizzas e pausas nos Steps ativos", () => {
         expect(markers(shortBreak).map(marker => marker.ratio)).toEqual([1, 0, 0]);
         expect(markers(shortBreak).every(marker => !marker.element.includes("aria-current"))).toBe(true);
         const secondFocus = pomodoroTimerReducer(shortBreak, { type: "skip" });
-        expect(markers(secondFocus).map(marker => marker.ratio)).toEqual([1, 0, 0]);
-        expect(markers(secondFocus)[1].element).toContain('aria-current="step"');
+        const items = markers(secondFocus);
+        expect(items.map(marker => marker.ratio)).toEqual([1, 0, 0]);
+        expect(items[0].element).toContain("Foco 1 de 3: percorrido.");
+        expect(items[1].element).toContain("Foco 2 de 3: atual.");
+        expect(items[1].element).toContain('aria-current="step"');
+        expect(items[2].element).toContain("Foco 3 de 3: próximo.");
+    });
+
+    test("frações avançam sem antecipar pausas e a retomada conserva o progresso", () => {
+        let state = pomodoroTimerReducer(initialState(), { type: "start", nowMs: 0 });
+        // SSR does not run WAAPI: pause a snapshot at each sample to inspect its visual fraction.
+        const before = markers(pomodoroTimerReducer(state, { type: "pause", nowMs: 500 }));
+        const after = markers(pomodoroTimerReducer(state, { type: "pause", nowMs: 501 }));
+        expect(before[0].ratio).toBe(0.5);
+        expect(after[0].ratio).toBe(0.501);
+        expect(before[0].element).toContain("Progresso: 50%.");
+        expect(after[0].element).toContain("Progresso: 50%.");
+        expect(after.map(marker => marker.pauseRatio)).toEqual([0, 0, 0]);
+
+        state = pomodoroTimerReducer(state, { type: "skip" });
+        state = pomodoroTimerReducer(state, { type: "start", nowMs: 2_000 });
+        const fractional = markers(pomodoroTimerReducer(state, { type: "pause", nowMs: 2_001.5 }));
+        expect(fractional.map(marker => marker.pauseRatio)).toEqual([0, 0.0015, 0]);
+        expect(fractional[1].element).toContain("Pausa entre os focos 1 e 2: 0%.");
+        state = pomodoroTimerReducer(state, { type: "pause", nowMs: 2_500 });
+        expect(markers(state).map(marker => marker.pauseRatio)).toEqual([0, 0.5, 0]);
+        state = pomodoroTimerReducer(state, { type: "start", nowMs: 8_000 });
+        expect(markers(pomodoroTimerReducer(state, { type: "pause", nowMs: 8_000 }))
+            .map(marker => marker.pauseRatio)).toEqual([0, 0.5, 0]);
+        const almostDone = markers(pomodoroTimerReducer(state, { type: "pause", nowMs: 8_499.5 }));
+        expect(almostDone.map(marker => marker.pauseRatio)).toEqual([0, 0.9995, 0]);
+        expect(almostDone[1].element).toContain("Pausa entre os focos 1 e 2: 99%.");
+        state = pomodoroTimerReducer(state, { type: "tick", nowMs: 8_500 });
+        expect(markers(state).map(marker => marker.pauseRatio)).toEqual([0, 1, 0]);
     });
 
     test("+1 recalcula a pizza e restart preserva os focos anteriores", () => {
@@ -149,8 +172,41 @@ describe("pizzas e pausas nos Steps ativos", () => {
         expect(single).toHaveLength(1);
         expect(single[0].pauseRatio).toBe(0);
         expect(single[0].element).not.toContain("Pausa entre");
-        expect(single[0].element).not.toContain("data-row-start");
+        // Inspect the attribute, not the Tailwind variant inside className.
+        expect(single[0].element).not.toMatch(/\sdata-row-start=/);
         expect(single[0].element).toMatch(/><\/li>$/);
+    });
+
+    test("até quatro focos permanecem em uma fileira, sem entrada de segunda fileira", () => {
+        for (const focusCount of [1, 2, 3, 4]) {
+            const items = markers(initialState(focusCount));
+            expect(items).toHaveLength(focusCount);
+            for (const [index, item] of items.entries()) {
+                expect(item.element).toContain(`Foco ${index + 1} de ${focusCount}:`);
+                expect(item.element).not.toMatch(/\sdata-row-start=/);
+                expect(item.element).not.toMatch(/\sdata-lower-row=/);
+            }
+        }
+    });
+
+    test("de cinco a doze focos preservam a ordem e equilibram as duas fileiras", () => {
+        for (const [focusCount, upperCount, lowerCount] of [
+            [5, 3, 2], [6, 3, 3], [7, 4, 3], [8, 4, 4],
+            [9, 5, 4], [10, 5, 5], [11, 6, 5], [12, 6, 6],
+        ] as const) {
+            const items = markers(initialState(focusCount));
+            expect(items).toHaveLength(focusCount);
+            expect(items.filter(item => item.element.includes('data-lower-row="true"')))
+                .toHaveLength(lowerCount);
+            expect(items.filter(item => item.element.includes('data-row-start="true"')))
+                .toHaveLength(1);
+            for (const [index, item] of items.entries()) {
+                expect(item.element).toContain(`Foco ${index + 1} de ${focusCount}:`);
+                expect(item.element.includes('data-lower-row="true"')).toBe(index >= upperCount);
+                expect(item.element.includes('data-row-start="true"')).toBe(index === upperCount);
+            }
+            expect(items.map(item => item.pauseRatio)).toEqual(Array(focusCount).fill(0));
+        }
     });
 });
 
@@ -196,46 +252,6 @@ describe("barra DaisyUI do Pomodoro com preenchimento fracionário", () => {
     });
 });
 
-describe("barra legada com preenchimento fracionário", () => {
-    test("a barra avança um milissegundo sem trocar o percentual inteiro exibido", () => {
-        const before = renderToStaticMarkup(<ProgressIndicatorLegacy totalDurationMs={1_000} remainingMs={500} />);
-        const after = renderToStaticMarkup(<ProgressIndicatorLegacy totalDurationMs={1_000} remainingMs={499} />);
-        expect(before).toContain('value="500"');
-        expect(after).toContain('value="501"');
-        expect(getVisualRatio(before)).toBe(0.5);
-        expect(getVisualRatio(after)).toBeCloseTo(0.501, 12);
-        for (const markup of [before, after]) {
-            expect(markup).toContain('max="1000"');
-            expect(markup).toContain('aria-valuetext="50%"');
-            expect(markup).toContain('>50%</span>');
-        }
-    });
-
-    test("a barra preserva frações de milissegundo e só anuncia 100% ao terminar", () => {
-        const almostDone = renderToStaticMarkup(<ProgressIndicatorLegacy totalDurationMs={1_000} remainingMs={0.5} />);
-        const done = renderToStaticMarkup(<ProgressIndicatorLegacy totalDurationMs={1_000} remainingMs={0} />);
-        expect(almostDone).toContain('value="999.5"');
-        expect(getVisualRatio(almostDone)).toBeCloseTo(0.9995, 12);
-        expect(almostDone).toContain('aria-valuetext="99%"');
-        expect(done).toContain('value="1000"');
-        expect(getVisualRatio(done)).toBe(1);
-        expect(done).toContain('aria-valuetext="100%"');
-    });
-
-    test("o preenchimento limita os extremos e mantém valores finitos sem duração", () => {
-        for (const [totalDurationMs, remainingMs, ratio] of [
-            [1_000, 2_000, 0],
-            [1_000, -500, 1],
-            [0, 0, 0],
-        ] as const) {
-            const markup = renderToStaticMarkup(<ProgressIndicatorLegacy totalDurationMs={totalDurationMs} remainingMs={remainingMs} />);
-            expect(getVisualRatio(markup)).toBe(ratio);
-            expect(markup).not.toContain("NaN");
-            expect(markup).not.toContain("Infinity");
-        }
-    });
-});
-
 describe("apresentação do Pomodoro com precisão de milissegundos", () => {
     test("o mostrador mantém MM:SS, HH:MM:SS e arredondamento para cima", () => {
         for (const [remainingMs, text, description] of [
@@ -249,107 +265,5 @@ describe("apresentação do Pomodoro com precisão de milissegundos", () => {
             expect(markup).toContain(`>${text}</time>`);
             expect(markup).toContain(`aria-label="${description}"`);
         }
-    });
-
-    test("os medidores circulares legados acompanham progresso fracionário", () => {
-        const before = renderToStaticMarkup(<CycleCounterLegacy focusProgress={[50, 0]} />);
-        const after = renderToStaticMarkup(<CycleCounterLegacy focusProgress={[50.1, 0]} />);
-        expect(before).toContain('aria-label="Progresso: 50%"');
-        expect(after).toContain('aria-label="Progresso: 50.1%"');
-        expect(after).not.toBe(before);
-    });
-});
-
-describe("conectores dos Steps acompanham as pausas curtas", () => {
-    function initialState(focusPhasesPerCycle = 4) {
-        return createInitialPomodoroTimerState({
-            focusDurationMs: 4_000,
-            shortBreakDurationMs: 2_000,
-            longBreakDurationMs: 6_000,
-            focusPhasesPerCycle,
-        });
-    }
-
-    function connectors(state: PomodoroTimerState) {
-        const markup = renderToStaticMarkup(<CycleSteps
-            focusProgress={getPomodoroCycleProgress(state).focusProgress}
-            currentFocusIndex={Math.floor(state.cyclePhaseIndex / 2)}
-            isCurrentFocusComplete={state.phase !== "focus" || state.status === "completed"}
-            transitionId={0}
-            phase={state.phase}
-            phaseDurationMs={state.totalDurationMs}
-            phaseRemainingMs={state.remainingMs}
-            endsAtMs={state.endsAtMs}
-        />);
-        return [...markup.matchAll(/<progress\b[^>]*>/g)].map(([element]) => {
-            const value = Number(element.match(/\bvalue="([^"]+)"/)?.[1]);
-            const max = Number(element.match(/\bmax="([^"]+)"/)?.[1]);
-            expect(Number.isFinite(value)).toBe(true);
-            expect(max).toBeGreaterThan(0);
-            return { value, max, ratio: value / max, element };
-        });
-    }
-
-    test("permanece vazio no foco e recebe frações reais da pausa, sem antecipar os próximos", () => {
-        let state = initialState();
-        expect(connectors(state).map(({ ratio }) => ratio)).toEqual([0, 0, 0]);
-        state = pomodoroTimerReducer(state, { type: "start", nowMs: 0 });
-        state = pomodoroTimerReducer(state, { type: "tick", nowMs: 2_000 });
-        expect(connectors(state).map(({ ratio }) => ratio)).toEqual([0, 0, 0]);
-        state = pomodoroTimerReducer(state, { type: "skip" });
-        expect(connectors(state).map(({ ratio }) => ratio)).toEqual([0, 0, 0]);
-        state = pomodoroTimerReducer(state, { type: "start", nowMs: 2_000 });
-        state = pomodoroTimerReducer(state, { type: "tick", nowMs: 2_001.5 });
-        const fractional = connectors(state);
-        expect(fractional[0].value).toBe(1.5);
-        expect(fractional[0].max).toBe(2_000);
-        expect(fractional[0].element).toContain('aria-label="Progresso da pausa entre os focos 1 e 2"');
-        expect(fractional.slice(1).map(({ ratio }) => ratio)).toEqual([0, 0]);
-        state = pomodoroTimerReducer(state, { type: "pause", nowMs: 3_000 });
-        expect(connectors(state).map(({ ratio }) => ratio)).toEqual([0.5, 0, 0]);
-        state = pomodoroTimerReducer(state, { type: "start", nowMs: 8_000 });
-        expect(connectors(state).map(({ ratio }) => ratio)).toEqual([0.5, 0, 0]);
-        state = pomodoroTimerReducer(state, { type: "tick", nowMs: 8_999.5 });
-        expect(connectors(state)[0].ratio).toBeLessThan(1);
-        state = pomodoroTimerReducer(state, { type: "tick", nowMs: 9_000 });
-        expect(connectors(state).map(({ ratio }) => ratio)).toEqual([1, 0, 0]);
-    });
-
-    test("extras, reinício e Skip alteram apenas a pausa correspondente", () => {
-        let state = pomodoroTimerReducer(initialState(), { type: "skip" });
-        state = pomodoroTimerReducer(state, { type: "skip" });
-        state = pomodoroTimerReducer(state, { type: "skip" });
-        state = pomodoroTimerReducer(state, { type: "start", nowMs: 0 });
-        state = pomodoroTimerReducer(state, { type: "pause", nowMs: 1_000 });
-        expect(connectors(state).map(({ ratio }) => ratio)).toEqual([1, 0.5, 0]);
-        state = pomodoroTimerReducer(state, { type: "addMinute", nowMs: 1_000 });
-        const extended = connectors(state);
-        expect(extended.map(({ ratio }) => ratio)).toEqual([1, 1_000 / 62_000, 0]);
-        expect(extended[1].value).toBe(1_000);
-        expect(extended[1].max).toBe(62_000);
-        state = pomodoroTimerReducer(state, { type: "restart" });
-        expect(connectors(state).map(({ ratio }) => ratio)).toEqual([1, 0, 0]);
-        state = pomodoroTimerReducer(state, { type: "skip" });
-        expect(connectors(state).map(({ ratio }) => ratio)).toEqual([1, 1, 0]);
-        state = pomodoroTimerReducer(state, { type: "start", nowMs: 2_000 });
-        state = pomodoroTimerReducer(state, { type: "tick", nowMs: 4_000 });
-        expect(connectors(state).map(({ ratio }) => ratio)).toEqual([1, 1, 0]);
-    });
-
-    test("pausa longa mantém as conexões, novo bloco zera e quantidade limita linhas", () => {
-        let state = initialState();
-        for (let index = 0; index < 7; index += 1) {
-            state = pomodoroTimerReducer(state, { type: "skip" });
-        }
-        state = pomodoroTimerReducer(state, { type: "start", nowMs: 0 });
-        state = pomodoroTimerReducer(state, { type: "tick", nowMs: 3_000 });
-        expect(state.phase).toBe("longBreak");
-        expect(connectors(state).map(({ ratio }) => ratio)).toEqual([1, 1, 1]);
-        state = pomodoroTimerReducer(state, { type: "skip" });
-        expect(connectors(state).map(({ ratio }) => ratio)).toEqual([0, 0, 0]);
-        state = pomodoroTimerReducer(state, { type: "configure", settings: initialState(1).settings });
-        expect(connectors(state)).toHaveLength(0);
-        state = pomodoroTimerReducer(state, { type: "configure", settings: initialState(12).settings });
-        expect(connectors(state).map(({ ratio }) => ratio)).toEqual(Array(11).fill(0));
     });
 });

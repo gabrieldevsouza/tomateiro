@@ -59,7 +59,34 @@ const CycleStep = memo(function CycleStep({
     return (
         <li
             ref={stepRef}
-            className={isReached ? "step step-primary" : "step"}
+            // Keep DaisyUI's native counter content and circle geometry. The arbitrary pseudo
+            // variants only change paint; before:/after: would inject their own content.
+            // Connectors overlap the circles to avoid a seam, and blend across one screen
+            // CSS pixel regardless of scale. The lower entry keeps a 2rem visible length
+            // and its original 4rem mask reference (solid widths 4:6.5:11 = 8:13:22).
+            // Transparent circle paint prevents the step-primary base leaking at its edge.
+            className={`
+                step flex-[0_0_4rem]
+                data-[lower-row]:relative data-[lower-row]:start-[1rem]
+                [&::before]:[--pomodoro-pause-overlap:0.0625rem]
+                [&::before]:[--pomodoro-pause-start:calc(1rem_-_var(--pomodoro-pause-overlap))]
+                [&::before]:[--pomodoro-pause-span:calc(2rem_+_2_*_var(--pomodoro-pause-overlap))]
+                [&::before]:[--pomodoro-pause-edge:calc(var(--pomodoro-pause-start)_+_var(--pomodoro-pause-ratio)_*_var(--pomodoro-pause-span))]
+                [&::before]:[--pomodoro-pause-half-edge:min(calc(0.5px_/_var(--pomodoro-steps-scale)),calc(var(--pomodoro-pause-ratio)_*_var(--pomodoro-pause-span)),calc((1_-_var(--pomodoro-pause-ratio))_*_var(--pomodoro-pause-span)))]
+                [&::before]:bg-base-300 [&::before]:bg-origin-border [&::before]:border-transparent
+                [&::before]:[background-image:linear-gradient(to_right,var(--color-primary)_calc(var(--pomodoro-pause-edge)_-_var(--pomodoro-pause-half-edge)),var(--color-base-300)_calc(var(--pomodoro-pause-edge)_+_var(--pomodoro-pause-half-edge)))]
+                [&[data-row-start]::before]:w-[calc(100%_-_1rem)]
+                [&[data-row-start]::before]:ms-[calc(-100%_+_1rem)]
+                [&[data-row-start]::before]:[--pomodoro-pause-start:0rem]
+                [&[data-row-start]::before]:[--pomodoro-pause-span:calc(2rem_+_var(--pomodoro-pause-overlap))]
+                [&[data-row-start]::before]:[mask-size:4rem_100%]
+                [&[data-row-start]::before]:mask-no-repeat
+                [&[data-row-start]::before]:[mask-image:linear-gradient(to_right,#000_0%_4%,transparent_4%_7%,#000_7%_13.5%,transparent_13.5%_16.5%,#000_16.5%_27.5%,transparent_27.5%_30.5%,#000_30.5%_100%)]
+                [&::after]:bg-transparent [&::after]:bg-origin-border [&::after]:text-transparent [&::after]:border-transparent
+                [&::after]:[background-image:conic-gradient(var(--color-primary-content)_calc(var(--pomodoro-progress-ratio)_*_1turn),var(--color-base-content)_0),conic-gradient(var(--color-primary)_calc(var(--pomodoro-progress-ratio)_*_1turn),var(--color-base-300)_0)]
+                [&::after]:[background-clip:text,border-box]
+                ${isReached ? "step-primary" : ""}
+            `}
             style={{
                 [PROGRESS_RATIO_PROPERTY]: endsAtMs === null ? ratio : undefined,
                 [PAUSE_RATIO_PROPERTY]: pauseEndsAtMs === null ? pauseRatio : undefined,
@@ -101,7 +128,9 @@ function CycleSteps({
                     {/* Each spacer replaces half of a second native row and its gap. */}
                     {isSingleRow && <div aria-hidden="true" className="h-[calc(20px+0.25rem)] shrink-0" />}
                     <ol
-                        className="steps pomodoro-steps"
+                        // Keep DaisyUI's base background/text; palette reference: context/architecture.md.
+                        // Wrap native-size items and center each row; allow the lower entry to overflow.
+                        className="steps pomodoro-steps flex flex-wrap justify-center gap-y-2 w-[calc(var(--pomodoro-steps-columns)*4rem)] overflow-visible [--color-primary:#fde047] [--color-primary-content:#111827]"
                         style={{ "--pomodoro-steps-columns": columnCount } as CSSProperties}
                         aria-label={`Progresso dos ${focusCount} focos do ciclo`}
                     >
