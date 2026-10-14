@@ -80,7 +80,7 @@ function CycleSteps({
     const columnCount = isSingleRow ? focusCount : Math.ceil(focusCount / 2);
     const unscaledHeight = "calc(80px + 0.5rem)";
     // Use the widest configuration for every count, keeping single-row circles the same size.
-    // The native entry connector needs 1rem extra when centered, or 4rem without compensation.
+    // Preserve the width budget when shortening the entry, so the circles do not change size.
     const maxColumnCount = Math.ceil(POMODORO_SETTINGS_LIMITS.maxFocusPhases / 2);
     const unscaledWidth = `${maxColumnCount * 4 + (CENTER_LOWER_ROW_WITH_CONNECTOR ? 1 : 4)}rem`;
 

@@ -117,8 +117,23 @@ body,
 }
 
 .pomodoro-steps > .step[data-row-start]::before {
+  /* Match the 2rem gap between circles, including segments and cuts; keep the right end under the circle. */
+  width: calc(100% - 1rem);
+  margin-inline-start: calc(-100% + 1rem);
   --pomodoro-pause-start: 0rem;
-  --pomodoro-pause-span: calc(3rem + var(--pomodoro-pause-overlap));
+  --pomodoro-pause-span: calc(2rem + var(--pomodoro-pause-overlap));
+  /* Preserve the original cuts' sizes against the native 4rem width when shortening the entry. */
+  mask-size: 4rem 100%;
+  mask-repeat: no-repeat;
+  /* Three full-height cuts near the entry tip; solid widths 4:6.5:11 = 8:13:22. */
+  mask-image: linear-gradient(to right,
+    #000 0% 4%,
+    transparent 4% 7%,
+    #000 7% 13.5%,
+    transparent 13.5% 16.5%,
+    #000 16.5% 27.5%,
+    transparent 27.5% 30.5%,
+    #000 30.5% 100%);
 }
 
 /* Paint the native circle clockwise from 12 o'clock; its counter and geometry stay DaisyUI. */
@@ -137,8 +152,8 @@ body,
 
 .pomodoro-steps > .step[data-lower-row] {
   position: relative;
-  /* Center the visible row, including the native connector's extra 3rem on the left. */
-  inset-inline-start: 1.5rem;
+  /* Center the visible row, including the entry connector's extra 2rem on the left. */
+  inset-inline-start: 1rem;
 }
 
 /* Legacy 2: fit DaisyUI Steps to the archived cycle markers' area, colors and spacing. */
