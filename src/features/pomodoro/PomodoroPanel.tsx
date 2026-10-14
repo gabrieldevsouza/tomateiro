@@ -110,7 +110,9 @@ function PomodoroPanel({ isEditing, onCloseEditor }: PomodoroPanelProps) {
 						focusProgress={cycleProgress.focusProgress}
 						currentFocusIndex={Math.floor(timerState.cyclePhaseIndex / 2)}
 						isCurrentFocusComplete={timerState.phase !== "focus" || timerState.status === "completed"}
+						phase={timerState.phase}
 						phaseDurationMs={timerState.totalDurationMs}
+						phaseRemainingMs={timerState.remainingMs}
 						endsAtMs={timerState.endsAtMs}
 						transitionId={progressTransitionId}
 					/>

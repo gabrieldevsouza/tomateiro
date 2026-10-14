@@ -88,6 +88,39 @@ body,
   flex: 0 0 4rem;
 }
 
+@property --pomodoro-pause-ratio {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 0;
+}
+
+/* Animate only the visible gap within DaisyUI's native 4rem connector. */
+.pomodoro-steps > .step::before {
+  --pomodoro-pause-start: 1rem;
+  --pomodoro-pause-span: 2rem;
+  --pomodoro-pause-edge: calc(var(--pomodoro-pause-start) + var(--pomodoro-pause-ratio) * var(--pomodoro-pause-span));
+  /* Interpolate across one screen CSS pixel, even when Steps shrink. Collapse at 0/100%. */
+  --pomodoro-pause-half-edge: min(
+    calc(0.5px / var(--pomodoro-steps-scale)),
+    calc(var(--pomodoro-pause-ratio) * var(--pomodoro-pause-span)),
+    calc((1 - var(--pomodoro-pause-ratio)) * var(--pomodoro-pause-span))
+  );
+  /* Keep the layer beneath the gradient neutral, including antialiased edges. */
+  background-color: var(--color-base-300);
+  background-image: linear-gradient(to right,
+    var(--color-primary) calc(var(--pomodoro-pause-edge) - var(--pomodoro-pause-half-edge)),
+    var(--color-base-300) calc(var(--pomodoro-pause-edge) + var(--pomodoro-pause-half-edge)));
+  background-origin: border-box;
+  border-color: transparent;
+  /* Exclude the circular ends so 0% and 100% have no prematurely painted tips. */
+  clip-path: inset(0 1rem 0 var(--pomodoro-pause-start));
+}
+
+.pomodoro-steps > .step[data-row-start]::before {
+  --pomodoro-pause-start: 0rem;
+  --pomodoro-pause-span: 3rem;
+}
+
 /* Paint the native circle clockwise from 12 o'clock; its counter and geometry stay DaisyUI. */
 .pomodoro-steps > .step::after {
   background-image:

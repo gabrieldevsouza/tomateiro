@@ -25,27 +25,31 @@ function getDaisyVisualRatio(markup: string) {
     return Number(ratio);
 }
 
-describe("pizza nos Steps ativos", () => {
+describe("pizzas e pausas nos Steps ativos", () => {
     function markers(state: PomodoroTimerState) {
         const markup = renderToStaticMarkup(<ActiveCycleSteps
             focusProgress={getPomodoroCycleProgress(state).focusProgress}
             currentFocusIndex={Math.floor(state.cyclePhaseIndex / 2)}
             isCurrentFocusComplete={state.phase !== "focus" || state.status === "completed"}
+            phase={state.phase}
             phaseDurationMs={state.totalDurationMs}
+            phaseRemainingMs={state.remainingMs}
             endsAtMs={state.endsAtMs}
             transitionId={0}
         />);
-        return [...markup.matchAll(/<li\b[^>]*>/g)].map(([element]) => ({
-            element, ratio: getDaisyVisualRatio(element),
-        }));
+        return [...markup.matchAll(/<li\b[^>]*>[\s\S]*?<\/li>/g)].map(([element]) => {
+            const pauseRatio = element.match(/--pomodoro-pause-ratio:([\d.e+-]+)/)?.[1];
+            if (pauseRatio === undefined) throw new Error("Preenchimento fracionário da pausa ausente");
+            return { element, ratio: getDaisyVisualRatio(element), pauseRatio: Number(pauseRatio) };
+        });
     }
 
-    function initialState() {
+    function initialState(focusPhasesPerCycle = 3) {
         return createInitialPomodoroTimerState({
             focusDurationMs: 1_000,
             shortBreakDurationMs: 1_000,
             longBreakDurationMs: 1_000,
-            focusPhasesPerCycle: 3,
+            focusPhasesPerCycle,
         });
     }
 
@@ -82,6 +86,71 @@ describe("pizza nos Steps ativos", () => {
         expect(markers(state)[1].ratio).toBeCloseTo(500 / 61_000, 12);
         state = pomodoroTimerReducer(state, { type: "restart" });
         expect(markers(state).map(marker => marker.ratio)).toEqual([1, 0, 0]);
+    });
+
+    test("pausa preenche só a linha seguinte, conserva os círculos e anuncia 100% somente no prazo", () => {
+        const shortBreak = pomodoroTimerReducer(initialState(), { type: "skip" });
+        expect(markers(shortBreak).map(marker => marker.pauseRatio)).toEqual([0, 0, 0]);
+        const running = pomodoroTimerReducer(shortBreak, { type: "start", nowMs: 0 });
+        const paused = pomodoroTimerReducer(running, { type: "pause", nowMs: 999.5 });
+        const incomplete = markers(paused);
+        expect(incomplete.map(marker => marker.pauseRatio)).toEqual([0, 0.9995, 0]);
+        expect(incomplete.map(marker => marker.ratio)).toEqual([1, 0, 0]);
+        expect(incomplete[1].element).toContain("Pausa entre os focos 1 e 2: 99%.");
+        expect(incomplete.every(marker => !marker.element.includes("aria-current"))).toBe(true);
+        const completed = markers(pomodoroTimerReducer(running, { type: "tick", nowMs: 1_000 }));
+        expect(completed.map(marker => marker.pauseRatio)).toEqual([0, 1, 0]);
+        expect(completed[1].element).toContain("Pausa entre os focos 1 e 2: 100%.");
+        expect(completed.map(marker => marker.ratio)).toEqual([1, 0, 0]);
+    });
+
+    test("+1, restart e Skip mudam somente a pausa correspondente", () => {
+        let state = initialState(4);
+        for (let index = 0; index < 3; index += 1) state = pomodoroTimerReducer(state, { type: "skip" });
+        state = pomodoroTimerReducer(state, { type: "start", nowMs: 0 });
+        state = pomodoroTimerReducer(state, { type: "pause", nowMs: 500 });
+        expect(markers(state).map(marker => marker.pauseRatio)).toEqual([0, 1, 0.5, 0]);
+        state = pomodoroTimerReducer(state, { type: "addMinute", nowMs: 500 });
+        expect(markers(state).map(marker => marker.pauseRatio)).toEqual([0, 1, 500 / 61_000, 0]);
+        expect(markers(state).map(marker => marker.ratio)).toEqual([1, 1, 0, 0]);
+        state = pomodoroTimerReducer(state, { type: "restart" });
+        expect(markers(state).map(marker => marker.pauseRatio)).toEqual([0, 1, 0, 0]);
+        state = pomodoroTimerReducer(state, { type: "skip" });
+        expect(markers(state).map(marker => marker.pauseRatio)).toEqual([0, 1, 1, 0]);
+        expect(markers(state).map(marker => marker.ratio)).toEqual([1, 1, 0, 0]);
+        expect(markers(state)[2].element).toContain('aria-current="step"');
+    });
+
+    test("a entrada da segunda fileira com cinco focos representa a pausa entre 3 e 4", () => {
+        let state = initialState(5);
+        for (let index = 0; index < 5; index += 1) state = pomodoroTimerReducer(state, { type: "skip" });
+        state = pomodoroTimerReducer(state, { type: "start", nowMs: 0 });
+        state = pomodoroTimerReducer(state, { type: "pause", nowMs: 500 });
+        const items = markers(state);
+        expect(items.map(marker => marker.pauseRatio)).toEqual([0, 1, 1, 0.5, 0]);
+        expect(items.map(marker => marker.ratio)).toEqual([1, 1, 1, 0, 0]);
+        expect(items.map(marker => marker.element.includes('data-row-start="true"')))
+            .toEqual([false, false, false, true, false]);
+        expect(items[3].element).toContain("Pausa entre os focos 3 e 4: 50%.");
+    });
+
+    test("pausa longa conserva as linhas, novo bloco zera e um foco não cria conexão", () => {
+        let state = initialState();
+        for (let index = 0; index < 5; index += 1) state = pomodoroTimerReducer(state, { type: "skip" });
+        state = pomodoroTimerReducer(state, { type: "start", nowMs: 0 });
+        state = pomodoroTimerReducer(state, { type: "pause", nowMs: 500 });
+        expect(state.phase).toBe("longBreak");
+        expect(markers(state).map(marker => marker.pauseRatio)).toEqual([0, 1, 1]);
+        expect(markers(state).map(marker => marker.ratio)).toEqual([1, 1, 1]);
+        state = pomodoroTimerReducer(state, { type: "skip" });
+        expect(markers(state).map(marker => marker.pauseRatio)).toEqual([0, 0, 0]);
+        expect(markers(state).map(marker => marker.ratio)).toEqual([0, 0, 0]);
+        const single = markers(initialState(1));
+        expect(single).toHaveLength(1);
+        expect(single[0].pauseRatio).toBe(0);
+        expect(single[0].element).not.toContain("Pausa entre");
+        expect(single[0].element).not.toContain("data-row-start");
+        expect(single[0].element).toMatch(/><\/li>$/);
     });
 });
 

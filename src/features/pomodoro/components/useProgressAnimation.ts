@@ -4,6 +4,7 @@ export const PROGRESS_RATIO_PROPERTY = "--pomodoro-progress-ratio";
 const PROGRESS_TRANSITION_MS = 300;
 
 type ProgressAnimationOptions = {
+	property?: `--${string}`;
 	ratio: number;
 	phaseStartRatio?: number;
 	phaseEndRatio?: number;
@@ -15,6 +16,7 @@ type ProgressAnimationOptions = {
 export function useProgressAnimation(
 	elementRef: RefObject<HTMLElement | null>,
 	{
+		property = PROGRESS_RATIO_PROPERTY,
 		ratio,
 		phaseStartRatio = 0,
 		phaseEndRatio = 1,
@@ -43,12 +45,12 @@ export function useProgressAnimation(
 			: previous.transitionEndsAtMs;
 		const transitionMs = Math.max(0, (transitionEndsAtMs ?? nowMs) - nowMs);
 		const targetRatio = staticRatio ?? ratio;
-		element.style.setProperty(PROGRESS_RATIO_PROPERTY, String(targetRatio));
+		element.style.setProperty(property, String(targetRatio));
 		let animation: Animation | undefined;
 		function animatePhase(deadlineMs: number) {
 			const phaseAnimation = element!.animate([
-				{ [PROGRESS_RATIO_PROPERTY]: String(phaseStartRatio) },
-				{ [PROGRESS_RATIO_PROPERTY]: String(phaseEndRatio) },
+				{ [property]: String(phaseStartRatio) },
+				{ [property]: String(phaseEndRatio) },
 			], { duration: phaseDurationMs, easing: "linear", fill: "both" });
 			// The default document timeline shares performance.now()'s origin.
 			phaseAnimation.startTime = deadlineMs - phaseDurationMs;
@@ -64,10 +66,10 @@ export function useProgressAnimation(
 					phaseStartRatio + (phaseEndRatio - phaseStartRatio)
 						* (phaseDurationMs - remainingPhaseMs + catchUpMs) / phaseDurationMs));
 				const keyframes: Keyframe[] = [
-					{ [PROGRESS_RATIO_PROPERTY]: String(previous.ratio), offset: 0, easing: "ease" },
-					{ [PROGRESS_RATIO_PROPERTY]: String(catchUpRatio), offset: catchUpMs / remainingPhaseMs, easing: "linear" },
+					{ [property]: String(previous.ratio), offset: 0, easing: "ease" },
+					{ [property]: String(catchUpRatio), offset: catchUpMs / remainingPhaseMs, easing: "linear" },
 				];
-				if (catchUpMs < remainingPhaseMs) keyframes.push({ [PROGRESS_RATIO_PROPERTY]: String(phaseEndRatio), offset: 1 });
+				if (catchUpMs < remainingPhaseMs) keyframes.push({ [property]: String(phaseEndRatio), offset: 1 });
 				animation = element.animate(keyframes, { duration: remainingPhaseMs, easing: "linear", fill: "both" });
 				animation.startTime = nowMs;
 			} else {
@@ -75,8 +77,8 @@ export function useProgressAnimation(
 			}
 		} else if (previous && transitionMs > 0 && previous.ratio !== targetRatio) {
 			animation = element.animate([
-				{ [PROGRESS_RATIO_PROPERTY]: String(previous.ratio) },
-				{ [PROGRESS_RATIO_PROPERTY]: String(targetRatio) },
+				{ [property]: String(previous.ratio) },
+				{ [property]: String(targetRatio) },
 			], { duration: transitionMs, easing: "ease", fill: "both" });
 			animation.startTime = nowMs;
 		}
@@ -90,7 +92,7 @@ export function useProgressAnimation(
 
 		return () => {
 			const paintedRatio = animation
-				? Number.parseFloat(getComputedStyle(element).getPropertyValue(PROGRESS_RATIO_PROPERTY))
+				? Number.parseFloat(getComputedStyle(element).getPropertyValue(property))
 				: targetRatio;
 			previousVisualRef.current = {
 				ratio: Number.isFinite(paintedRatio) ? Math.max(0, Math.min(1, paintedRatio)) : targetRatio,
@@ -100,5 +102,5 @@ export function useProgressAnimation(
 			animation?.cancel();
 			motionPreference.removeEventListener("change", handleMotionPreferenceChange);
 		};
-	}, [elementRef, endsAtMs, phaseDurationMs, phaseStartRatio, phaseEndRatio, transitionId, staticRatio, isAnimating]);
+	}, [elementRef, property, endsAtMs, phaseDurationMs, phaseStartRatio, phaseEndRatio, transitionId, staticRatio, isAnimating]);
 }
