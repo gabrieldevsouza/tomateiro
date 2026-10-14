@@ -94,10 +94,11 @@ body,
   initial-value: 0;
 }
 
-/* Animate only the visible gap within DaisyUI's native 4rem connector. */
+/* Join the native connector beneath the circle's curved edge, avoiding a dark seam. */
 .pomodoro-steps > .step::before {
-  --pomodoro-pause-start: 1rem;
-  --pomodoro-pause-span: 2rem;
+  --pomodoro-pause-overlap: 0.0625rem;
+  --pomodoro-pause-start: calc(1rem - var(--pomodoro-pause-overlap));
+  --pomodoro-pause-span: calc(2rem + 2 * var(--pomodoro-pause-overlap));
   --pomodoro-pause-edge: calc(var(--pomodoro-pause-start) + var(--pomodoro-pause-ratio) * var(--pomodoro-pause-span));
   /* Interpolate across one screen CSS pixel, even when Steps shrink. Collapse at 0/100%. */
   --pomodoro-pause-half-edge: min(
@@ -112,17 +113,18 @@ body,
     var(--color-base-300) calc(var(--pomodoro-pause-edge) + var(--pomodoro-pause-half-edge)));
   background-origin: border-box;
   border-color: transparent;
-  /* Exclude the circular ends so 0% and 100% have no prematurely painted tips. */
-  clip-path: inset(0 1rem 0 var(--pomodoro-pause-start));
+  /* Let the native line continue under the circles; clipping here creates a visible seam. */
 }
 
 .pomodoro-steps > .step[data-row-start]::before {
   --pomodoro-pause-start: 0rem;
-  --pomodoro-pause-span: 3rem;
+  --pomodoro-pause-span: calc(3rem + var(--pomodoro-pause-overlap));
 }
 
 /* Paint the native circle clockwise from 12 o'clock; its counter and geometry stay DaisyUI. */
 .pomodoro-steps > .step::after {
+  /* The gradients paint the whole circle; a solid step-primary base leaks through antialiasing. */
+  background-color: transparent;
   background-image:
     conic-gradient(var(--color-primary-content) calc(var(--pomodoro-progress-ratio) * 1turn), var(--color-base-content) 0),
     conic-gradient(var(--color-primary) calc(var(--pomodoro-progress-ratio) * 1turn), var(--color-base-300) 0);
