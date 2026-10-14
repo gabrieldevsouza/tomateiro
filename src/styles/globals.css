@@ -77,14 +77,18 @@ body,
   justify-content: center;
   row-gap: 0.5rem;
   width: calc(var(--pomodoro-steps-columns) * 4rem);
+  /* Let the native connector enter the lower row from the left. */
+  overflow: visible;
 }
 
 .pomodoro-steps > .step {
   flex: 0 0 4rem;
 }
 
-.pomodoro-steps > .step[data-row-start]::before {
-  content: none;
+.pomodoro-steps > .step[data-lower-row] {
+  position: relative;
+  /* Center the visible row, including the native connector's extra 3rem on the left. */
+  inset-inline-start: 1.5rem;
 }
 
 /* Legacy 2: fit DaisyUI Steps to the archived cycle markers' area, colors and spacing. */

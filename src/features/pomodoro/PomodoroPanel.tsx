@@ -88,7 +88,7 @@ function PomodoroPanel({ isEditing, onCloseEditor }: PomodoroPanelProps) {
 					w-full
 					min-h-0
 					min-w-0
-					grid-rows-[minmax(0,43fr)_minmax(0,12.5fr)_minmax(0,46fr)_minmax(0,12.5fr)_minmax(0,13fr)_minmax(0,25fr)_minmax(0,28fr)]
+					grid-rows-[minmax(0,55.5fr)_minmax(0,12.5fr)_minmax(0,46fr)_minmax(0,12.5fr)_minmax(0,13fr)_minmax(0,12.5fr)_minmax(0,28fr)]
 				"
 			>
 				<div className="absolute inset-x-0 bottom-full h-[12.5%] @container-size">

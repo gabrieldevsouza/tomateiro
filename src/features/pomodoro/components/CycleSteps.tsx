@@ -1,5 +1,8 @@
 import type { CSSProperties } from "react";
 
+// true: centraliza círculos + linha de entrada; false: centraliza somente os círculos.
+const CENTER_LOWER_ROW_WITH_CONNECTOR = true;
+
 type CycleStepsProps = {
     focusCount: number;
     currentFocusIndex: number;
@@ -11,11 +14,11 @@ function CycleSteps({ focusCount, currentFocusIndex, isCurrentFocusComplete }: C
     const unscaledHeight = focusCount <= 4 ? "40px" : "calc(80px + 0.5rem)";
 
     return (
-        <div className="relative h-full w-full min-h-0 min-w-0 @container-size">
+        <div className="relative h-full w-full min-h-0 min-w-0 overflow-visible @container-size">
             <div
                 className="absolute top-1/2 left-1/2 flex w-max -translate-x-1/2 -translate-y-1/2"
-                // Scale native 40px rows and 4rem steps together, including the gap between rows.
-                style={{ scale: `min(calc(100cqh / ${unscaledHeight}), calc(100cqw / ${columnCount * 4}rem))` }}
+                // Fit the cell height; only Steps may extend beyond the cell horizontally.
+                style={{ scale: `calc(100cqh / ${unscaledHeight})` }}
             >
                 <ol
                     className="steps pomodoro-steps"
@@ -32,7 +35,7 @@ function CycleSteps({ focusCount, currentFocusIndex, isCurrentFocusComplete }: C
                             <li
                                 key={index}
                                 className={index <= currentFocusIndex ? "step step-primary" : "step"}
-                                data-row-start={index === columnCount || undefined}
+                                data-lower-row={(CENTER_LOWER_ROW_WITH_CONNECTOR && index >= columnCount) || undefined}
                                 aria-current={isCurrent ? "step" : undefined}
                                 aria-label={`Foco ${index + 1} de ${focusCount}: ${state}`}
                             />
