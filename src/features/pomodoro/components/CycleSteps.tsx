@@ -2,8 +2,8 @@ import { memo, useRef, type CSSProperties } from "react";
 import { POMODORO_SETTINGS_LIMITS, type PomodoroPhase } from "../model/pomodoroTimer";
 import { PROGRESS_RATIO_PROPERTY, useProgressAnimation } from "./useProgressAnimation";
 
-// Colunas: lateral / Steps / lateral. 3 / 34 / 3 reserva 7,5% em cada ponta.
-const STEPS_HORIZONTAL_GRID = "minmax(0, 3fr) minmax(0, 34fr) minmax(0, 3fr)";
+// Colunas: lateral / Steps / lateral. 5 / 30 / 5 reserva 12,5% em cada ponta.
+const STEPS_HORIZONTAL_GRID = "minmax(0, 5fr) minmax(0, 30fr) minmax(0, 5fr)";
 
 // true: centraliza círculos + linha de entrada; false: centraliza somente os círculos.
 const CENTER_LOWER_ROW_WITH_CONNECTOR = true;
@@ -115,10 +115,18 @@ function CycleSteps({
 
     return (
         <div
-            className="relative left-1/2 grid h-full w-screen min-h-0 min-w-0 -translate-x-1/2 overflow-visible"
+            className="relative left-1/2 grid w-screen min-h-0 min-w-0 -translate-x-1/2 overflow-visible"
             style={{ gridTemplateColumns: STEPS_HORIZONTAL_GRID }}
         >
-            <div className="relative col-start-2 h-full min-h-0 min-w-0 @container-size">
+            <div
+                className="relative col-start-2 w-full min-h-0 min-w-0 @container-size"
+                // Fit the same reference geometry, capped by the panel's original row budget.
+                // The panel gives the released height to the timer without resizing the Steps.
+                style={{
+                    aspectRatio: `calc(${unscaledWidth} / ${unscaledHeight})`,
+                    maxHeight: "calc(100cqh * var(--pomodoro-steps-row-ratio, 1))",
+                }}
+            >
                 <div
                     className="absolute top-1/2 left-1/2 flex w-max -translate-x-1/2 -translate-y-1/2 flex-col"
                     // Steps may exceed the panel cell, but must fit within the central grid track.
@@ -128,7 +136,7 @@ function CycleSteps({
                     } as CSSProperties}
                 >
                     {/* Each spacer replaces half of a second native row and its gap. */}
-                    {isSingleRow && <div aria-hidden="true" className="h-6 shrink-0" />}
+                    {isSingleRow && <div aria-hidden="true" className="h-[calc(20px+0.25rem)] shrink-0" />}
                     <ol
                         // Keep DaisyUI's base background/text; palette reference: context/architecture.md.
                         // Wrap native-size items and center each row; allow the lower entry to overflow.
@@ -162,7 +170,7 @@ function CycleSteps({
                             );
                         })}
                     </ol>
-                    {isSingleRow && <div aria-hidden="true" className="h-6 shrink-0" />}
+                    {isSingleRow && <div aria-hidden="true" className="h-[calc(20px+0.25rem)] shrink-0" />}
                 </div>
             </div>
         </div>
