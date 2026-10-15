@@ -1,4 +1,4 @@
-import { type ClipboardEvent, type FormEvent, useCallback, useContext, useEffect, useId, useLayoutEffect, useRef, useState } from "react";
+import { type ClipboardEvent, type SubmitEvent, type SyntheticEvent, useCallback, useContext, useEffect, useId, useLayoutEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import PrimaryButton from "../../../../components/buttons/PrimaryButton";
 import SecondaryButton from "../../../../components/buttons/SecondaryButton";
@@ -92,7 +92,7 @@ function TimerSettingsDialog({ settings, onSave, onClose }: TimerSettingsDialogP
 		});
 	}
 
-	function handleSubmit(event: FormEvent<HTMLFormElement>) {
+	function handleSubmit(event: SubmitEvent<HTMLFormElement>) {
 		event.preventDefault();
 		const form = event.currentTarget;
 		// Native constraints must also hold for a programmatically dispatched submit.
@@ -105,12 +105,12 @@ function TimerSettingsDialog({ settings, onSave, onClose }: TimerSettingsDialogP
 		onSave(result.settings);
 	}
 
-	function handleInvalid(event: FormEvent<HTMLFormElement>) {
+	function handleInvalid(event: SyntheticEvent<HTMLFormElement>) {
 		event.preventDefault();
 		showErrors(event.currentTarget, readFormErrors(event.currentTarget));
 	}
 
-	function handleFormInput(event: FormEvent<HTMLFormElement>) {
+	function handleFormInput(event: SyntheticEvent<HTMLFormElement>) {
 		const input = event.target;
 		if (!(input instanceof HTMLInputElement)) return;
 		const field = editorFieldOrder.find((name) => input.name === name || input.name.startsWith(`${name}.`));
