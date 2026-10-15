@@ -9,7 +9,13 @@ type TimerDisplayProps = {
 
 // Epilogue regular: countdown's 1ch digit slots, colon advance and visible digit height, in em.
 // Fit the glyphs rather than the font's line box; remeasure if the typeface changes.
-const EPILOGUE_METRICS = { digitSlotWidth: 0.5685, separatorWidth: 0.2575, digitHeight: 0.766 };
+const EPILOGUE_METRICS = {
+	digitSlotWidth: 0.5685,
+	separatorWidth: 0.2575,
+	digitHeight: 0.766,
+	// (digit ascent - digit descent - font ascent + font descent) / 2.
+	digitOffsetY: 0.0896875,
+};
 
 function TimerDisplay({ remainingMs, mode = "countdown" }: TimerDisplayProps) {
 	const totalSeconds = Math.ceil(remainingMs / 1_000);
@@ -24,7 +30,17 @@ function TimerDisplay({ remainingMs, mode = "countdown" }: TimerDisplayProps) {
 		+ separatorCount * EPILOGUE_METRICS.separatorWidth;
 
 	return (
-		<div className="@container-size h-full w-full min-h-0 min-w-0 overflow-hidden">
+		<div
+			className="@container-size w-full min-h-0 min-w-0 overflow-x-clip overflow-y-visible"
+			// Match the cell to the visible digits, returning unused height to the panel's gaps.
+			// The original 46/180 budget fits every supported format without shrinking the font.
+			// Native countdown slots clip rolling digits; preserve their vertical motion and
+			// subpixel glyph edges in the adjacent gaps while still clipping horizontal overflow.
+			style={{
+				aspectRatio: widthEm / EPILOGUE_METRICS.digitHeight,
+				maxHeight: "calc(100cqh * var(--pomodoro-timer-row-ratio, 1))",
+			}}
+		>
 			<time
 				dateTime={`PT${totalSeconds}S`}
 				className="
@@ -41,7 +57,7 @@ function TimerDisplay({ remainingMs, mode = "countdown" }: TimerDisplayProps) {
 				"
 				style={{
 					fontSize: `min(${100 / widthEm}cqw,${100 / EPILOGUE_METRICS.digitHeight}cqh)`,
-					transform: "translateY(0.09em)",
+					transform: `translateY(${EPILOGUE_METRICS.digitOffsetY}em)`,
 				}}
 				aria-label={`${hours > 0 ? `${hours} horas, ` : ""}${minutes} minutos e ${seconds} segundos restantes`}
 			>

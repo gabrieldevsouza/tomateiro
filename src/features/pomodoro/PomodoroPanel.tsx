@@ -78,8 +78,8 @@ function PomodoroPanel({ isEditing, onCloseEditor }: PomodoroPanelProps) {
 	return (
 		<>
 		<div className="grid aspect-8/9 w-[min(100cqw,88.8889cqh)] grid-cols-[minmax(0,3fr)_minmax(0,10fr)_minmax(0,3fr)] grid-rows-[minmax(0,1fr)_minmax(0,4fr)_minmax(0,1fr)]">
-			{/* Preserve the other rows' shares of the original 180fr; only the timer absorbs
-			    the difference between the Steps' former 55.5fr budget and their fitted height. */}
+			{/* Fit Steps and timer to their content; rows 2, 4 and 6 share the remaining
+			    height equally. Progress and controls keep their original shares of 180fr. */}
 			<div
 				className="
 					row-start-2
@@ -92,7 +92,8 @@ function PomodoroPanel({ isEditing, onCloseEditor }: PomodoroPanelProps) {
 					min-w-0
 					@container-size
 					[--pomodoro-steps-row-ratio:calc(55.5/180)]
-					grid-rows-[auto_calc(100%*12.5/180)_minmax(0,1fr)_calc(100%*12.5/180)_calc(100%*13/180)_calc(100%*12.5/180)_calc(100%*28/180)]
+					[--pomodoro-timer-row-ratio:calc(46/180)]
+					grid-rows-[auto_minmax(0,1fr)_auto_minmax(0,1fr)_calc(100%*13/180)_minmax(0,1fr)_calc(100%*28/180)]
 				"
 			>
 				<div className="absolute inset-x-0 bottom-full h-[12.5%] @container-size">

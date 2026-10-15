@@ -121,7 +121,7 @@ function CycleSteps({
             <div
                 className="relative col-start-2 w-full min-h-0 min-w-0 @container-size"
                 // Fit the same reference geometry, capped by the panel's original row budget.
-                // The panel gives the released height to the timer without resizing the Steps.
+                // The panel distributes released height to its gaps without resizing the Steps.
                 style={{
                     aspectRatio: `calc(${unscaledWidth} / ${unscaledHeight})`,
                     maxHeight: "calc(100cqh * var(--pomodoro-steps-row-ratio, 1))",
