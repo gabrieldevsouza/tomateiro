@@ -2,8 +2,8 @@ import { memo, useRef, type CSSProperties } from "react";
 import { POMODORO_SETTINGS_LIMITS, type PomodoroPhase } from "../model/pomodoroTimer";
 import { PROGRESS_RATIO_PROPERTY, useProgressAnimation } from "./useProgressAnimation";
 
-// Colunas: lateral / Steps / lateral. 0 / 1 / 0 usa toda a largura, sem margens laterais.
-const STEPS_HORIZONTAL_GRID = "minmax(0, 0fr) minmax(0, 1fr) minmax(0, 0fr)";
+// Colunas: lateral / Steps / lateral. 5 / 30 / 5 reserva 12,5% em cada ponta.
+const STEPS_HORIZONTAL_GRID = "minmax(0, 5fr) minmax(0, 30fr) minmax(0, 5fr)";
 
 // true: centraliza círculos + linha de entrada; false: centraliza somente os círculos.
 const CENTER_LOWER_ROW_WITH_CONNECTOR = true;
