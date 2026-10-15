@@ -79,7 +79,9 @@ function PomodoroPanel({ isEditing, onCloseEditor }: PomodoroPanelProps) {
 		<>
 		<div className="grid aspect-8/9 w-[min(100cqw,88.8889cqh)] grid-cols-[minmax(0,3fr)_minmax(0,10fr)_minmax(0,3fr)] grid-rows-[minmax(0,1fr)_minmax(0,4fr)_minmax(0,1fr)]">
 			{/* Fit Steps and timer to their content; rows 2, 4 and 6 share the remaining
-			    height equally. Progress and controls keep their original shares of 180fr. */}
+			    height equally. Progress and controls keep their original shares of 180fr.
+			    Steps may span the outer panel: (3 + 10 + 3) / 10 times this central column.
+			    Distinct backgrounds expose all seven rows for layout review. */}
 			<div
 				className="
 					row-start-2
@@ -91,11 +93,17 @@ function PomodoroPanel({ isEditing, onCloseEditor }: PomodoroPanelProps) {
 					min-h-0
 					min-w-0
 					@container-size
+					[--pomodoro-steps-width-ratio:calc(16/10)]
 					[--pomodoro-steps-row-ratio:calc(55.5/180)]
 					[--pomodoro-timer-row-ratio:calc(46/180)]
 					grid-rows-[auto_minmax(0,1fr)_auto_minmax(0,1fr)_calc(100%*13/180)_minmax(0,1fr)_calc(100%*28/180)]
 				"
 			>
+				{/* Paint empty rows first, behind any overflowing countdown digits. */}
+				<div aria-hidden="true" className="pointer-events-none row-start-2 min-h-0 min-w-0 bg-amber-400/40" />
+				<div aria-hidden="true" className="pointer-events-none row-start-4 min-h-0 min-w-0 bg-sky-400/40" />
+				<div aria-hidden="true" className="pointer-events-none row-start-6 min-h-0 min-w-0 bg-orange-400/40" />
+
 				<div className="absolute inset-x-0 bottom-full h-[12.5%] @container-size">
 					<p
 						className="flex h-full items-center justify-center whitespace-nowrap font-[Epilogue] text-[#00CBEA] leading-none"
@@ -110,6 +118,7 @@ function PomodoroPanel({ isEditing, onCloseEditor }: PomodoroPanelProps) {
 					row-start-1
 					min-h-0
 					min-w-0
+					bg-rose-400/40
 				">
 					<CycleSteps
 						focusProgress={cycleProgress.focusProgress}
@@ -127,6 +136,7 @@ function PomodoroPanel({ isEditing, onCloseEditor }: PomodoroPanelProps) {
 					row-start-3
 					min-h-0
 					min-w-0
+					bg-emerald-400/40
 				">
 					<TimerDisplay remainingMs={timerState.remainingMs} mode={TIMER_DISPLAY_MODE} />
 				</div>
@@ -135,6 +145,7 @@ function PomodoroPanel({ isEditing, onCloseEditor }: PomodoroPanelProps) {
 					row-start-5
 					min-h-0
 					min-w-0
+					bg-violet-400/40
 				">
 					<ProgressIndicator
 						totalDurationMs={cycleProgress.totalDurationMs}
@@ -150,6 +161,7 @@ function PomodoroPanel({ isEditing, onCloseEditor }: PomodoroPanelProps) {
 					row-start-7
 					min-h-0
 					min-w-0
+					bg-fuchsia-400/40
 				">
 					<TimerControls
 						status={timerState.status}

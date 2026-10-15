@@ -2,8 +2,8 @@ import { memo, useRef, type CSSProperties } from "react";
 import { POMODORO_SETTINGS_LIMITS, type PomodoroPhase } from "../model/pomodoroTimer";
 import { PROGRESS_RATIO_PROPERTY, useProgressAnimation } from "./useProgressAnimation";
 
-// Colunas: lateral / Steps / lateral. 5 / 30 / 5 reserva 12,5% em cada ponta.
-const STEPS_HORIZONTAL_GRID = "minmax(0, 5fr) minmax(0, 30fr) minmax(0, 5fr)";
+// Colunas: lateral / Steps / lateral. 0 / 1 / 0 usa toda a largura, sem margens laterais.
+const STEPS_HORIZONTAL_GRID = "minmax(0, 0fr) minmax(0, 1fr) minmax(0, 0fr)";
 
 // true: centraliza círculos + linha de entrada; false: centraliza somente os círculos.
 const CENTER_LOWER_ROW_WITH_CONNECTOR = true;
@@ -115,7 +115,9 @@ function CycleSteps({
 
     return (
         <div
-            className="relative left-1/2 grid w-screen min-h-0 min-w-0 -translate-x-1/2 overflow-visible"
+            // Stop scaling with the panel, even when the viewport keeps getting wider.
+            // Its width budget still allows overflow beyond the central cell.
+            className="relative left-1/2 grid w-screen max-w-[calc(100cqw*var(--pomodoro-steps-width-ratio,1))] min-h-0 min-w-0 -translate-x-1/2 overflow-visible"
             style={{ gridTemplateColumns: STEPS_HORIZONTAL_GRID }}
         >
             <div
