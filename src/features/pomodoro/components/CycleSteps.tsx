@@ -132,7 +132,7 @@ function CycleSteps({
                     <ol
                         // Keep DaisyUI's base background/text; palette reference: context/architecture.md.
                         // Wrap native-size items and center each row; allow the lower entry to overflow.
-                        className="steps pomodoro-steps flex flex-wrap justify-center gap-y-2 w-[calc(var(--pomodoro-steps-columns)*4rem)] overflow-visible [--color-primary:#fde047] [--color-primary-content:#111827]"
+                        className="steps pomodoro-steps flex flex-wrap justify-center gap-y-2 w-[calc(var(--pomodoro-steps-columns)*4rem)] overflow-visible [--color-primary:#fde047] [--color-primary-content:#F5911F] [--color-base-content:#212940] [--color-base-300:#2B416B]"
                         style={{ "--pomodoro-steps-columns": columnCount } as CSSProperties}
                         aria-label={`Progresso dos ${focusCount} focos do ciclo`}
                     >
