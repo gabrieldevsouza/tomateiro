@@ -234,7 +234,7 @@ function CustomTitlebar({ onMaximizedChange, portalContainer = null }: CustomTit
 				data-tauri-drag-region
 				className={`
 					absolute inset-x-0 top-0 z-20 grid h-full items-center
-					bg-blue-300 text-slate-950 select-none
+					bg-[#5587B5] text-slate-[#C0C5D9] select-none
 					transition-transform duration-300 motion-reduce:transition-none
 					${shouldShowTitlebar
 						? "translate-y-0 pointer-events-auto ease-out"
@@ -262,7 +262,7 @@ function CustomTitlebar({ onMaximizedChange, portalContainer = null }: CustomTit
 						)}
 					</WindowControlButton>
 				</div>
-				<WindowTitle title="Tomateiro" />
+				<WindowTitle title="TOMATEIRO" />
 				<div className="h-full justify-self-end">
 					<WindowControls isMaximized={isMaximized} />
 				</div>

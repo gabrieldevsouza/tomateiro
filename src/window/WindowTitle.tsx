@@ -27,7 +27,7 @@ function WindowTitle({ title }: WindowTitleProps) {
 		>
 			<img
 				data-tauri-drag-region
-				src="/tauri.svg"
+				src="/tomateiro_titlebar.svg"
 				alt=""
 				aria-hidden="true"
 				draggable={false}
