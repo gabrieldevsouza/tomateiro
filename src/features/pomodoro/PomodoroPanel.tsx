@@ -95,7 +95,7 @@ function PomodoroPanel({ isEditing, onCloseEditor }: PomodoroPanelProps) {
 					[--pomodoro-steps-width-ratio:calc(16/10)]
 					[--pomodoro-steps-row-ratio:calc(55.5/180)]
 					[--pomodoro-timer-row-ratio:calc(46/180)]
-					grid-rows-[auto_minmax(0,1fr)_auto_minmax(0,1fr)_calc(100%*13/180)_minmax(0,1fr)_calc(100%*28/180)]
+					grid-rows-[auto_minmax(0,1.2fr)_auto_minmax(0,1.2fr)_calc(100%*13/180)_minmax(0,1fr)_calc(100%*28/180)]
 				"
 			>
 				<div className="absolute inset-x-0 bottom-full h-[12.5%] @container-size">
