@@ -6,6 +6,11 @@ function AddCardSelection() {
       className="
         card 
         bg-green-500 
+        text-[#212940]
+        focus-visible:outline-2
+        focus-visible:outline-solid
+        focus-visible:outline-current
+        focus-visible:-outline-offset-2
         shadow-sm
         h-full 
         w-full 

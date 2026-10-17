@@ -25,7 +25,7 @@ function PlayButton({ isRunning, onStart, onPause }: PlayButtonProps) {
 
 			" />}
 			bgColor="bg-[#0473B8]"
-			hoverColor="hover:bg-[#00A6CE]"
+			hoverColor="hover:bg-[#008EB0]"
 		/>
 	);
 }

@@ -7,6 +7,9 @@ const STEPS_HORIZONTAL_GRID = "minmax(0, 5fr) minmax(0, 30fr) minmax(0, 5fr)";
 
 // true: centraliza círculos + linha de entrada; false: centraliza somente os círculos.
 const CENTER_LOWER_ROW_WITH_CONNECTOR = true;
+
+// true: preenche no sentido anti-horário; false: horário. Ambos começam no topo.
+const CYCLE_FILL_COUNTERCLOCKWISE = true;
 const PAUSE_RATIO_PROPERTY = "--pomodoro-pause-ratio";
 
 type CycleStepsProps = {
@@ -85,7 +88,9 @@ const CycleStep = memo(function CycleStep({
                 [&[data-row-start]::before]:mask-no-repeat
                 [&[data-row-start]::before]:mask-[linear-gradient(to_right,#000_0%_4%,transparent_4%_7%,#000_7%_13.5%,transparent_13.5%_16.5%,#000_16.5%_27.5%,transparent_27.5%_30.5%,#000_30.5%_100%)]
                 [&::after]:bg-transparent [&::after]:bg-origin-border [&::after]:text-transparent [&::after]:border-transparent
-                [&::after]:bg-[conic-gradient(var(--color-primary-content)_calc(var(--pomodoro-progress-ratio)*1turn),var(--color-base-content)_0),conic-gradient(var(--color-primary)_calc(var(--pomodoro-progress-ratio)*1turn),var(--color-base-300)_0)]
+                ${CYCLE_FILL_COUNTERCLOCKWISE
+                    ? "[&::after]:bg-[conic-gradient(var(--color-base-content)_calc((1-var(--pomodoro-progress-ratio))*1turn),var(--color-primary-content)_0),conic-gradient(var(--color-base-300)_calc((1-var(--pomodoro-progress-ratio))*1turn),var(--color-primary)_0)]"
+                    : "[&::after]:bg-[conic-gradient(var(--color-primary-content)_calc(var(--pomodoro-progress-ratio)*1turn),var(--color-base-content)_0),conic-gradient(var(--color-primary)_calc(var(--pomodoro-progress-ratio)*1turn),var(--color-base-300)_0)]"}
                 [&::after]:[background-clip:text,border-box]
                 ${isReached ? "step-primary" : ""}
             `}
@@ -138,11 +143,11 @@ function CycleSteps({
                     } as CSSProperties}
                 >
                     {/* Each spacer replaces half of a second native row and its gap. */}
-                    {isSingleRow && <div aria-hidden="true" className="h-[calc(20px+0.25rem)] shrink-0" />}
+                    {isSingleRow && <div aria-hidden="true" className="h-6 shrink-0" />}
                     <ol
-                        // Keep DaisyUI's base background/text; palette reference: context/architecture.md.
+                        // Preserve the designer's surfaces; each text color exceeds 4.5:1 on its surface.
                         // Wrap native-size items and center each row; allow the lower entry to overflow.
-                        className="steps pomodoro-steps flex flex-wrap justify-center gap-y-2 w-[calc(var(--pomodoro-steps-columns)*4rem)] overflow-visible [--color-primary:#fde047] [--color-primary-content:#F5911F] [--color-base-content:#212940] [--color-base-300:#2B416B]"
+                        className="steps pomodoro-steps flex flex-wrap justify-center gap-y-2 w-[calc(var(--pomodoro-steps-columns)*4rem)] overflow-visible [--color-primary:#fde047] [--color-primary-content:#915100] [--color-base-content:#A5B1CE] [--color-base-300:#2B416B]"
                         style={{ "--pomodoro-steps-columns": columnCount } as CSSProperties}
                         aria-label={`Progresso dos ${focusCount} focos do ciclo`}
                     >
@@ -172,7 +177,7 @@ function CycleSteps({
                             );
                         })}
                     </ol>
-                    {isSingleRow && <div aria-hidden="true" className="h-[calc(20px+0.25rem)] shrink-0" />}
+                    {isSingleRow && <div aria-hidden="true" className="h-6 shrink-0" />}
                 </div>
             </div>
         </div>

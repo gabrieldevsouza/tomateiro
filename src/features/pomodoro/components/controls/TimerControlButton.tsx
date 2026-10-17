@@ -21,8 +21,8 @@ function TimerControlButton({
     title = ariaLabel,
     onClick,
     disabled = false,
-    bgColor = "bg-red-400",
-    hoverColor = "hover:bg-[#5F77B8]",
+    bgColor = "bg-[#374468]",
+    hoverColor = "hover:bg-[#435482]",
     activeColor = "active:bg-[#1D2230]",
     className = "",
 

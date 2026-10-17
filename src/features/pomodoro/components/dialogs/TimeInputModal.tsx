@@ -70,7 +70,7 @@ function TimeInputModal({ name, label, labelledBy, defaultValue, inputDescriptio
                 input grid cursor-default
                 grid-cols-[minmax(0,0.92fr)_minmax(0,0.24fr)_minmax(0,0.92fr)_minmax(0,0.24fr)_minmax(0,0.92fr)]
                 items-center h-full w-full min-h-0 min-w-0 max-w-none gap-0 px-0 py-0 border-0 shadow-none
-                rounded-none bg-[#17243F] font-[Epilogue] text-white
+                rounded-none bg-[#17243F] font-[Epilogue] text-white outline-1 -outline-offset-1 outline-[#7C8BA9]
             ">
                 {DURATION_SEGMENTS.map((segment, index) => (
                     <Fragment key={segment.name}>

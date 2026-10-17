@@ -10,7 +10,8 @@ function Button({ type = "button", className = "", children, ...props }: ButtonP
 			className={`
 				btn btn-ghost @container-size
 				min-h-0 min-w-0 select-none rounded-full border-0 p-0
-				font-[Inter] font-bold shadow-none outline-none
+				font-[Inter] font-bold shadow-none
+				focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white
 				${className}
 			`}
 		>

@@ -27,6 +27,7 @@ function SelectionView() {
                     className="
                         [grid-area:main]
                         bg-green-400
+                        text-[#212940]
                         min-w-0
                     "
                 >
@@ -38,6 +39,7 @@ function SelectionView() {
                     className="
                         [grid-area:conf]
                         bg-yellow-600
+                        text-[#212940]
                     "
                 >
                     Conf

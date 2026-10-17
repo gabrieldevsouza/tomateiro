@@ -46,7 +46,7 @@ function CyclesAmountInputModal({
 			py-0
 
             rounded-none border-0 shadow-none
-            bg-[#17243F] font-[Epilogue] text-white
+            bg-[#17243F] font-[Epilogue] text-white outline-1 -outline-offset-1 outline-[#7C8BA9]
         `}>
         <div className="flex h-full w-full min-h-0 min-w-0 items-center justify-center @container-size">
         <CountdownNumberInput numberInput={cyclesInput} label="Quantidade de ciclos" name={name} id={id} descriptionId={descriptionId} invalid={invalid} />
