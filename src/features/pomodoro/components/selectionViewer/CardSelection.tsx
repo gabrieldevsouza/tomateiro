@@ -12,7 +12,7 @@ function CardSelection({ onEdit }: CardSelectionProps) {
   const title = "Editar Pomodoro";
 
   return (
-    <div className="relative h-full w-full min-w-0 min-h-0">
+    <div className="group relative h-full w-full min-w-0 min-h-0">
       <div className="hover-3d h-full w-full min-w-0 min-h-0">
         <div
           className="
@@ -137,8 +137,21 @@ function CardSelection({ onEdit }: CardSelectionProps) {
       </div>
 
       {/* Botão de edição sobreposto ao card */}
-      <div className="absolute right-2 top-2 z-20">
-        <EditTimerButton onClick={onEdit} />
+      <div className="absolute 
+          right-2 
+          top-2 
+          z-20
+          opacity-0
+          pointer-events-none
+          transition-opacity
+          duration-200
+          group-hover:opacity-100
+          group-hover:pointer-events-auto
+          group-focus-within:opacity-100
+          group-focus-within:pointer-events-auto"
+          >
+        <EditTimerButton onClick={onEdit}
+        sizeClassName="!size-8" />
       </div>
     </div>
   );
