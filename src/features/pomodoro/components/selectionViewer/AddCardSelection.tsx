@@ -21,7 +21,7 @@ function AddCardSelection() {
       flex
       aspect-square
       shrink-0
-      h-[50%]
+      h-[30%]
       items-center
       justify-center
       rounded-full
