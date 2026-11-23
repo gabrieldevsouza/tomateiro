@@ -32,7 +32,7 @@ function DurationSegmentInput({ segment, id, name, label, defaultValue, inputDes
                 type="button"
                 tabIndex={-1}
                 className={arrowButtonClasses}
-                aria-label={label + (segment.name === "hours" ? ": aumentar " : ":aumentar ") + segment.label}
+                aria-label={label + ": increase " + segment.label}
                 {...numberInput.getStepButtonProps(1)}
             >
                 <PiCaretUp aria-hidden="true" className={arrowIconClasses} />
@@ -40,7 +40,7 @@ function DurationSegmentInput({ segment, id, name, label, defaultValue, inputDes
             <div className="flex h-full w-full min-h-0 min-w-0 items-center justify-center @container-size">
                 <CountdownNumberInput
                     numberInput={numberInput}
-                    label={label + ":" + segment.label}
+                    label={label + ": " + segment.label}
                     name={`${name}.${segment.name}`}
                     id={`${id}-${segment.name}`}
                     descriptionId={inputDescriptionId}
@@ -51,7 +51,7 @@ function DurationSegmentInput({ segment, id, name, label, defaultValue, inputDes
                 type="button"
                 tabIndex={-1}
                 className={arrowButtonClasses}
-                aria-label={label + ":diminuir " + segment.label}
+                aria-label={label + ": decrease " + segment.label}
                 {...numberInput.getStepButtonProps(-1)}
             >
                 <PiCaretDown aria-hidden="true" className={arrowIconClasses} />

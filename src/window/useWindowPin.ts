@@ -24,9 +24,9 @@ export function useWindowPin() {
 			if (toggle) await appWindow.setAlwaysOnTop(nextPinned);
 			if (request === pinRequestRef.current) setIsPinned(nextPinned);
 		} catch (error: unknown) {
-			console.error("Falha ao atualizar fixação da janela:", error);
+			console.error("Failed to update the Always on top setting:", error);
 			if (request === pinRequestRef.current) {
-				setPinError("Não foi possível atualizar a fixação. Clique no pin para tentar novamente.");
+				setPinError("Couldn't update the Always on top setting. Select Always on top to try again.");
 			}
 		} finally {
 			if (request === pinRequestRef.current) {

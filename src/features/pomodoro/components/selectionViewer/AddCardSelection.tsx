@@ -2,7 +2,7 @@ function AddCardSelection() {
   return (
     <button
       type="button"
-      aria-label="Adicionar temporizador"
+      aria-label="Add timer"
       className="
         card 
         bg-green-500 

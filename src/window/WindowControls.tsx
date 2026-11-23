@@ -7,7 +7,7 @@ async function executeWindowAction(action: () => Promise<void>) {
 		await action();
 	} catch (error: unknown) {
 		console.error(
-			"Falha ao executar comando de janela:",
+			"Failed to execute window command:",
 			error,
 		);
 	}
@@ -17,7 +17,7 @@ function WindowControls({ isMaximized }: { isMaximized: boolean }) {
 	return (
 		<div className="flex h-full items-stretch">
 			<WindowControlButton
-				ariaLabel="Minimizar janela"
+				ariaLabel="Minimize window"
 				variant="default"
 				onClick={() =>
 					void executeWindowAction(() =>
@@ -29,7 +29,7 @@ function WindowControls({ isMaximized }: { isMaximized: boolean }) {
 			</WindowControlButton>
 
 			<WindowControlButton
-				ariaLabel={isMaximized ? "Restaurar janela" : "Maximizar janela"}
+				ariaLabel={isMaximized ? "Restore window" : "Maximize window"}
 				variant="default"
 				onClick={() =>
 					void executeWindowAction(() =>
@@ -45,7 +45,7 @@ function WindowControls({ isMaximized }: { isMaximized: boolean }) {
 			</WindowControlButton>
 
 			<WindowControlButton
-				ariaLabel="Fechar janela"
+				ariaLabel="Close window"
 				variant="danger"
 				onClick={() =>
 					void executeWindowAction(() =>

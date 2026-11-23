@@ -53,7 +53,7 @@ export function isValidPomodoroSettings(settings: unknown): settings is Pomodoro
 
 export function getCycleDurationMs(settings: PomodoroSettings): number {
 	if (!isValidPomodoroSettings(settings)) {
-		throw new RangeError("Configuração do Pomodoro inválida.");
+		throw new RangeError("Invalid Pomodoro settings.");
 	}
 	return settings.focusPhasesPerCycle * settings.focusDurationMs +
 		(settings.focusPhasesPerCycle - 1) * settings.shortBreakDurationMs +
@@ -92,7 +92,7 @@ export function createInitialPomodoroTimerState(
 	settings: PomodoroSettings = DEFAULT_POMODORO_SETTINGS,
 ): PomodoroTimerState{
 	if (!isValidPomodoroSettings(settings)) {
-		throw new RangeError("Configuração do Pomodoro inválida.");
+		throw new RangeError("Invalid Pomodoro settings.");
 	}
 	return{
 		settings: { ...settings },
@@ -115,7 +115,7 @@ export function getPhaseDurationMs(
 	settings: PomodoroSettings = DEFAULT_POMODORO_SETTINGS,
 ): number{
 	if (!isValidPomodoroSettings(settings)) {
-		throw new RangeError("Configuração do Pomodoro inválida.");
+		throw new RangeError("Invalid Pomodoro settings.");
 	}
 	switch(phase){
 		case "focus":

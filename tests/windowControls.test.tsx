@@ -36,10 +36,10 @@ describe("fronteira nativa dos controles de janela", () => {
     Reflect.deleteProperty(globalThis, "document");
     const html = renderToStaticMarkup(<AppShell><p>Conteúdo</p></AppShell>);
     expect(html).toContain("Conteúdo");
-    expect(html).toContain('aria-label="Manter janela sempre no topo"');
-    expect(html).toContain('aria-label="Minimizar janela"');
-    expect(html).toContain('aria-label="Maximizar janela"');
-    expect(html).toContain('aria-label="Fechar janela"');
+    expect(html).toContain('aria-label="Always on top"');
+    expect(html).toContain('aria-label="Minimize window"');
+    expect(html).toContain('aria-label="Maximize window"');
+    expect(html).toContain('aria-label="Close window"');
     expect(html).toContain('aria-busy="true"');
   });
 
@@ -59,7 +59,7 @@ describe("fronteira nativa dos controles de janela", () => {
       { command: "plugin:window|toggle_maximize", payload: { label: "segunda" } },
       { command: "plugin:window|close", payload: { label: "segunda" } },
     ]);
-    expect(controls(true)[1].ariaLabel).toBe("Restaurar janela");
+    expect(controls(true)[1].ariaLabel).toBe("Restore window");
   });
 
   test("falha de IPC é tratada e uma nova ação continua disponível", async () => {
@@ -73,7 +73,7 @@ describe("fronteira nativa dos controles de janela", () => {
       const minimize = controls()[0].onClick;
       minimize();
       await new Promise((resolve) => setTimeout(resolve, 0));
-      expect(error).toHaveBeenCalledWith("Falha ao executar comando de janela:", failure);
+      expect(error).toHaveBeenCalledWith("Failed to execute window command:", failure);
       minimize();
       await Promise.resolve();
       expect(attempts).toBe(2);

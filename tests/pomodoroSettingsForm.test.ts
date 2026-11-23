@@ -145,9 +145,9 @@ describe("campos e conversão do editor", () => {
 			{ field: "shortBreakDurationMs", inputName: "shortBreakDurationMs.hours" },
 			{ field: "focusPhasesPerCycle", inputName: "focusPhasesPerCycle" },
 		]);
-		expect(result.errors[0].message).toContain("Temporizador");
-		expect(result.errors[1].message).toContain("Pausa curta");
-		expect(result.errors[2].message).toContain("Ciclos");
+		expect(result.errors[0].message).toContain("Focus");
+		expect(result.errors[1].message).toContain("Short break");
+		expect(result.errors[2].message).toContain("Sessions");
 		expect(readPomodoroSettingsForm(data)).toBeNull();
 	});
 

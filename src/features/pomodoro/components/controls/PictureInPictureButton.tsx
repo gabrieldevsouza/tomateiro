@@ -4,8 +4,8 @@ import { TbPictureInPicture } from "react-icons/tb";
 function PictureInPictureButton() {
     return (
         <TimerControlButton
-            ariaLabel="Picture-in-picture indisponível"
-            title="Picture-in-picture ainda não disponível"
+            ariaLabel="Picture-in-picture (unavailable)"
+            title="Not available yet"
             disabled
 
             icon={<TbPictureInPicture className="

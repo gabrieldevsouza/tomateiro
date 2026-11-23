@@ -19,7 +19,7 @@ export function useWindowMaximized(onMaximizedChange?: (isMaximized: boolean) =>
 					onMaximizedChange?.(maximized);
 				}
 			} catch (error: unknown) {
-				console.error("Falha ao consultar estado maximizado:", error);
+				console.error("Failed to read the window's maximized state:", error);
 			}
 		}
 		void syncMaximizedState();
@@ -28,7 +28,7 @@ export function useWindowMaximized(onMaximizedChange?: (isMaximized: boolean) =>
 		}).then((unlisten) => {
 			if (isDisposed) unlisten();
 			else stopListening = unlisten;
-		}).catch((error: unknown) => console.error("Falha ao observar redimensionamento:", error));
+		}).catch((error: unknown) => console.error("Failed to subscribe to window resize events:", error));
 
 		return () => {
 			isDisposed = true;

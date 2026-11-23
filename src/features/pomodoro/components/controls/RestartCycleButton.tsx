@@ -6,7 +6,7 @@ function RestartCycleButton({ onClick }: { onClick: () => void }) {
 	return (
 		<TimerControlButton
 			onClick={onClick}
-			ariaLabel = "Reiniciar ciclo"
+			ariaLabel = "Restart phase"
 
 			icon={<MdOutlineReplay className="
 				fill-[#C2C7DA]

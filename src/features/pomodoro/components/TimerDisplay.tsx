@@ -59,7 +59,7 @@ function TimerDisplay({ remainingMs, mode = "countdown" }: TimerDisplayProps) {
 					fontSize: `min(${100 / widthEm}cqw,${100 / EPILOGUE_METRICS.digitHeight}cqh)`,
 					transform: `translateY(${EPILOGUE_METRICS.digitOffsetY}em)`,
 				}}
-				aria-label={`${hours > 0 ? `${hours} horas, ` : ""}${minutes} minutos e ${seconds} segundos restantes`}
+				aria-label={`${hours > 0 ? `${hours} ${hours === 1 ? "hour" : "hours"}, ` : ""}${minutes} ${minutes === 1 ? "minute" : "minutes"} and ${seconds} ${seconds === 1 ? "second" : "seconds"} remaining`}
 			>
 				{mode === "digital" ? formattedTime : timeParts.map((part, index) => (
 					<Fragment key={timeParts.length - index}>

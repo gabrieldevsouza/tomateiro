@@ -83,7 +83,7 @@ function ProgressIndicator({
 					"
 					value={elapsedMs}
 					max={Math.max(1, totalDurationMs)}
-					aria-label="Progresso do ciclo completo"
+					aria-label="Overall cycle progress"
 					aria-valuetext={`${progress}%`}
 				/>
 				<span

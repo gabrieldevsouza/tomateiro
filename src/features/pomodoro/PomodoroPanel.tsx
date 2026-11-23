@@ -21,9 +21,9 @@ import { useEffect, useReducer } from "react";
 const TIMER_DISPLAY_MODE: TimerDisplayMode = "countdown";
 
 const phaseLabels: Record<PomodoroPhase, string> = {
-	focus: "Foco",
-	shortBreak: "Pausa curta",
-	longBreak: "Pausa longa",
+	focus: "Focus",
+	shortBreak: "Short break",
+	longBreak: "Long break",
 };
 
 type PomodoroPanelProps = {

@@ -31,7 +31,7 @@ function SelectionView() {
                         min-w-0
                     "
                 >
-                    Main
+                    Timers
                     <TimersGrid />
                 </div>
 
@@ -42,7 +42,7 @@ function SelectionView() {
                         text-[#212940]
                     "
                 >
-                    Conf
+                    Settings
                 </div>
             </div>
         </section>

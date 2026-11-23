@@ -15,7 +15,7 @@ export default function TimersGrid({
 }: TimersGridProps) {
   return (
     <section
-      aria-label="Temporizadores"
+      aria-label="Timers"
       className="
         grid 
         w-full 

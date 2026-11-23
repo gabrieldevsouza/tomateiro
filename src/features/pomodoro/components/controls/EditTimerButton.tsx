@@ -4,7 +4,7 @@ import TimerControlButton from "./TimerControlButton";
 function EditTimerButton({ onClick }: { onClick: () => void }) {
 	return (
 		<TimerControlButton
-			ariaLabel="Editar tempos e ciclos"
+			ariaLabel="Edit timer settings"
 			onClick={onClick}
 			icon={<PiPencilSimple aria-hidden="true" className="h-[55%] w-[55%] fill-[#00CBEA]" />}
 			bgColor="bg-transparent"

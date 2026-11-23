@@ -50,10 +50,10 @@ describe("pizzas e pausas nos Steps ativos", () => {
         const incomplete = markers(paused);
         expect(incomplete.map(marker => marker.ratio)).toEqual([0.9995, 0, 0]);
         expect(incomplete[0].element).toContain('aria-current="step"');
-        expect(incomplete[0].element).toContain("Progresso: 99%");
+        expect(incomplete[0].element).toContain("Progress: 99%");
         const completed = markers(pomodoroTimerReducer(running, { type: "tick", nowMs: 1_000 }));
         expect(completed[0].ratio).toBe(1);
-        expect(completed[0].element).toContain("Progresso: 100%");
+        expect(completed[0].element).toContain("Progress: 100%");
         expect(completed[0].element).not.toContain("aria-current");
     });
 
@@ -64,10 +64,10 @@ describe("pizzas e pausas nos Steps ativos", () => {
         const secondFocus = pomodoroTimerReducer(shortBreak, { type: "skip" });
         const items = markers(secondFocus);
         expect(items.map(marker => marker.ratio)).toEqual([1, 0, 0]);
-        expect(items[0].element).toContain("Foco 1 de 3: percorrido.");
-        expect(items[1].element).toContain("Foco 2 de 3: atual.");
+        expect(items[0].element).toContain("Focus session 1 of 3: ended.");
+        expect(items[1].element).toContain("Focus session 2 of 3: current.");
         expect(items[1].element).toContain('aria-current="step"');
-        expect(items[2].element).toContain("Foco 3 de 3: próximo.");
+        expect(items[2].element).toContain("Focus session 3 of 3: upcoming.");
     });
 
     test("frações avançam sem antecipar pausas e a retomada conserva o progresso", () => {
@@ -77,15 +77,15 @@ describe("pizzas e pausas nos Steps ativos", () => {
         const after = markers(pomodoroTimerReducer(state, { type: "pause", nowMs: 501 }));
         expect(before[0].ratio).toBe(0.5);
         expect(after[0].ratio).toBe(0.501);
-        expect(before[0].element).toContain("Progresso: 50%.");
-        expect(after[0].element).toContain("Progresso: 50%.");
+        expect(before[0].element).toContain("Progress: 50%.");
+        expect(after[0].element).toContain("Progress: 50%.");
         expect(after.map(marker => marker.pauseRatio)).toEqual([0, 0, 0]);
 
         state = pomodoroTimerReducer(state, { type: "skip" });
         state = pomodoroTimerReducer(state, { type: "start", nowMs: 2_000 });
         const fractional = markers(pomodoroTimerReducer(state, { type: "pause", nowMs: 2_001.5 }));
         expect(fractional.map(marker => marker.pauseRatio)).toEqual([0, 0.0015, 0]);
-        expect(fractional[1].element).toContain("Pausa entre os focos 1 e 2: 0%.");
+        expect(fractional[1].element).toContain("Break between focus sessions 1 and 2: 0%.");
         state = pomodoroTimerReducer(state, { type: "pause", nowMs: 2_500 });
         expect(markers(state).map(marker => marker.pauseRatio)).toEqual([0, 0.5, 0]);
         state = pomodoroTimerReducer(state, { type: "start", nowMs: 8_000 });
@@ -93,7 +93,7 @@ describe("pizzas e pausas nos Steps ativos", () => {
             .map(marker => marker.pauseRatio)).toEqual([0, 0.5, 0]);
         const almostDone = markers(pomodoroTimerReducer(state, { type: "pause", nowMs: 8_499.5 }));
         expect(almostDone.map(marker => marker.pauseRatio)).toEqual([0, 0.9995, 0]);
-        expect(almostDone[1].element).toContain("Pausa entre os focos 1 e 2: 99%.");
+        expect(almostDone[1].element).toContain("Break between focus sessions 1 and 2: 99%.");
         state = pomodoroTimerReducer(state, { type: "tick", nowMs: 8_500 });
         expect(markers(state).map(marker => marker.pauseRatio)).toEqual([0, 1, 0]);
     });
@@ -119,11 +119,11 @@ describe("pizzas e pausas nos Steps ativos", () => {
         const incomplete = markers(paused);
         expect(incomplete.map(marker => marker.pauseRatio)).toEqual([0, 0.9995, 0]);
         expect(incomplete.map(marker => marker.ratio)).toEqual([1, 0, 0]);
-        expect(incomplete[1].element).toContain("Pausa entre os focos 1 e 2: 99%.");
+        expect(incomplete[1].element).toContain("Break between focus sessions 1 and 2: 99%.");
         expect(incomplete.every(marker => !marker.element.includes("aria-current"))).toBe(true);
         const completed = markers(pomodoroTimerReducer(running, { type: "tick", nowMs: 1_000 }));
         expect(completed.map(marker => marker.pauseRatio)).toEqual([0, 1, 0]);
-        expect(completed[1].element).toContain("Pausa entre os focos 1 e 2: 100%.");
+        expect(completed[1].element).toContain("Break between focus sessions 1 and 2: 100%.");
         expect(completed.map(marker => marker.ratio)).toEqual([1, 0, 0]);
     });
 
@@ -154,7 +154,7 @@ describe("pizzas e pausas nos Steps ativos", () => {
         expect(items.map(marker => marker.ratio)).toEqual([1, 1, 1, 0, 0]);
         expect(items.map(marker => marker.element.includes('data-row-start="true"')))
             .toEqual([false, false, false, true, false]);
-        expect(items[3].element).toContain("Pausa entre os focos 3 e 4: 50%.");
+        expect(items[3].element).toContain("Break between focus sessions 3 and 4: 50%.");
     });
 
     test("pausa longa conserva as linhas, novo bloco zera e um foco não cria conexão", () => {
@@ -171,7 +171,7 @@ describe("pizzas e pausas nos Steps ativos", () => {
         const single = markers(initialState(1));
         expect(single).toHaveLength(1);
         expect(single[0].pauseRatio).toBe(0);
-        expect(single[0].element).not.toContain("Pausa entre");
+        expect(single[0].element).not.toContain("Break between");
         // Inspect the attribute, not the Tailwind variant inside className.
         expect(single[0].element).not.toMatch(/\sdata-row-start=/);
         expect(single[0].element).toMatch(/><\/li>$/);
@@ -182,7 +182,7 @@ describe("pizzas e pausas nos Steps ativos", () => {
             const items = markers(initialState(focusCount));
             expect(items).toHaveLength(focusCount);
             for (const [index, item] of items.entries()) {
-                expect(item.element).toContain(`Foco ${index + 1} de ${focusCount}:`);
+                expect(item.element).toContain(`Focus session ${index + 1} of ${focusCount}:`);
                 expect(item.element).not.toMatch(/\sdata-row-start=/);
                 expect(item.element).not.toMatch(/\sdata-lower-row=/);
             }
@@ -201,7 +201,7 @@ describe("pizzas e pausas nos Steps ativos", () => {
             expect(items.filter(item => item.element.includes('data-row-start="true"')))
                 .toHaveLength(1);
             for (const [index, item] of items.entries()) {
-                expect(item.element).toContain(`Foco ${index + 1} de ${focusCount}:`);
+                expect(item.element).toContain(`Focus session ${index + 1} of ${focusCount}:`);
                 expect(item.element.includes('data-lower-row="true"')).toBe(index >= upperCount);
                 expect(item.element.includes('data-row-start="true"')).toBe(index === upperCount);
             }
@@ -224,7 +224,7 @@ describe("barra DaisyUI do Pomodoro com preenchimento fracionário", () => {
             expect(classes).not.toContain("sr-only");
             expect(element).toContain(`value="${elapsedMs}"`);
             expect(element).toContain('max="1000"');
-            expect(element).toContain('aria-label="Progresso do ciclo completo"');
+            expect(element).toContain('aria-label="Overall cycle progress"');
             expect(element).toContain(`aria-valuetext="${percentage}%"`);
             expect(getDaisyVisualRatio(markup)).toBeCloseTo(elapsedMs / 1_000, 12);
             expect(markup).toContain(`>${percentage}%</span>`);
@@ -255,11 +255,13 @@ describe("barra DaisyUI do Pomodoro com preenchimento fracionário", () => {
 describe("apresentação do Pomodoro com precisão de milissegundos", () => {
     test("o mostrador mantém MM:SS, HH:MM:SS e arredondamento para cima", () => {
         for (const [remainingMs, text, description] of [
-            [1_000.5, "00:02", "0 minutos e 2 segundos restantes"],
-            [1_000, "00:01", "0 minutos e 1 segundos restantes"],
-            [0.5, "00:01", "0 minutos e 1 segundos restantes"],
-            [0, "00:00", "0 minutos e 0 segundos restantes"],
-            [3_600_000, "01:00:00", "1 horas, 0 minutos e 0 segundos restantes"],
+            [1_000.5, "00:02", "0 minutes and 2 seconds remaining"],
+            [1_000, "00:01", "0 minutes and 1 second remaining"],
+            [0.5, "00:01", "0 minutes and 1 second remaining"],
+            [0, "00:00", "0 minutes and 0 seconds remaining"],
+            [61_000, "01:01", "1 minute and 1 second remaining"],
+            [3_600_000, "01:00:00", "1 hour, 0 minutes and 0 seconds remaining"],
+            [7_321_000, "02:02:01", "2 hours, 2 minutes and 1 second remaining"],
         ] as const) {
             const markup = renderToStaticMarkup(<TimerDisplay remainingMs={remainingMs} mode="digital" />);
             expect(markup).toContain(`>${text}</time>`);

@@ -6,7 +6,7 @@ function SkipCycleButton({ onClick }: { onClick: () => void }) {
 	return (
 		<TimerControlButton
 			onClick={onClick}
-			ariaLabel="Pular ciclo"
+			ariaLabel="Skip phase"
 
 			icon = {<IoPlaySkipForward className="
 				fill-[#C2C7DA]

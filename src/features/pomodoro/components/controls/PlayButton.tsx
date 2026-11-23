@@ -10,7 +10,7 @@ type PlayButtonProps = {
 };
 
 function PlayButton({ isRunning, onStart, onPause }: PlayButtonProps) {
-	const ariaLabel = isRunning ? "Pausar ciclo" : "Iniciar ciclo";
+	const ariaLabel = isRunning ? "Pause timer" : "Start timer";
 	const Icon = isRunning ? BsFillPauseFill : PiPlayFill;
 
 	return (

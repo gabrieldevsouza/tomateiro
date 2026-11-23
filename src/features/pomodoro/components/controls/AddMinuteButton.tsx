@@ -7,8 +7,8 @@ function AddMinuteButton({ onClick, disabled = false }: { onClick: () => void; d
 		<TimerControlButton
 			onClick={onClick}
 			disabled={disabled}
-			title={disabled ? "Não é possível adicionar um minuto à etapa concluída ou acima do limite de 99:59:59." : "Adicionar um minuto"}
-			ariaLabel="Adicionar um minuto"
+			title={disabled ? "Can't add a minute to a completed phase or exceed the 99:59:59 limit." : "Add 1 minute"}
+			ariaLabel="Add 1 minute"
 			icon={<MdOutlinePlusOne className="
 				fill-[#C2C7DA]
 

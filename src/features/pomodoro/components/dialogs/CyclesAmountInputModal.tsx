@@ -49,7 +49,7 @@ function CyclesAmountInputModal({
             bg-[#17243F] font-[Epilogue] text-white outline-1 -outline-offset-1 outline-[#7C8BA9]
         `}>
         <div className="flex h-full w-full min-h-0 min-w-0 items-center justify-center @container-size">
-        <CountdownNumberInput numberInput={cyclesInput} label="Quantidade de ciclos" name={name} id={id} descriptionId={descriptionId} invalid={invalid} />
+        <CountdownNumberInput numberInput={cyclesInput} label="Sessions per cycle" name={name} id={id} descriptionId={descriptionId} invalid={invalid} />
             </div>
             {/* Folga entre cada SVG e a borda central: percentual da altura do botão. */}
             <div className="grid h-full w-full min-h-0 min-w-0 grid-rows-2 self-stretch [--arrow-inner-gap:15%]">
@@ -57,7 +57,7 @@ function CyclesAmountInputModal({
                     type="button"
                     tabIndex={-1}
                     className={`${arrowButtonClasses} grid-rows-[minmax(0,1fr)_var(--arrow-inner-gap)]`}
-                    aria-label="Aumentar quantidade de ciclos"
+                    aria-label="Increase sessions per cycle"
                     {...cyclesInput.getStepButtonProps(1)}
                 >
                     <PiCaretUp aria-hidden="true" className={`${arrowIconClasses} self-end`}/>
@@ -66,7 +66,7 @@ function CyclesAmountInputModal({
                     type="button"
                     tabIndex={-1}
                     className={`${arrowButtonClasses} grid-rows-[var(--arrow-inner-gap)_minmax(0,1fr)]`}
-                    aria-label="Diminuir quantidade de ciclos"
+                    aria-label="Decrease sessions per cycle"
                     {...cyclesInput.getStepButtonProps(-1)}
                 >
                     <PiCaretDown aria-hidden="true" className={`${arrowIconClasses} row-start-2 self-start`}/>

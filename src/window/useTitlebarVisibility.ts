@@ -95,13 +95,13 @@ export function useTitlebarVisibility(isMaximized: boolean, portalContainer: HTM
 		const revision = focusRevision;
 		void appWindow.isFocused().then((focused) => {
 			if (!isDisposed && revision === focusRevision) updateFocus(focused, INITIAL_HIDE_DELAY_MS);
-		}).catch((error: unknown) => console.error("Falha ao consultar foco da janela:", error));
+		}).catch((error: unknown) => console.error("Failed to read the window's focus state:", error));
 		void appWindow.onFocusChanged(({ payload }) => {
 			if (!isDisposed) updateFocus(payload);
 		}).then((unlisten) => {
 			if (isDisposed) unlisten();
 			else stopListening = unlisten;
-		}).catch((error: unknown) => console.error("Falha ao observar foco da janela:", error));
+		}).catch((error: unknown) => console.error("Failed to subscribe to window focus events:", error));
 
 		return () => {
 			isDisposed = true;

@@ -156,8 +156,8 @@ export function useNumberInput(value: string | number, min: number, max: number,
         }
 
         function rejectTransfer() {
-            const label = input!.getAttribute("aria-label")?.replace(/:\s*/g, ", ") ?? "Este campo";
-            feedback.current?.(`${label}: use um número inteiro entre ${min} e ${max}. O valor anterior foi mantido.`);
+            const label = input!.getAttribute("aria-label")?.replace(/:\s*/g, ", ") ?? "This field";
+            feedback.current?.(`${label}: enter a whole number from ${min} to ${max}. The previous value was kept.`);
         }
 
         function transferValue(event: ClipboardEvent | DragEvent, text: string, inputType: string) {

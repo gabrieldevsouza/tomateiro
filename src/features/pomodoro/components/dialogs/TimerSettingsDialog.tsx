@@ -28,17 +28,23 @@ function readFormErrors(form: HTMLFormElement): PomodoroSettingsFormError[] {
 		if (!(input instanceof HTMLInputElement) || input.validity.valid) continue;
 		const field = POMODORO_SETTINGS_FIELDS.find(({ name }) => input.name === name || input.name.startsWith(name + "."));
 		if (!field || errors.some((error) => error.inputName === input.name)) continue;
+		const label = input.getAttribute("aria-label") ?? field.label;
+		const correction = input.validity.stepMismatch
+			? `enter a value in increments of ${input.step || "1"}, starting at ${input.min || "0"}.`
+			: input.min !== "" && input.max !== ""
+				? `enter a whole number from ${input.min} to ${input.max}.`
+				: "enter a valid whole number.";
 		errors.push({
 			field: field.name,
 			inputName: input.name,
-			message: field.label + ": " + (input.validationMessage || "o valor não respeita as restrições deste campo."),
+			message: label + ": " + correction,
 		});
 	}
 	return errors;
 }
 
 function TimerSettingsDialog({ settings, onSave, onClose }: TimerSettingsDialogProps) {
-	if (!isValidPomodoroSettings(settings)) throw new RangeError("Configuração do Pomodoro inválida.");
+	if (!isValidPomodoroSettings(settings)) throw new RangeError("Invalid Pomodoro settings.");
 	const dialogRef = useRef<HTMLDialogElement>(null);
 	const formRef = useRef<HTMLFormElement>(null);
 	const titleId = useId();
@@ -202,27 +208,27 @@ function TimerSettingsDialog({ settings, onSave, onClose }: TimerSettingsDialogP
 					"
 				>
 					<DialogTitle id={titleId} className="col-start-2 col-span-2 row-start-2">
-						Editar Tomateiro
+						Timer settings
 					</DialogTitle>
 					<div className="row-start-3 col-start-2 min-w-0 min-h-0 h-full w-full" />
 					<FieldLabel htmlFor={nameInputId} className="col-start-2 row-start-3">
-						Nome do Temporizador
+						Timer name
 					</FieldLabel>
 					<TextInput
 						id={nameInputId}
-						placeholder="Disponível em etapa futura"
+						placeholder="Not available yet"
 						readOnly
 						tabIndex={-1}
 						aria-describedby={nameHelpId}
 						containerClassName="col-start-2 col-span-2 row-start-5"
 					/>
 					<FieldLabel id={fieldId + "-focus-label"} className="col-start-2 row-start-7">
-						Temporizador
+						Focus
 					</FieldLabel>
 					<div className="col-start-2 row-start-9 relative min-w-0 min-h-0 h-full w-full">
 						<TimeInputModal
 							name="focusDurationMs"
-							label="Temporizador"
+							label="Focus"
 							labelledBy={fieldId + "-focus-label"}
 							defaultValue={settings.focusDurationMs}
 							inputDescriptionId={descriptionFor("focusDurationMs")}
@@ -231,7 +237,7 @@ function TimerSettingsDialog({ settings, onSave, onClose }: TimerSettingsDialogP
 						/>
 					</div>
 					<FieldLabel htmlFor={cyclesInputId} className="col-start-4 row-start-7">
-						Ciclos
+						Sessions
 					</FieldLabel>
 					<div className="col-start-4 row-start-9 w-[40%] relative min-w-0 min-h-0 h-full">
 						<CyclesAmountInputModal
@@ -244,12 +250,12 @@ function TimerSettingsDialog({ settings, onSave, onClose }: TimerSettingsDialogP
 					</div>
 					<div className="col-start-2 row-start-10 min-w-0 min-h-0 h-full w-full" />
 					<FieldLabel id={fieldId + "-short-label"} className="relative col-start-2 row-start-11">
-						Pausa Curta
+						Short break
 					</FieldLabel>
 					<div className="col-start-2 row-start-13 relative min-w-0 min-h-0 h-full w-full">
 						<TimeInputModal
 							name="shortBreakDurationMs"
-							label="Pausa curta"
+							label="Short break"
 							labelledBy={fieldId + "-short-label"}
 							defaultValue={settings.shortBreakDurationMs}
 							inputDescriptionId={descriptionFor("shortBreakDurationMs")}
@@ -258,12 +264,12 @@ function TimerSettingsDialog({ settings, onSave, onClose }: TimerSettingsDialogP
 						/>
 					</div>
 					<FieldLabel id={fieldId + "-long-label"} className="col-start-4 row-start-11">
-						Pausa Longa
+						Long break
 					</FieldLabel>
 					<div className="col-start-4 row-start-13 relative min-w-0 min-h-0 h-full w-full">
 						<TimeInputModal
 							name="longBreakDurationMs"
-							label="Pausa longa"
+							label="Long break"
 							labelledBy={fieldId + "-long-label"}
 							defaultValue={settings.longBreakDurationMs}
 							inputDescriptionId={descriptionFor("longBreakDurationMs")}
@@ -277,18 +283,18 @@ function TimerSettingsDialog({ settings, onSave, onClose }: TimerSettingsDialogP
 						onClick={onClose}
 						className="col-start-2 col-span-2 row-start-15 mr-[8%] justify-self-end h-full w-[62%]"
 					>
-						Cancelar
+						Cancel
 					</SecondaryButton>
 					<PrimaryButton type="submit" className="col-start-4 row-start-15 h-full w-full">
-						Salvar
+						Save
 					</PrimaryButton>
 				</form>
 			</div>
 			<div className="sr-only">
-				<p id={descriptionId}>O timer continua durante a edição. Salvar alterações reinicia o bloco, pronto para Play.</p>
-				<p id={durationHelpId}>Horas de 0 a 99; minutos e segundos de 0 a 59. Duração total de 00:00:01 a 99:59:59.</p>
-				<p id={cyclesHelpId}>Ciclos: de 1 a 12 focos por bloco, com uma pausa longa após o último foco.</p>
-				<p id={nameHelpId}>O nome do temporizador estará disponível em uma etapa futura.</p>
+				<p id={descriptionId}>Saving changes resets the cycle. The timer keeps running while you edit.</p>
+				<p id={durationHelpId}>Hours: 0 to 99. Minutes and seconds: 0 to 59. Total duration: 00:00:01 to 99:59:59.</p>
+				<p id={cyclesHelpId}>Choose 1 to 12 focus sessions per cycle. A long break follows the last session.</p>
+				<p id={nameHelpId}>Editing the timer name is not available yet.</p>
 				{editorFieldOrder.map((field) => {
 					const fieldErrors = errors.filter((error) => error.field === field);
 					return fieldErrors.length > 0 && <p key={field} id={fieldId + "-" + field + "-error"}>{fieldErrors.map((error) => error.message).join(" ")}</p>;
@@ -304,14 +310,14 @@ function TimerSettingsDialog({ settings, onSave, onClose }: TimerSettingsDialogP
 				{(visibleError || inputFeedback) && <div className="alert alert-warning alert-soft grid-cols-[minmax(0,1fr)] rounded-none p-[1cqmin] font-medium [font-size:inherit] leading-tight">
 					<span className="min-w-0 wrap-break-word">
 						{visibleError?.message ?? inputFeedback}
-						{visibleError && invalidFieldCount > 1 && " (" + invalidFieldCount + " campos precisam de correção.)"}
+						{visibleError && invalidFieldCount > 1 && " (" + invalidFieldCount + " fields need attention.)"}
 					</span>
 				</div>}
 			</div>
 			{!visibleError && !inputFeedback && <p className="pointer-events-none absolute bottom-[1cqmin] z-10 m-0 w-[90%] justify-self-center text-center font-[Beiruti] text-[clamp(0.75rem,2.5cqmin,1rem)] leading-tight">
-				Editar mantém a contagem; salvar alterações reinicia o bloco.
+				Saving changes resets the cycle. The timer keeps running while you edit.
 			</p>}
-			<button type="button" tabIndex={-1} className="modal-backdrop absolute inset-0 col-auto row-auto" aria-label="Fechar edição" onClick={onClose} />
+			<button type="button" tabIndex={-1} className="modal-backdrop absolute inset-0 col-auto row-auto" aria-label="Close settings" onClick={onClose} />
 		</dialog>,
 		document.body,
 	);

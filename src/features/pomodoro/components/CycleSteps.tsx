@@ -53,11 +53,11 @@ const CycleStep = memo(function CycleStep({
         endsAtMs: pauseEndsAtMs,
         transitionId,
     });
-    const state = isCurrent ? "atual" : isReached ? "percorrido" : "próximo";
+    const state = isCurrent ? "current" : isReached ? "ended" : "upcoming";
     // Keep accessibility updates at whole percentages, independently of visual frames.
     const percentage = ratio === 1 ? 100 : Math.min(99, Math.floor(ratio * 100));
     const pausePercentage = pauseRatio === 1 ? 100 : Math.min(99, Math.floor(pauseRatio * 100));
-    const pauseLabel = index > 0 ? ` Pausa entre os focos ${index} e ${index + 1}: ${pausePercentage}%.` : "";
+    const pauseLabel = index > 0 ? ` Break between focus sessions ${index} and ${index + 1}: ${pausePercentage}%.` : "";
 
     return (
         <li
@@ -101,7 +101,7 @@ const CycleStep = memo(function CycleStep({
             data-lower-row={isLowerRow || undefined}
             data-row-start={isRowStart || undefined}
             aria-current={isCurrent ? "step" : undefined}
-            aria-label={`Foco ${index + 1} de ${focusCount}: ${state}. Progresso: ${percentage}%.${pauseLabel}`}
+            aria-label={`Focus session ${index + 1} of ${focusCount}: ${state}. Progress: ${percentage}%.${pauseLabel}`}
         />
     );
 });
@@ -149,7 +149,7 @@ function CycleSteps({
                         // Wrap native-size items and center each row; allow the lower entry to overflow.
                         className="steps pomodoro-steps flex flex-wrap justify-center gap-y-2 w-[calc(var(--pomodoro-steps-columns)*4rem)] overflow-visible [--color-primary:#fde047] [--color-primary-content:#915100] [--color-base-content:#A5B1CE] [--color-base-300:#2B416B]"
                         style={{ "--pomodoro-steps-columns": columnCount } as CSSProperties}
-                        aria-label={`Progresso dos ${focusCount} focos do ciclo`}
+                        aria-label={`Cycle progress: ${focusCount} focus ${focusCount === 1 ? "session" : "sessions"}`}
                     >
                         {focusProgress.map((progress, index) => {
                             const isCurrent = index === currentFocusIndex && !isCurrentFocusComplete;

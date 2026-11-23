@@ -75,8 +75,8 @@ function CustomTitlebar({ onMaximizedChange, portalContainer = null }: CustomTit
 			>
 				<div data-tauri-drag-region className="flex h-full items-stretch">
 					<WindowControlButton
-						ariaLabel={pinError ? "Tentar novamente a fixação" : "Manter janela sempre no topo"}
-						title={pinError ?? (isPinPending ? "Consultando fixação…" : isPinned ? "Desafixar do topo" : "Fixar no topo")}
+						ariaLabel="Always on top"
+						title={pinError ?? (isPinPending ? "Checking Always on top…" : isPinned ? "Turn off Always on top" : "Turn on Always on top")}
 						pressed={isPinned ?? undefined}
 						busy={isPinPending}
 						onClick={() => { void updatePinnedState(isPinned !== null); }}
